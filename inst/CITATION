@@ -1,0 +1,21 @@
+citHeader("To cite webmorphR in publications use:")
+
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+doi <- "10.5281/zenodo.???????"
+textVersion <- paste0("Lisa DeBruine, (", year, ").",
+  " webmorphR: Reproducible Stimuli ",
+  note, ".",
+  " Zenodo. http://doi.org/", doi)
+
+citEntry(
+  entry    = "Manual",
+  title    = "webmorphR: Reproducible Stimuli",
+  author   = "Lisa DeBruine",
+  doi      = doi,
+  publisher = "Zenodo",
+  year     = year,
+  note     = note,
+  url      = "https://debruine.github.io/webmorphR/",
+  textVersion = textVersion
+)

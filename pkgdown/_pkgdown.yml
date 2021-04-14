@@ -1,0 +1,137 @@
+url: https://facelab.github.io/webmorph/
+
+development:
+  mode: release
+home:
+  title: Reproducible Stimuli
+  description: Create reproducible image stimuli using images with webmorph.org templates.
+
+template:
+  params:
+    bootswatch: flatly
+  opengraph:
+    image:
+      src: man/figures/card.png
+      alt: "Blue hexagon with a simplified white wireframe face"
+    twitter:
+      creator: "@lisadebruine"
+      site: "@webmorph_org"
+      card: summary_large_image
+
+figures:
+  dev: grDevices::png
+  dpi: 96
+  dev.args: []
+  fig.ext: png
+
+articles:
+- title: Demos
+  navbar: ~
+  contents:
+  - stimuli
+  - manip
+  - masking
+  - figures
+  - similarity
+  twitter:
+    icon: "fab fa-twitter fa-lg"
+    href: https://twitter.com/webmorph_org
+
+reference:
+- title: Loading
+  desc: ~
+  contents:
+  - '`blank`'
+  - '`read_stim`'
+  - '`write_stim`'
+- title: Demo
+  desc: Built-in images, templates and info
+  contents:
+  - '`demo_stim`'
+  - '`london_info`'
+- title: Web functions
+  desc: Functions that link to webmorph.org or Face++
+  contents:
+  - '`auto_delin`'
+  - '`avg`'
+  - '`continuum`'
+  - '`loop`'
+  - '`symmetrize`'
+  - '`trans`'
+- title: Plotting
+  desc: ~
+  contents:
+  - '`draw_tem`'
+  - '`plot_rows`'
+  - '`plot_stim`'
+  - '`plot.stimlist`'
+- title: Image Manipulation
+  desc: ~
+  contents:
+  - '`align`'
+  - '`animate`'
+  - '`average_tem`'
+  - '`crop`'
+  - '`crop_pad`'
+  - '`greyscale`'
+  - '`horiz_eyes`'
+  - '`image_func`'
+  - '`label`'
+  - '`mask`'
+  - '`mask_oval`'
+  - '`mirror`'
+  - '`pad`'
+  - '`pt_delete`'
+  - '`resize`'
+  - '`rotate`'
+  - '`to_size`'
+- title: Metrics/Info
+  desc: ~
+  contents:
+  - '`add_info`'
+  - '`get_info`'
+  - '`get_point`'
+  - '`height`'
+  - '`image_comp`'
+  - '`setnames`'
+  - '`width`'
+- title: Helper functions
+  desc: ~
+  contents:
+  - '`bounds`'
+  - '`frl_features`'
+  - '`patch`'
+  - '`quick_delin`'
+  - '`remove_tem`'
+  - '`same_tems`'
+  - '`social_media_size`'
+  - '`subset.stimlist`'
+  - '`tem_def`'
+  - '`wm_opts`'
+- title: Geomorph functions
+  desc: ~
+  contents:
+  - '`tems_to_array`'
+  - '`write_tps`'
+- title: Utilities
+  desc: Mainly internally used functions
+  contents:
+  - '`col2lab`'
+  - '`color_conv`'
+  - '`format_size`'
+  - '`get_imgs`'
+  - '`image_func_types`'
+  - '`list_to_tbl`'
+  - '`new_stim`'
+  - '`new_stimlist`'
+  - '`OR`'
+  - '`rotated_size`'
+  - '`svgBezier`'
+  - '`svgControlPoints`'
+  - '`svgCubicTo`'
+  - '`svgLineTo`'
+  - '`svgMoveTo`'
+  - '`svgQuadraticTo`'
+  - '`unique_names`'
+  - '`validate_stimlist`'
+  - '`xget`'

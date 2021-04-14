@@ -1,0 +1,143 @@
+---
+title: "Face Model"
+author: "Lisa DeBruine"
+date: "05/04/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(webmorphR)
+library(tidyverse)
+```
+
+
+```{r}
+frl <- demo_stim("london") %>% resize(0.5)
+#fpp <- auto_delin(frl, "high", TRUE)
+#saveRDS(fpp, file = "fpp.RDS")
+fpp <- readRDS("fpp.RDS")
+```
+
+```{r}
+plot(fpp[1], pt.plot = TRUE)
+```
+
+## Get points from each image
+
+```{r}
+frl_pt <- lapply(frl, `[[`, "points") %>%
+  lapply(t) %>% lapply(as.data.frame) %>%
+  as.data.frame() %>%
+  mutate(n = 0:(nrow(.)-1),
+         tem = "frl") %>%
+  pivot_longer(cols = 1:(ncol(.)-2),
+               names_to = c("img", "coord"),
+               names_sep = "\\.",
+               values_to = "value") %>%
+  pivot_wider(names_from = c(tem, coord, n),
+              values_from = "value")
+```
+
+```{r}
+fpp_pt <- lapply(fpp, `[[`, "points") %>%
+  lapply(t) %>% lapply(as.data.frame) %>%
+  as.data.frame() %>%
+  mutate(n = 0:(nrow(.)-1),
+         tem = "fpp") %>%
+  pivot_longer(cols = 1:(ncol(.)-2),
+               names_to = c("img", "coord"),
+               names_sep = "\\.",
+               values_to = "value") %>%
+  pivot_wider(names_from = c(tem, coord, n),
+              values_from = "value")
+```
+
+### PCA
+
+```{r}
+
+just_pts <- select (fpp_pt, -img)
+ev <- eigen(cor(just_pts))$values
+nfactors <- sum(ev > 1) * 2
+  
+pca <- psych::principal(
+  just_pts, 
+  nfactors = nfactors, 
+  rotate="varimax"
+)
+
+
+fpp_scores <- as.data.frame(pca$scores) %>%
+  mutate(img = fpp_pt$img)
+```
+
+
+```{r}
+pts <- left_join(fpp_scores, frl_pt, by = "img")
+```
+
+```{r}
+xnam <- names(fpp_scores)[1:nfactors]
+ynam <- names(frl_pt)[2:379]
+
+px_off <- lapply(ynam, function(y) {
+  fmla <- as.formula(paste(y, " ~ ", paste(xnam, collapse= "+")))
+  m <- lm(fmla, data = pts)
+  m$fitted.values - pts[[y]]
+})
+```
+
+
+```{r}
+off <- data.frame(
+  ptname = ynam,
+  off = lapply(px_off, abs) %>% sapply(mean)
+) %>%
+  separate(ptname, c("frl", "coord", "n"), convert = TRUE) %>%
+  spread(coord, off) %>%
+  mutate(off = sqrt(x^2 + y^2))
+```
+
+```{r}
+hist(off$off, breaks = seq(0,max(off$off)+1, .25))
+```
+
+### Accurate <4 pixels
+
+```{r}
+rm_pt <- off %>%
+  filter(off >=4) %>%
+  pull(n)
+
+avg <- demo_stim("composite", "f_multi")
+
+avg %>% pt_delete(rm_pt) %>% draw_tem() %>% plot()
+```
+
+
+### Accurate 4-7 pixels
+
+```{r}
+rm_pt <- off %>%
+  filter(off < 4 | off > 7) %>%
+  pull(n)
+
+avg <- demo_stim("composite", "f_multi")
+
+avg %>% pt_delete(rm_pt) %>% draw_tem() %>% plot()
+```
+
+
+### Accurate > 7 pixels
+
+```{r}
+rm_pt <- off %>%
+  filter(off <= 7) %>%
+  pull(n)
+
+avg %>% pt_delete(rm_pt) %>% draw_tem() %>% plot()
+```
+
+
+

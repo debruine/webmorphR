@@ -1,0 +1,599 @@
+---
+title             : "Reproducible Methods for Face Research (Draft)"
+shorttitle        : "Face Methods"
+
+author: 
+  - name          : "Lisa DeBruine"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "lisa.debruine@glasgow.ac.uk"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - Conceptualization
+      - Writing - Original Draft Preparation
+  - name          : "Iris Holzleitner"
+    affiliation   : "1,2"
+    role:
+      - Writing - Review & Editing
+
+affiliation:
+  - id            : "1"
+    institution   : "Institute of Neuroscience & Psychology, University of Glasgow"
+  - id            : "2"
+    institution   : "University of the West of England, Bristol"
+
+authornote: |
+  This research was funded by ERC grant #647910 (KINSHIP).
+
+abstract: |
+  Face stimuli are commonly created in non-reproducible ways. This paper will introduce the open-access online platform webmorph and its associated R package webmorphR. It will explain the technical processes of morphing and transforming through a case study of creating face stimuli from an open-access image set.
+  
+keywords          : "faces; morphing; transforming; reproducible; webmorph"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib","biblio.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : html_document #papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+library("kableExtra")
+library("dplyr")
+library("magick")
+# devtools::install_github("debruine/webmorphR")
+library("webmorphR") 
+r_refs("r-references.bib")
+
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(
+  cache = FALSE,
+  cache.extra = knitr::rand_seed,
+  out.width = "100%",
+  echo = FALSE
+)
+
+# set to ggplot to view inline in Rmd, magick for the Viewer pane
+wm_opts(plot = "ggplot")
+wm_opts(plot.maxwidth = 850*2)
+```
+
+<style>
+  blockquote { 
+    font-size: 13px; 
+    border: 1px solid grey; 
+    background-color: #EEE;
+    border-radius: 1em;
+  }
+</style>
+
+
+## Introduction
+
+People use face stimuli in research on face perception. This almost always involves some level of stimulus preparation to rotate, resize, crop, and reposition faces on the image. In addition, many studies systematically manipulate face images by changing color and/or shape properties. Give some examples [e.g., @Little_2011]. 
+
+* Visualise group differences
+* Averageness
+* Sexual dimorphism
+* Symmetry
+* Self-resemblance
+
+Scope of this type of research. How many papers, what range of questions?
+
+### Reproducibility!
+
+Why are reproducible stimulus construction methods important?
+
+I once gave up on a research project because I couldn't figure out how to manipulate spatial frequency in MatLab to make my stimuli look like those in a relevant paper. When I contacted the author, they didn't know how the stimuli were created because a postdoc had done it in Photoshop and didn't leave a detailed record of the method.
+
+Reproducibility of stimuli is especially important for face stimuli because faces are sampled, so replications should sample new faces as well as new participants. The difficulty of creating equivalent face stimuli is a major barrier to this, resulting in stimulus sets that are used across dozens or hundreds of papers. 
+
+* The Chicago Face Database [@CFD_2015] has been cited in almost 800 papers.
+* Ekman POFA **selling** for [$399](https://www.paulekman.com/product/pictures-of-facial-affect-pofa/) for "110 photographs of facial expressions that have been widely used in cross-cultural studies, and more recently, in neuropsychological research".
+* Image sets are often private and reused without clear attribution. My own lab has only recently been trying to combat this by making image sets public and citable where possible [e.g., @FRL_London;@Canada2003;@Morrison_2018] and including clear explanations of reuse where not possible [e.g., ].
+
+### Common Techniques
+
+It was basically impossible to systematically survey the literature about the methods used to create facial stimuli, in large part because of poor documentation. However, several common methods are discussed below.
+
+#### Photoshop/Image editors
+
+A search for "Photoshop face attractiveness" produced 6,450 responses in Google Scholar. Here are descriptions of the use of Photoshop from a few of the top hits.
+
+> If necessary, scanned pictures were rotated slightly, using Adobe Photoshop software, clockwise to counterclockwise until both pupil centres were on the same y-coordinate. Each picture was slightly lightened a constant amount by Adobe Photoshop. [@Scheib_1999, p. 1914]
+
+> For each face in the adapting set, we created two distortions using the spherize distort function in Adobe Photoshop: a −50% distortion, which compressed the center of the face, producing the appearance of a face in a concave mirror, and a +50% distortion, which expanded the center of the face, producing the appearance of a face in a convex mirror [@Rhodes_2003, p. 559]
+
+>  Using Adobe Photoshop, Version 3.05 (1994), each photo was rotated (if necessary) and then cut vertically along the facial midline using the philtrum (the base of the nose) as a guide. For each LL image, a copy of the left half of the face was reversed horizontally and then pasted onto the actual left half of the photograph (as depicted in Figure 1). The same procedure was followed to obtain RR mirror-image depictions. [@Mealey_1999, p. 153]
+
+> Averted gaze images were generated in Adobe Photoshop. The irises and pupils of each face were isolated using the path tool and horizontally shifted three pixels left and right to produce an averted-left and averted-right version of each face [@Ewing_2010, p. 324]
+
+> These pictures were edited using Adobe Photoshop 6.0 to remove external features (hair, ears) and create a uniform grey background. [@sforza2010my, pp. 150] 
+
+
+
+- [@Gronenschild_2009]
+  
+#### Commerical morphing 
+
+Face averaging or "morphing" is a common technique for making images that are blends of two or more faces. We found 831 Google Scholar responses for "fantamorph face",  158 Google Scholar responses for "WinMorph face" and fewer mentions of several other programs, such as MorphThing (no longer available) and xmorph.
+
+Most of these programs do not use open formats for storing delineations, the x- and y-coordinates of the landmark points that define shape and the way these are connected with lines. Their algorithms also tend to be closed and there is no common language for describing the procedures used to create stimuli in one program in a way that is easily translatable to another program. Here are descriptions of the use of commercial morphing programs from a few of the top hits.
+
+> The faces were carefully marked with 112 nodes in FantaMorph™, 4th version: 28 nodes (face outline), 16 (nose), 5 (each ear), 20 (lips), 11 (each eye), and 8 (each eyebrow). To create the prototypes, I used FantaMorph Face Mixer, which averages node locations across faces. Prototypes are available online, in the Personality Faceaurus [http://www.nickholtzman.com/faceaurus.htm]. [@Holtzman_2011, p. 650]
+
+The link above contains only morphed face images and no further details about the morphing or stimulus preparation procedure.
+
+> For the stimuli used as probes of the aftereffect, we created morphs across the three expression pairs for each Karolinska face, using Fantamorph 3.0 (www.fantamorph.com). Twenty-one images were produced for each morph series, with each picture representing a 5% step within the morph series (i.e., 0/100, 5/95, 10/90… 100/0). [@Fox_2007, p.87]
+
+> The 20 individual stimuli of each category were paired to make 10 morph continua, by morphing one endpoint exemplar into its paired exemplar (e.g. one face into its paired face, see Figure 1C) in steps of 5%. Morphing was realized within FantaMorph Software (Abrosoft) for faces and cars, Poser 6 for bodies (only between stimuli of the same gender with same clothing), and Google SketchUp for places. [@Weigelt_2013, p. 4]
+
+> Each identity was morphed, using Fantamorph v5.3.1 (http://www. fantamorph.com), with three composite faces displaying happy, angry, and neutral expressions, respectively (each an average of 50 identities, from Skinner & Benton, 2010). For the neutral face condition, we also morphed each original face (neutral expression) image towards a neutral composite. This process ensured that all stimuli presented during this task were morphs. Standard morphing procedures were used to create 25% and 50% morphs by blending the original faces with the expression composites in different proportions, for example, 25% angry morph was a 75/25 blend of an original face and the angry composite. [@caulfield2016judging, pp. 506--507]
+
+> Then, for each pair, different degrees of digital morphing between the two picture faces were created using Abrosoft Fantamorph 3.0 (from 0% to 100% in steps of 2%, for a total of 48 morphs, plus the two original pictures; Figure 2A). Along the morphing continuum, 2% steps were contemplated except for two specific points where the step was 3% (from 24% to 27% and from 73% to 76%). [@sforza2010my, pp. 150--151] 
+
+
+#### Scriptable Methods
+
+There are several scriptable methods for creating image stimuli, including MatLab, ImageMagick, and GraphicConvertor.
+
+MatLab [@MatLab] is widely used within visual psychophysics. A Google Scholar search for "MatLab face attractiveness" returned 7,440 hits, although the majority of papers I inspected used MatLab to process EEG data, present the experiment, or analyse image color, rather than using MatLab to create the stimuli. "MatLab face perception" generated 80,800 hits, more of which used MatLab to create stimuli.
+
+> Subjects were presented with four different types of face stimuli: black and white line drawings of unfamiliar faces, and gray scale photographs of unfamiliar, famous, and emotional faces. Phase scrambled versions of these faces were used as visual baseline. The scrambled pictures were generated by randomizing the phase information after Fourier transformation using an in-house Matlab script. [no stimuli were shown in the paper, @ishai2005face, p. 88]
+
+> The average pixel intensity of each image (ranging from 0 to 255) was set to 128 with a standard deviation of 40 using the SHINE toolbox (function lumMatch) (Willenbockel et al., 2010) in MATLAB (version 8.1.0.604, R2013a). [@visconti2014facilitated, p. 2]
+
+
+ImageMagick [@imagemagick] is a free, open-source program that creates, edits, and converts images in a scriptable manner. The {magick} R package allows you to script image manipulations in R using ImageMagick [@R-magick].
+
+> Images were cropped, resized to 150 × 150 pixels, and then grayscaled using ImageMagick (version 6.8.7-7 Q16, x86_64, 2013-11-27) on Mac OS X 10.9.2. [@visconti2014facilitated, p. 2]
+
+GraphicConvertor [@nishimura2000graphicconverter] is typically used to batch process images, such as making images a standard size or adjusting color. While not technically "scriptable", batch processing can be set up in the GUI interface and the saved to a reloadable ".gaction" file. (A search for '"gaction" graphicconvertor' on Google Scholar returned no hits.)
+
+> Photographs were converted to black-and-white images through a program called GraphicConverter (Thorsten Lemke, v.3.1.1). [@neiworth2007face, pp. 128-129]
+
+> We used the GraphicConverterTM application to crop the images around the cat face and make them all 1024x1024 pixels. One of the challenges of image matching is to do this process automatically. [@paluszek2019pattern, p.214]
+
+#### Mystery Methods
+
+Many researchers describe image manipulation generically or use "in-house" methods that are not well specified enough for another researcher to have any chance of replicating them.
+
+> A normalization procedure was then used to bring each face into a common orientation and position. [@pantelis2008some, p.1188]
+
+> Each of the images was rendered in gray-scale and morphed to a common shape using an in-house program based on bi-linear interpolation (see e.g., Gonzalez & Woods, 2002). Key points in the morphing grid were set manually, using a graphics program to align a standard grid to a set of facial points (eye corners, face outline, etc.). Images were then subject to automatic histogram equalization. [@burton2005robust, p. 263]
+
+The reference above [@gonzalez2002digital] has been cited by 2384 papers on Google Scholar, and is a 190-page book. It mentions bilinear interpolation on pages 64--66 in the context of calculating pixel color when resizing images and it's unclear how this could be used to morph shape.
+
+
+#### Psychomorph/WebMorph
+
+[@benson1993extracting]
+[@rowland1995manipulating]
+[@webmorph]
+
+
+### Ethical Issues
+
+Research with identifiable faces has a number of ethical issues. This means it is not always possible to share the exact images used in a study. Then it is all the more important for the stimulus construction methods to be clear and reproducible. However, there are other ethical issues outside of image sharing that we feel are important to highlight in an paper discussing the use of face images in research.
+
+The use of face photographs must respect participant consent and personal data privacy. Images that are "freely" available on the internet are a grey area and the ethical issues should be carefully considered and approved by the relevant ethics board.
+
+Do not use face images in research where there is a possibility of real-world consequences for the pictured individuals. For example, do not post identifiable images of real people on real dating sites without the explicit consent of the pictured individuals for that specific research.
+
+The use of face image analysis should never be used to predict behaviour or as automatic screening. For example, face images cannot be used to predict criminality or decide who should proceed to the interview stage in a job application. This type of application is unethical because the training data is always biased. Face image analysis can be useful for researching what aspects of face images give rise to the *perception* of traits like trustworthiness, but should not be confused with the ability to detect *actual* behaviour. Researchers have a responsibility to consider how their research may be misused in this manner.
+
+
+### Glossary
+
+```{r}
+terms <- tibble::tribble(
+  ~Term, ~Definition,
+  "delineation", "the x- and y-coordinates of the landmark points that define shape and the way these are connected with lines",
+  "landmark", "a point that marks corresponding locations on different images",
+  "morphing", "blending two or more images to make an image with an average shape and/or color",
+  "transforming", "changing the shape and/or color of an image by some proportion of a vector that is usually defined as the difference between two images",
+  "template", "the collection of landmarks coordiantes and line connections that describes an image",
+  "lines", "connections between landmarks; these may be used to interpolate new landmarks for morphing"
+) %>%
+  dplyr::arrange(Term)
+
+kableExtra::kable(terms)  %>%
+  kable_styling(bootstrap_options = c("striped", "responsive"))
+  
+  
+```
+
+
+
+
+## Methods
+
+### Editing
+
+Almost all imagesets start with raw images that need to be cropped, aligned, resized, rotated, greyscaled, and/or color normalized. Although many reproducible methods exist to manipulate images in these ways, they are complicated when an image has an associated template, so {webmorphR} has functions that alter the image and template together
+
+
+```{r, echo = TRUE}
+orig <- demo_stim("lisa", 3)
+norm <- image_func(orig, "normalize")
+grey <- greyscale(orig)
+resized <- resize(orig, 0.75)
+cropped <- crop(orig, width = 0.75, height = 0.75)
+rotated <- rotate(orig, degrees = 45, keep_size = FALSE)
+padded <- pad(orig, 30, fill = "black")
+```
+
+```{r, fig.cap="Examples of image manipulations: (A) original image, (B) color normalized, (C) greyscale, (D) resized to 75%, (E) cropped to 75%, (F) (G) rotated 45 degrees, (H) 30 pixels of black padding added."}
+
+c(orig, norm, grey, resized, cropped, rotated, padded) %>%
+  pad(0, 0, 0, 60) %>%
+  draw_tem() %>%
+  label(LETTERS, "northwest", "+0+0", size = 60) %>% 
+  plot(nrow = 1)
+```
+
+Other image manipulations use the templates to determine the manipulations.
+
+```{r, echo = TRUE}
+aligned <- align(orig, x1 = 200, x2 = 400, y1 = 350, y2 = 350)
+hzeyes <- horiz_eyes(orig, patch = TRUE)
+cropadded <- crop_pad(orig, 30)
+oval <- mask_oval(orig, fill = "dodgerblue")
+masked <- mask(orig, "face", fill = "dodgerblue", tem_id = "fpp106")
+```
+
+```{r, fig.cap="Examples of template-aware image manipulations: (A) Eyes aligned to specific coordinates, (B) rotated so pupils are horizontal, (C) cropped to template dimensions plus 30 pixels of padding, (D) masked with an oval, (E) masked around specified template points."}
+
+c(aligned, hzeyes, cropadded, oval, masked) %>%
+  pad(0, 0, 0, 60) %>%
+  draw_tem() %>%
+  label(LETTERS, "northwest", "+0+0", size = 60) %>% 
+  plot(nrow = 1)
+```
+
+And, of course, most stimulus preparation requires several steps to get all the images into the same position. You can chain {webmorphR} functions to apply each manipulation to the result of the previous step.
+
+```{r, echo = TRUE}
+stimuli <- demo_stim("london", 1:5) %>%
+  resize(0.5) %>%
+  align(procrustes = TRUE) %>%
+  crop_pad(30) %>%
+  mask("face", fill = rainbow(5)) %>%
+  pad(20, fill = "grey")
+```
+
+```{r chain, fig.cap="Individuals image after resizing, aligning, cropping to the template, padding 30 pixels, maskings with a unique color for each face, and adding a 20-pixel grey border."}
+plot(stimuli)
+```
+
+
+
+
+### Averaging
+
+### Transforming
+
+
+## Case Study
+
+### London Face Set
+
+We will use the open-source, CC-BY licensed image set, the Face Research Lab London Set [@FRL_London]. Images are of 102 adults whose pictures were taken in London, UK, in April 2012 for a project with Nikon camera. All individuals were paid and gave signed consent for their images to be "used in lab-based and web-based studies in their original or altered forms and to illustrate research (e.g., in scientific journals, news media or presentations)." 
+
+```{r london-set, fig.cap = "The 102 neutral front faces in the London Face Set."}
+
+london <- demo_stim("london") %>%
+  resize(0.5) %>% # makes the demo run faster, change for final
+  add_info(london_info)
+
+london %>% plot(nrow=6, maxwidth = 2000)
+```
+
+Each subject has one smiling and one neutral pose. For each pose, 5 full colour images were simultaneously taken from different angles: left profile, left three-quarter, front, right three-quarter, and right profile. These images were cropped to 1350x1350 pixels and the faces were manually centered. The neutral front images have template files that mark out 189 coordinates delineating face shape for use with Psychomorph or WebMorph.
+
+### Delineation
+
+WebMorph's default face template marks 189 points. Some of these points have very clear anatomical locations, such as point 0 ("left pupil"), while others have only approximate placements and are used mainly for masking or preventing morphing artifacts from affecting the background of images, such as point 147 ("about 2cm to the left of the top of the left ear (creates oval around head)").
+
+```{r delineate, fig.cap = "Default webmorph FRL template"}
+demo_stim("composite", "f_multi") %>%
+  crop_pad(20) %>%
+  resize(2) %>%
+  draw_tem(pt.shape = "index", pt.color = "#FFFFFFFF", pt.size = 25) %>%
+  plot()
+```
+
+
+```{r, echo = TRUE}
+# get all information about a standard template
+FRL <- tem_def("FRL")
+
+FRL$points[1:10, ] %>% kable(caption = "The first 10 landmark points of WebMorph's default \"FRL\" template")
+```
+
+
+You can use one of several algorithms to automatically delineate faces with a simpler template. This is available on WebMorph and webmorphR through Face++. 
+
+```{r, echo = TRUE}
+# load 5 images with FRL templates
+f <- london %>%
+  subset(face_eth == "black") %>%
+  subset(face_gender == "female")
+
+# remove templates and auto-delineate with Face++ template
+fpp_tem <- f %>%
+  remove_tem() %>%
+  auto_delin()
+```
+
+```{r auto-delin, fig.cap="The top row shows manual delineations using the FRL template. The bottom row shows automatic delineations using the Face++ temple."}
+plot_rows(
+  draw_tem(f), 
+  draw_tem(fpp_tem)
+)
+```
+
+A study comparing the accuracy of four common measures of face shape (sexual dimorphism, distinctiveness, bilateral asymmetry, and facial width to height ratio) between automatic and manual delineation concluded that automatic delineation had higher replicability and good correlations with manual delineation [@jones2020facial]. However, <2% of images had noticeably inaccurate automatic delineation, which should be screened for by outlier detection and visual inspection. 
+
+While automatic delineation has the advantage of being very fast and generally more replicable than manual delineation, it is more limited in the areas that can be described. Typically, automatic face detection algorithms outline the lower face shape and internal features of the face, but don't define the hairline, hair, neck, or ears. Manual delineation of these can greatly improve stimuli created through morphing or transforming.
+
+```{r avg-comp, fig.cap="Averages of 5 images made using the full manual template (left) and the reduced automatic template (right)."}
+frl_avg <- avg(f)
+fpp_avg <- avg(fpp_tem)
+
+c(frl_avg, fpp_avg) %>% label(c("189-point manual template", "106-point automatic template")) %>% plot()
+```
+
+
+### Normalisation
+
+If your image set isn't highly standardised, you probably want to crop, resize and rotate your images to get them all in approximately the same orientation on images of the same size. There are several reproducible options, each with pros and cons. 
+
+One-point alignment doesn't rotate or resize the image at all, but aligns one of the delineation points across images. This is ideal when you know that your camera-to-head distance and orientation was standard (or meaningfully different) across images and you want to preserve this in the stimuli, but you still need to get them all in the same position and image size.
+
+Two-point alignment resizes and rotates the images so that two points (usually the centres of the eyes) are in the same position on each image. This will alter relative head size such that people with very close-set eyes will appear to have larger heads than people with very wide-set eyes. This technique is good for getting images into the same orientation when you didn't have any control over image rotation and camera-to-head distance of the original photos. 
+
+Procrustes alignment resizes and rotates the images so that each delineation point is as aligned as possible across all images. This can obscure meaningful differences in relative face size (e.g., a baby's face will be as large as an adult's), but can be superior to two-point alignment. However, this requires that the whole face be accurately delineated, but you can use a minimal template such as a face outline or the Face++ auto-delineation to achieve approximately the same result. While not available in webmorph, procrustes alignment is available in webmorphR. 
+
+You can very quickly delineate an image set with a custom template using the `quick_delin()` function in webmorphR if auto-delineation doesn't provide suitable points.
+
+```{r, echo = TRUE}
+# one-point alignment
+onept <- align(f, pt1 = 55, pt2 = 55,
+               x1 = width(f)/2, y1 = height(f)/2,
+               fill = "dodgerblue")
+
+# two-point alignment
+twopt <- align(f, pt1 = 0, pt2 = 1,
+               fill = "dodgerblue")
+
+# procrustes alignment
+proc <- align(f, pt1 = 0, pt2 = 1, procrustes = TRUE, fill = "dodgerblue")
+```
+
+```{r norm-comp, fig.cap="Original images with different alignments. One-point alignment placed the bottom of the nose point in the centre of the image. Two-point alignment placed the eye centre points in the same position as the first image. Procrustes alignment moved all images to the most congruent position. A blue background was used to highlight the difference here, but normally a colour matching the image background would be used or the images would be cropped."}
+
+plot_rows("One-point Alignment" = onept, 
+          "Two-point Alignment" = twopt, 
+          "Procrustes Alignment" = proc,
+          top_label = TRUE)
+```
+
+
+
+### Masking
+
+(effect in masc paper) [@debruine2006correlated)
+
+The "standard oval mask" has enjoyed widespread popularity because it is straightforward to add to images using programs like PhotoShop.
+
+```{r, echo = TRUE}
+ovals <- f %>%
+  pt_delete(frl_features("neck", "halo", "ears")) %>%
+  mask_oval(fill = "dodgerblue") %>%
+  align(procrustes = TRUE) %>%
+  crop_pad()
+```
+
+An arguably better way to mask out hair, clothing and background from images is to crop around the curves defined by the template. 
+
+
+```{r, echo = TRUE}
+masked <- mask(f, c("face", "neck", "ears"), fill = "dodgerblue") %>%
+  pt_delete(frl_features("halo")) %>%
+  align(procrustes = TRUE) %>%
+  crop_pad()
+```
+
+```{r mask, fig.cap = "Images masked to include face, ears and neck (A), or with an oval defined by the minimum and maximum x- and y-coordinates of template points (B)."}
+plot_rows(A = masked, B = ovals)
+```
+
+
+### Averaging
+
+Averaging faces with texture [@tiddeman2001prototyping;@tiddeman2005towards] makes composite image look more realistic. However, averages created without texture averaging look smoother and may be more appropriate for transformation endpoints.
+
+```{r avg-texture, fig.cap="An average of 5 faces created with texture averaging (left) and without (right)."}
+avg_tex <- avg(f, texture = TRUE)
+avg_notex <- avg(f, texture = FALSE)
+
+c(avg_tex, avg_notex) %>% plot()
+```
+
+### Symmetrising
+
+```{r, echo = TRUE}
+sym_both <- symmetrize(f)
+sym_shape <- symmetrize(f, color = 0)
+sym_color <- symmetrize(f, shape = 0)
+sym_anti <- symmetrize(f, shape = -1.0, color = 0)
+```
+
+```{r, fig.cap = "Images with different types of symmetry."}
+plot_rows("Shape and Color" = sym_both,
+          "Shape Only" = sym_shape,
+          "Color Only" = sym_color,
+          "Asymmetric Shape" = sym_anti,
+          top_label = TRUE)
+```
+
+Left-left and right-right mirroring is not recommended for investigating perceptions of facial symmetry. this is because this method typically produces unnatural images for any face that isn't already perfectly symmetric. For example, if the nose does not lie in a perfectly straight line from the centre point between the eyes to the centre of the mouth, then one of the mirrored halves will have a much wider nose than the original face, while the the other half will have a much narrower nose than the original face. In extreme cases, one mirrored version can end up with three nostrils. The method above preserves the individual's characteristic feature shapes and avoids the problem of having to choose an axis of symmetry on a face that isn't perfectly symmetrical.
+
+```{r mirror-sym, fig.cap = "Left-left (top) and right-right (bottom) mirrored images."}
+# make eye points exactly horizontal
+hzeyes <- horiz_eyes(f)
+
+# calculate midpoint of eyes for each image
+pts <- get_point(hzeyes, pt = 0:1)
+midpoint <- (pts$x0 + pts$x1)/2
+
+# crop and mirror images
+left_side <- crop(hzeyes, width = midpoint, x_off = 0)
+left_mirror <- mirror(left_side)
+right_side <- crop(hzeyes, width = width(hzeyes)-midpoint, x_off = midpoint)
+right_mirror <- mirror(right_side)
+
+# paste images together
+left_left <- mapply(function(ls, rs) {
+  c(ls, rs) %>% plot(padding = 0)
+}, left_side, left_mirror) %>%
+  crop(width(hzeyes), height(hzeyes))
+
+
+right_right <- mapply(function(ls, rs) {
+  c(ls, rs) %>% plot(padding = 0)
+}, right_mirror, right_side) %>%
+  crop(width(hzeyes), height(hzeyes))
+
+plot_rows(left_left, right_right)
+```
+
+
+
+### Sexual dimorphism transform
+
+The first step in making a sexual dimorphism transform is to create male and female average faces. The faces that make up these averages should be matched for other characteristics that you want to avoid confounding with gender, such as age or ethnicity.
+
+```{r, echo = TRUE}
+m <- subset(london, face_gender == "male") %>% 
+  subset(face_eth == "black") %>%
+  subset(1:5)
+
+f_avg <- avg(f, texture = FALSE)
+m_avg <- avg(m, texture = FALSE)
+```
+
+```{r sexdim-avg, fig.cap="Average and individual male and female faces."}
+c(f_avg,
+  plot(f, external_pad = 0, ncol = 1), 
+  plot(m, external_pad = 0, ncol = 1),
+  m_avg
+) %>% 
+  resize(height = height(f_avg)) %>%
+  plot()
+```
+
+Next, transform each individual image using the average female and male faces as transform endpoints.
+
+```{r, echo = TRUE}
+# use a named vector for shape to automatically rename the images
+sexdim <- trans(
+  trans_img = c(f[1:3], m[1:3]),
+  from_img = f_avg,
+  to_img = m_avg,
+  shape = c(fem = -.5, masc = .5)
+)
+```
+
+
+```{r, fig.cap="Feminised and masculinised versions of individual faces"}
+
+plot_rows("50% feminised shape" = subset(sexdim, "_fem"),
+          "50% masculinised shape" = subset(sexdim, "_masc"),
+          top_label = TRUE)
+
+```
+
+
+
+Continuum
+
+```{r, echo = TRUE}
+steps <- continuum(f_avg, m_avg, by = 0.25)
+```
+
+```{r continuum, fig.cap=""}
+lab <- paste0(seq(0,1,.25) * 100, "%")
+steps %>%
+  label(lab, "northwest", "+10+10", size = 70) %>%
+  plot(nrow = 1)
+```
+
+
+```{r animate, out.width = "25%", fig.cap="Animated gif of continuum from female to male average."}
+steps2 <- continuum(f_avg, m_avg, by = 0.1)
+
+steps2 %>% resize(200) %>% animate(fps = 10, rev = TRUE)
+```
+
+### Self-resemblance transform
+
+```{r, echo = TRUE}
+virtual_sis <- trans(
+  trans_img = f_avg,
+  from_img = m_avg,
+  to_img = m,
+  shape = 0.5) %>%
+  mask(c("face", "neck","ears")) 
+
+virtual_bro <- trans(
+  trans_img = m_avg,
+  from_img = m_avg,
+  to_img = m,
+  shape = 0.5) %>%
+  mask(c("face", "neck","ears"))
+```
+
+```{r virtual-sibs, fig.cap="Virtual siblings"}
+plot_rows(Original = crop_pad(m),
+          "Virtual Brothers" = crop_pad(virtual_bro),
+          "Virtual Sisters" = crop_pad(virtual_sis),
+          top_label = TRUE)
+```
+
+
+# Discussion
+
+* head position in 2D images
+  * morphometics
+  * facefuns
+* Natural vs standardised source images
+  * right image for the question
+* Averaging is N=1
+
+
+
+\newpage
+
+# References
+
+We used `r cite_r("r-references.bib")` to produce this manuscript.
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup

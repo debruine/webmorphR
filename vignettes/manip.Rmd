@@ -1,0 +1,252 @@
+---
+title: "Image Manipulations"
+output: rmarkdown::html_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+
+starttime <- Sys.time()
+
+library(webmorphR)
+wm_opts(plot = "ggplot")
+wm_opts(plot.maxwidth = 850*2)
+```
+
+
+## Load your images
+
+```{r}
+stimuli <- demo_stim("composite", "multi")
+```
+
+
+## Resize
+
+Resizing your images at the start of a chain can make everything go faster if you're working with very large images, but can make them blurry if you make them too small.
+
+```{r resize, fig.cap="Resized Images"}
+stimuli %>%
+  resize(.05) %>%
+  plot()
+```
+
+
+## Rotate
+
+```{r rotate, fig.cap="Rotated Images and Templates"}
+stimuli %>%
+  rotate(45, patch = TRUE) %>%
+  draw_tem() %>%
+  plot()
+```
+
+
+## Crop
+
+You can set the new width, height, x-offset and y-offset in pixels (must be > 2) or proportions.
+
+```{r crop, fig.cap="Cropped Images and Templates"}
+stimuli %>%
+  crop(width = .6, height = .8, 
+       x_off = .2, y_off = .1) %>%
+  draw_tem() %>%
+  plot()
+```
+
+## Pad 
+
+Pad the top, right, bottom and left borders; set the colour with `fill`.
+
+```{r pad, fig.cap="Padded Images and Templates"}
+stimuli %>%
+  pad(top = 100, right = 200, bottom = 300, left = 400,
+       fill = c("dodgerblue", "hotpink")) %>%
+  plot()
+```
+
+Or you can use the `patch` function to get the median colour from a patch of the image. If you set `patch` to `TRUE`, this will default to the top left 10 pixel square, or you can set the boundaries of the patch manually.
+
+```{r crop-match, fig.cap="Cropped Images with Matched Background"}
+demo_stim("rainbow")[1:8] %>%
+  pad(50, patch = c(x1=1, x2=640, y1=1, y2=10)) %>%
+  plot(nrow = 2)
+```
+
+## Crop to Template
+
+You can use the `crop_pad()` function to get the minimum and maximum x- and y-values from a list of templates, then use that to set the cropping. In the example below, the images are cropped so there is 100 pixels of padding around the boundaries, calculated across all images. 
+
+```{r bounds}
+lisa <- demo_stim("lisa")
+
+crop_pad(lisa, 100) %>%
+  draw_tem() %>%
+  plot()
+```
+
+Set `each` to TRUE to calculate the boundaries separately for each template in the list instead of the full set.
+
+```{r bounds-each}
+lisa %>%
+  crop_pad(20, each = TRUE) %>%
+  plot()
+```
+
+## To Size
+
+The function`to_size()` combines crop and resize to get a batch of images to the same size.
+
+```{r}
+multisize <- c(
+    demo_stim("test")[[1]],
+    demo_stim("lisa")[[1]],
+    demo_stim("composite")[[1]],
+    demo_stim("zoom")[[1]]
+  )
+
+width(multisize)
+height(multisize)
+```
+
+The code below resizes each image to fit in a 300 x 400 pixel image and fills in any extra background using the average colour from a patch in the upper left corner. 
+
+```{r fig-fit}
+new1 <- to_size(multisize, 300, 400, patch = TRUE)
+plot(new1)
+```
+
+Set `keep_rels = TRUE` to keep the relative sizes. 
+
+```{r fig-fit-rel}
+new2 <- to_size(multisize, 300, 400, patch = TRUE, keep_rels = TRUE)
+plot(new2)
+```
+
+
+## Align
+
+You can align a set of images on two points. By default, these are the first two points in the template, which correspond to the left and right eye in the standard FRL template and the Face++ autodelineation template.
+
+```{r align}
+stimuli %>%
+  align(x1 = 350, y1 = 350, x2 = 450, y2 = 450,
+        width = 800, height = 800, fill = "grey80") %>%
+  draw_tem() %>%
+  plot()
+```
+
+If you have a set of misaligned images and don't fill in coordinates or dimensions, `align()` will align to the coordinates and dimensions for the first image. 
+
+
+```{r realign1}
+align(lisa, fill = "grey80") %>% 
+  plot()
+```
+
+Or you can specify the reference image by index or name.
+
+```{r realign2}
+align(lisa, ref_img = "lisa3", patch = TRUE) %>% 
+  plot()
+```
+
+## Procrustes Align 
+
+You can set the `procrustes` argument to TRUE to procrustes-align the images and templates.
+
+```{r procrustes}
+align(lisa, procrustes = TRUE, patch = TRUE) %>%
+  plot()
+```
+
+Currently, [webmorph](https://webmorph.org) does not have this capability, but you can download your images and tems, procrustes align them with the R package, save the images and templates, and upload them back to webmorph.
+
+## Chaining
+
+You can also chain image manipulation commands. 
+
+```{r chain}
+stimuli %>%
+  rotate(c(45, -45)) %>%
+  crop(.5, .5) %>%
+  pad(0.1, fill = "dodgerblue") %>%
+  plot()
+```
+
+## Repeating images
+
+You can use `rep()` to repeat images in a stimuli. Here, we repeat the faces 3 times each, apply 6 different rotations with different background colours, crop them to the same size, and plot them with 6 different template point colours.
+
+```{r rep}
+
+rainbow <- c(pink = "#983E82",
+             orange = "#E2A458",
+             yellow = "#F5DC70",
+             green = "#59935B",
+             blue = "#467AAC",
+             purple = "#61589C")
+
+stimuli %>%
+  resize(0.5) %>%
+  rep(each = 3) %>%
+  rotate(seq(10, 60, 10), fill = rainbow) %>%
+  crop(250, 250, fill = rainbow) %>%
+  draw_tem(pt.color = rainbow, pt.alpha = 1, pt.size = 5) %>%
+  plot(nrow = 2)
+```
+
+
+## Image functions
+
+You can do so many things with the {magick} package that is installed with {webmorph}. The function `image_func()` is just a convenient wrapper that allows you to apply {magick} functions (or any other function that takes a magick image as the first argument) to each image in a stimulus list.
+
+```{r fun}
+
+stimuli <- demo_stim("test", "m_")
+imglist <- c(
+  image_func(stimuli, "blur", radius = 10, sigma = 5),
+  image_func(stimuli, "charcoal", radius = 5, sigma = 2),
+  image_func(stimuli, "oilpaint", radius = 5),
+  image_func(stimuli, "implode", factor = 0.25),
+  image_func(stimuli, "implode", factor = -0.25),
+  image_func(stimuli, "negate"),
+  # canny edge detection format is {radius}x{sigma}+{lower%}+{upper%}
+  image_func(stimuli, "canny", geometry = "0x1+10%+30%"),
+  image_func(stimuli, "edge", radius = 2),
+  image_func(stimuli, "modulate", brightness = 80),
+  image_func(stimuli, "modulate", brightness = 120),
+  image_func(stimuli, "modulate", saturation = 0),
+  image_func(stimuli, "modulate", saturation = 110)
+)
+
+labs <- c("Blur", "Charcoal", "Oilpaint", "Implode",
+          "Explode", "Negate", "Canny", "Edge", 
+          "20% Darker", "20% Brighter", "Greyscale", "Saturated")
+
+imglist %>%
+  pad(40, 0, 0, 0, fill = "dodgerblue3") %>%
+  label(labs, color = "white") %>%
+  plot(nrow = 3)
+
+```
+
+The possible {magick} functions are listed by `image_func_types(). Check the magick package help for more info on each (e.g., `?magick::image_oilpaint`.
+
+```{r}
+image_func_types()
+```
+
+
+
+```{r, echo = FALSE}
+elapsed <- (Sys.time() - starttime) %>%
+  as.numeric(units="mins") %>%
+  round(1)
+```
+
+This script took `r elapsed` minutes to render all the included images from scratch.

@@ -1,0 +1,11 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^README\.Rmd$
+^docs$
+^pkgdown$
+^stuff$
+^data-raw$
+^codecov\.yml$
+^vignettes$
+^paper$

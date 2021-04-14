@@ -1,0 +1,139 @@
+---
+title: "Image Similarity"
+output: rmarkdown::html_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%",
+  warning = FALSE,
+  message = FALSE
+)
+
+starttime <- Sys.time()
+
+library(webmorphR)
+wm_opts(plot = "ggplot")
+library(ggplot2)
+library(tidyr)
+```
+
+This article explores the use of {magick}'s image_compare function in the context of morphed images, since I couldn't find any clear guides to what it was doing. I've implemented this for webmorph stimuli with the `image_comp()` function.
+
+While this metric does capture something about similarity between morphed images, it is unlikely to be of any use as a metric for similarity between non-morphed images (e.g., it won't be able to tell you if two face images are of the same person or not).
+
+### Create images to compare
+
+```{r, fig.width = 11, fig.height = 1.5}
+stimuli <- demo_stim()
+s <- continuum(stimuli[1], stimuli[2]) %>%
+  mask("face") %>%
+  pt_delete(frl_features("imprecise")) %>%
+  crop_pad()
+
+plot(s, nrow = 1)
+```
+
+### Calculate metrics
+
+Using all the available metrics, calculate similarity of each image to the first image.
+
+```{r}
+mtypes <- magick::metric_types()
+names(mtypes) <- mtypes
+m <- lapply(mtypes, image_comp, 
+            stim = s, 
+            ref_stim = s[[1]], 
+            fuzz = 0, 
+            scale = TRUE) # results scaled from 0 to 1
+```
+
+
+```{r, echo = FALSE}
+df <- as.data.frame(m)
+df$morph_distance <- seq(0,100,10)
+
+df <- pivot_longer(df, cols = all_of(mtypes),
+                 names_to = "metric",
+                 values_to = "value")
+
+ggplot(df, aes(morph_distance, value, color = metric)) +
+  geom_point(show.legend = FALSE) +
+  facet_wrap(~metric, nrow = 3)
+```
+
+PSNR is `Inf` when the test and reference image are identical, so the highest non-infinite value scales as 1.0. 
+
+### Check fuzz settings
+
+```{r}
+m2 <- lapply(mtypes, image_comp, 
+             stim = s, 
+             ref_stim = s[[1]], 
+             fuzz = 50,
+             scale = TRUE)
+```
+
+Fuzz only does something for AE.
+
+```{r, echo = FALSE}
+df2 <- as.data.frame(m2)
+df2$morph_distance <- seq(0,100,10)
+
+df2 <- pivot_longer(df2, cols = all_of(mtypes),
+                 names_to = "metric",
+                 values_to = "value")
+
+df$fuzz = "0"
+df2$fuzz = "50"
+
+dplyr::bind_rows(df, df2) %>%
+  ggplot(aes(morph_distance, value, color = fuzz, shape = fuzz)) +
+  geom_point() +
+  facet_wrap(~metric, nrow = 3) +
+  scale_shape_manual(values = c(16, 4))
+```
+
+
+```{r}
+fuzzes <- seq(0, 20, 1)
+names(fuzzes) <- fuzzes
+m3 <- lapply(fuzzes, image_comp, 
+             stim = s, 
+             ref_stim = s[[1]], 
+             metric = "AE",
+             scale = FALSE) # don't scale for this comparison
+```
+
+```{r, echo = FALSE}
+df3 <- as.data.frame(m3)
+names(df3) <- fuzzes
+df3$morph_distance <- seq(0,100,10)
+
+df3 <- pivot_longer(df3, cols = 1:length(fuzzes),
+                 names_to = "fuzz",
+                 values_to = "value") %>%
+  readr::type_convert()
+
+ggplot(df3, aes(morph_distance, value, color = fuzz, group = fuzz)) +
+  geom_point(show.legend = T) +
+  geom_line(show.legend = F) +
+  scale_color_viridis_c()
+```
+
+
+### Conclusions
+
+* Increases with morph distance:
+    * very strong negative exponential decay at 0 fuzz; more linear with higher fuzz: AE
+    * strong negative exponential decay: PAE
+    * slight negative exponential decay: Fuzz, RMSE
+    * linear: MAE, MEPP, MSE
+    * no idea: PHASH
+* Decreases with morph distance:
+    * linear: NCC, Undefined
+    * slight exponential decay: PSNR
+    
+

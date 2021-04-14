@@ -1,0 +1,265 @@
+---
+title: "Making Stimuli"
+output: rmarkdown::html_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+starttime <- Sys.time()
+library(webmorphR)
+wm_opts(plot = "ggplot")
+wm_opts(plot.maxwidth = 850*2)
+library(dplyr)
+```
+
+
+This vignette will show some recipes for common types of stimulus creation.
+
+## Averageness
+
+Let's start with a set of images from the built-in image sets. You can add data to an image set to use in subsetting the images. For demonstration, the built-in London image set has a data table called `london_info`.
+
+```{r subset}
+stimuli <- demo_stim("london") %>%
+  add_info(london_info, .by = "face_id")
+```
+
+Select the image IDs from your subset to make a new image set. the original images are large, and we don't need the resulting stimuli to be that large, so we'll reduce image size by 50% right at the start to reduce processing time.
+
+```{r resize}
+subset <- stimuli %>%
+  subset(face_eth == "black") %>%
+  subset(face_gender == "male") %>%
+  resize(.5)
+
+plot(subset, nrow = 2)
+```
+
+Next, align the images using Procrustes normalisation to the position of the first image. They need to have templates fitted to do this. The argument `patch = TRUE` tries to match the background colour as closely as possible. 
+
+The `horiz_eyes` function just makes sure that the first image has good alignment, since his head is slightly tilted.
+
+```{r align, message=FALSE}
+aligned <- subset %>%
+  horiz_eyes(patch = TRUE) %>%
+  align(procrustes = TRUE, patch = TRUE)
+
+plot(aligned, nrow = 2)
+```
+
+You may also want to crop the images to a 3x4 aspect ratio.
+
+```{r crop}
+cropped <- crop(aligned, width = 0.6, height = 0.8)
+
+plot(cropped, nrow = 2)
+```
+
+Now we can make an average version of these faces. This uses the morphing functions available on the web app, so you need to have an internet connection. It usually takes 1-4 seconds per image to upload your images to the server for processing.
+
+```{r average}
+avg <- avg(cropped)
+
+draw_tem(avg) %>% c(avg) %>% plot()
+```
+
+You can use this average face to transform the individual faces in distinctiveness and averageness. 
+
+```{r transform}
+transf <- trans(trans_img = cropped,
+                from_img = avg,
+                to_img = cropped,
+                shape = c(avg = -0.5, dist = 0.5))
+```
+
+Use `plot()` to make subplot images that you can use in further plots. 
+
+```{r male-grid}
+avg_i <- seq(1, 16, 2)
+dist_i <- seq(2, 16, 2)
+
+plot_rows(
+  "More Average" = transf[avg_i],
+  "Original" = cropped,
+  "More Distinctive" = transf[dist_i],
+  top_label = TRUE
+)
+```
+
+Now you can set names and save your individual stimuli in a directory to use in studies.
+
+```{r save}
+cropped %>%
+  setnames(pattern = "_03", replacement = "", prefix = "orig_") %>%
+  write_stim("stimuli", "jpg")
+
+transf %>%
+  setnames(pattern = "_03", replacement = "") %>%
+  write_stim("stimuli", "jpg")
+```
+
+Now you can pipe all of the commands together and apply them to a new set of images, such as all the black women in the set.
+
+```{r}
+
+# subset, resize, align, and crop
+cropped <- stimuli %>%
+  subset(face_gender == "female") %>%
+  subset(face_eth == "black") %>%
+  resize(.5) %>%
+  horiz_eyes(patch = TRUE) %>%
+  align(procrustes = TRUE, patch = TRUE) %>%
+  crop(width = 0.6, height = 0.8)
+
+# average
+avg <- avg(cropped)
+
+# transform
+transf <- trans(trans_img = cropped,
+                from_img = avg,
+                to_img = cropped,
+                shape = c(avg = -0.5, dist = 0.5))
+
+# save
+cropped %>%
+  setnames(pattern = "_03", replacement = "", prefix = "orig_") %>%
+  write_stim("stimuli", "jpg")
+
+transf %>%
+  setnames(pattern = "_03", replacement = "") %>%
+  write_stim("stimuli", "jpg")
+
+```
+
+```{r female-grid}
+avg_i <- seq(1, 10, 2)
+dist_i <- seq(2, 10, 2)
+plot_rows(
+  "More Average" = transf[avg_i],
+  "Original" = cropped,
+  "More Distinctive" = transf[dist_i],
+  top_label = TRUE
+)
+```
+
+## Sexual Dimorphism
+
+To manipulate sexual dimorphism, you need male and female average faces like the ones created above. We'll load them from the saved files.
+
+```{r}
+avgs <- read_stim("stimuli", "(f|m)_avg")
+orig <- read_stim("stimuli", "orig_")
+```
+
+You can then transform them by -50% to feminise and +50% to masculinise. Remember to give your shape vector names to set the output names automatically.
+
+```{r}
+sexdim <- trans(trans_img = orig[1:6],
+                from_img = avgs$f_avg,
+                to_img = avgs$m_avg,
+                shape = c(fem = -0.5, masc = 0.5))
+```
+
+```{r sexdim}
+plot(sexdim, nrow = 2, byrow = FALSE)
+```
+
+
+## Animate
+
+Make a continuum that morphs from the female to the male average in 5% steps.
+
+```{r}
+continuum <- continuum(avgs$f_avg, avgs$m_avg, 0, 1, .05)
+```
+
+```{r}
+plot(continuum, nrow = 3)
+```
+
+You can turn your images into an animated gif. Resize the images to the size you want first.
+
+```{r animated-gif, out.width = "25%"}
+continuum %>%
+  resize(width = 180) %>%
+  animate(fps = 20, rev = TRUE)
+```
+
+## Non-Face Stimuli
+
+{webmorphR} can also be used to process images without templates. For example, the following code takes a group of images and crops them to a standard size.
+
+```{r, message = FALSE}
+# get info on the images to put in order by type and colour
+info <- system.file("extdata/rainbow/_info.csv", package = "webmorphR") %>%
+  readr::read_csv() %>%
+  dplyr::mutate(colour = factor(colour, c("red", "orange", "yellow", "green", "blue", "purple"))) %>%
+  dplyr::arrange(type, colour)
+
+# load images and crop to smallest size
+stimuli <- demo_stim("rainbow")
+width <- width(stimuli) %>% min()
+height <- height(stimuli) %>% min()
+stim <- crop(stimuli, width, height) %>%
+  `[`(info$photo_name) # reorder by type and colour
+
+plot(stim, ncol = 6)
+```
+
+
+## Word Stimuli
+
+Make word stimuli by starting with blank images. You can specify the size and colour.
+
+```{r}
+new_stimuli <- blank(n = 6, width = 100, height = 100, 
+                     color = c("red", "orange", "yellow", "green", "blue", "purple"))
+```
+
+
+```{r, echo = FALSE}
+plot(new_stimuli, nrow = 1)
+```
+
+Then you can add words to each stimulus with the `label()` function.
+
+```{r}
+colours <- c(red = "red", 
+             orange = "darkorange", 
+             green = "darkgreen", 
+             blue = "blue", 
+             purple = "purple")
+n <- length(colours)
+labels <- rep(names(colours), each = n)
+
+stroop <- blank(n*n, 400, 100) %>%
+  label(labels, size = 50, color = colours, 
+        gravity = "center")
+```
+
+```{r, echo = FALSE}
+plot(stroop, ncol = n, fill = "grey")
+```
+
+
+
+
+```{r, echo = FALSE}
+elapsed <- (Sys.time() - starttime) %>%
+  as.numeric(units="mins") %>%
+  round(1)
+```
+
+This script took `r elapsed` minutes to render all the included images from scratch.
+
+
+```{r, echo = FALSE, eval = FALSE}
+# cleanup
+unlink("stimuli", recursive = TRUE)
+```
+
+
