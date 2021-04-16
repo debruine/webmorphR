@@ -72,7 +72,7 @@ reference:
   - '`animate`'
   - '`average_tem`'
   - '`crop`'
-  - '`crop_pad`'
+  - '`crop_tem`'
   - '`greyscale`'
   - '`horiz_eyes`'
   - '`image_func`'

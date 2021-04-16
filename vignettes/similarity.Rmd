@@ -16,6 +16,7 @@ starttime <- Sys.time()
 
 library(webmorphR)
 wm_opts(plot = "ggplot")
+wm_opts(plot.maxwidth = 850)
 library(ggplot2)
 library(tidyr)
 ```

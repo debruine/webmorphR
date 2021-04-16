@@ -255,7 +255,7 @@ masked <- mask(orig, "face", fill = "dodgerblue", tem_id = "fpp106")
 
 ```{r, fig.cap="Examples of template-aware image manipulations: (A) Eyes aligned to specific coordinates, (B) rotated so pupils are horizontal, (C) cropped to template dimensions plus 30 pixels of padding, (D) masked with an oval, (E) masked around specified template points."}
 
-c(aligned, hzeyes, cropadded, oval, masked) %>%
+c(aligned, hzeyes, croptem, oval, masked) %>%
   pad(0, 0, 0, 60) %>%
   draw_tem() %>%
   label(LETTERS, "northwest", "+0+0", size = 60) %>% 
@@ -337,10 +337,11 @@ fpp_tem <- f %>%
   auto_delin()
 ```
 
-```{r auto-delin, fig.cap="The top row shows manual delineations using the FRL template. The bottom row shows automatic delineations using the Face++ temple."}
+```{r auto-delin, fig.cap="The top row shows manual delineations using the FRL template. The bottom row shows automatic delineations using the Face++ template."}
 plot_rows(
-  draw_tem(f), 
-  draw_tem(fpp_tem)
+  "FRL template" = draw_tem(f), 
+  "Face++ template" = draw_tem(fpp_tem),
+  top_label = TRUE
 )
 ```
 
@@ -400,7 +401,7 @@ The "standard oval mask" has enjoyed widespread popularity because it is straigh
 
 ```{r, echo = TRUE}
 ovals <- f %>%
-  pt_subset(features("face")) %>%
+  pt_subset(features("gmm")) %>%
   mask_oval(fill = "dodgerblue") %>%
   align(procrustes = TRUE) %>%
   crop_tem()
@@ -552,17 +553,17 @@ steps2 %>% resize(200) %>% animate(fps = 10, rev = TRUE)
 
 ```{r, echo = TRUE}
 virtual_sis <- trans(
-  trans_img = f_avg,
-  from_img = m_avg,
-  to_img = m,
-  shape = 0.5) %>%
+  trans_img = f_avg,   # transform an average female face
+  shape = 0.5,         # by 50% of the shape differences
+  from_img = m_avg,    # between an average male face
+  to_img = m) %>%      # and individual male faces
   mask(c("face", "neck","ears")) 
 
 virtual_bro <- trans(
-  trans_img = m_avg,
-  from_img = m_avg,
-  to_img = m,
-  shape = 0.5) %>%
+  trans_img = m_avg,   # transform an average male face
+  shape = 0.5,         # by 50% of the shape differences
+  from_img = m_avg,    # between an average male face
+  to_img = m) %>%      # and individual male faces
   mask(c("face", "neck","ears"))
 ```
 

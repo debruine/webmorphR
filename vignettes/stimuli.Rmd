@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 starttime <- Sys.time()
 library(webmorphR)
 wm_opts(plot = "ggplot")
-wm_opts(plot.maxwidth = 850*2)
+wm_opts(plot.maxwidth = 850)
 library(dplyr)
 ```
 
@@ -28,14 +28,16 @@ stimuli <- demo_stim("london") %>%
   add_info(london_info, .by = "face_id")
 ```
 
-Select the image IDs from your subset to make a new image set. the original images are large, and we don't need the resulting stimuli to be that large, so we'll reduce image size by 50% right at the start to reduce processing time.
+Select images from your subset to make a new image set. the original images are large, and we don't need the resulting stimuli to be that large, so we'll reduce image size by 50% right at the start to reduce processing time.
 
-```{r resize}
+```{r}
 subset <- stimuli %>%
   subset(face_eth == "black") %>%
   subset(face_gender == "male") %>%
   resize(.5)
+```
 
+```{r resize, echo = FALSE}
 plot(subset, nrow = 2)
 ```
 
@@ -43,27 +45,33 @@ Next, align the images using Procrustes normalisation to the position of the fir
 
 The `horiz_eyes` function just makes sure that the first image has good alignment, since his head is slightly tilted.
 
-```{r align, message=FALSE}
+```{r, message=FALSE}
 aligned <- subset %>%
   horiz_eyes(patch = TRUE) %>%
   align(procrustes = TRUE, patch = TRUE)
+```
 
+```{r align, echo=FALSE}
 plot(aligned, nrow = 2)
 ```
 
 You may also want to crop the images to a 3x4 aspect ratio.
 
-```{r crop}
+```{r}
 cropped <- crop(aligned, width = 0.6, height = 0.8)
+```
 
+```{r crop, echo = FALSE}
 plot(cropped, nrow = 2)
 ```
 
 Now we can make an average version of these faces. This uses the morphing functions available on the web app, so you need to have an internet connection. It usually takes 1-4 seconds per image to upload your images to the server for processing.
 
-```{r average}
+```{r}
 avg <- avg(cropped)
+```
 
+```{r average, echo = FALSE}
 draw_tem(avg) %>% c(avg) %>% plot()
 ```
 
@@ -76,9 +84,8 @@ transf <- trans(trans_img = cropped,
                 shape = c(avg = -0.5, dist = 0.5))
 ```
 
-Use `plot()` to make subplot images that you can use in further plots. 
 
-```{r male-grid}
+```{r male-grid, echo = FALSE}
 avg_i <- seq(1, 16, 2)
 dist_i <- seq(2, 16, 2)
 
@@ -93,6 +100,8 @@ plot_rows(
 Now you can set names and save your individual stimuli in a directory to use in studies.
 
 ```{r save}
+avg %>% setnames("m_avg") %>% write_stim("stimuli", "jpg")
+                                         
 cropped %>%
   setnames(pattern = "_03", replacement = "", prefix = "orig_") %>%
   write_stim("stimuli", "jpg")
@@ -125,6 +134,8 @@ transf <- trans(trans_img = cropped,
                 shape = c(avg = -0.5, dist = 0.5))
 
 # save
+avg %>% setnames("f_avg") %>% write_stim("stimuli", "jpg")
+
 cropped %>%
   setnames(pattern = "_03", replacement = "", prefix = "orig_") %>%
   write_stim("stimuli", "jpg")
@@ -164,7 +175,7 @@ sexdim <- trans(trans_img = orig[1:6],
                 shape = c(fem = -0.5, masc = 0.5))
 ```
 
-```{r sexdim}
+```{r sexdim, echo = FALSE}
 plot(sexdim, nrow = 2, byrow = FALSE)
 ```
 
@@ -183,7 +194,7 @@ plot(continuum, nrow = 3)
 
 You can turn your images into an animated gif. Resize the images to the size you want first.
 
-```{r animated-gif, out.width = "25%"}
+```{r animated-gif, out.width = "180px"}
 continuum %>%
   resize(width = 180) %>%
   animate(fps = 20, rev = TRUE)
@@ -191,17 +202,19 @@ continuum %>%
 
 ## Non-Face Stimuli
 
-{webmorphR} can also be used to process images without templates. For example, the following code takes a group of images and crops them to a standard size.
+You can also process images without templates. For example, the following code takes a group of images and crops them to a standard size.
 
 ```{r, message = FALSE}
+# load rainbow images
+stimuli <- demo_stim("rainbow")
+
 # get info on the images to put in order by type and colour
 info <- system.file("extdata/rainbow/_info.csv", package = "webmorphR") %>%
   readr::read_csv() %>%
   dplyr::mutate(colour = factor(colour, c("red", "orange", "yellow", "green", "blue", "purple"))) %>%
   dplyr::arrange(type, colour)
 
-# load images and crop to smallest size
-stimuli <- demo_stim("rainbow")
+# crop to smallest size
 width <- width(stimuli) %>% min()
 height <- height(stimuli) %>% min()
 stim <- crop(stimuli, width, height) %>%
