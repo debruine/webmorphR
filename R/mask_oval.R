@@ -17,8 +17,8 @@
 #'
 #' # remove external points
 #' omask2 <- demo_stim() %>%
-#'   pt_delete(frl_features("halo", "neck", "ears")) %>%
-#'   crop_pad(25) %>%
+#'   pt_subset(features("face")) %>%
+#'   crop_tem(25) %>%
 #'   mask_oval()
 #'
 #' # set bounds manually

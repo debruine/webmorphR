@@ -5,7 +5,7 @@
 \title{Demo Stimuli}
 \usage{
 demo_stim(
-  dir = c("test", "composite", "london", "lisa", "zoom", "rainbow"),
+  dir = c("test", "composite", "london", "smiling", "lisa", "zoom", "rainbow"),
   pattern = NULL,
   ...
 )

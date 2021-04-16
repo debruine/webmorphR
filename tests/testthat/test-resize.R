@@ -1,5 +1,4 @@
-path <- system.file("extdata/composite", package = "webmorphR")
-stimuli <- read_stim(path, "f_multi")
+stimuli <- demo_stim("test", "f_multi")
 
 test_that("error", {
   expect_error(resize(),
@@ -60,7 +59,10 @@ test_that("basic", {
                2*r[[1]]$points[2, 1])
 
   # pixels, no height
-  r <- resize(stimuli, 1350/2)
+  w <- stimuli[[1]]$width
+  h <- stimuli[[1]]$height
+  
+  r <- resize(stimuli, w/2)
   imginfo <- magick::image_info(r[[1]]$img)
   expect_equal(stimuli[[1]]$width, r[[1]]$width*2)
   expect_equal(stimuli[[1]]$height, r[[1]]$height*2)
@@ -72,7 +74,7 @@ test_that("basic", {
                2*r[[1]]$points[2, 1])
 
   # pixels no width
-  r <- resize(stimuli, height = 1350/2)
+  r <- resize(stimuli, height = h/2)
   imginfo <- magick::image_info(r[[1]]$img)
   expect_equal(stimuli[[1]]$width, r[[1]]$width*2)
   expect_equal(stimuli[[1]]$height, r[[1]]$height*2)
@@ -84,10 +86,10 @@ test_that("basic", {
                2*r[[1]]$points[2, 1])
 
   # pixels different height/width
-  r <- resize(stimuli, width = 1350/4, height = 1350/2)
+  r <- resize(stimuli, width = w/4, height = h/2)
   imginfo <- magick::image_info(r[[1]]$img)
-  expect_equal(round(1350/4), r[[1]]$width)
-  expect_equal(1350/2, r[[1]]$height)
+  expect_equal(round(w/4), r[[1]]$width)
+  expect_equal(h/2, r[[1]]$height)
   expect_equal(imginfo$width, r[[1]]$width)
   expect_equal(imginfo$height, r[[1]]$height)
   expect_equal(stimuli[[1]]$points[1, 1],
@@ -97,8 +99,7 @@ test_that("basic", {
 })
 
 test_that("no tem", {
-  tem <- demo_stim("test")
-  notem <- remove_tem(tem)
+  notem <- demo_stim() %>% remove_tem()
   x <- resize(notem, .5)
   expect_equal(width(x), width(notem)/2)
   expect_equal(height(x), height(notem)/2)

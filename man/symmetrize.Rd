@@ -16,7 +16,7 @@ symmetrize(stimuli, shape = 1, color = 1, tem_id = "FRL", ...)
 \item{...}{Additional arguments to pass to \code{\link{trans}}}
 }
 \value{
-stimlist with symmatrised images and templates
+stimlist with symmetrised images and templates
 }
 \description{
 Symmetrise Images

@@ -98,7 +98,7 @@ stimuli %>%
   resize(1000) %>%
   draw_tem(line.color = "grey", line.size = 2, line.alpha = 0.2, 
            pt.color = "red", pt.size = 4, bg = "grey") %>%
-  crop_pad(50) %>%
+  crop_tem(50) %>%
   plot()
 ```
 
@@ -106,9 +106,8 @@ stimuli %>%
 ## Delete some points
 
 ```{r point-remove}
-remove_points <- frl_features("imprecise")
 stimuli %>%
-  pt_delete(remove_points) %>%
+  pt_subset(features("gmm")) %>%
   draw_tem() %>%
   plot()
 ```

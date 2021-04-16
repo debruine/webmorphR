@@ -12,17 +12,10 @@
 #' @export
 #'
 #' @examples
-#'
 #' stimuli <- demo_stim() %>%
 #'   add_info(project = "XXX", gender = c("F", "M"))
 #'
 #' stimuli$f_multi$info %>% str()
-#'
-#' info <- data("london_info", package = "webmorphR")
-#' stimuli <- demo_stim("london") %>%
-#'   add_info(london_info)
-#'
-#' stimuli$`018_03`$info %>% str()
 #'
 add_info <- function(stimuli, ..., .by = NULL) {
   stimuli <- validate_stimlist(stimuli)
@@ -33,23 +26,26 @@ add_info <- function(stimuli, ..., .by = NULL) {
   if (length(dots) == 1 && is.data.frame(dots[[1]])) {
     # data is in a table
     info <- dots[[1]]
-    if (is.null(.by)) {
-      .by <- ".by"
-      info$.by <- names(stimuli)
-    }
+    
   } else {
     # dots are vectors
-    if (is.null(.by)) { # add before in case dots are single values
-      .by <- ".by"
-      dots$.by <- names(stimuli)
-    }
+    dots$..n.. <- seq_along(stimuli) # in case dots are single values
     info <- as.data.frame(dots)
+    info$..n.. <- NULL
   }
-
-  for (nm in names(stimuli)) {
-    row <- info[which(info[[.by]] == nm), ]
-    row[[.by]] <- NULL
-    stimuli[[nm]]$info <- lapply(row, `[`)
+  
+  if (is.null(.by)) {
+    # match by index
+    for (i in seq_along(stimuli)) {
+      stimuli[[i]]$info <- lapply(info[i, , drop = FALSE], `[`)
+    }
+  } else {
+    # match by name
+    for (nm in names(stimuli)) {
+      row <- info[which(info[[.by]] == nm), , drop = FALSE]
+      row[[.by]] <- NULL
+      stimuli[[nm]]$info <- lapply(row, `[`)
+    }
   }
 
   stimuli

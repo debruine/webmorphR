@@ -1,28 +1,25 @@
 # concatenate c() ----
 test_that("c", {
-  path <- system.file("extdata/composite/", package = "webmorphR")
+  path <- system.file("extdata/test/", package = "webmorphR")
   a <- read_stim(path, "multi")
-  b <- read_stim(path, "african")
+  b <- read_stim(path, "f_")
 
   # temlists
   x <- c(a, b)
-  expect_equal(length(x), 4)
-  expect_equal(names(x), c("f_multi", "m_multi", "f_african", "m_african"))
+  expect_equal(names(x), c("f_multi", "m_multi", "f_multi"))
 
   # individual tems
-  x <- c(a[[1]], b[[1]], a[[2]])
-  expect_equal(length(x), 3)
-  expect_equal(names(x), c("f_multi", "f_african", "m_multi"))
+  x <- c(a[[2]], b[[1]])
+  expect_equal(names(x), c("m_multi", "f_multi"))
 
   # mixed tems and temlists
-  x <- c(a, b[[1]])
-  expect_equal(length(x), 3)
-  expect_equal(names(x), c("f_multi", "m_multi", "f_african"))
+  x <- c(a[[2]], b)
+  expect_equal(names(x), c("m_multi", "f_multi"))
 })
 
 # print ----
 test_that("print", {
-  skip("needs visual inspection")
+  skip("needs visual check")
   a <- demo_stim()
   print(a)
   a
@@ -90,20 +87,21 @@ test_that("xget", {
 
 # subset ----
 test_that("subset", {
-  stimuli <- demo_stim("composite") %>%
-    add_info(x = 1:10)
+  stimuli <- demo_stim() %>%
+    c(., .) %>%
+    add_info(x = 1:4)
 
   f <- subset(stimuli, "f_")
   m <- subset(stimuli, "^m")
   x2 <- subset(stimuli, x < 3)
-  x3 <- subset(stimuli, x %in% c(1,3,6))
+  x3 <- subset(stimuli, x %in% c(1,3))
   odd <- subset(stimuli, x%%2 == 1)
 
-  expect_equal(names(f), names(stimuli)[1:5])
-  expect_equal(names(m), names(stimuli)[6:10])
+  expect_equal(names(f), names(stimuli)[c(1,3)])
+  expect_equal(names(m), names(stimuli)[c(2, 4)])
   expect_equal(names(x2), names(stimuli)[1:2])
-  expect_equal(names(x3), names(stimuli)[c(1,3,6)])
-  expect_equal(names(odd), names(stimuli)[c(1,3,5,7,9)])
+  expect_equal(names(x3), names(stimuli)[c(1,3)])
+  expect_equal(names(odd), names(stimuli)[c(1,3)])
 })
 
 

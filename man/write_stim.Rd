@@ -4,7 +4,7 @@
 \alias{write_stim}
 \title{Write tems and images to files}
 \usage{
-write_stim(stimuli, dir = ".", format = "png")
+write_stim(stimuli, dir = ".", format = "png", ...)
 }
 \arguments{
 \item{stimuli}{list of class stimlist}
@@ -12,6 +12,8 @@ write_stim(stimuli, dir = ".", format = "png")
 \item{dir}{Directory to save to}
 
 \item{format}{output format such as "png", "jpeg", "gif"}
+
+\item{...}{other arguments to pass to magick::image_write}
 }
 \value{
 list of saved paths

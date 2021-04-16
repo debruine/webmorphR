@@ -106,37 +106,37 @@ hist(off$off, breaks = seq(0,max(off$off)+1, .25))
 ### Accurate <4 pixels
 
 ```{r}
-rm_pt <- off %>%
-  filter(off >=4) %>%
+pt <- off %>%
+  filter(off <4) %>%
   pull(n)
 
 avg <- demo_stim("composite", "f_multi")
 
-avg %>% pt_delete(rm_pt) %>% draw_tem() %>% plot()
+avg %>% pt_subset(pt) %>% draw_tem() %>% plot()
 ```
 
 
 ### Accurate 4-7 pixels
 
 ```{r}
-rm_pt <- off %>%
-  filter(off < 4 | off > 7) %>%
+pt <- off %>%
+  filter(off > 4 | off < 7) %>%
   pull(n)
 
 avg <- demo_stim("composite", "f_multi")
 
-avg %>% pt_delete(rm_pt) %>% draw_tem() %>% plot()
+avg %>% pt_subset(pt) %>% draw_tem() %>% plot()
 ```
 
 
 ### Accurate > 7 pixels
 
 ```{r}
-rm_pt <- off %>%
-  filter(off <= 7) %>%
+pt <- off %>%
+  filter(off > 7) %>%
   pull(n)
 
-avg %>% pt_delete(rm_pt) %>% draw_tem() %>% plot()
+avg %>% pt_subset(pt) %>% draw_tem() %>% plot()
 ```
 
 

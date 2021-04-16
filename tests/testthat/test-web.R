@@ -1,15 +1,15 @@
 wm_opts(server = "https://webmorph.test")
-london <- demo_stim("london") %>% resize(0.25)
 
 # avg ----
 test_that("avg", {
   skip_on_cran()
 
   # can't average more than 100 images
-  expect_error(avg(london))
+  stim120 <- rep(demo_stim(), 60)
+  expect_error(avg(stim120))
 
   # normalisation
-  stimuli <- demo_stim("lisa")
+  stimuli <- demo_stim()
   avg <- avg(stimuli)
   twopoint <- avg(stimuli, norm = "twopoint")
   rigid <- avg(stimuli, norm = "rigid")
@@ -31,7 +31,7 @@ test_that("avg", {
 
   ## long run time ----
   skip("long run time")
-  expect_silent(avg100 <- avg(london[1:100]))
+  expect_silent(avg100 <- avg(stim120[1:100]))
 })
 
 # trans ----
@@ -59,7 +59,7 @@ test_that("trans", {
   plot(cont)
 
   # texture
-  s <- demo_stim("composite", "multi")
+  s <- demo_stim()
   tex <- trans(s[1], s[1], s[2], .5, .5, .5)
   notex <- trans(s[1], s[1], s[2], .5, .5, 0)
 })

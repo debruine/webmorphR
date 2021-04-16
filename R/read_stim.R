@@ -9,8 +9,8 @@
 #' @export
 #'
 #' @examples
-#' path <- system.file("extdata/composite", package = "webmorphR")
-#' stimuli <- read_stim(path, "multi")
+#' path <- system.file("extdata/test", package = "webmorphR")
+#' stimuli <- read_stim(path)
 #'
 read_stim <- function (path, pattern = NULL, ...) {
   imgext <- "\\.(jpg|jpeg|gif|png|bmp)$"

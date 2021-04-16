@@ -10,11 +10,12 @@
 #' @export
 #'
 #' @examples
-#' o <- demo_stim("london", "005_03")
+#' o <- demo_stim("test", 1)
 #' m <- mirror(o, "frl")
 #'
 #' c(o, m) %>%
-#'   draw_tem() %>%
+#'   pt_subset(features("face")) %>%
+#'   draw_tem(pt.shape = "index", pt.color = "white", pt.size = 10) %>%
 #'   label(c("original", "mirrored")) %>%
 #'   plot()
 #'

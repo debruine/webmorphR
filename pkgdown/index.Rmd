@@ -120,7 +120,7 @@ Now you can procrustes align the images and crop them all to the same dimensions
 
 ```{r aligned}
 aligned <- align(stimuli, procrustes = TRUE, patch = TRUE) %>%
-  crop_pad(100, 10, 10, 10)
+  crop_tem(100, 10, 10, 10)
 
 plot(aligned)
 ```

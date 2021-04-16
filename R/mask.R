@@ -32,7 +32,7 @@
 #'   mask("mouth", "blue", TRUE)
 #'
 #' masked_fpp <- demo_stim("lisa")  %>%
-#'   crop_pad() %>%
+#'   crop_tem() %>%
 #'   mask(mask = c("face"), tem_id = "fpp106")
 #'
 mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),

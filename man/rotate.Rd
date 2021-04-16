@@ -35,7 +35,6 @@ rotated <- demo_stim() \%>\%
   draw_tem()
 
 rotate_patch <- demo_stim() \%>\%
-  rotate(45, patch = TRUE) \%>\%
-  plot()
+  rotate(45, patch = TRUE, keep_size = FALSE)
 
 }

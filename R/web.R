@@ -94,7 +94,7 @@ continuum <- function(from_img, to_img, from = 0, to = 1, by = 0.1, ...) {
 #' \dontrun{
 #'   stimuli <- demo_stim("zoom") %>%
 #'     align(procrustes = TRUE) %>%
-#'     crop_pad(250, 50, 50, 50) %>%
+#'     crop_tem(250, 50, 50, 50) %>%
 #'     resize(300)
 #'   loop <- loop(stimuli, 5)
 #'   animate(loop, 10)
@@ -362,7 +362,7 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
 #' @param tem_id template ID to be passed to \code{\link{tem_def}} (usually "frl" or "fpp106")
 #' @param ... Additional arguments to pass to \code{\link{trans}}
 #'
-#' @return stimlist with symmatrised images and templates
+#' @return stimlist with symmetrised images and templates
 #' @export
 #'
 #' @examples

@@ -177,9 +177,9 @@ pad <- function(stimuli, top = 10, right = top, bottom = top, left = right, ...)
 #' @export
 #'
 #' @examples
-#' cpad <- demo_stim() %>% crop_pad(20) %>% draw_tem()
-#' plot(cpad)
-crop_pad <- function(stimuli, top = 10, right = top, bottom = top, left = right, each = FALSE, ...) {
+#' ctem <- demo_stim() %>% crop_tem(20) %>% draw_tem()
+#' plot(ctem)
+crop_tem <- function(stimuli, top = 10, right = top, bottom = top, left = right, each = FALSE, ...) {
   stimuli <- validate_stimlist(stimuli, TRUE)
 
   b <- bounds(stimuli, each = each)

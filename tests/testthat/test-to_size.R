@@ -1,16 +1,18 @@
+stimuli <- demo_stim()
+
 test_that("basic", {
-  stimuli <- c(
-    demo_stim("test")[[1]],
-    demo_stim("lisa")[[1]],
-    demo_stim("composite")[[1]],
-    demo_stim("zoom")[[1]]
+  s <- c(
+    stimuli[1],
+    stimuli[1] %>% resize(.5),
+    stimuli[1] %>% crop(0.8),
+    stimuli[1] %>% crop(0.8) %>% resize(0.75)
   )
 
-  new1 <- to_size(stimuli, 300, 400, fill = "red")
+  new1 <- to_size(s, 300, 400, fill = "red")
   expect_equal(width(new1) %>% unname(), rep(300, 4))
   expect_equal(height(new1) %>% unname(), rep(400, 4))
 
-  new2 <- to_size(stimuli, 300, 400, fill = "red", keep_rels = TRUE)
+  new2 <- to_size(s, 300, 400, fill = "red", keep_rels = TRUE)
   expect_equal(width(new1) %>% unname(), rep(300, 4))
   expect_equal(height(new1) %>% unname(), rep(400, 4))
 
@@ -20,7 +22,6 @@ test_that("basic", {
 })
 
 test_that("width and height", {
-  stimuli <- demo_stim("test")
   expect_error(to_size(stimuli, 10))
   expect_error(to_size(stimuli, 10, 0))
   expect_error(to_size(stimuli, "A", 10))
@@ -43,8 +44,7 @@ test_that("width and height", {
 })
 
 test_that("no tem", {
-  tem <- demo_stim("test")
-  notem <- remove_tem(tem)
+  notem <- remove_tem(stimuli)
   x <- to_size(notem, 100, 200)
   expect_equal(width(x) %>% unname(), c(100, 100))
   expect_equal(height(x) %>% unname(), c(200, 200))

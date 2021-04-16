@@ -1,7 +1,6 @@
 test_that("works", {
-  path <- system.file("extdata/composite", package = "webmorphR")
-  stimuli <- read_stim(path, "f_multi")
-  dir <- paste(tempdir(), "ftest", sep = "/")
+  stimuli <- demo_stim()[1]
+  dir <- file.path(tempdir(), "ftest")
 
   # default format ----
   write_stim(stimuli, dir)

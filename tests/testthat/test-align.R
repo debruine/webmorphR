@@ -1,5 +1,4 @@
-path <- system.file("extdata/test", package = "webmorphR")
-stimuli <- read_stim(path)
+stimuli <- demo_stim()
 
 test_that("works", {
   f2 <- align(stimuli, x1 = 100, y1 = 150, x2 = 200, y2 = 250,
@@ -17,32 +16,16 @@ test_that("works", {
 
 
 test_that("procrustes", {
-  grps <- c("composite", "test", "london")
-  grps <- "test"
-  lapply(grps , function(grp) {
-    data <- demo_stim(grp) %>% tems_to_array()
+  data <- demo_stim() %>% tems_to_array()
 
-    expect_silent(g <- procrustes_align(data))
-    expect_silent(p0 <- procrustes_align(data, 0))
-    # expect_silent(p1 <- procrustes_align(data, 90))
-    # expect_silent(p2 <- procrustes_align(data, 180))
-    # expect_silent(p3 <- procrustes_align(data, 270))
+  expect_silent(g <- procrustes_align(data))
+  expect_silent(p0 <- procrustes_align(data, 0))
 
-    # plot(g[,1,1], g[,2,1])
-    # plot(p0[,1,1], p0[,2,1])
-    # plot(p1[,1,1], p1[,2,1])
-    # plot(p2[,1,1], p2[,2,1])
-    # plot(p3[,1,1], p3[,2,1])
-
-    expect_equal(g, p0)
-    # expect_equivalent(p1, geomorph::rotate.coords(p0, "rotateC"))
-    # expect_equivalent(p2, geomorph::rotate.coords(p1, "rotateC"))
-    # expect_equivalent(p3, geomorph::rotate.coords(p2, "rotateC"))
-  })
+  expect_equal(g, p0)
 })
 
 test_that("procrustes align", {
-  stimuli <- demo_stim("lisa")
+  stimuli <- demo_stim() %>% crop(0.9, x_off = c(0.1, 0))
   pr <- align(stimuli, procrustes = TRUE)
 
   # eye points all around the same place (low SD)

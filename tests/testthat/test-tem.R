@@ -1,6 +1,7 @@
 def_parts <- c("name", "notes", "delin_pts", "align_pts", "width", "height", "points", "lines", "closed", "linecolor", "masks")
 
-test_that("default", {
+# tem_def ----
+test_that("tem_def", {
   frl <- tem_def()
   expect_equal(names(frl), def_parts)
   expect_equal(frl$delin_pts, c(0, 1, 96))
@@ -34,3 +35,39 @@ test_that("online", {
   expect_equal(names(frl_online), def_parts[1:10])
   expect_equal(frl_online$delin_pts, c(0, 1, 96))
 })
+
+
+
+# pt_subset ----
+test_that("pt_subset", {
+  stimuli <- demo_stim()
+  
+  # error
+  expect_error(pt_subset(stimuli, 0:200))
+  
+  # keep
+  nt <- pt_subset(stimuli, 0:20)
+  expect_equal(stimuli[[1]]$points[, 1:21], nt[[1]]$points)
+  
+  # delete
+  nt <- pt_subset(stimuli, 0:9, 20:188, keep = FALSE)
+  expect_equal(stimuli[[1]]$points[, 11:20], nt[[1]]$points)
+})
+
+# features ----
+test_that("features", {
+  stimuli <- demo_stim()[1]
+  features <- c("gmm", "oval", "face", "mouth", "nose", "eyes", "brows",
+                "left_eye",  "right_eye", "left_brow",  "right_brow",
+                "ears", "undereyes", "teeth", "smile_lines", 
+                "cheekbones", "philtrum", "chin", "neck", "halo")
+  names(features) <- features
+  
+  new <- lapply(features, function(ft) {
+    stimuli %>% pt_subset(features(ft)) %>% draw_tem()
+  }) %>% do.call(c, .)
+  
+  skip("needs visual check")
+  new %>% setnames(features) %>% label() %>% plot()
+})
+

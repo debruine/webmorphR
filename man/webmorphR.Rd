@@ -5,6 +5,6 @@
 \alias{webmorphR}
 \title{webmorphR: Reproducible Face Stimuli}
 \description{
-Create reproducible face stimuli using images with webmorph.org templates. \url{https://facelab.github.io/webmorphR/}
+Create reproducible face stimuli using images with webmorph.org templates. \url{https://debruine.github.io/webmorphR/}
 }
 \keyword{package}

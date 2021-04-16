@@ -73,7 +73,7 @@ print.stimlist <- function(x, ...) {
 #' @export
 #'
 #' @examples
-#' f <- demo_stim("composite") %>% subset("f_")
+#' f <- demo_stim() %>% subset("f_")
 subset.stimlist <- function (x, subset, ...) {
   e <- substitute(subset)
   info <- get_info(x)

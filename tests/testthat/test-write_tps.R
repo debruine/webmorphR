@@ -1,4 +1,4 @@
-stimuli <- demo_stim("composite")
+stimuli <- demo_stim()
 
 test_that("works", {
   tpath <- tempfile(fileext = ".tps")
@@ -10,6 +10,6 @@ test_that("works", {
   w_array <- tems_to_array(stimuli)
 
   expect_equivalent(dim(g_array), dim(w_array))
-  expect_equal(dim(w_array), c(189, 2, 10))
+  expect_equal(dim(w_array), c(189, 2, 2))
 
 })

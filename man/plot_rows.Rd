@@ -18,7 +18,8 @@ stimlist with plot
 Plot in rows
 }
 \examples{
-s <- demo_stim("composite") \%>\% resize(0.25)
-plot_rows(female = s[1:5], male = s[6:10])
-plot_rows(female = s[1:5], male = s[6:10], color = "blue", top_label = TRUE)
+up <- demo_stim()
+inv <- rotate(up, 180)
+plot_rows(upright = up, inverted = inv)
+plot_rows(upright = up, inverted = inv, color = "dodgerblue", top_label = TRUE)
 }

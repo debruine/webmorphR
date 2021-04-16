@@ -79,12 +79,12 @@ demo_stim("rainbow")[1:8] %>%
 
 ## Crop to Template
 
-You can use the `crop_pad()` function to get the minimum and maximum x- and y-values from a list of templates, then use that to set the cropping. In the example below, the images are cropped so there is 100 pixels of padding around the boundaries, calculated across all images. 
+You can use the `crop_tem()` function to get the minimum and maximum x- and y-values from a list of templates, then use that to set the cropping. In the example below, the images are cropped so there is 100 pixels of padding around the boundaries, calculated across all images. 
 
 ```{r bounds}
 lisa <- demo_stim("lisa")
 
-crop_pad(lisa, 100) %>%
+crop_tem(lisa, 100) %>%
   draw_tem() %>%
   plot()
 ```
@@ -93,7 +93,7 @@ Set `each` to TRUE to calculate the boundaries separately for each template in t
 
 ```{r bounds-each}
 lisa %>%
-  crop_pad(20, each = TRUE) %>%
+  crop_tem(20, each = TRUE) %>%
   plot()
 ```
 

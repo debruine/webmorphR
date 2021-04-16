@@ -23,7 +23,7 @@ Loop
 \dontrun{
   stimuli <- demo_stim("zoom") \%>\%
     align(procrustes = TRUE) \%>\%
-    crop_pad(250, 50, 50, 50) \%>\%
+    crop_tem(250, 50, 50, 50) \%>\%
     resize(300)
   loop <- loop(stimuli, 5)
   animate(loop, 10)

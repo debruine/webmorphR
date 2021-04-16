@@ -20,5 +20,5 @@ a list of class stimlist
 Returns a subset of the stimulus list meeting the condition.
 }
 \examples{
-f <- demo_stim("composite") \%>\% subset("f_")
+f <- demo_stim() \%>\% subset("f_")
 }

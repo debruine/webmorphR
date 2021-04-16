@@ -20,7 +20,7 @@ demo_stim <- function(dir = c("test", "composite", "london", "smiling", "lisa", 
   # download missing images
   if (path == "") {
     message(dir, " is not yet installed. Downloading...")
-    remote_zip_dir <- "https://raw.githubusercontent.com/debruine/webmorphR/master/data-raw/"
+    remote_zip_dir <- "https://github.com/debruine/webmorphR/raw/master/data-raw/"
     url <- list(
       test = paste0(remote_zip_dir, "test.zip"),
       lisa = paste0(remote_zip_dir, "lisa.zip"),
@@ -33,7 +33,7 @@ demo_stim <- function(dir = c("test", "composite", "london", "smiling", "lisa", 
     basedir <- system.file("extdata", package = "webmorphR")
     newdir <- file.path(basedir, dir)
     ziptmp <- file.path(tempdir(), "zip.zip")
-    download.file(url[[dir]], ziptmp)
+    utils::download.file(url[[dir]], ziptmp)
     utils::unzip(ziptmp, exdir = newdir, junkpaths = TRUE)
     
     path <- system.file(file.path("extdata", dir), package = "webmorphR")

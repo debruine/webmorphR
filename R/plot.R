@@ -132,9 +132,10 @@ plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
 #' @export
 #'
 #' @examples
-#' s <- demo_stim("composite") %>% resize(0.25)
-#' plot_rows(female = s[1:5], male = s[6:10])
-#' plot_rows(female = s[1:5], male = s[6:10], color = "blue", top_label = TRUE)
+#' up <- demo_stim()
+#' inv <- rotate(up, 180)
+#' plot_rows(upright = up, inverted = inv)
+#' plot_rows(upright = up, inverted = inv, color = "dodgerblue", top_label = TRUE)
 plot_rows <- function(..., top_label = FALSE) {
   dots <- list(...)
   is_stimlist <- lapply(dots, class) %>%

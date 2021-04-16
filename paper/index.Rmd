@@ -248,7 +248,7 @@ Other image manipulations use the templates to determine the manipulations.
 ```{r, echo = TRUE}
 aligned <- align(orig, x1 = 200, x2 = 400, y1 = 350, y2 = 350)
 hzeyes <- horiz_eyes(orig, patch = TRUE)
-cropadded <- crop_pad(orig, 30)
+croptem <- crop_tem(orig, 30)
 oval <- mask_oval(orig, fill = "dodgerblue")
 masked <- mask(orig, "face", fill = "dodgerblue", tem_id = "fpp106")
 ```
@@ -268,7 +268,7 @@ And, of course, most stimulus preparation requires several steps to get all the 
 stimuli <- demo_stim("london", 1:5) %>%
   resize(0.5) %>%
   align(procrustes = TRUE) %>%
-  crop_pad(30) %>%
+  crop_tem(30) %>%
   mask("face", fill = rainbow(5)) %>%
   pad(20, fill = "grey")
 ```
@@ -308,7 +308,7 @@ WebMorph's default face template marks 189 points. Some of these points have ver
 
 ```{r delineate, fig.cap = "Default webmorph FRL template"}
 demo_stim("composite", "f_multi") %>%
-  crop_pad(20) %>%
+  crop_tem(20) %>%
   resize(2) %>%
   draw_tem(pt.shape = "index", pt.color = "#FFFFFFFF", pt.size = 25) %>%
   plot()
@@ -400,10 +400,10 @@ The "standard oval mask" has enjoyed widespread popularity because it is straigh
 
 ```{r, echo = TRUE}
 ovals <- f %>%
-  pt_delete(frl_features("neck", "halo", "ears")) %>%
+  pt_subset(features("face")) %>%
   mask_oval(fill = "dodgerblue") %>%
   align(procrustes = TRUE) %>%
-  crop_pad()
+  crop_tem()
 ```
 
 An arguably better way to mask out hair, clothing and background from images is to crop around the curves defined by the template. 
@@ -411,9 +411,9 @@ An arguably better way to mask out hair, clothing and background from images is 
 
 ```{r, echo = TRUE}
 masked <- mask(f, c("face", "neck", "ears"), fill = "dodgerblue") %>%
-  pt_delete(frl_features("halo")) %>%
+  pt_subset(features("halo"), keep = FALSE) %>%
   align(procrustes = TRUE) %>%
-  crop_pad()
+  crop_tem()
 ```
 
 ```{r mask, fig.cap = "Images masked to include face, ears and neck (A), or with an oval defined by the minimum and maximum x- and y-coordinates of template points (B)."}
@@ -567,9 +567,9 @@ virtual_bro <- trans(
 ```
 
 ```{r virtual-sibs, fig.cap="Virtual siblings"}
-plot_rows(Original = crop_pad(m),
-          "Virtual Brothers" = crop_pad(virtual_bro),
-          "Virtual Sisters" = crop_pad(virtual_sis),
+plot_rows(Original = crop_tem(m),
+          "Virtual Brothers" = crop_tem(virtual_bro),
+          "Virtual Sisters" = crop_tem(virtual_sis),
           top_label = TRUE)
 ```
 

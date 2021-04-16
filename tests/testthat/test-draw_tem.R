@@ -6,8 +6,7 @@ test_that("draw_tem", {
   thin <- draw_tem(stimuli, "red", 0.5)
 
   # check size scales with image
-  stimuli <- demo_stim("composite", "f_multi")
-  red2 <- draw_tem(stimuli, "red")
+  red2 <- stimuli %>% resize(0.5) %>% draw_tem("red")
 
   skip("needs visual check")
   plot(default)

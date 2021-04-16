@@ -66,10 +66,42 @@ By default, the oval mask calculates the maximum and minimum x and y coordinates
 stimuli %>%
   greyscale() %>%
   # remove template points to make the oval tighter around the face
-  pt_delete(frl_features("halo", "neck", "ears")) %>%
+  pt_subset(features("face")) %>%
   mask_oval(fill = "black", each = FALSE) %>%
   plot()
 ```
+
+## Subset templates
+
+You can subset template points for images delineated with the FRL template using the convenience function `features()`. 
+
+```{r features-demo}
+full_tem <- demo_stim()[1]
+pts_to_keep <- features("eyes", "nose", "mouth", "brows")
+pts_to_delete <- features("cheekbones", "undereyes", "smile_lines")
+
+internal_features <- pt_subset(full_tem, pts_to_keep)
+no_lines <- pt_subset(full_tem, pts_to_delete, keep = FALSE)
+
+c(full_tem, internal_features, no_lines) %>% draw_tem() %>% plot()
+```
+
+Here are all of the available named features. The feature "gmm" is the subset of points commonly used for geometric morphometrics, which excludes points that don't have clear anatomical definitions.
+
+```{r features-all}
+
+features <- c("gmm", "oval", "face", "mouth", "nose", "eyes", "brows",
+              "left_eye",  "right_eye", "left_brow",  "right_brow",
+              "ears", "undereyes", "teeth", "smile_lines", 
+              "cheekbones", "philtrum", "chin", "neck", "halo")
+
+new_tems <- lapply(features, function(ft) {
+  full_tem %>% pt_subset(features(ft)) %>% draw_tem()
+}) %>% do.call(c, .)
+
+new_tems %>% setnames(features) %>% label() %>% plot()
+```
+
 
 ## Stimulus set
 
@@ -79,10 +111,10 @@ Now it's relatively straightforward to create a stimulus set that matches old pa
 demo_stim("london")[1:10] %>%
   greyscale() %>%
   # remove template points to make the oval tighter around the face
-  pt_delete(frl_features("halo", "neck", "ears")) %>%
+  pt_subset(features("face")) %>%
   align(procrustes = TRUE) %>%
   mask_oval(fill = "grey") %>%
-  crop_pad(50) %>% #  crop to template boundary and add 50px on each side 
+  crop_tem(50) %>% #  crop to template boundary and add 50px on each side 
   plot(nrow = 2)
 ```
 
@@ -92,7 +124,7 @@ Although I still think the delineated masking is better :)
 demo_stim("london")[1:10] %>%
   align(procrustes = TRUE) %>%
   mask(fill = "grey") %>%
-  crop_pad(50) %>% #  crop to template boundary and add 50px on each side 
+  crop_tem(50) %>% #  crop to template boundary and add 50px on each side 
   plot(nrow = 2)
 ```
 
@@ -104,7 +136,7 @@ You can define a custom mask. The code below is useful for finding the template 
 stimuli <- demo_stim("lisa") 
 
 stimuli[1] %>% 
-  crop_pad() %>% 
+  crop_tem() %>% 
   image_func("modulate", brightness = 50) %>%
   resize(4) %>%
   draw_tem(pt.size = 30, pt.shape = "index", pt.alpha = 1, pt.color = "white") %>%

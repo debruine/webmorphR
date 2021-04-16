@@ -1,34 +1,34 @@
-test_that("width", {
-  stimuli <- c(demo_stim("lisa")[1], demo_stim("composite")[1])
+s <- demo_stim()
+s2 <- resize(s, 2)
+stimuli <- c(s[[1]], s2[[2]])
 
-  expect_equal(width(stimuli), c(lisa1 = 600, f_african = 1350))
-  expect_equal(width(stimuli, "all"), c(lisa1 = 600, f_african = 1350))
-  expect_equal(width(stimuli, "min"), 600)
-  expect_equal(width(stimuli, "max"), 1350)
-  expect_equal(width(stimuli, "unique"), c(600, 1350))
+test_that("width", {
+  expect_equal(width(stimuli), c(f_multi = 500, m_multi = 1000))
+  expect_equal(width(stimuli, "all"), c(f_multi = 500, m_multi = 1000))
+  expect_equal(width(stimuli, "min"), 500)
+  expect_equal(width(stimuli, "max"), 1000)
+  expect_equal(width(stimuli, "unique"), c(500, 1000))
 })
 
 test_that("height", {
-  stimuli <- c(demo_stim("lisa")[1], demo_stim("composite")[1])
-
-  expect_equal(height(stimuli), c(lisa1 = 800, f_african = 1350))
-  expect_equal(height(stimuli, "all"), c(lisa1 = 800, f_african = 1350))
-  expect_equal(height(stimuli, "min"), 800)
-  expect_equal(height(stimuli, "max"), 1350)
-  expect_equal(height(stimuli, "unique"), c(800, 1350))
+  expect_equal(height(stimuli), c(f_multi = 500, m_multi = 1000))
+  expect_equal(height(stimuli, "all"), c(f_multi = 500, m_multi = 1000))
+  expect_equal(height(stimuli, "min"), 500)
+  expect_equal(height(stimuli, "max"), 1000)
+  expect_equal(height(stimuli, "unique"), c(500, 1000))
 })
 
 test_that("same_tems", {
-  lisa <- demo_stim("lisa")
-  test <- demo_stim("test")
+  t1 <- demo_stim()
+  t2 <- pt_subset(t1, features("gmm"))
 
-  expect_equal(same_tems(lisa), TRUE)
-  expect_equal(same_tems(stimuli = test), TRUE)
-  expect_equal(c(lisa, test) %>% same_tems(), FALSE)
+  expect_equal(same_tems(t1), TRUE)
+  expect_equal(same_tems(stimuli = t2), TRUE)
+  expect_equal(c(t1, t2) %>% same_tems(), FALSE)
 })
 
 test_that("remove_tem", {
-  test <- demo_stim("test")
+  test <- demo_stim()
 
   expect_equal(names(test$f_multi), c("img", "imgpath", "width", "height",
                                       "tempath", "points", "lines", "closed"))

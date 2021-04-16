@@ -37,14 +37,11 @@ Resize and crop images to a specified size
 }
 \examples{
 
-stimuli <- c(
-  demo_stim("lisa")[[1]],
-  demo_stim("composite")[[1]],
-  demo_stim("rainbow")[[1]]
-)
+# make images with different aspect ratios and sizes
+stimuli <- demo_stim() \%>\% crop(c(0.8, 1.0)) \%>\% resize(c(1.0, 0.5))
 
-to_size(stimuli, 300, 400, fill = "red") \%>\% plot()
-to_size(stimuli, 300, 400, fill = "red", keep_rels = TRUE) \%>\% plot()
+to_size(stimuli, 300, 400, fill = "dodgerblue") \%>\% plot()
+to_size(stimuli, 300, 400, fill = "dodgerblue", keep_rels = TRUE) \%>\% plot()
 
 
 }
