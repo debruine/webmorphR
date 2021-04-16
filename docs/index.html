@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">webmorphR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9003</span>
       </span>
     </div>
 
@@ -122,7 +122,7 @@
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"debruine/webmorphR"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/facelab/webmorphR">webmorphR</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/debruine/webmorphR">webmorphR</a></span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ************</span>
 <span class="co">#&gt; Welcome to webmorphR. For support and examples visit:</span>
@@ -191,7 +191,7 @@
 <p>Now you can procrustes align the images and crop them all to the same dimensions.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aligned</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/align.html">align</a></span><span class="op">(</span><span class="va">stimuli</span>, procrustes <span class="op">=</span> <span class="cn">TRUE</span>, patch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/crop_pad.html">crop_pad</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>
+  <span class="fu">crop_pad</span><span class="op">(</span><span class="fl">100</span>, <span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">aligned</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/aligned-1.png" title="plot of chunk aligned" alt="plot of chunk aligned" width="100%"></p>

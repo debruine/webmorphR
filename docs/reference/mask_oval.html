@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorphR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9003</span>
       </span>
     </div>
 
@@ -191,8 +191,8 @@
 
 <span class='co'># remove external points</span>
 <span class='va'>omask2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='demo_stim.html'>demo_stim</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='pt_delete.html'>pt_delete</a></span><span class='op'>(</span><span class='fu'><a href='frl_features.html'>frl_features</a></span><span class='op'>(</span><span class='st'>"halo"</span>, <span class='st'>"neck"</span>, <span class='st'>"ears"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='crop_pad.html'>crop_pad</a></span><span class='op'>(</span><span class='fl'>25</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='pt_subset.html'>pt_subset</a></span><span class='op'>(</span><span class='fu'><a href='features.html'>features</a></span><span class='op'>(</span><span class='st'>"face"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='crop_tem.html'>crop_tem</a></span><span class='op'>(</span><span class='fl'>25</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>mask_oval</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># set bounds manually</span>

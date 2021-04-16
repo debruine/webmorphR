@@ -81,7 +81,6 @@ reference:
   - '`mask_oval`'
   - '`mirror`'
   - '`pad`'
-  - '`pt_delete`'
   - '`resize`'
   - '`rotate`'
   - '`to_size`'
@@ -99,8 +98,9 @@ reference:
   desc: ~
   contents:
   - '`bounds`'
-  - '`frl_features`'
+  - '`features`'
   - '`patch`'
+  - '`pt_subset`'
   - '`quick_delin`'
   - '`remove_tem`'
   - '`same_tems`'

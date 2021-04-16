@@ -52,7 +52,7 @@
     <loc>https://facelab.github.io/webmorph//reference/crop.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/crop_pad.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/crop_tem.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/demo_stim.html</loc>
@@ -61,10 +61,10 @@
     <loc>https://facelab.github.io/webmorph//reference/draw_tem.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/format_size.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/features.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/frl_features.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/format_size.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/get_imgs.html</loc>
@@ -154,7 +154,7 @@
     <loc>https://facelab.github.io/webmorph//reference/procrustes_align.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/pt_delete.html</loc>
+    <loc>https://facelab.github.io/webmorph//reference/pt_subset.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/quick_delin.html</loc>

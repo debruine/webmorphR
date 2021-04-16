@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorphR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9002</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9003</span>
       </span>
     </div>
 
@@ -183,24 +183,13 @@
     <p>You can also add data as named vectors.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='va'>stimuli</span> <span class='op'>&lt;-</span> <span class='fu'><a href='demo_stim.html'>demo_stim</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <pre class="examples"><div class='input'><span class='va'>stimuli</span> <span class='op'>&lt;-</span> <span class='fu'><a href='demo_stim.html'>demo_stim</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>add_info</span><span class='op'>(</span>project <span class='op'>=</span> <span class='st'>"XXX"</span>, gender <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"F"</span>, <span class='st'>"M"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='va'>stimuli</span><span class='op'>$</span><span class='va'>f_multi</span><span class='op'>$</span><span class='va'>info</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; List of 2
 #&gt;  $ project: chr "XXX"
 #&gt;  $ gender : chr "F"</div><div class='input'>
-<span class='va'>info</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='st'>"london_info"</span>, package <span class='op'>=</span> <span class='st'>"webmorphR"</span><span class='op'>)</span>
-<span class='va'>stimuli</span> <span class='op'>&lt;-</span> <span class='fu'><a href='demo_stim.html'>demo_stim</a></span><span class='op'>(</span><span class='st'>"london"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>add_info</span><span class='op'>(</span><span class='va'>london_info</span><span class='op'>)</span>
-
-<span class='va'>stimuli</span><span class='op'>$</span><span class='va'>`018_03`</span><span class='op'>$</span><span class='va'>info</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; List of 4
-#&gt;  $ face_id    : chr "018_03"
-#&gt;  $ face_age   : int 19
-#&gt;  $ face_gender: chr "male"
-#&gt;  $ face_eth   : chr "white"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
