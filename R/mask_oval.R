@@ -17,13 +17,13 @@
 #'
 #' # remove external points
 #' omask2 <- demo_stim() %>%
-#'   pt_subset(features("face")) %>%
+#'   subset_tem(features("face")) %>%
 #'   crop_tem(25) %>%
 #'   mask_oval()
 #'
 #' # set bounds manually
-#' omask3 <- demo_stim("lisa") %>%
-#'   mask_oval(bounds = list(t= 50, r = 50, b = 50, l = 50))
+#' omask3 <- demo_stim() %>%
+#'   mask_oval(bounds = list(t= 70, r = 120, b = 70, l = 120))
 mask_oval <- function(stimuli, bounds = NULL, fill = wm_opts("fill"), each = TRUE) {
   stimuli <- validate_stimlist(stimuli, is.null(bounds))
 

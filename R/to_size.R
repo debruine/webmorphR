@@ -5,7 +5,6 @@
 #' @param height the target height (or null if width is dimensions)
 #' @param fill background color if cropping goes outside the original image
 #' @param patch whether to use the patch function to set the background color
-#' @param squash whether to move template points outside the image boundaries inside the image
 #' @param keep_rels whether to keep the size relationships between images in the set, or make all the maximum size
 #'
 #' @return stimlist with cropped tems and/or images
@@ -21,7 +20,7 @@
 #'
 #'
 to_size <- function(stimuli, width, height = NULL,
-                    fill = wm_opts("fill"), patch = FALSE, squash = FALSE,
+                    fill = wm_opts("fill"), patch = FALSE,
                     keep_rels = FALSE) {
   # process width and height
   if (length(width) == 2 && is.null(height)) {
@@ -53,7 +52,7 @@ to_size <- function(stimuli, width, height = NULL,
 
   resized <- resize(stimuli, pcnt)
 
-  crop(resized, width, height, fill = fill, patch = patch, squash = squash)
+  crop(resized, width, height, fill = fill, patch = patch)
 }
 
 

@@ -113,10 +113,10 @@ tem_def <- function(tem_id = "FRL", path = NULL) {
 #'
 #' @examples
 #' demo_stim()[1] %>%
-#'   pt_subset(features("gmm")) %>%
+#'   subset_tem(features("gmm")) %>%
 #'   draw_tem()
 #'
-pt_subset <- function(stimuli, ..., keep = TRUE) {
+subset_tem <- function(stimuli, ..., keep = TRUE) {
   stimuli <- validate_stimlist(stimuli)
   points <- list(...) %>% unlist() %>% unique() %>% sort()
   
@@ -172,7 +172,7 @@ pt_subset <- function(stimuli, ..., keep = TRUE) {
 
 #' Feature Points
 #' 
-#' Get point indices for features, usually for use with \code{\link{pt_subset}}.
+#' Get point indices for features, usually for use with \code{\link{subset_tem}}.
 #' 
 #' Available features for the FRL template are: "gmm", "oval", "face", "mouth", "nose", "eyes", "brows", "left_eye",  "right_eye", "left_brow",  "right_brow", "ears", "undereyes", "teeth", "smile_lines", "cheekbones", "philtrum", "chin", "neck", "halo".
 #'

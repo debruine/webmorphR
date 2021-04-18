@@ -1,6 +1,6 @@
 Package: webmorphR
 Title: Reproducible Stimuli
-Date: 2021-04-11
+Date: 2021-04-18
 Version: 0.0.1.9003
 Authors@R: 
     person(
@@ -34,7 +34,10 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
-    covr
+    covr,
+    stimsets
+Remotes:
+    debruine/stimsets
 VignetteBuilder: knitr
 URL: https://github.com/debruine/webmorphR
 BugReports: https://github.com/debruine/webmorphR/issues

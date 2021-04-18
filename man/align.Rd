@@ -14,10 +14,9 @@ align(
   y2 = NULL,
   width = NULL,
   height = NULL,
-  ref_img = 1,
+  ref_img = NULL,
   fill = wm_opts("fill"),
   patch = FALSE,
-  squash = FALSE,
   procrustes = FALSE
 )
 }
@@ -40,13 +39,11 @@ align(
 
 \item{height}{The height of the aligned image}
 
-\item{ref_img}{The reference image (by index or name) to get coordinates and dimensions from if NULL (defaults to first image)}
+\item{ref_img}{The reference image (by index or name) to get coordinates and dimensions from if they are NULL (defaults to average of all images if NULL)}
 
 \item{fill}{background color if cropping goes outside the original image}
 
 \item{patch}{whether to use the patch function to set the background color}
-
-\item{squash}{whether to move template points outside the image boundaries inside the image}
 
 \item{procrustes}{Whether to do a procrustes alignment}
 }
@@ -57,14 +54,18 @@ stimlist with aligned tems and/or images
 Align templates and images
 }
 \examples{
-stimuli <- demo_stim("lisa")[1:2]
+# load stimuli and crop/rotate differently
+stimuli <- demo_stim() \%>\% 
+  crop(c(0.8, 0.9), c(1.0, 0.9), x_off = c(0, 0.2)) \%>\%
+  rotate(c(-5, + 5))
 
-# align to bottom-centre of nose
+# align to bottom-centre of nose (average position)
 one_pt <- align(stimuli, pt1 = 55, pt2 = 55)
 
 # align to pupils of second image
 two_pt <- align(stimuli, ref_img = 2)
 
-# procrustes align
+# procrustes align to average position
 proc <- align(stimuli, procrustes = TRUE)
+draw_tem(proc)
 }

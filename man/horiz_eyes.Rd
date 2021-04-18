@@ -30,6 +30,6 @@ stimlist with rotated tems and/or images
 Make eyes horizontal
 }
 \examples{
-demo_stim("lisa") \%>\% horiz_eyes() \%>\% plot()
+demo_stim() \%>\% horiz_eyes()
 
 }

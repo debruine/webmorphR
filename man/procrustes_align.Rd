@@ -4,12 +4,12 @@
 \alias{procrustes_align}
 \title{Procrustes align templates}
 \usage{
-procrustes_align(data, rotate = 0)
+procrustes_align(data, ref_img = NULL)
 }
 \arguments{
 \item{data}{Template points}
 
-\item{rotate}{Whether to "guess" the rotation, or rotate 0, 90, 180, or 270 degrees}
+\item{ref_img}{Reference image}
 }
 \value{
 coordinates

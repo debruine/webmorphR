@@ -1,4 +1,4 @@
-stimuli <- demo_stim("london", "001_03")
+stimuli <- demo_stim()[1]
 
 test_that("no map", {
   m <- mirror(stimuli)

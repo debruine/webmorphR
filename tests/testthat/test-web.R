@@ -49,8 +49,8 @@ test_that("trans", {
   expect_equal(names(fem_masc), c("f_multi_fem", "f_multi_masc", "m_multi_fem", "m_multi_masc"))
 
   steps <- seq(0, 1, .2)
-  faces <- demo_stim("london", "003|005") %>% resize(0.5)
-  cont <- trans(faces$`003_03`, faces$`003_03`, faces$`005_03`, steps, steps, steps)
+  faces <- demo_stim() %>% resize(0.5)
+  cont <- trans(faces$f_multi, faces$f_multi, faces$m_multi, steps, steps, steps)
 
   ## visual checks ----
   skip("needs visual check")

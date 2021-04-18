@@ -20,7 +20,7 @@ test_that("height", {
 
 test_that("same_tems", {
   t1 <- demo_stim()
-  t2 <- pt_subset(t1, features("gmm"))
+  t2 <- subset_tem(t1, features("gmm"))
 
   expect_equal(same_tems(t1), TRUE)
   expect_equal(same_tems(stimuli = t2), TRUE)

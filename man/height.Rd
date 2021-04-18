@@ -19,5 +19,5 @@ Image heights
 }
 \examples{
 
-demo_stim("rainbow") \%>\% height()
+demo_stim() \%>\% height()
 }

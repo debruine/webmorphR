@@ -10,7 +10,6 @@ to_size(
   height = NULL,
   fill = wm_opts("fill"),
   patch = FALSE,
-  squash = FALSE,
   keep_rels = FALSE
 )
 }
@@ -24,8 +23,6 @@ to_size(
 \item{fill}{background color if cropping goes outside the original image}
 
 \item{patch}{whether to use the patch function to set the background color}
-
-\item{squash}{whether to move template points outside the image boundaries inside the image}
 
 \item{keep_rels}{whether to keep the size relationships between images in the set, or make all the maximum size}
 }

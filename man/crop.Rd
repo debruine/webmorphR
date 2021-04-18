@@ -11,8 +11,7 @@ crop(
   x_off = NULL,
   y_off = NULL,
   fill = wm_opts("fill"),
-  patch = FALSE,
-  squash = FALSE
+  patch = FALSE
 )
 }
 \arguments{
@@ -29,8 +28,6 @@ crop(
 \item{fill}{background color if cropping goes outside the original image}
 
 \item{patch}{whether to use the patch function to set the background color}
-
-\item{squash}{whether to move template points outside the image boundaries inside the image}
 }
 \value{
 stimlist with cropped tems and/or images
@@ -49,10 +46,6 @@ stim_centered <- crop(stimuli, width = .60, height = .80)
 
 # crop to upper right quadrant
 urq <- crop(stimuli, .5, .5, x_off = .5, y_off = 0)
-
-# crop to 40\% width and 40\% height (centered) and add border
-# points are squashed to image edges
-squash <- crop(stimuli, width = .4, height = .4, squash = TRUE)
 
 # take median color from a patch
 bigger <- crop(stimuli, 1.2, 1.2, patch = c(100, 200, 1, 10))

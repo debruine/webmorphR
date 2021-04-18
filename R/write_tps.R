@@ -49,7 +49,7 @@ write_tps <- function(stimuli, path_to_tps = NULL) {
 #' dim(data)
 #'
 tems_to_array <- function(stimuli) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- validate_stimlist(stimuli, TRUE)
 
   # check number of points
   n_pts <- lapply(stimuli, `[[`, "points") %>%

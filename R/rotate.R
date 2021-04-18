@@ -159,7 +159,7 @@ rotated_size <- function(width, height, degrees) {
 #' @export
 #'
 #' @examples
-#' demo_stim("lisa") %>% horiz_eyes() %>% plot()
+#' demo_stim() %>% horiz_eyes()
 #'
 horiz_eyes <- function(stimuli, left_eye = 0, right_eye = 1, fill = wm_opts("fill"), patch = FALSE) {
   stimuli <- validate_stimlist(stimuli, TRUE)

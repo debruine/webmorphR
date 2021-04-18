@@ -15,29 +15,13 @@
 demo_stim <- function(dir = c("test", "composite", "london", "smiling", "lisa", "zoom", "rainbow"),
                      pattern = NULL, ...) {
   dir <- match.arg(dir)
-  path <- system.file(file.path("extdata", dir), package = "webmorphR")
   
-  # download missing images
-  if (path == "") {
-    message(dir, " is not yet installed. Downloading...")
-    remote_zip_dir <- "https://github.com/debruine/webmorphR/raw/master/data-raw/"
-    url <- list(
-      test = paste0(remote_zip_dir, "test.zip"),
-      lisa = paste0(remote_zip_dir, "lisa.zip"),
-      zoom = paste0(remote_zip_dir, "zoom.zip"),
-      rainbow = paste0(remote_zip_dir, "rainbow.zip"),
-      london = "https://ndownloader.figshare.com/files/8541961",
-      smiling = "https://ndownloader.figshare.com/files/8541964",
-      composite = "https://ndownloader.figshare.com/articles/4055130/versions/1"
-    )
-    basedir <- system.file("extdata", package = "webmorphR")
-    newdir <- file.path(basedir, dir)
-    ziptmp <- file.path(tempdir(), "zip.zip")
-    utils::download.file(url[[dir]], ziptmp)
-    utils::unzip(ziptmp, exdir = newdir, junkpaths = TRUE)
-    
+  if (dir == "test") { # included in webmorphR
     path <- system.file(file.path("extdata", dir), package = "webmorphR")
-    message("...Installed")
+  } else if (requireNamespace("stimsets", quietly = TRUE)) {
+    path <- system.file(file.path(dir), package = "stimsets")
+  } else {
+    stop("You  need to install the package stimsets to access these demo images\nremotes::install_github(\"debruine/stimsets\")")
   }
 
   stimuli <- read_stim(path, pattern, ...)

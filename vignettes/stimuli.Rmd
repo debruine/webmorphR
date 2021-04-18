@@ -21,11 +21,11 @@ This vignette will show some recipes for common types of stimulus creation.
 
 ## Averageness
 
-Let's start with a set of images from the built-in image sets. You can add data to an image set to use in subsetting the images. For demonstration, the built-in London image set has a data table called `london_info`.
+Let's start with a set of images from the built-in image sets. You can add data to an image set to use in subsetting the images. For demonstration, the London image set from the package [stimsets](https://github.com/debruine/stimsets) has a data table called `london_info`.
 
 ```{r subset}
 stimuli <- demo_stim("london") %>%
-  add_info(london_info, .by = "face_id")
+  add_info(stimsets::london_info)
 ```
 
 Select images from your subset to make a new image set. the original images are large, and we don't need the resulting stimuli to be that large, so we'll reduce image size by 50% right at the start to reduce processing time.
@@ -209,7 +209,7 @@ You can also process images without templates. For example, the following code t
 stimuli <- demo_stim("rainbow")
 
 # get info on the images to put in order by type and colour
-info <- system.file("extdata/rainbow/_info.csv", package = "webmorphR") %>%
+info <- system.file("rainbow/_info.csv", package = "stimsets") %>%
   readr::read_csv() %>%
   dplyr::mutate(colour = factor(colour, c("red", "orange", "yellow", "green", "blue", "purple"))) %>%
   dplyr::arrange(type, colour)

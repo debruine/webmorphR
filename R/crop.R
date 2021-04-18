@@ -11,7 +11,6 @@
 #' @param y_off y-offset in pixels or % (<1) (NULL vertically centers cropped image)
 #' @param fill background color if cropping goes outside the original image
 #' @param patch whether to use the patch function to set the background color
-#' @param squash whether to move template points outside the image boundaries inside the image
 #'
 #' @return stimlist with cropped tems and/or images
 #' @export
@@ -25,18 +24,13 @@
 #' # crop to upper right quadrant
 #' urq <- crop(stimuli, .5, .5, x_off = .5, y_off = 0)
 #'
-#' # crop to 40% width and 40% height (centered) and add border
-#' # points are squashed to image edges
-#' squash <- crop(stimuli, width = .4, height = .4, squash = TRUE)
-#'
 #' # take median color from a patch
 #' bigger <- crop(stimuli, 1.2, 1.2, patch = c(100, 200, 1, 10))
 #'
 crop <- function(stimuli,
                  width = 1.0, height = 1.0,
                  x_off = NULL, y_off = NULL,
-                 fill = wm_opts("fill"), patch = FALSE,
-                 squash = FALSE) {
+                 fill = wm_opts("fill"), patch = FALSE) {
   stimuli <- validate_stimlist(stimuli)
 
   suppressWarnings({
@@ -111,14 +105,7 @@ crop <- function(stimuli,
 
     if (!is.null(stimuli[[i]]$points)) {
       stimuli[[i]]$points <- apply(stimuli[[i]]$points, 2, function(pt) {
-        newpt <- pt - c(x_off[i], y_off[i])
-        if (isTRUE(squash)) {
-          # move points outside image boundaries
-          newpt <- newpt %>%
-            pmax(c(0, 0)) %>%
-            pmin(c(w-1, h-1)) # subtract 1 for 0-vs 1-based origin
-        }
-        newpt
+        pt - c(x_off[i], y_off[i])
       })
     }
   }
@@ -206,7 +193,7 @@ crop_tem <- function(stimuli, top = 10, right = top, bottom = top, left = right,
 #'
 #' demo_stim() %>% bounds(each = TRUE)
 bounds <- function(stimuli, each = FALSE) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- validate_stimlist(stimuli, TRUE)
 
   if (isTRUE(each)) {
     # get separate bounds for each stimulus
@@ -227,4 +214,44 @@ bounds <- function(stimuli, each = FALSE) {
        max_x = max(x),
        min_y = min(y),
        max_y = max(y))
+}
+
+
+#' Squash Template Points
+#' 
+#' Move template points that are outside the image boundaries (e.g., negative values or larger than image width or height) to the borders of the image.
+#'
+#' @param stimuli list of class stimlist
+#'
+#' @return list of class stimlist
+#' @export
+#'
+#' @examples
+#' nosquash <- demo_stim()[1] %>% 
+#'   crop(0.4, 0.5) %>% pad(50) %>% 
+#'   draw_tem(line.size = 3)
+#' 
+#' squashed <- demo_stim()[1] %>% 
+#'   crop(0.4, 0.5) %>% squash_tem() %>% pad(50) %>% 
+#'   draw_tem(line.size = 3)
+#'   
+#' # c(nosquash, squashed) %>% plot()
+squash_tem <- function(stimuli) {
+  stimuli <- validate_stimlist(stimuli, TRUE)
+  
+  for (i in seq_along(stimuli)) {
+    if (!is.null(stimuli[[i]]$points)) {
+      w <- stimuli[[i]]$width
+      h <- stimuli[[i]]$height
+      
+      stimuli[[i]]$points <- apply(stimuli[[i]]$points, 2, function(pt) {
+        # move points into image boundaries
+        pt %>%
+          pmax(c(0, 0)) %>%
+          pmin(c(w-1, h-1)) # subtract 1 for 0-vs 1-based origin
+      })
+    }
+  }
+  
+  stimuli
 }

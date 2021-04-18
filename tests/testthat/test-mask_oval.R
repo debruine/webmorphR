@@ -1,5 +1,5 @@
 test_that("mask_oval", {
-  stimuli <- demo_stim("lisa")
+  stimuli <- demo_stim()
 
   expect_silent(x <- mask_oval(stimuli, each = TRUE))
   expect_silent(y <- mask_oval(stimuli, each = FALSE))

@@ -1,6 +1,6 @@
 # webmorph 0.0.1.9003
 
-* demo imagesets removed so `demo_stim()` needs to load "london", "smiling", "composite", "lisa", "zoom", and "rainbow" the first time you use them
+* demo imagesets removed so `demo_stim()` needs to load "london", "smiling", "composite", "lisa", "zoom", and "rainbow" from stimsets the first time you use them
 * `image_comp()` to calculate difference between images in a way that corresponds to morph continuua differences
 * crop_pad renamed to `crop_tem()`
 * frl_features renames to `features()`

@@ -31,7 +31,7 @@ While this metric does capture something about similarity between morphed images
 stimuli <- demo_stim()
 s <- continuum(stimuli[1], stimuli[2]) %>%
   mask("face") %>%
-  pt_subset(features("face")) %>%
+  subset_tem(features("face")) %>%
   crop_tem()
 
 plot(s, nrow = 1)

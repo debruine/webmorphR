@@ -38,19 +38,19 @@ test_that("online", {
 
 
 
-# pt_subset ----
-test_that("pt_subset", {
+# subset_tem ----
+test_that("subset_tem", {
   stimuli <- demo_stim()
   
   # error
-  expect_error(pt_subset(stimuli, 0:200))
+  expect_error(subset_tem(stimuli, 0:200))
   
   # keep
-  nt <- pt_subset(stimuli, 0:20)
+  nt <- subset_tem(stimuli, 0:20)
   expect_equal(stimuli[[1]]$points[, 1:21], nt[[1]]$points)
   
   # delete
-  nt <- pt_subset(stimuli, 0:9, 20:188, keep = FALSE)
+  nt <- subset_tem(stimuli, 0:9, 20:188, keep = FALSE)
   expect_equal(stimuli[[1]]$points[, 11:20], nt[[1]]$points)
 })
 
@@ -64,7 +64,7 @@ test_that("features", {
   names(features) <- features
   
   new <- lapply(features, function(ft) {
-    stimuli %>% pt_subset(features(ft)) %>% draw_tem()
+    stimuli %>% subset_tem(features(ft)) %>% draw_tem()
   }) %>% do.call(c, .)
   
   skip("needs visual check")

@@ -42,13 +42,9 @@ reference:
   desc: ~
   contents:
   - '`blank`'
+  - '`demo_stim`'
   - '`read_stim`'
   - '`write_stim`'
-- title: Demo
-  desc: Built-in images, templates and info
-  contents:
-  - '`demo_stim`'
-  - '`london_info`'
 - title: Web functions
   desc: Functions that link to webmorph.org or Face++
   contents:
@@ -70,7 +66,6 @@ reference:
   contents:
   - '`align`'
   - '`animate`'
-  - '`average_tem`'
   - '`crop`'
   - '`crop_tem`'
   - '`greyscale`'
@@ -84,6 +79,13 @@ reference:
   - '`resize`'
   - '`rotate`'
   - '`to_size`'
+- title: Template Manipulation
+  desc: ~
+  contents:
+  - '`average_tem`'
+  - '`subset_tem`'
+  - '`remove_tem`'
+  - '`squash_tem`'
 - title: Metrics/Info
   desc: ~
   contents:
@@ -100,9 +102,7 @@ reference:
   - '`bounds`'
   - '`features`'
   - '`patch`'
-  - '`pt_subset`'
   - '`quick_delin`'
-  - '`remove_tem`'
   - '`same_tems`'
   - '`social_media_size`'
   - '`subset.stimlist`'

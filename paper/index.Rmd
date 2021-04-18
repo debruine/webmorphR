@@ -295,7 +295,7 @@ We will use the open-source, CC-BY licensed image set, the Face Research Lab Lon
 
 london <- demo_stim("london") %>%
   resize(0.5) %>% # makes the demo run faster, change for final
-  add_info(london_info)
+  add_info(stimsets::london_info)
 
 london %>% plot(nrow=6, maxwidth = 2000)
 ```
@@ -401,7 +401,7 @@ The "standard oval mask" has enjoyed widespread popularity because it is straigh
 
 ```{r, echo = TRUE}
 ovals <- f %>%
-  pt_subset(features("gmm")) %>%
+  subset_tem(features("gmm")) %>%
   mask_oval(fill = "dodgerblue") %>%
   align(procrustes = TRUE) %>%
   crop_tem()
@@ -412,7 +412,7 @@ An arguably better way to mask out hair, clothing and background from images is 
 
 ```{r, echo = TRUE}
 masked <- mask(f, c("face", "neck", "ears"), fill = "dodgerblue") %>%
-  pt_subset(features("halo"), keep = FALSE) %>%
+  subset_tem(features("halo"), keep = FALSE) %>%
   align(procrustes = TRUE) %>%
   crop_tem()
 ```

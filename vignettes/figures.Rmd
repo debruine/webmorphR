@@ -107,7 +107,7 @@ stimuli %>%
 
 ```{r point-remove}
 stimuli %>%
-  pt_subset(features("gmm")) %>%
+  subset_tem(features("gmm")) %>%
   draw_tem() %>%
   plot()
 ```

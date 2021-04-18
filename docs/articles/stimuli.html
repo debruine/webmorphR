@@ -119,10 +119,10 @@
 <div id="averageness" class="section level2">
 <h2 class="hasAnchor">
 <a href="#averageness" class="anchor"></a>Averageness</h2>
-<p>Let’s start with a set of images from the built-in image sets. You can add data to an image set to use in subsetting the images. For demonstration, the built-in London image set has a data table called <code>london_info</code>.</p>
+<p>Let’s start with a set of images from the built-in image sets. You can add data to an image set to use in subsetting the images. For demonstration, the London image set from the package <a href="https://github.com/debruine/stimsets">stimsets</a> has a data table called <code>london_info</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"london"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/add_info.html">add_info</a></span><span class="op">(</span><span class="va">london_info</span>, .by <span class="op">=</span> <span class="st">"face_id"</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/add_info.html">add_info</a></span><span class="op">(</span><span class="fu">stimsets</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/stimsets/man/london_info.html">london_info</a></span><span class="op">)</span></code></pre></div>
 <p>Select images from your subset to make a new image set. the original images are large, and we don’t need the resulting stimuli to be that large, so we’ll reduce image size by 50% right at the start to reduce processing time.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">subset</span> <span class="op">&lt;-</span> <span class="va">stimuli</span> <span class="op">%&gt;%</span>
@@ -245,7 +245,7 @@
 <span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"rainbow"</span><span class="op">)</span>
 
 <span class="co"># get info on the images to put in order by type and colour</span>
-<span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/rainbow/_info.csv"</span>, package <span class="op">=</span> <span class="st">"webmorphR"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"rainbow/_info.csv"</span>, package <span class="op">=</span> <span class="st">"stimsets"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">colour</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"orange"</span>, <span class="st">"yellow"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>, <span class="st">"purple"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">colour</span><span class="op">)</span>

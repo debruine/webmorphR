@@ -153,7 +153,7 @@
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/greyscale.html">greyscale</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="co"># remove template points to make the oval tighter around the face</span>
-  <span class="fu"><a href="../reference/pt_subset.html">pt_subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"face"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"face"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/mask_oval.html">mask_oval</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"black"</span>, each <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/mask-oval-each-1.png" width="100%"></p>
@@ -167,8 +167,8 @@
 <span class="va">pts_to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"eyes"</span>, <span class="st">"nose"</span>, <span class="st">"mouth"</span>, <span class="st">"brows"</span><span class="op">)</span>
 <span class="va">pts_to_delete</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"cheekbones"</span>, <span class="st">"undereyes"</span>, <span class="st">"smile_lines"</span><span class="op">)</span>
 
-<span class="va">internal_features</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pt_subset.html">pt_subset</a></span><span class="op">(</span><span class="va">full_tem</span>, <span class="va">pts_to_keep</span><span class="op">)</span>
-<span class="va">no_lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/pt_subset.html">pt_subset</a></span><span class="op">(</span><span class="va">full_tem</span>, <span class="va">pts_to_delete</span>, keep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">internal_features</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="va">full_tem</span>, <span class="va">pts_to_keep</span><span class="op">)</span>
+<span class="va">no_lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="va">full_tem</span>, <span class="va">pts_to_delete</span>, keep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">full_tem</span>, <span class="va">internal_features</span>, <span class="va">no_lines</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/features-demo-1.png" width="100%"></p>
@@ -181,7 +181,7 @@
               <span class="st">"cheekbones"</span>, <span class="st">"philtrum"</span>, <span class="st">"chin"</span>, <span class="st">"neck"</span>, <span class="st">"halo"</span><span class="op">)</span>
 
 <span class="va">new_tems</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">features</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ft</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">full_tem</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/pt_subset.html">pt_subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="va">ft</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="va">full_tem</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="va">ft</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">c</span>, <span class="va">.</span><span class="op">)</span>
 
 <span class="va">new_tems</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span><span class="va">features</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -195,7 +195,7 @@
 <code class="sourceCode R"><span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"london"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/greyscale.html">greyscale</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="co"># remove template points to make the oval tighter around the face</span>
-  <span class="fu"><a href="../reference/pt_subset.html">pt_subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"face"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"face"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span>procrustes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/mask_oval.html">mask_oval</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co">#  crop to template boundary and add 50px on each side </span>
@@ -241,7 +241,7 @@
 <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span>, <span class="va">mask</span>, fill <span class="op">=</span> <span class="st">"hotpink"</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/unnamed-chunk-3-1.png" width="100%"></p>
-<p>This script took 0.7 minutes to render all the included images from scratch.</p>
+<p>This script took 0.6 minutes to render all the included images from scratch.</p>
 </div>
   </div>
 

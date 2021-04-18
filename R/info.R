@@ -104,7 +104,7 @@ get_info <- function(stimuli, ..., .rownames = "id") {
 #'
 #' @examples
 #'
-#' demo_stim("rainbow") %>% width()
+#' demo_stim() %>% width()
 width <- function(stimuli, type = c("all", "min", "max", "unique")) {
   stimuli <- validate_stimlist(stimuli)
 
@@ -128,7 +128,7 @@ width <- function(stimuli, type = c("all", "min", "max", "unique")) {
 #'
 #' @examples
 #'
-#' demo_stim("rainbow") %>% height()
+#' demo_stim() %>% height()
 height <- function(stimuli, type = c("all", "min", "max", "unique")) {
   stimuli <- validate_stimlist(stimuli)
 
@@ -173,8 +173,12 @@ remove_tem <- function(stimuli) {
 #' @export
 #'
 #' @examples
-#' demo_stim() %>% same_tems()
-#' c(demo_stim("test"), demo_stim("lisa")) %>% same_tems()
+#' stim <- demo_stim()
+#' stim2 <- subset_tem(stim, features("gmm"))
+#' 
+#' same_tems(stim)
+#' 
+#' c(stim, stim2) %>% same_tems()
 same_tems <- function(stimuli) {
   stimuli <- validate_stimlist(stimuli)
 

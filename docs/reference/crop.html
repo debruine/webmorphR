@@ -163,8 +163,7 @@
   x_off <span class='op'>=</span> <span class='cn'>NULL</span>,
   y_off <span class='op'>=</span> <span class='cn'>NULL</span>,
   fill <span class='op'>=</span> <span class='fu'><a href='wm_opts.html'>wm_opts</a></span><span class='op'>(</span><span class='st'>"fill"</span><span class='op'>)</span>,
-  patch <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  squash <span class='op'>=</span> <span class='cn'>FALSE</span>
+  patch <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -198,10 +197,6 @@
       <th>patch</th>
       <td><p>whether to use the patch function to set the background color</p></td>
     </tr>
-    <tr>
-      <th>squash</th>
-      <td><p>whether to move template points outside the image boundaries inside the image</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -219,10 +214,6 @@
 
 <span class='co'># crop to upper right quadrant</span>
 <span class='va'>urq</span> <span class='op'>&lt;-</span> <span class='fu'>crop</span><span class='op'>(</span><span class='va'>stimuli</span>, <span class='fl'>.5</span>, <span class='fl'>.5</span>, x_off <span class='op'>=</span> <span class='fl'>.5</span>, y_off <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
-
-<span class='co'># crop to 40% width and 40% height (centered) and add border</span>
-<span class='co'># points are squashed to image edges</span>
-<span class='va'>squash</span> <span class='op'>&lt;-</span> <span class='fu'>crop</span><span class='op'>(</span><span class='va'>stimuli</span>, width <span class='op'>=</span> <span class='fl'>.4</span>, height <span class='op'>=</span> <span class='fl'>.4</span>, squash <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># take median color from a patch</span>
 <span class='va'>bigger</span> <span class='op'>&lt;-</span> <span class='fu'>crop</span><span class='op'>(</span><span class='va'>stimuli</span>, <span class='fl'>1.2</span>, <span class='fl'>1.2</span>, patch <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>200</span>, <span class='fl'>1</span>, <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>

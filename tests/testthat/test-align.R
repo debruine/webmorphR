@@ -19,9 +19,12 @@ test_that("procrustes", {
   data <- demo_stim() %>% tems_to_array()
 
   expect_silent(g <- procrustes_align(data))
-  expect_silent(p0 <- procrustes_align(data, 0))
+  expect_silent(p1 <- procrustes_align(data, 1))
+  expect_silent(p2 <- procrustes_align(data, 2))
 
-  expect_equal(g, p0)
+  expect_true(all(g != p1))
+  expect_true(all(g != p2))
+  expect_true(all(p1 != p2))
 })
 
 test_that("procrustes align", {

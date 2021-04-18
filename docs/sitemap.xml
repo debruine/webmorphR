@@ -100,9 +100,6 @@
     <loc>https://facelab.github.io/webmorph//reference/list_to_tbl.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/london_info.html</loc>
-  </url>
-  <url>
     <loc>https://facelab.github.io/webmorph//reference/loop.html</loc>
   </url>
   <url>
@@ -154,9 +151,6 @@
     <loc>https://facelab.github.io/webmorph//reference/procrustes_align.html</loc>
   </url>
   <url>
-    <loc>https://facelab.github.io/webmorph//reference/pt_subset.html</loc>
-  </url>
-  <url>
     <loc>https://facelab.github.io/webmorph//reference/quick_delin.html</loc>
   </url>
   <url>
@@ -190,6 +184,9 @@
     <loc>https://facelab.github.io/webmorph//reference/social_media_size.html</loc>
   </url>
   <url>
+    <loc>https://facelab.github.io/webmorph//reference/squash_tem.html</loc>
+  </url>
+  <url>
     <loc>https://facelab.github.io/webmorph//reference/sub-.stimlist.html</loc>
   </url>
   <url>
@@ -197,6 +194,9 @@
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/subset.stimlist.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph//reference/subset_tem.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph//reference/svgBezier.html</loc>

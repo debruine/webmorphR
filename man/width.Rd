@@ -19,5 +19,5 @@ Image widths
 }
 \examples{
 
-demo_stim("rainbow") \%>\% width()
+demo_stim() \%>\% width()
 }

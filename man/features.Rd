@@ -15,7 +15,7 @@ features(..., tem_id = "FRL")
 vector of corresponding FRL template indices
 }
 \description{
-Get point indices for features, usually for use with \code{\link{pt_subset}}.
+Get point indices for features, usually for use with \code{\link{subset_tem}}.
 }
 \details{
 Available features for the FRL template are: "gmm", "oval", "face", "mouth", "nose", "eyes", "brows", "left_eye",  "right_eye", "left_brow",  "right_brow", "ears", "undereyes", "teeth", "smile_lines", "cheekbones", "philtrum", "chin", "neck", "halo".

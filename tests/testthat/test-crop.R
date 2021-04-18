@@ -17,15 +17,6 @@ test_that("works", {
   expect_equal(info$height, h)
   expect_equal(stimuli[[1]]$points - c(ow-w, oh-h)/2, ctems[[1]]$points)
 
-
-  # squash
-  ctems <- crop(stimuli, w, h, squash = TRUE)
-  draw_tem(ctems)
-  expect_equal(ctems[[1]]$points[2,140], c(y = 0))
-  expect_equal(ctems[[1]]$points[1,118], c(x = 0))
-  expect_equal(ctems[[1]]$points["x",123], c(x = w-1))
-  expect_equal(ctems[[1]]$points["y",146], c(y = h-1))
-
   # with offsets
   ctems <- crop(stimuli, w, h, 50, 75)
   info <- magick::image_info(ctems[[1]]$img)

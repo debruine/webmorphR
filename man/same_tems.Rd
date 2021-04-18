@@ -16,6 +16,10 @@ logical
 Check All Templates are the Same
 }
 \examples{
-demo_stim() \%>\% same_tems()
-c(demo_stim("test"), demo_stim("lisa")) \%>\% same_tems()
+stim <- demo_stim()
+stim2 <- subset_tem(stim, features("gmm"))
+
+same_tems(stim)
+
+c(stim, stim2) \%>\% same_tems()
 }

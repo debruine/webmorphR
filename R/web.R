@@ -367,7 +367,7 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
 #'
 #' @examples
 #' \dontrun{
-#'   stimuli <- demo_stim("london", 1) %>% resize(0.5)
+#'   stimuli <- demo_stim()[1]
 #'
 #'   sym_both <- symmetrize(stimuli)
 #'   sym_shape <- symmetrize(stimuli, color = 0)

@@ -52,8 +52,4 @@ revmasked <- mask(stimuli, "eyes", "#FFFF00", TRUE) \%>\%
   mask("nose", "#FF000066", TRUE) \%>\%
   mask("mouth", "blue", TRUE)
 
-masked_fpp <- demo_stim("lisa")  \%>\%
-  crop_tem() \%>\%
-  mask(mask = c("face"), tem_id = "fpp106")
-
 }

@@ -31,10 +31,6 @@
 #'   mask("nose", "#FF000066", TRUE) %>%
 #'   mask("mouth", "blue", TRUE)
 #'
-#' masked_fpp <- demo_stim("lisa")  %>%
-#'   crop_tem() %>%
-#'   mask(mask = c("face"), tem_id = "fpp106")
-#'
 mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
                  reverse = FALSE, expand = 1, tem_id = "FRL") {
   stimuli <- validate_stimlist(stimuli, TRUE)

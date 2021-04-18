@@ -15,9 +15,9 @@ average_tem(stimuli, name = "average")
 list with class stimlist
 }
 \description{
-This function just averages the templates. An average image is returned, but it is just all the images superimposed. To create a full average, see \code{\link{avg}}.
+This function just averages the templates. An average image is returned, but it is just all the images superimposed. To create a template-aware average, see \code{\link{avg}}.
 }
 \examples{
-demo_stim("lisa") \%>\% average_tem()
+demo_stim() \%>\% average_tem()
 
 }

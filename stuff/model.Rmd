@@ -112,7 +112,7 @@ pt <- off %>%
 
 avg <- demo_stim("composite", "f_multi")
 
-avg %>% pt_subset(pt) %>% draw_tem() %>% plot()
+avg %>% subset_tem(pt) %>% draw_tem() %>% plot()
 ```
 
 
@@ -125,7 +125,7 @@ pt <- off %>%
 
 avg <- demo_stim("composite", "f_multi")
 
-avg %>% pt_subset(pt) %>% draw_tem() %>% plot()
+avg %>% subset_tem(pt) %>% draw_tem() %>% plot()
 ```
 
 
@@ -136,7 +136,7 @@ pt <- off %>%
   filter(off > 7) %>%
   pull(n)
 
-avg %>% pt_subset(pt) %>% draw_tem() %>% plot()
+avg %>% subset_tem(pt) %>% draw_tem() %>% plot()
 ```
 
 
