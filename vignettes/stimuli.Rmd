@@ -11,7 +11,6 @@ knitr::opts_chunk$set(
 )
 starttime <- Sys.time()
 library(webmorphR)
-wm_opts(plot = "ggplot")
 wm_opts(plot.maxwidth = 850)
 library(dplyr)
 ```
@@ -100,15 +99,15 @@ plot_rows(
 Now you can set names and save your individual stimuli in a directory to use in studies.
 
 ```{r save}
-avg %>% setnames("m_avg") %>% write_stim("stimuli", "jpg")
+avg %>% write_stim("stimuli", "m_avg", "jpg")
                                          
 cropped %>%
   setnames(pattern = "_03", replacement = "", prefix = "orig_") %>%
-  write_stim("stimuli", "jpg")
+  write_stim("stimuli", format = "jpg")
 
 transf %>%
   setnames(pattern = "_03", replacement = "") %>%
-  write_stim("stimuli", "jpg")
+  write_stim("stimuli", format = "jpg")
 ```
 
 Now you can pipe all of the commands together and apply them to a new set of images, such as all the black women in the set.
@@ -134,15 +133,15 @@ transf <- trans(trans_img = cropped,
                 shape = c(avg = -0.5, dist = 0.5))
 
 # save
-avg %>% setnames("f_avg") %>% write_stim("stimuli", "jpg")
+avg %>% write_stim("stimuli", "f_avg", "jpg")
 
 cropped %>%
   setnames(pattern = "_03", replacement = "", prefix = "orig_") %>%
-  write_stim("stimuli", "jpg")
+  write_stim("stimuli", format = "jpg")
 
 transf %>%
   setnames(pattern = "_03", replacement = "") %>%
-  write_stim("stimuli", "jpg")
+  write_stim("stimuli", format = "jpg")
 
 ```
 

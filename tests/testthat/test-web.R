@@ -46,7 +46,7 @@ test_that("trans", {
   fem_masc <- trans(s, s$f_multi, s$m_multi,
               shape = c(fem = -0.5, masc = 0.5))
 
-  expect_equal(names(fem_masc), c("f_multi_fem", "f_multi_masc", "m_multi_fem", "m_multi_masc"))
+  expect_equal(names(fem_masc), c("f_multi_fem", "m_multi_fem", "f_multi_masc", "m_multi_masc"))
 
   steps <- seq(0, 1, .2)
   faces <- demo_stim() %>% resize(0.5)

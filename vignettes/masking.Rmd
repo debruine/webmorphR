@@ -13,7 +13,6 @@ knitr::opts_chunk$set(
 starttime <- Sys.time()
 
 library(webmorphR)
-wm_opts(plot = "ggplot")
 wm_opts(plot.maxwidth = 850)
 ```
 

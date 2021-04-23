@@ -13,7 +13,6 @@ knitr::opts_chunk$set(
 starttime <- Sys.time()
 
 library(webmorphR)
-wm_opts(plot = "ggplot")
 wm_opts(plot.maxwidth = 850)
 ```
 
@@ -102,29 +101,51 @@ lisa %>%
 The function`to_size()` combines crop and resize to get a batch of images to the same size.
 
 ```{r}
+s <- demo_stim()[1]
 multisize <- c(
-    demo_stim("test")[[1]],
-    demo_stim("lisa")[[1]],
-    demo_stim("composite")[[1]],
-    demo_stim("zoom")[[1]]
-  )
-
-width(multisize)
-height(multisize)
+    s,
+    s %>% resize(.5),
+    s %>% crop(0.6),
+    s %>% crop(1, 0.8)
+  ) %>% pad(10, fill = "hotpink")
 ```
 
-The code below resizes each image to fit in a 300 x 400 pixel image and fills in any extra background using the average colour from a patch in the upper left corner. 
+A 10-pixel pink border has been added to these original images so you can see what has been cropped in the subsequent images.
 
-```{r fig-fit}
-new1 <- to_size(multisize, 300, 400, patch = TRUE)
-plot(new1)
+```{r fig-to-size, echo = FALSE}
+lab <- paste0(width(multisize), "x", height(multisize))
+
+multisize %>% 
+  pad(60, 0, 0, 0) %>%
+  label(lab, size = 40) %>%
+  plot()
 ```
 
-Set `keep_rels = TRUE` to keep the relative sizes. 
+The code below resizes each image to fit into a 300 x 400 pixel image and fills in any extra background with blue.
 
-```{r fig-fit-rel}
-new2 <- to_size(multisize, 300, 400, patch = TRUE, keep_rels = TRUE)
-plot(new2)
+```{r fig-fit-pad}
+fit_pad <- to_size(multisize, 300, 400, fill = "dodgerblue")
+plot(fit_pad)
+```
+Set `keep_rels = TRUE` to brings the largest image to fit in the new size, resize the others proportionally, and pad.
+
+```{r fig-rel-pad}
+rel_pad <- to_size(multisize, 300, 400, fill = "dodgerblue", keep_rels = TRUE)
+plot(rel_pad)
+```
+
+Set `crop = TRUE` to bring all images to cover new size and crop the "overhang". There is no need to set the fill color for padding when crop is TRUE.
+
+```{r fig-fit-crop}
+fit_crop <- to_size(multisize, 300, 400, crop = TRUE)
+plot(fit_crop)
+```
+
+Set `keep_rels = TRUE` to bring the smallest image to cover the new size, resize the others proportionally, and crop any overhang. 
+
+```{r fig-rel-crop}
+rel_crop <- to_size(multisize, 300, 400, crop = TRUE, keep_rels = TRUE)
+plot(rel_crop)
 ```
 
 
