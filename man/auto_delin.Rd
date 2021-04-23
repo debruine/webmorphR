@@ -13,7 +13,7 @@ auto_delin(stimuli, style = c("fpp106", "fpp83"), replace = FALSE, face = 1)
 
 \item{replace}{if FALSE, only gets templates for images with no template}
 
-\item{face}{which face to delineate if there is more than 1}
+\item{face}{which face to delineate in each image if there is more than 1}
 }
 \value{
 stimlist with templates

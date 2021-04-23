@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorphR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9004</span>
       </span>
     </div>
 
@@ -154,15 +154,15 @@
 <p><img src="stimuli_files/figure-html/male-grid-1.png" width="100%"></p>
 <p>Now you can set names and save your individual stimuli in a directory to use in studies.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">avg</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span><span class="st">"m_avg"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, <span class="st">"jpg"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">avg</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, <span class="st">"m_avg"</span>, <span class="st">"jpg"</span><span class="op">)</span>
                                          
 <span class="va">cropped</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"_03"</span>, replacement <span class="op">=</span> <span class="st">""</span>, prefix <span class="op">=</span> <span class="st">"orig_"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, <span class="st">"jpg"</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, format <span class="op">=</span> <span class="st">"jpg"</span><span class="op">)</span>
 
 <span class="va">transf</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"_03"</span>, replacement <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, <span class="st">"jpg"</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, format <span class="op">=</span> <span class="st">"jpg"</span><span class="op">)</span></code></pre></div>
 <p>Now you can pipe all of the commands together and apply them to a new set of images, such as all the black women in the set.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -185,15 +185,15 @@
                 shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>avg <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>, dist <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># save</span>
-<span class="va">avg</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span><span class="st">"f_avg"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, <span class="st">"jpg"</span><span class="op">)</span>
+<span class="va">avg</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, <span class="st">"f_avg"</span>, <span class="st">"jpg"</span><span class="op">)</span>
 
 <span class="va">cropped</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"_03"</span>, replacement <span class="op">=</span> <span class="st">""</span>, prefix <span class="op">=</span> <span class="st">"orig_"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, <span class="st">"jpg"</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, format <span class="op">=</span> <span class="st">"jpg"</span><span class="op">)</span>
 
 <span class="va">transf</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"_03"</span>, replacement <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, <span class="st">"jpg"</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, format <span class="op">=</span> <span class="st">"jpg"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">avg_i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span>
 <span class="va">dist_i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span>

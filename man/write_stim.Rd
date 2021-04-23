@@ -4,12 +4,14 @@
 \alias{write_stim}
 \title{Write tems and images to files}
 \usage{
-write_stim(stimuli, dir = ".", format = "png", ...)
+write_stim(stimuli, dir = ".", names = NULL, format = "png", ...)
 }
 \arguments{
 \item{stimuli}{list of class stimlist}
 
 \item{dir}{Directory to save to}
+
+\item{names}{A vector of stimulus names or NULL to use names fro the stimuli list}
 
 \item{format}{output format such as "png", "jpeg", "gif"}
 
@@ -23,6 +25,6 @@ Write tems and images to files
 }
 \examples{
 \dontrun{
-  demo_stim() \%>\% write_stim("test_faces", "jpg")
+  demo_stim() \%>\% write_stim("test_faces", format = "jpg")
 }
 }

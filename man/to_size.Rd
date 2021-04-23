@@ -2,7 +2,7 @@
 % Please edit documentation in R/to_size.R
 \name{to_size}
 \alias{to_size}
-\title{Resize and crop images to a specified size}
+\title{Resize and crop/pad images to a specified size}
 \usage{
 to_size(
   stimuli,
@@ -10,6 +10,7 @@ to_size(
   height = NULL,
   fill = wm_opts("fill"),
   patch = FALSE,
+  crop = FALSE,
   keep_rels = FALSE
 )
 }
@@ -24,13 +25,15 @@ to_size(
 
 \item{patch}{whether to use the patch function to set the background color}
 
+\item{crop}{whether to crop or pad images to make them the specified size}
+
 \item{keep_rels}{whether to keep the size relationships between images in the set, or make all the maximum size}
 }
 \value{
 stimlist with cropped tems and/or images
 }
 \description{
-Resize and crop images to a specified size
+Resize and crop/pad images to a specified size
 }
 \examples{
 

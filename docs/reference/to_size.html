@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Resize and crop images to a specified size — to_size • webmorphR</title>
+<title>Resize and crop/pad images to a specified size — to_size • webmorphR</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Resize and crop images to a specified size — to_size" />
-<meta property="og:description" content="Resize and crop images to a specified size" />
+<meta property="og:title" content="Resize and crop/pad images to a specified size — to_size" />
+<meta property="og:description" content="Resize and crop/pad images to a specified size" />
 <meta property="og:image" content="https://facelab.github.io/webmorph/reference/figures/card.png" />
 <meta property="og:image:alt" content="Blue hexagon with a simplified white wireframe face" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorphR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9004</span>
       </span>
     </div>
 
@@ -147,13 +147,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Resize and crop images to a specified size</h1>
+    <h1>Resize and crop/pad images to a specified size</h1>
     <small class="dont-index">Source: <a href='https://github.com/debruine/webmorphR/blob/master/R/to_size.R'><code>R/to_size.R</code></a></small>
     <div class="hidden name"><code>to_size.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Resize and crop images to a specified size</p>
+    <p>Resize and crop/pad images to a specified size</p>
     </div>
 
     <pre class="usage"><span class='fu'>to_size</span><span class='op'>(</span>
@@ -162,6 +162,7 @@
   height <span class='op'>=</span> <span class='cn'>NULL</span>,
   fill <span class='op'>=</span> <span class='fu'><a href='wm_opts.html'>wm_opts</a></span><span class='op'>(</span><span class='st'>"fill"</span><span class='op'>)</span>,
   patch <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  crop <span class='op'>=</span> <span class='cn'>FALSE</span>,
   keep_rels <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
@@ -187,6 +188,10 @@
     <tr>
       <th>patch</th>
       <td><p>whether to use the patch function to set the background color</p></td>
+    </tr>
+    <tr>
+      <th>crop</th>
+      <td><p>whether to crop or pad images to make them the specified size</p></td>
     </tr>
     <tr>
       <th>keep_rels</th>

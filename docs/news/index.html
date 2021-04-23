@@ -83,7 +83,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorphR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9003</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9004</span>
       </span>
     </div>
 
@@ -150,16 +150,31 @@
       <small>Source: <a href='https://github.com/debruine/webmorphR/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="webmorph-0019004" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.1.9004">
+<a href="#webmorph-0019004" class="anchor"></a>webmorph 0.0.1.9004</h1>
+<ul>
+<li>Fixed bug in <code><a href="../reference/mask_oval.html">mask_oval()</a></code> when setting bounds manually that had reversed top and bottom values.</li>
+<li>
+<code><a href="../reference/trans.html">trans()</a></code> now returns images in a more sensible order.</li>
+<li>added ability to rename images to <code><a href="../reference/write_stim.html">write_stim()</a></code>
+</li>
+<li>
+<code><a href="../reference/to_size.html">to_size()</a></code> crop argument added.</li>
+<li>Images from <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> displayed in the correct aspect ratio in RMarkdown files by default now.</li>
+</ul>
+</div>
     <div id="webmorph-0019003" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1.9003">
 <a href="#webmorph-0019003" class="anchor"></a>webmorph 0.0.1.9003</h1>
 <ul>
-<li>demo imagesets removed so <code><a href="../reference/demo_stim.html">demo_stim()</a></code> needs to load “london”, “smiling”, “composite”, “lisa”, “zoom”, and “rainbow” from stimsets the first time you use them</li>
+<li>demo imagesets removed so <code><a href="../reference/demo_stim.html">demo_stim()</a></code> needs to load “london”, “smiling”, “composite”, “lisa”, “zoom”, and “rainbow” from stimsets using <code><a href="https://remotes.r-lib.org/reference/install_github.html">remotes::install_github("debruine/stimsets")</a></code>
+</li>
 <li>
 <code><a href="../reference/image_comp.html">image_comp()</a></code> to calculate difference between images in a way that corresponds to morph continuua differences</li>
 <li>crop_pad renamed to <code><a href="../reference/crop_tem.html">crop_tem()</a></code>
 </li>
-<li>frl_features renames to <code><a href="../reference/features.html">features()</a></code>
+<li>frl_features renamed to <code><a href="../reference/features.html">features()</a></code>
 </li>
 <li>as always, bug fixes too numerous to mention</li>
 </ul>
