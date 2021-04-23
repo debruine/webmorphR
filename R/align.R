@@ -164,6 +164,8 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
 #' @keywords internal
 #'
 procrustes_align <- function(data, ref_img = NULL) {
+  suppressMessages(requireNamespace("geomorph"))
+  
   n <- dim(data)[3]
   if (is.null(ref_img)) {
     # calcuate average and add as img 1

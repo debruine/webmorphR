@@ -11,7 +11,7 @@
 #' @param stimuli list of class stimlist
 #' @param style Which service and number of landmarks
 #' @param replace if FALSE, only gets templates for images with no template
-#' @param face which face to delineate if there is more than 1
+#' @param face which face to delineate in each image if there is more than 1
 #'
 #' @return stimlist with templates
 #' @export
@@ -56,7 +56,7 @@ auto_delin <- function(stimuli, style = c("fpp106", "fpp83"), replace = FALSE, f
   )
 
   tempdir <- tempfile()
-  write_stim(stimuli, tempdir, "jpg")
+  write_stim(stimuli, tempdir, format = "jpg")
 
   # get line definitions
   fpp <- tem_def(style)

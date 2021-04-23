@@ -26,7 +26,7 @@ avg <- function(stimuli,
 
   # save images locally
   tdir <- tempfile()
-  files <- write_stim(stimuli, tdir, "jpg") %>% unlist()
+  files <- write_stim(stimuli, tdir, format = "jpg") %>% unlist()
   upload <- lapply(files, httr::upload_file)
   names(upload) <- sprintf("upload[%d]", 0:(length(upload)-1))
 
@@ -191,8 +191,8 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
 
   # save images locally
   tdir <- tempfile()
-  files <- write_stim(to_upload[nondupes], tdir, "jpg") %>% unlist()
-  if (length(files) > 20) {
+  files <- write_stim(to_upload[nondupes], tdir, format = "jpg") %>% unlist()
+  if (length(files) > 200) {
     stop("Sorry! We can't upload more than 100 images at a time. You will need to break your transform into smaller chunks.")
   }
   upload <- lapply(files, httr::upload_file)
@@ -204,6 +204,9 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
                     to = names(to_img))
   n_img <- sapply(filenames, length) %>% max()
   filenames <- lapply(filenames, rep_len, n_img) %>% as.data.frame()
+  filenames$trans <- factor(filenames$trans, unique(filenames$trans))
+  filenames$from <- factor(filenames$from, unique(filenames$from))
+  filenames$to <- factor(filenames$to, unique(filenames$to))
 
   n_param <- list(shape, color, texture) %>%
     sapply(length) %>% max()
@@ -214,6 +217,9 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
   )
 
   batch <- tidyr::crossing(param, filenames)
+  batch$trans <- as.character(batch$trans)
+  batch$from <- as.character(batch$from)
+  batch$to <- as.character(batch$to)
 
   # clean params
   for (x in c("shape", "color", "texture")) {
@@ -254,13 +260,13 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
 
     # factorise to keep order
     if (!all(imgnames$trans == "")) {
-      imgnames$trans <- factor(imgnames$trans, trans_names)
+      imgnames$trans <- factor(imgnames$trans, unique(trans_names))
     }
     if (!all(imgnames$from == "")) {
-      imgnames$from <- factor(imgnames$from, from_names)
+      imgnames$from <- factor(imgnames$from, unique(from_names))
     }
     if (!all(imgnames$to == "")) {
-      imgnames$to <- factor(imgnames$to, to_names)
+      imgnames$to <- factor(imgnames$to, unique(to_names))
     }
 
     paramnames <- data.frame(
@@ -337,21 +343,21 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
   r <- httr::POST(url, body = c(upload, settings) ,
                   httr::write_disk(ziptmp, TRUE))
 
-  utils::unzip(ziptmp, exdir = paste0(tdir, "/trans"))
+  utils::unzip(ziptmp, exdir = file.path(tdir, "trans"))
 
   # check return zip
-  nfiles <- paste0(tdir, "/trans") %>% list.files() %>% length()
+  nfiles <- file.path(tdir, "trans") %>% list.files() %>% length()
   if (nfiles == 0) {
     resp <- httr::content(r)
     stop(resp$errorText, call. = FALSE)
   }
 
-  trans <- paste0(tdir, "/trans") %>%
+  trans <- file.path(tdir, "trans") %>%
     read_stim()
   unlink(tdir, recursive = TRUE) # clean up temp directory
   # trans %>% draw_tem() %>% plot()
 
-  trans
+  trans[batch$outname]
 }
 
 

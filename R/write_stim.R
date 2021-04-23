@@ -2,6 +2,7 @@
 #'
 #' @param stimuli list of class stimlist
 #' @param dir Directory to save to
+#' @param names A vector of stimulus names or NULL to use names fro the stimuli list
 #' @param format output format such as "png", "jpeg", "gif"
 #' @param ... other arguments to pass to magick::image_write
 #'
@@ -10,10 +11,21 @@
 #'
 #' @examples
 #' \dontrun{
-#'   demo_stim() %>% write_stim("test_faces", "jpg")
+#'   demo_stim() %>% write_stim("test_faces", format = "jpg")
 #' }
-write_stim <- function(stimuli, dir = ".", format = "png", ...) {
+write_stim <- function(stimuli, dir = ".", names = NULL, format = "png", ...) {
   stimuli <- validate_stimlist(stimuli)
+  
+  if (!is.null(names)) {
+    n <- length(stimuli)
+    if (length(names) > n) {
+      names <- names[1:n]
+    } else if (length(names) < n) {
+      names <- rep_len(names, n) %>% paste0("_", 1:n)
+    }
+    
+    stimuli <- setnames(stimuli, names)
+  }
 
   # make dir if it doesn't exist
   if (!dir.exists(dir)) {

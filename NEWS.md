@@ -1,9 +1,17 @@
+# webmorph 0.0.1.9004
+
+* Fixed bug in `mask_oval()` when setting bounds manually that had reversed top and bottom values.
+* `trans()` now returns images in a more sensible order.
+* added ability to rename images to `write_stim()`
+* `to_size()` crop argument added.
+* Images from `plot()` displayed in the correct aspect ratio in RMarkdown files by default now.
+
 # webmorph 0.0.1.9003
 
-* demo imagesets removed so `demo_stim()` needs to load "london", "smiling", "composite", "lisa", "zoom", and "rainbow" from stimsets the first time you use them
+* demo imagesets removed so `demo_stim()` needs to load "london", "smiling", "composite", "lisa", "zoom", and "rainbow" from stimsets  using `remotes::install_github("debruine/stimsets")`
 * `image_comp()` to calculate difference between images in a way that corresponds to morph continuua differences
 * crop_pad renamed to `crop_tem()`
-* frl_features renames to `features()`
+* frl_features renamed to `features()`
 * as always, bug fixes too numerous to mention
 
 # webmorph 0.0.1.9002

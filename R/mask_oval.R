@@ -33,8 +33,10 @@ mask_oval <- function(stimuli, bounds = NULL, fill = wm_opts("fill"), each = TRU
 
   if (is.null(bounds)) {
     bounds <- bounds(stimuli, each)
-    bounds$top <- h - bounds$max_y
+    bounds$top <- bounds$min_y
     bounds$right <- w - bounds$max_x
+    bounds$bottom <- h - bounds$max_y
+    bounds$left <-  bounds$min_x
   } else {
     bounds <- as.list(bounds)
   }
@@ -42,14 +44,14 @@ mask_oval <- function(stimuli, bounds = NULL, fill = wm_opts("fill"), each = TRU
   borders <- list(
     t = bounds$top %||% bounds$t %||% bounds[1],
     r = bounds$right %||% bounds$r %||% bounds[2],
-    b = bounds$min_y %||% bounds$bottom %||% bounds$b %||% bounds[3],
-    l = bounds$min_x %||% bounds$left %||% bounds$l %||% bounds[4]
+    b = bounds$bottom %||% bounds$b %||% bounds[3],
+    l = bounds$left %||% bounds$l %||% bounds[4]
   )
 
   rx <- ((w - borders$r - borders$l)/2) %>% rep_len(n)
   ry <- ((h - borders$t - borders$b)/2) %>% rep_len(n)
   cx <- (borders$l + rx) %>% rep_len(n)
-  cy <- (borders$b + ry) %>% rep_len(n)
+  cy <- (borders$t + ry) %>% rep_len(n)
   fill <- rep_len(fill, n)
 
   svg_text <- "<svg

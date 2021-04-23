@@ -10,7 +10,7 @@
     webmorph.pt.color = "green",
     webmorph.fill = "white",
     webmorph.server = "https://webmorph.org",
-    webmorph.plot = "magick",
+    webmorph.plot = "inline",
     webmorph.plot.maxwidth = 10000,
     webmorph.plot.maxheight = 10000
   )

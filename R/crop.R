@@ -101,6 +101,9 @@ crop <- function(stimuli,
         composite_image = newimg,
         offset = offset
       )
+      info <- magick::image_info(stimuli[[i]]$img)
+      stimuli[[i]]$width <- info$width[[1]]
+      stimuli[[i]]$height <- info$height[[1]]
     }
 
     if (!is.null(stimuli[[i]]$points)) {

@@ -51,14 +51,20 @@ print.stimlist <- function(x, ...) {
 
   img <- get_imgs(x)
 
-  # print image as ggplot if option set and not knitting
+  # print image inline if option set and not knitting
+  # TODO: only run this if in an Rmd chunk
   if (length(img) == 1 &&
-      wm_opts("plot") == "ggplot" &&
+      wm_opts("plot") == "inline" &&
+      interactive() &&
+      rstudioapi::readRStudioPreference("rmd_chunk_output_inline", NA) &&
       !isTRUE(getOption("knitr.in.progress"))) {
-    magick::image_ggplot(img) %>% print()
-  } else {
-    print(img, FALSE)
+    tmp <- tempfile(fileext = ".png")
+    magick::image_write(img, tmp)
+    knitr::include_graphics(tmp) %>% print()
   }
+  
+  # prints in the viewer if not in an Rmd document
+  print(img, FALSE)
 }
 
 #' Subset Stimulus Lists
