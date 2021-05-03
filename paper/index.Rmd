@@ -90,6 +90,8 @@ wm_opts(plot.maxwidth = 850)
     background-color: #EEE;
     border-radius: 1em;
   }
+  
+  address { display: none; }
 </style>
 
 ## Introduction
@@ -98,8 +100,7 @@ Face stimuli are commonly used in research on visual and social perception. This
 
 Gronenschild and colleagues [-@Gronenschild_2009] argue for the importance of standardizing face stimuli so that they are not "confounded by factors such as brightness and contrast, head size, hair cut and color, skin color, and the presence of glasses and earrings". They describe a three-step standardization process. First, they manually removed features such as glasses and earrings in Photoshop. Second, they geometrically standardized images by semi-automatically defining eye and mouth coordinates used to fit the images within an oval mask, Third, they optically standardized images by converting them to greyscale and remapping values between the minimum and 98% threshold onto the full range of values. While laudable in its aims, this procedure has not achieved widespread adoption, probably because the authors provided no code or tools. In personal communication, the main author said that this is because "the procedure is based on standard image processing algorithms described in many textbooks". However, I was unable to easily replicate the procedure and found several places where instructions had more than one possible interpretation or relied on the starting images having specific properties, such as symmetric lighting reflections in the eyes.
 
-
-Scope of this type of research. How many papers, what range of questions?
+**Scope of this type of research. How many papers, what range of questions?**
 
 ### Reproducibility!
 
@@ -160,7 +161,7 @@ MatLab [@higham2016matlab] is widely used within visual psychophysics. A Google 
 > The average pixel intensity of each image (ranging from 0 to 255) was set to 128 with a standard deviation of 40 using the SHINE toolbox (function lumMatch) (Willenbockel et al., 2010) in MATLAB (version 8.1.0.604, R2013a). [@visconti2014facilitated, p. 2]
 
 
-ImageMagick [@imagemagick] is a free, open-source program that creates, edits, and converts images in a scriptable manner. The {magick} R package allows you to script image manipulations in R using ImageMagick [@R-magick].
+ImageMagick [@imagemagick] is a free, open-source program that creates, edits, and converts images in a scriptable manner. The {magick} R package [@R-magick] allows you to script image manipulations in R using ImageMagick.
 
 > Images were cropped, resized to 150 × 150 pixels, and then grayscaled using ImageMagick (version 6.8.7-7 Q16, x86_64, 2013-11-27) on Mac OS X 10.9.2. [@visconti2014facilitated, p. 2]
 
@@ -180,10 +181,12 @@ Many researchers describe image manipulation generically or use "in-house" metho
 
 The reference above [@gonzalez2002digital] has been cited by 2384 papers on Google Scholar, and is a 190-page book. It mentions bilinear interpolation on pages 64--66 in the context of calculating pixel color when resizing images and it's unclear how this could be used to morph shape.
 
-> Each face was put into an oval so that the hairstyle was not visible. The oval was 670 pixels high x 510 pixels wide, which corresponded to a size of about 14.5 x 11 cm on the screen. [baudouin2006face, p. 792]
+> Each face was put into an oval so that the hairstyle was not visible. The oval was 670 pixels high x 510 pixels wide, which corresponded to a size of about 14.5 x 11 cm on the screen. [@baudouin2006face, p. 792]
 
 
 #### Psychomorph/WebMorph
+
+**TO DO**
 
 [@benson1993extracting]
 [@rowland1995manipulating]
@@ -194,7 +197,7 @@ The reference above [@gonzalez2002digital] has been cited by 2384 papers on Goog
 
 Research with identifiable faces has a number of ethical issues. This means it is not always possible to share the exact images used in a study. Then it is all the more important for the stimulus construction methods to be clear and reproducible. However, there are other ethical issues outside of image sharing that we feel are important to highlight in an paper discussing the use of face images in research.
 
-The use of face photographs must respect participant consent and personal data privacy. Images that are "freely" available on the internet are a grey area and the ethical issues should be carefully considered and approved by the relevant ethics board.
+The use of face photographs must respect participant consent and personal data privacy. Images that are "freely" available on the internet are a grey area and the ethical issues should be carefully considered by the researchers and relevant ethics board.
 
 Do not use face images in research where there is a possibility of real-world consequences for the pictured individuals. For example, do not post identifiable images of real people on real dating sites without the explicit consent of the pictured individuals for that specific research.
 
@@ -212,7 +215,8 @@ terms <- tibble::tribble(
   "transforming", "changing the shape and/or color of an image by some proportion of a vector that is  defined as the difference between two images",
   "delineation", "the x- and y-coordinates for a specific template that describe an image",
   "lines", "connections between landmarks; these may be used to interpolate new landmarks for morphing",
-  "prototype", "an average of faces with similar characteristics, such as expression, gender, age, and/or ethnic group"
+  "prototype", "an average of faces with similar characteristics, such as expression, gender, age, and/or ethnic group",
+  "composite", "an average of more than one face image"
 ) %>%
   dplyr::arrange(Term)
 
@@ -227,7 +231,7 @@ kableExtra::kable(terms, caption = "Glossary of terms.") %>%
 
 ### Editing
 
-Almost all imagesets start with raw images that need to be cropped, resized, rotated, padded, and/or color normalised Although many reproducible methods exist to manipulate images in these ways, they are complicated when an image has an associated template, so {webmorphR} has functions that alter the image and template together (Fig.\ \@ref(fig:editing)).
+Almost all imagesets start with raw images that need to be cropped, resized, rotated, padded, and/or color normalised. Although many reproducible methods exist to manipulate images in these ways, they are complicated when an image has an associated template, so webmorphR has functions that alter the image and template together (Fig.\ \@ref(fig:editing)).
 
 ```{r, echo = TRUE}
 orig <- demo_stim("test", 1) # load one demo image
@@ -286,12 +290,10 @@ fpp_tem <- auto_delin(f, replace = TRUE)
 ```
 
 ```{r auto-delin, fig.cap="Delineation templates: (A) manual delineations using the FRL template and (B) automatic delineations using the Face++ template."}
-plot_rows(A = draw_tem(f), B = draw_tem(fpp_tem),
-  top_label = TRUE
-)
+plot_rows(A = draw_tem(f), B = draw_tem(fpp_tem))
 ```
 
-A study comparing the accuracy of four common measures of face shape (sexual dimorphism, distinctiveness, bilateral asymmetry, and facial width to height ratio) between automatic and manual delineation concluded that automatic delineation had higher replicability and good correlations with manual delineation [@jones2020facial]. However, <2% of images had noticeably inaccurate automatic delineation, which should be screened for by outlier detection and visual inspection. 
+A study comparing the accuracy of four common measures of face shape (sexual dimorphism, distinctiveness, bilateral asymmetry, and facial width to height ratio) between automatic and manual delineation concluded that automatic delineation had higher replicability and good correlations with manual delineation [@jones2020facial]. However, around 2% of images had noticeably inaccurate automatic delineation, which should be screened for by outlier detection and visual inspection. 
 
 While automatic delineation has the advantage of being very fast and generally more replicable than manual delineation, it is more limited in the areas that can be described. Typically, automatic face detection algorithms outline the lower face shape and internal features of the face, but don't define the hairline, hair, neck, or ears. Manual delineation of these can greatly improve stimuli created through morphing or transforming (Fig.\ \@ref(fig:avg-comp)).
 
@@ -368,7 +370,7 @@ plot_rows(A = onept, B = twopt, C = proc)
 
 ### Masking
 
-(effect in masc paper) [@debruine2006correlated].
+Oftentimes, researchers will want to remove the background, hair, and clothing from an image to avoid confounds. For example, the presence versus absence of hairstyle information can reverse preferences for masculine versus feminine male averages [@debruine2006correlated].
 
 The "standard oval mask" has enjoyed widespread popularity because it is straightforward to add to images using programs like PhotoShop. WebmorphR's `mask_oval()` function allows you to set oval boundaries manually (Fig.\ \@ref(fig:mask)A) or in relation to minimum and maximum template coordinates for each face (Fig.\ \@ref(fig:mask)B). An arguably better way to mask out hair, clothing and background from images is to crop around the curves defined by the template (Fig.\ \@ref(fig:mask)C). 
 
@@ -487,13 +489,13 @@ right_mirror <- mirror(right_side)
 left_left <- mapply(function(ls, rs) {
   c(ls, rs) %>% plot(padding = 0)
 }, left_side, left_mirror) %>%
-  crop(width(hzeyes), height(hzeyes))
+  crop(width(., "max"), height(., "max"))
 
 
 right_right <- mapply(function(ls, rs) {
   c(ls, rs) %>% plot(padding = 0)
 }, right_mirror, right_side) %>%
-  crop(width(hzeyes), height(hzeyes))
+  crop(width(., "max"), height(., "max"))
 
 plot_rows(left_left, right_right)
 ```
@@ -533,7 +535,7 @@ smiling <- demo_stim("smiling") %>%
   add_info(stimsets::london_info)
 ```
 
-Each subject has one smiling and one neutral pose. For each pose, 5 full colour images were simultaneously taken from different angles: left profile, left three-quarter, front, right three-quarter, and right profile, but we will only use the front-facing images in the examples below. These images were cropped to 1350x1350 pixels and the faces were manually centered (I did this many years ago before I made the tools in this paper). The neutral front images have template files that mark out 189 coordinates delineating face shape for use with Psychomorph or WebMorph.
+Each subject has one smiling and one neutral pose. For each pose, 5 full colour images were simultaneously taken from different angles: left profile, left three-quarter, front, right three-quarter, and right profile, but we will only use the front-facing images in the examples below. These images were cropped to 1350x1350 pixels and the faces were manually centered (Lisa did this many years ago before we made the tools in this paper). The neutral front images have template files that mark out 189 coordinates delineating face shape for use with Psychomorph or WebMorph.
 
 ### Protoypes
 
@@ -644,7 +646,7 @@ plot_rows(A = subset(sexdim, "_fem"),
 
 ### Self-resemblance transform
 
-Much of my own research involves creating "virtual siblings" for participants to test how they perceive and behave towards strangers with phenotypic kinship cues [@DeBruine_2004PRSLB;DeBruine_2005PRSLB;DeBruine_2011PNAS]. As discussed in detail in DeBruine et al. [-@DeBruine_2008ASB], while morphing techniques are sufficient to create same-gender virtual siblings, transforming techniques are required to make other-gender virtual siblings without confounding self-resemblance with androgyny (Fig.\ \@ref(fig:virtual-sibs)).
+Much of my own research involves creating "virtual siblings" for participants to test how they perceive and behave towards strangers with phenotypic kinship cues [@DeBruine_2004PRSLB;@DeBruine_2005PRSLB;@DeBruine_2011PNAS]. As discussed in detail in DeBruine et al. [-@DeBruine_2008ASB], while morphing techniques are sufficient to create same-gender virtual siblings, transforming techniques are required to make other-gender virtual siblings without confounding self-resemblance with androgyny (Fig.\ \@ref(fig:virtual-sibs)).
 
 ```{r, echo = TRUE}
 virtual_sis <- trans(
@@ -662,7 +664,7 @@ virtual_bro <- trans(
   mask(c("face", "neck","ears"))
 ```
 
-```{r virtual-sibs, fig.cap="Creating vitual siblings: (A) original images, (B) virtual brothers, (C) virtual sisters."}
+```{r virtual-sibs, fig.cap="Creating virtual siblings: (A) original images, (B) virtual brothers, (C) virtual sisters."}
 plot_rows(A = crop_tem(m), 
           B = crop_tem(virtual_bro), 
           C = crop_tem(virtual_sis))
@@ -719,7 +721,7 @@ plot_rows(ingroup, outgroup)
   * facefuns
 * Natural vs standardised source images
   * right image for the question
-* Averaging is N=1
+* Averaging is N=1 https://debruine.github.io/posts/composite-images/
 
 
 

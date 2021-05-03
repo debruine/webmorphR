@@ -286,8 +286,13 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Reproducible Methods for Face Research</h1>
-<h4 class="author">Lisa DeBruine & Iris Holzleitner (DRAFT)</h4>
-<div class="abstract">
+<h4 class="author">Lisa DeBruine</h4>
+<address class="author_afil">
+1<br><a class="author_email" href="mailto:#"><a href="mailto:lisa.debruine@glasgow.ac.uk" class="email">lisa.debruine@glasgow.ac.uk</a></a>
+</address>
+<h4 class="author">Iris Holzleitner</h4>
+<address class="author_afil">
+1,2<br><div class="abstract">
 <p class="abstract">Abstract</p>
 <p>Face stimuli are commonly created in non-reproducible ways. This paper will introduce the open-access online platform webmorph and its associated R package webmorphR. It will explain the technical processes of morphing and transforming through a case study of creating face stimuli from an open-access image set.</p>
 </div>
@@ -302,12 +307,14 @@ div.tocify {
     background-color: #EEE;
     border-radius: 1em;
   }
+  
+  address { display: none; }
 </style>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>Face stimuli are commonly used in research on visual and social perception. This almost always involves some level of stimulus preparation to rotate, resize, crop, and reposition faces on the image. In addition, many studies systematically manipulate face images by changing color and/or shape properties <span class="citation">(e.g., Alex L. Jones and Jaeger 2019; reviewed in Little, Jones, and DeBruine 2011)</span>.</p>
 <p>Gronenschild and colleagues <span class="citation">(2009)</span> argue for the importance of standardizing face stimuli so that they are not “confounded by factors such as brightness and contrast, head size, hair cut and color, skin color, and the presence of glasses and earrings.” They describe a three-step standardization process. First, they manually removed features such as glasses and earrings in Photoshop. Second, they geometrically standardized images by semi-automatically defining eye and mouth coordinates used to fit the images within an oval mask, Third, they optically standardized images by converting them to greyscale and remapping values between the minimum and 98% threshold onto the full range of values. While laudable in its aims, this procedure has not achieved widespread adoption, probably because the authors provided no code or tools. In personal communication, the main author said that this is because “the procedure is based on standard image processing algorithms described in many textbooks.” However, I was unable to easily replicate the procedure and found several places where instructions had more than one possible interpretation or relied on the starting images having specific properties, such as symmetric lighting reflections in the eyes.</p>
-<p>Scope of this type of research. How many papers, what range of questions?</p>
+<p><strong>Scope of this type of research. How many papers, what range of questions?</strong></p>
 <div id="reproducibility" class="section level3">
 <h3>Reproducibility!</h3>
 <p>Why are reproducible stimulus construction methods important?</p>
@@ -368,7 +375,7 @@ div.tocify {
 <blockquote>
 <p>The average pixel intensity of each image (ranging from 0 to 255) was set to 128 with a standard deviation of 40 using the SHINE toolbox (function lumMatch) (Willenbockel et al., 2010) in MATLAB (version 8.1.0.604, R2013a). <span class="citation">(Visconti di Oleggio Castello et al. 2014, 2)</span></p>
 </blockquote>
-<p>ImageMagick <span class="citation">(The ImageMagick Development Team 2021)</span> is a free, open-source program that creates, edits, and converts images in a scriptable manner. The {magick} R package allows you to script image manipulations in R using ImageMagick <span class="citation">(Ooms 2021)</span>.</p>
+<p>ImageMagick <span class="citation">(The ImageMagick Development Team 2021)</span> is a free, open-source program that creates, edits, and converts images in a scriptable manner. The {magick} R package <span class="citation">(Ooms 2021)</span> allows you to script image manipulations in R using ImageMagick.</p>
 <blockquote>
 <p>Images were cropped, resized to 150 × 150 pixels, and then grayscaled using ImageMagick (version 6.8.7-7 Q16, x86_64, 2013-11-27) on Mac OS X 10.9.2. <span class="citation">(Visconti di Oleggio Castello et al. 2014, 2)</span></p>
 </blockquote>
@@ -391,11 +398,12 @@ div.tocify {
 </blockquote>
 <p>The reference above <span class="citation">(Gonzalez, Woods, and others 2002)</span> has been cited by 2384 papers on Google Scholar, and is a 190-page book. It mentions bilinear interpolation on pages 64–66 in the context of calculating pixel color when resizing images and it’s unclear how this could be used to morph shape.</p>
 <blockquote>
-<p>Each face was put into an oval so that the hairstyle was not visible. The oval was 670 pixels high x 510 pixels wide, which corresponded to a size of about 14.5 x 11 cm on the screen. [baudouin2006face, p. 792]</p>
+<p>Each face was put into an oval so that the hairstyle was not visible. The oval was 670 pixels high x 510 pixels wide, which corresponded to a size of about 14.5 x 11 cm on the screen. <span class="citation">(Baudouin and Gallay 2006, 792)</span></p>
 </blockquote>
 </div>
 <div id="psychomorphwebmorph" class="section level4">
 <h4>Psychomorph/WebMorph</h4>
+<p><strong>TO DO</strong></p>
 <p><span class="citation">(Benson and Perrett 1993)</span>
 <span class="citation">(Rowland and Perrett 1995)</span>
 <span class="citation">(L. M. DeBruine 2018)</span></p>
@@ -404,7 +412,7 @@ div.tocify {
 <div id="ethical-issues" class="section level3">
 <h3>Ethical Issues</h3>
 <p>Research with identifiable faces has a number of ethical issues. This means it is not always possible to share the exact images used in a study. Then it is all the more important for the stimulus construction methods to be clear and reproducible. However, there are other ethical issues outside of image sharing that we feel are important to highlight in an paper discussing the use of face images in research.</p>
-<p>The use of face photographs must respect participant consent and personal data privacy. Images that are “freely” available on the internet are a grey area and the ethical issues should be carefully considered and approved by the relevant ethics board.</p>
+<p>The use of face photographs must respect participant consent and personal data privacy. Images that are “freely” available on the internet are a grey area and the ethical issues should be carefully considered by the researchers and relevant ethics board.</p>
 <p>Do not use face images in research where there is a possibility of real-world consequences for the pictured individuals. For example, do not post identifiable images of real people on real dating sites without the explicit consent of the pictured individuals for that specific research.</p>
 <p>The use of face image analysis should never be used to predict behaviour or as automatic screening. For example, face images cannot be used to predict criminality or decide who should proceed to the interview stage in a job application. This type of application is unethical because the training data is always biased. Face image analysis can be useful for researching what aspects of face images give rise to the <em>perception</em> of traits like trustworthiness, but should not be confused with the ability to detect <em>actual</em> behaviour. Researchers have a responsibility to consider how their research may be misused in this manner.</p>
 </div>
@@ -425,6 +433,14 @@ Definition
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+composite
+</td>
+<td style="text-align:left;">
+an average of more than one face image
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 delineation
@@ -489,7 +505,7 @@ changing the shape and/or color of an image by some proportion of a vector that 
 <h2>Methods</h2>
 <div id="editing" class="section level3">
 <h3>Editing</h3>
-<p>Almost all imagesets start with raw images that need to be cropped, resized, rotated, padded, and/or color normalised Although many reproducible methods exist to manipulate images in these ways, they are complicated when an image has an associated template, so {webmorphR} has functions that alter the image and template together (Fig. <a href="#fig:editing">1</a>).</p>
+<p>Almost all imagesets start with raw images that need to be cropped, resized, rotated, padded, and/or color normalised. Although many reproducible methods exist to manipulate images in these ways, they are complicated when an image has an associated template, so webmorphR has functions that alter the image and template together (Fig. <a href="#fig:editing">1</a>).</p>
 <pre class="r"><code>orig &lt;- demo_stim(&quot;test&quot;, 1) # load one demo image
 mirrored &lt;- mirror(orig)
 cropped &lt;- crop(orig, width = 0.75, height = 0.75)
@@ -723,7 +739,7 @@ fpp_tem &lt;- auto_delin(f, replace = TRUE)</code></pre>
 Figure 3: Delineation templates: (A) manual delineations using the FRL template and (B) automatic delineations using the Face++ template.
 </p>
 </div>
-<p>A study comparing the accuracy of four common measures of face shape (sexual dimorphism, distinctiveness, bilateral asymmetry, and facial width to height ratio) between automatic and manual delineation concluded that automatic delineation had higher replicability and good correlations with manual delineation <span class="citation">(Alex L. Jones, Schild, and Jones 2020)</span>. However, &lt;2% of images had noticeably inaccurate automatic delineation, which should be screened for by outlier detection and visual inspection.</p>
+<p>A study comparing the accuracy of four common measures of face shape (sexual dimorphism, distinctiveness, bilateral asymmetry, and facial width to height ratio) between automatic and manual delineation concluded that automatic delineation had higher replicability and good correlations with manual delineation <span class="citation">(Alex L. Jones, Schild, and Jones 2020)</span>. However, around 2% of images had noticeably inaccurate automatic delineation, which should be screened for by outlier detection and visual inspection.</p>
 <p>While automatic delineation has the advantage of being very fast and generally more replicable than manual delineation, it is more limited in the areas that can be described. Typically, automatic face detection algorithms outline the lower face shape and internal features of the face, but don’t define the hairline, hair, neck, or ears. Manual delineation of these can greatly improve stimuli created through morphing or transforming (Fig. <a href="#fig:avg-comp">4</a>).</p>
 <div class="figure"><span id="fig:avg-comp"></span>
 <img src="index_files/figure-html/avg-comp-1.png" alt="Averages of 5 images made using (A) the full 189-point manual template and (B) the reduced 106-point automatic template." width="100%" />
@@ -917,7 +933,7 @@ Figure 5: Original images with different alignments. (A) One-point alignment pla
 </div>
 <div id="masking" class="section level3">
 <h3>Masking</h3>
-<p>(effect in masc paper) <span class="citation">(L. M. DeBruine et al. 2006)</span>.</p>
+<p>Oftentimes, researchers will want to remove the background, hair, and clothing from an image to avoid confounds. For example, the presence versus absence of hairstyle information can reverse preferences for masculine versus feminine male averages <span class="citation">(L. M. DeBruine et al. 2006)</span>.</p>
 <p>The “standard oval mask” has enjoyed widespread popularity because it is straightforward to add to images using programs like PhotoShop. WebmorphR’s <code>mask_oval()</code> function allows you to set oval boundaries manually (Fig. <a href="#fig:mask">6</a>A) or in relation to minimum and maximum template coordinates for each face (Fig. <a href="#fig:mask">6</a>B). An arguably better way to mask out hair, clothing and background from images is to crop around the curves defined by the template (Fig. <a href="#fig:mask">6</a>C).</p>
 <pre class="r"><code># standard oval mask
 bounds &lt;- list(t = 200, r = 400, b = 300, l = 400)
@@ -1001,7 +1017,7 @@ Figure 11: Images with different types of symmetry: (A) symmetric shape and colo
 Figure 12: The 102 neutral front faces in the London Face Set.
 </p>
 </div>
-<p>Each subject has one smiling and one neutral pose. For each pose, 5 full colour images were simultaneously taken from different angles: left profile, left three-quarter, front, right three-quarter, and right profile, but we will only use the front-facing images in the examples below. These images were cropped to 1350x1350 pixels and the faces were manually centered (I did this many years ago before I made the tools in this paper). The neutral front images have template files that mark out 189 coordinates delineating face shape for use with Psychomorph or WebMorph.</p>
+<p>Each subject has one smiling and one neutral pose. For each pose, 5 full colour images were simultaneously taken from different angles: left profile, left three-quarter, front, right three-quarter, and right profile, but we will only use the front-facing images in the examples below. These images were cropped to 1350x1350 pixels and the faces were manually centered (Lisa did this many years ago before we made the tools in this paper). The neutral front images have template files that mark out 189 coordinates delineating face shape for use with Psychomorph or WebMorph.</p>
 </div>
 <div id="protoypes" class="section level3">
 <h3>Protoypes</h3>
@@ -1086,7 +1102,7 @@ Figure 16: Versions of individual faces with (A) 50% feminised shape and (B) 50%
 </div>
 <div id="self-resemblance-transform" class="section level3">
 <h3>Self-resemblance transform</h3>
-<p>Much of my own research involves creating “virtual siblings” for participants to test how they perceive and behave towards strangers with phenotypic kinship cues [<span class="citation">L. M. DeBruine (2004)</span>;DeBruine_2005PRSLB;DeBruine_2011PNAS]. As discussed in detail in DeBruine et al. <span class="citation">(2008)</span>, while morphing techniques are sufficient to create same-gender virtual siblings, transforming techniques are required to make other-gender virtual siblings without confounding self-resemblance with androgyny (Fig. <a href="#fig:virtual-sibs">17</a>).</p>
+<p>Much of my own research involves creating “virtual siblings” for participants to test how they perceive and behave towards strangers with phenotypic kinship cues <span class="citation">(L. M. DeBruine 2004, 2005; L. M. DeBruine et al. 2011)</span>. As discussed in detail in DeBruine et al. <span class="citation">(2008)</span>, while morphing techniques are sufficient to create same-gender virtual siblings, transforming techniques are required to make other-gender virtual siblings without confounding self-resemblance with androgyny (Fig. <a href="#fig:virtual-sibs">17</a>).</p>
 <pre class="r"><code>virtual_sis &lt;- trans(
   trans_img = f_avg,   # transform an average female face
   shape = 0.5,         # by 50% of the shape differences
@@ -1101,9 +1117,9 @@ virtual_bro &lt;- trans(
   to_img = m) %&gt;%      # and individual male faces
   mask(c(&quot;face&quot;, &quot;neck&quot;,&quot;ears&quot;))</code></pre>
 <div class="figure"><span id="fig:virtual-sibs"></span>
-<img src="index_files/figure-html/virtual-sibs-1.png" alt="Creating vitual siblings: (A) original images, (B) virtual brothers, (C) virtual sisters." width="100%" />
+<img src="index_files/figure-html/virtual-sibs-1.png" alt="Creating virtual siblings: (A) original images, (B) virtual brothers, (C) virtual sisters." width="100%" />
 <p class="caption">
-Figure 17: Creating vitual siblings: (A) original images, (B) virtual brothers, (C) virtual sisters.
+Figure 17: Creating virtual siblings: (A) original images, (B) virtual brothers, (C) virtual sisters.
 </p>
 </div>
 </div>
@@ -1144,7 +1160,7 @@ Figure 18: Stimuli with text labels and superimposed images.
 <ul>
 <li>right image for the question</li>
 </ul></li>
-<li>Averaging is N=1</li>
+<li>Averaging is N=1 <a href="https://debruine.github.io/posts/composite-images/" class="uri">https://debruine.github.io/posts/composite-images/</a></li>
 </ul>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1157,6 +1173,9 @@ Aust, Frederik, and Marius Barth. 2020. <em><span class="nocase">papaja</span>: 
 </div>
 <div id="ref-barrgeneralizing" class="csl-entry">
 Barr, Dale J. 2007. <span>“Generalizing over Encounters.”</span> In <em>The Oxford Handbook of Psycholinguistics</em>. Oxford University Press, USA.
+</div>
+<div id="ref-baudouin2006face" class="csl-entry">
+Baudouin, Jean-Yves, and Mathieu Gallay. 2006. <span>“Is Face Distinctiveness Gender Based?”</span> <em>Journal of Experimental Psychology: Human Perception and Performance</em> 32 (4): 789.
 </div>
 <div id="ref-benson1993extracting" class="csl-entry">
 Benson, Philip J, and David I Perrett. 1993. <span>“Extracting Prototypical Facial Images from Exemplars.”</span> <em>Perception</em> 22 (3): 257–62.
@@ -1173,6 +1192,9 @@ DeBruine, Lisa. 2021. <em>webmorphR: Reproducible Stimuli</em>. Zenodo. <a href=
 <div id="ref-DeBruine_2004PRSLB" class="csl-entry">
 DeBruine, Lisa M. 2004. <span>“Facial Resemblance Increases the Attractiveness of Same-Sex Faces More Than Other-Sex Faces.”</span> <em>Proceedings of the Royal Society of London B</em> 271: 2085–90. <a href="https://doi.org/10.1098/rspb.2004.2824">https://doi.org/10.1098/rspb.2004.2824</a>.
 </div>
+<div id="ref-DeBruine_2005PRSLB" class="csl-entry">
+———. 2005. <span>“Trustworthy but Not Lust-Worthy: Context-Specific Effects of Facial Resemblance.”</span> <em>Proceedings of the Royal Society of London B</em> 272: 919–22. <a href="https://doi.org/10.1098/rspb.2004.3003">https://doi.org/10.1098/rspb.2004.3003</a>.
+</div>
 <div id="ref-webmorph" class="csl-entry">
 ———. 2018. <span>“Debruine/Webmorph: Beta Release 2,”</span> January. <a href="https://doi.org/10.5281/zenodo.1162670">https://doi.org/10.5281/zenodo.1162670</a>.
 </div>
@@ -1187,6 +1209,9 @@ DeBruine, Lisa M., Benedict C. Jones, Anthony C. Little, Lynda G. Boothroyd, Dav
 </div>
 <div id="ref-DeBruine_2008ASB" class="csl-entry">
 DeBruine, Lisa M., Benedict C. Jones, Anthony C. Little, and David I. Perrett. 2008. <span>“Social Perception of Facial Resemblance in Humans.”</span> <em>Archives of Sexual Behavior</em> 37: 64–77. <a href="https://doi.org/10.1007/s10508-007-9266-0">https://doi.org/10.1007/s10508-007-9266-0</a>.
+</div>
+<div id="ref-DeBruine_2011PNAS" class="csl-entry">
+DeBruine, Lisa M., Benedict C. Jones, Christopher D. Watkins, S. Craig Roberts, Anthony C. Little, Finlay G. Smith, and Michelle Quist. 2011. <span>“Opposite-Sex Siblings Decrease Attraction, but Not Prosocial Attributions, to Self-Resembling Opposite-Sex Faces.”</span> <em>Proceedings of the National Academy of Sciences</em> 108: 11710–14. <a href="https://doi.org/10.1073/pnas.1105919108">https://doi.org/10.1073/pnas.1105919108</a>.
 </div>
 <div id="ref-ekman1976pictures" class="csl-entry">
 Ekman, Paul. 1976. <span>“Pictures of Facial Affect.”</span> <em>Consulting Psychologists Press</em>.
