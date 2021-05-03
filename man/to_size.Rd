@@ -43,5 +43,4 @@ stimuli <- demo_stim() \%>\% crop(c(0.8, 1.0)) \%>\% resize(c(1.0, 0.5))
 to_size(stimuli, 300, 400, fill = "dodgerblue") \%>\% plot()
 to_size(stimuli, 300, 400, fill = "dodgerblue", keep_rels = TRUE) \%>\% plot()
 
-
 }

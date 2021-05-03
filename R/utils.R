@@ -54,8 +54,8 @@ print.stimlist <- function(x, ...) {
   # print image inline if option set and not knitting
   # TODO: only run this if in an Rmd chunk
   if (length(img) == 1 &&
-      wm_opts("plot") == "inline" &&
       interactive() &&
+      wm_opts("plot") == "inline" &&
       rstudioapi::readRStudioPreference("rmd_chunk_output_inline", NA) &&
       !isTRUE(getOption("knitr.in.progress"))) {
     tmp <- tempfile(fileext = ".png")

@@ -8,12 +8,12 @@
 #' @param gravity string with gravity value from \code{magick::gravity_types}.
 #' @param location geometry string with location relative to gravity
 #' @param degrees rotates text around center point
-#' @param size font size in pixels (if NULL, scales to 5% image height)
+#' @param size font size in pixels or proportion of image width (if < 1.0)
 #' @param font string with font family such as "sans", "mono", "serif", "Times", "Helvetica", "Trebuchet", "Georgia", "Palatino" or "Comic Sans".
 #' @param style value of style_types for example "italic"
 #' @param weight thickness of the font, 400 is normal and 700 is bold.
 #' @param kerning increases or decreases whitespace between letters
-#' @param decoration value of decoration_types for example "underline"
+#' @param decoration value of decoration_types: "LineThrough" "None", "Overline", "Underline" 
 #' @param strokecolor adds a stroke (border around the text)
 #' @param boxcolor adds a background color
 
@@ -28,10 +28,10 @@
 #'   plot()
 label <- function(stimuli,
                   text = TRUE,
-                  gravity = "north",
-                  location = "+0+10",
+                  gravity = "northwest",
+                  location = "+10+10",
                   degrees = 0,
-                  size = NULL,
+                  size = 0.1,
                   font = "sans",
                   style = "normal",
                   weight = 400,
@@ -43,11 +43,34 @@ label <- function(stimuli,
   stimuli <- validate_stimlist(stimuli)
 
   if (isTRUE(text)) text <- names(stimuli)
-  color <- sapply(color, color_conv)
-  if (!is.null(strokecolor)) strokecolor <- sapply(strokecolor, color_conv)
-  if (!is.null(boxcolor)) boxcolor <- sapply(boxcolor, color_conv)
-  # scale size to image height
-  if (is.null(size)) size <- height(stimuli)*0.05
+  
+  tryCatch({
+    color <- sapply(color, color_conv)
+  }, error = function(e) {
+    stop("Invalid color: ", e$message, call. = FALSE)
+  })
+  if (!is.null(strokecolor)) {
+    tryCatch({
+      strokecolor <- sapply(strokecolor, color_conv)
+    }, error = function(e) {
+      stop("Invalid strokecolor: ", e$message, call. = FALSE)
+    })
+  }
+  
+  if (!is.null(boxcolor)) {
+    tryCatch({
+      boxcolor <- sapply(boxcolor, color_conv)
+    }, error = function(e) {
+      stop("Invalid boxcolor: ", e$message, call. = FALSE)
+    })
+  }
+  # font size
+  if (!is.numeric(size)) {
+    stop("size must be a number")
+  } else if (any(size < 1.0)) {
+    # sizes are proportions of image width
+    size <- rep_len(size, length(stimuli)) * width(stimuli)
+  }
 
   # allows for arguments to be vectors of any length
   ith <- function(v, i) {
@@ -55,22 +78,26 @@ label <- function(stimuli,
   }
 
   for (i in seq_along(stimuli)) {
-    stimuli[[i]]$img <- magick::image_annotate(
-      stimuli[[i]]$img,
-      ith(text, i),
-      gravity = ith(gravity, i),
-      location = ith(location, i),
-      degrees = ith(degrees, i),
-      size = ith(size, i),
-      font = ith(font, i),
-      style = ith(style, i),
-      weight = ith(weight, i),
-      kerning = ith(kerning, i),
-      decoration = ith(decoration, i),
-      color = ith(color, i),
-      strokecolor = ith(strokecolor, i),
-      boxcolor = ith(boxcolor, i)
-    )
+    tryCatch({
+      stimuli[[i]]$img <- magick::image_annotate(
+        stimuli[[i]]$img,
+        ith(text, i),
+        gravity = ith(gravity, i),
+        location = ith(location, i),
+        degrees = ith(degrees, i),
+        size = ith(size, i),
+        font = ith(font, i),
+        style = ith(style, i),
+        weight = ith(weight, i),
+        kerning = ith(kerning, i),
+        decoration = ith(decoration, i),
+        color = ith(color, i),
+        strokecolor = ith(strokecolor, i),
+        boxcolor = ith(boxcolor, i)
+      )
+    }, error = function(e) {
+      stop("Error in label(): ", e$message, call. = FALSE)
+    })
   }
 
   stimuli

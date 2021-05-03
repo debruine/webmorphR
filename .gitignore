@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 paper/index.html
+paper/index_cache
+paper/index_files
+paper/images

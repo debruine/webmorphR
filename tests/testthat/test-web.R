@@ -1,4 +1,4 @@
-wm_opts(server = "https://webmorph.test")
+#wm_opts(server = "https://webmorph.test")
 
 # avg ----
 test_that("avg", {

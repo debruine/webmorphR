@@ -39,7 +39,7 @@ tem_def <- function(tem_id = "FRL", path = NULL) {
       stop("You might not have an internet connection")
     })
   } else if (is.character(tem_id)) {
-    temdir <- system.file("extdata/tem_defs/", package = "webmorphR")
+    temdir <- system.file("extdata/tem_defs", package = "webmorphR")
     temdefs <- list.files(temdir, full.names = TRUE)
     match <- grepl(tolower(tem_id), tolower(temdefs), fixed = TRUE)
     if (all(match == FALSE)) {

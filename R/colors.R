@@ -140,6 +140,11 @@ col2lab <- function(col) {
 color_conv <- function(color, alpha = 1,
                        from = c("guess", "col", "hex", "hexa", "hex3", "rgb", "rgba"),
                        to = c("hexa", "hex", "rgba", "rgb", "hsv")) {
+  # handle NULL and NA
+  if (is.null(color) || any(is.na(color))) {
+    return(NULL)
+  }
+  
   from <- match.arg(from)
   to <- match.arg(to)
 
@@ -162,7 +167,7 @@ color_conv <- function(color, alpha = 1,
     from <- paste0(from, "_text")
   }
 
-  if (is.null(from)) {
+  if (is.null(from) || is.na(from)) {
     stop("The color format could not be guessed.")
   }
 

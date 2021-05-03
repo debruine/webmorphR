@@ -94,6 +94,7 @@ reference:
   - '`get_point`'
   - '`height`'
   - '`image_comp`'
+  - '`metrics`'
   - '`setnames`'
   - '`width`'
 - title: Helper functions

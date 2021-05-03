@@ -210,16 +210,22 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
 
   n_param <- list(shape, color, texture) %>%
     sapply(length) %>% max()
+  # use indices, not values, so crossing doesn't mangle order
   param <- data.frame(
-    shape = rep_len(shape, n_param),
-    color = rep_len(color, n_param),
-    texture = rep_len(texture, n_param)
+    shape = rep_len(seq_along(shape), n_param),
+    color = rep_len(seq_along(color), n_param),
+    texture = rep_len(seq_along(texture), n_param)
   )
 
   batch <- tidyr::crossing(param, filenames)
+  
+  # translate back to characters or numbers
   batch$trans <- as.character(batch$trans)
   batch$from <- as.character(batch$from)
   batch$to <- as.character(batch$to)
+  batch$shape <- shape[batch$shape]
+  batch$color <- color[batch$color]
+  batch$texture <- texture[batch$texture]
 
   # clean params
   for (x in c("shape", "color", "texture")) {
@@ -296,6 +302,14 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
     if (!all(paramnames$texture == "") && !is.null(names(texture))) {
       paramnames$texture <- factor(paramnames$texture, names(texture))
     }
+    
+    # remove exact duplicates
+    if (all(paramnames$shape == paramnames$color)) 
+      paramnames$color <- ""
+    if (all(paramnames$shape == paramnames$texture))
+      paramnames$texture <- ""
+    if (all(paramnames$color == paramnames$texture))
+      paramnames$texture <- ""
 
     o <- tidyr::crossing(paramnames, imgnames)
     batch$outname <- paste(o$trans, o$from, o$to,

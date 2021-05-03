@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorphR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9004</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9005</span>
       </span>
     </div>
 
@@ -178,17 +178,17 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>frl</span> <span class='op'>&lt;-</span> <span class='fu'>tem_def</span><span class='op'>(</span><span class='st'>"FRL"</span><span class='op'>)</span>
 <span class='va'>frl</span><span class='op'>$</span><span class='va'>points</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='op'>]</span>
-</div><div class='output co'>#&gt;    n                      name       x       y sym
-#&gt; 1  0                left pupil 165.659 275.234   1
-#&gt; 2  1               right pupil 284.339 275.231   0
-#&gt; 3  2          top of left iris 165.219 267.225  10
-#&gt; 4  3     top-left of left iris 155.781 269.909  17
-#&gt; 5  4         left of left iris 154.252 276.694  16
-#&gt; 6  5  bottom-left of left iris 157.117 282.607  15
-#&gt; 7  6       bottom of left iris 165.507 286.083  14
-#&gt; 8  7 bottom-right of left iris 173.839 282.517  13
-#&gt; 9  8        right of left iris 176.720 276.472  12
-#&gt; 10 9    top-right of left iris 175.040 270.366  11</div><div class='input'>
+</div><div class='output co'>#&gt;    n                      name       x       y sym fpp106.x fpp106.y
+#&gt; 1  0                left pupil 165.659 275.234   1        0        0
+#&gt; 2  1               right pupil 284.339 275.231   0        1        1
+#&gt; 3  2          top of left iris 165.219 267.225  10       37       37
+#&gt; 4  3     top-left of left iris 155.781 269.909  17       NA       NA
+#&gt; 5  4         left of left iris 154.252 276.694  16       NA        0
+#&gt; 6  5  bottom-left of left iris 157.117 282.607  15       NA       NA
+#&gt; 7  6       bottom of left iris 165.507 286.083  14       41       41
+#&gt; 8  7 bottom-right of left iris 173.839 282.517  13       NA       NA
+#&gt; 9  8        right of left iris 176.720 276.472  12       NA        0
+#&gt; 10 9    top-right of left iris 175.040 270.366  11       NA       NA</div><div class='input'>
 <span class='va'>fpp106</span> <span class='op'>&lt;-</span> <span class='fu'>tem_def</span><span class='op'>(</span><span class='st'>"fpp106"</span><span class='op'>)</span>
 <span class='va'>fpp106</span><span class='op'>$</span><span class='va'>lines</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; List of 15

@@ -7,10 +7,10 @@
 label(
   stimuli,
   text = TRUE,
-  gravity = "north",
-  location = "+0+10",
+  gravity = "northwest",
+  location = "+10+10",
   degrees = 0,
-  size = NULL,
+  size = 0.1,
   font = "sans",
   style = "normal",
   weight = 400,
@@ -32,7 +32,7 @@ label(
 
 \item{degrees}{rotates text around center point}
 
-\item{size}{font size in pixels (if NULL, scales to 5\% image height)}
+\item{size}{font size in pixels or proportion of image width (if < 1.0)}
 
 \item{font}{string with font family such as "sans", "mono", "serif", "Times", "Helvetica", "Trebuchet", "Georgia", "Palatino" or "Comic Sans".}
 
@@ -42,7 +42,7 @@ label(
 
 \item{kerning}{increases or decreases whitespace between letters}
 
-\item{decoration}{value of decoration_types for example "underline"}
+\item{decoration}{value of decoration_types: "LineThrough" "None", "Overline", "Underline"}
 
 \item{color}{a vector of the label colour(s)}
 

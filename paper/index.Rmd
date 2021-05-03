@@ -41,7 +41,7 @@ wordcount         : "X"
 
 bibliography      : ["r-references.bib","biblio.bib"]
 
-floatsintext      : no
+floatsintext      : yes
 figurelist        : no
 tablelist         : no
 footnotelist      : no
@@ -51,14 +51,20 @@ draft             : yes
 
 documentclass     : "apa6"
 classoption       : "man"
-output            : html_document #papaja::apa6_pdf
+output            : 
+  bookdown::html_document2:
+    toc: true
+    toc_float: true
+    number_sections: false
+    self_contained: false
+    code_folding: hide
+note              : "Draft"
 ---
 
 ```{r setup, include = FALSE}
 library("papaja")
 library("kableExtra")
 library("dplyr")
-library("magick")
 # devtools::install_github("debruine/webmorphR")
 library("webmorphR") 
 r_refs("r-references.bib")
@@ -66,13 +72,15 @@ r_refs("r-references.bib")
 # Seed for random number generation
 set.seed(42)
 knitr::opts_chunk$set(
-  cache = FALSE,
+  cache       = TRUE,
   cache.extra = knitr::rand_seed,
-  out.width = "100%",
-  echo = FALSE
+  out.width   = "100%",
+  warning     = FALSE,
+  message     = FALSE,
+  echo        = FALSE
 )
 
-wm_opts(plot.maxwidth = 850*2)
+wm_opts(plot.maxwidth = 850)
 ```
 
 <style>
@@ -84,12 +92,11 @@ wm_opts(plot.maxwidth = 850*2)
   }
 </style>
 
-
 ## Introduction
 
 Face stimuli are commonly used in research on visual and social perception. This almost always involves some level of stimulus preparation to rotate, resize, crop, and reposition faces on the image. In addition, many studies systematically manipulate face images by changing color and/or shape properties [e.g., @jones2019biological; reviewed in @Little_2011]. 
 
-Gronenschild and colleagues [@Gronenschild_2009] argue for the importance of standardizing face stimuli so that they are not "confounded by factors such as brightness and contrast, head size, hair cut and color, skin color, and the presence of glasses and earrings". They describe a three-step standardization process. First, they manually removed features such as glasses and earrings in Photoshop. Second, they geometrically standardized images by semi-automatically defining eye and mouth coordinates used to fit the images within an oval mask, Third, they optically standardized images by converting them to greyscale and remapping values between the minimum and 98% threshold onto the full range of values. While laudable in its aims, this procedure has not achieved widespread adoption, probably because the authors provided no code or tools. In personal communication, the main author said that this is because "the procedure is based on standard image processing algorithms described in many textbooks". However, I was unable to easily replicate the procedure and found several places where instructions had more than one possible interpretation or relied on the starting images having specific properties, such as symmetric lighting reflections in the eyes.
+Gronenschild and colleagues [-@Gronenschild_2009] argue for the importance of standardizing face stimuli so that they are not "confounded by factors such as brightness and contrast, head size, hair cut and color, skin color, and the presence of glasses and earrings". They describe a three-step standardization process. First, they manually removed features such as glasses and earrings in Photoshop. Second, they geometrically standardized images by semi-automatically defining eye and mouth coordinates used to fit the images within an oval mask, Third, they optically standardized images by converting them to greyscale and remapping values between the minimum and 98% threshold onto the full range of values. While laudable in its aims, this procedure has not achieved widespread adoption, probably because the authors provided no code or tools. In personal communication, the main author said that this is because "the procedure is based on standard image processing algorithms described in many textbooks". However, I was unable to easily replicate the procedure and found several places where instructions had more than one possible interpretation or relied on the starting images having specific properties, such as symmetric lighting reflections in the eyes.
 
 
 Scope of this type of research. How many papers, what range of questions?
@@ -102,7 +109,7 @@ I once gave up on a research project because I couldn't figure out how to manipu
 
 Reproducibility of stimuli is especially important for face stimuli because faces are sampled, so replications should sample new *faces* as well as new participants [@barrgeneralizing]. The difficulty of creating equivalent face stimuli is a major barrier to this, resulting in stimulus sets that are used across dozens or hundreds of papers. For example, the Chicago Face Database [@CFD_2015] has been cited in almost 800 papers. Ekman and Friesen's [-@ekman1976pictures] Pictures of Facial Affect has been cited more than 5500 times. This image set is currently [**selling** for $399](https://www.paulekman.com/product/pictures-of-facial-affect-pofa/) for "110 photographs of facial expressions that have been widely used in cross-cultural studies, and more recently, in neuropsychological research". Such extensive reuse of image sets means that any confounds present in the image set can cause highly "replicable" but false findings.
 
-Additionally, image sets are often private and reused without clear attribution. My own lab has only recently been trying to combat this by making image sets public and citable where possible [e.g., @FRL_London;@Canada2003;@Morrison_2018] and including clear explanations of reuse where not possible [e.g., @jones2018no,@holzleitner2019comparing].
+Additionally, image sets are often private and reused without clear attribution. The Face research Lab has only recently been trying to combat this by making image sets public and citable where possible [e.g., @FRL_London;@Canada2003;@Morrison_2018] and including clear explanations of reuse where not possible [e.g., @jones2018no,@holzleitner2019comparing].
 
 ### Common Techniques
 
@@ -146,7 +153,7 @@ The link above contains only morphed face images and no further details about th
 
 There are several scriptable methods for creating image stimuli, including MatLab, ImageMagick, and GraphicConvertor.
 
-MatLab [@MatLab] is widely used within visual psychophysics. A Google Scholar search for "MatLab face attractiveness" returned 7,440 hits, although the majority of papers I inspected used MatLab to process EEG data, present the experiment, or analyse image color, rather than using MatLab to create the stimuli. "MatLab face perception" generated 80,800 hits, more of which used MatLab to create stimuli.
+MatLab [@higham2016matlab] is widely used within visual psychophysics. A Google Scholar search for "MatLab face attractiveness" returned 7,440 hits, although the majority of papers I inspected used MatLab to process EEG data, present the experiment, or analyse image color, rather than using MatLab to create the stimuli. "MatLab face perception" generated 80,800 hits, more of which used MatLab to create stimuli.
 
 > Subjects were presented with four different types of face stimuli: black and white line drawings of unfamiliar faces, and gray scale photographs of unfamiliar, famous, and emotional faces. Phase scrambled versions of these faces were used as visual baseline. The scrambled pictures were generated by randomizing the phase information after Fourier transformation using an in-house Matlab script. [no stimuli were shown in the paper, @ishai2005face, p. 88]
 
@@ -196,22 +203,21 @@ The use of face image analysis should never be used to predict behaviour or as a
 
 ### Glossary
 
-```{r}
+```{r glossary}
 terms <- tibble::tribble(
   ~Term, ~Definition,
-  "delineation", "the x- and y-coordinates of the landmark points that define shape and the way these are connected with lines",
+  "template", "a set of landmark points that define shape and the way these are connected with lines; only image with the same template can be averaged or transformed",
   "landmark", "a point that marks corresponding locations on different images",
-  "morphing", "blending two or more images to make an image with an average shape and/or color",
-  "transforming", "changing the shape and/or color of an image by some proportion of a vector that is usually defined as the difference between two images",
-  "template", "the collection of landmarks coordinates and line connections that describes an image",
-  "lines", "connections between landmarks; these may be used to interpolate new landmarks for morphing"
+  "morphing", "blending two or more images to make an image with an average shape andor color",
+  "transforming", "changing the shape and/or color of an image by some proportion of a vector that is  defined as the difference between two images",
+  "delineation", "the x- and y-coordinates for a specific template that describe an image",
+  "lines", "connections between landmarks; these may be used to interpolate new landmarks for morphing",
+  "prototype", "an average of faces with similar characteristics, such as expression, gender, age, and/or ethnic group"
 ) %>%
   dplyr::arrange(Term)
 
-kableExtra::kable(terms)  %>%
+kableExtra::kable(terms, caption = "Glossary of terms.") %>%
   kable_styling(bootstrap_options = c("striped", "responsive"))
-  
-  
 ```
 
 
@@ -221,10 +227,10 @@ kableExtra::kable(terms)  %>%
 
 ### Editing
 
-Almost all imagesets start with raw images that need to be cropped, resized, rotated, padded, and/or color normalised Although many reproducible methods exist to manipulate images in these ways, they are complicated when an image has an associated template, so {webmorphR} has functions that alter the image and template together
+Almost all imagesets start with raw images that need to be cropped, resized, rotated, padded, and/or color normalised Although many reproducible methods exist to manipulate images in these ways, they are complicated when an image has an associated template, so {webmorphR} has functions that alter the image and template together (Fig.\ \@ref(fig:editing)).
 
 ```{r, echo = TRUE}
-orig <- demo_stim("test", 1)
+orig <- demo_stim("test", 1) # load one demo image
 mirrored <- mirror(orig)
 cropped <- crop(orig, width = 0.75, height = 0.75)
 resized <- resize(orig, 0.75)
@@ -233,12 +239,12 @@ padded <- pad(orig, 30, fill = "black")
 grey <- greyscale(orig)
 ```
 
-```{r, fig.cap="Examples of image manipulations: (A) original image, (B) mirrored, (C) cropped to 75%, (D) resized to 75%, (E) rotated 180 degrees, (F) 30 pixels of black padding added, and (G) greyscale,."}
+```{r editing, fig.cap="Examples of image manipulations: (A) original image, (B) mirrored, (C) cropped to 75%, (D) resized to 75%, (E) rotated 180 degrees, (F) 30 pixels of black padding added, and (G) greyscale,."}
 
 c(orig, mirrored, cropped, resized, rotated, padded, grey) %>%
   pad(0, 0, 0, 60) %>%
   #draw_tem() %>%
-  label(LETTERS, "northwest", "+0+0", size = 60) %>% 
+  label(LETTERS, size = 60) %>% 
   plot(nrow = 1)
 ```
 
@@ -247,7 +253,7 @@ c(orig, mirrored, cropped, resized, rotated, padded, grey) %>%
 
 The image manipulations above work best if your raw images start the same size and aspect ratio, with the faces in the same orientation and position on each image. This is frequently not the case with raw images. Image delineation provides a way to set image manipulation parameters relative to face landmarks by marking corresponding points according to a template.
 
-WebMorph's default face template marks 189 points. Some of these points have very clear anatomical locations, such as point 0 ("left pupil"), while others have only approximate placements and are used mainly for masking or preventing morphing artifacts from affecting the background of images, such as point 147 ("about 2cm to the left of the top of the left ear (creates oval around head)"). Template points numbering is 0-based because PsychoMorph was originally written in Java.
+WebMorph's default face template marks 189 points (Fig.\ \@ref(fig:delineate)). Some of these points have very clear anatomical locations, such as point 0 ("left pupil"), while others have only approximate placements and are used mainly for masking or preventing morphing artifacts from affecting the background of images, such as point 147 ("about 2cm to the left of the top of the left ear (creates oval around head)"). Template points numbering is 0-based because PsychoMorph was originally written in Java.
 
 ```{r delineate, fig.cap = "Default webmorph FRL template"}
 demo_stim("composite", "f_multi") %>%
@@ -257,16 +263,19 @@ demo_stim("composite", "f_multi") %>%
   plot()
 ```
 
+The function `tem_def()` retrieves a template definition that includes point names, default coordinates, and the identity of the symmetrically matching point for mirroring or symmetrising images Table\ \@ref(tab:tem-def).
 
-```{r, echo = TRUE}
+```{r tem-def}
 # get all information about a standard template
 FRL <- tem_def("FRL")
 
-FRL$points[1:10, ] %>% kable(caption = "The first 10 landmark points of WebMorph's default \"FRL\" template.")
+FRL$points[1:10, 1:5] %>% 
+  kableExtra::kable(caption = "The first 10 landmark points of WebMorph's default \"FRL\" template.") %>%
+  kable_styling(bootstrap_options = c("striped"))
 ```
 
 
-You can use one of several algorithms to automatically delineate faces with a simpler template. This is available on WebMorph and webmorphR through Face++. 
+You can automatically delineate faces with a simpler template (Fig.\ \@ref(fig:auto-delin)) using services provided through [Face++](https://www.faceplusplus.com/landmarks/). 
 
 ```{r, echo = TRUE}
 # load 5 images with FRL templates
@@ -276,35 +285,64 @@ f <- demo_stim("london", "006|038|064|066|135")
 fpp_tem <- auto_delin(f, replace = TRUE)
 ```
 
-```{r auto-delin, fig.cap="The top row shows manual delineations using the FRL template. The bottom row shows automatic delineations using the Face++ template."}
-plot_rows(
-  "FRL template" = draw_tem(f), 
-  "Face++ template" = draw_tem(fpp_tem),
+```{r auto-delin, fig.cap="Delineation templates: (A) manual delineations using the FRL template and (B) automatic delineations using the Face++ template."}
+plot_rows(A = draw_tem(f), B = draw_tem(fpp_tem),
   top_label = TRUE
 )
 ```
 
 A study comparing the accuracy of four common measures of face shape (sexual dimorphism, distinctiveness, bilateral asymmetry, and facial width to height ratio) between automatic and manual delineation concluded that automatic delineation had higher replicability and good correlations with manual delineation [@jones2020facial]. However, <2% of images had noticeably inaccurate automatic delineation, which should be screened for by outlier detection and visual inspection. 
 
-While automatic delineation has the advantage of being very fast and generally more replicable than manual delineation, it is more limited in the areas that can be described. Typically, automatic face detection algorithms outline the lower face shape and internal features of the face, but don't define the hairline, hair, neck, or ears. Manual delineation of these can greatly improve stimuli created through morphing or transforming.
+While automatic delineation has the advantage of being very fast and generally more replicable than manual delineation, it is more limited in the areas that can be described. Typically, automatic face detection algorithms outline the lower face shape and internal features of the face, but don't define the hairline, hair, neck, or ears. Manual delineation of these can greatly improve stimuli created through morphing or transforming (Fig.\ \@ref(fig:avg-comp)).
 
-```{r avg-comp, fig.cap="Averages of 5 images made using the full manual template (left) and the reduced automatic template (right)."}
+```{r avg-comp, fig.cap="Averages of 5 images made using (A) the full 189-point manual template and (B) the reduced 106-point automatic template."}
 frl_avg <- avg(f)
 fpp_avg <- avg(fpp_tem)
 
-c(frl_avg, fpp_avg) %>% label(c("189-point manual template", "106-point automatic template")) %>% plot()
+c(frl_avg, fpp_avg) %>% 
+  label(LETTERS) %>%
+  plot()
 ```
 
+### Facial Metrics
+
+Once you have images delineated, you can use the x- and y-coordinates to calculate various facial-metric measurements (Table\ \@ref(tab:metrics)). You can calculate the distance between any two points, such as the pupil centres, or use a more complicated formula, such as the face width-to-height ratio from Lefevre et al. [-@lefevre2013telling]. 
+
+```{r, echo = TRUE}
+# inter-pupillary distance between points 0 and 1
+ipd <- metrics(f, c(0, 1))
+
+# face width-to-height ratio
+# width = maximum bizygomatic width
+# height = top of upper lip to highest eyelid point
+fwh <- metrics(f, "abs(max(x[113],x[112],x[114])-min(x[110],x[111],x[109]))/abs(y[90]-min(y[20],y[25]))")
+```
+
+```{r metrics}
+data.frame(
+  face = names(f),
+  x0 = metrics(f, "x[0]"),
+  y0 = metrics(f, "y[0]"),
+  x1 = metrics(f, "x[1]"),
+  y1 = metrics(f, "y[1]"),
+  ipd = ipd,
+  fwh = fwh
+) %>%
+  kable(caption = "Facial metric measurements.", row.names = FALSE) %>%
+  kable_styling(bootstrap_options = c("striped", "responsive"))
+```
+
+While it is *possible* to calculate metrics such as width-to-height ratio from 2D face images, this does not mean it is a good idea. Even on highly standardized images, head tilt can have large effects on such measurements. When image qualities such as camera type and head-to-camera distance are not standardized, facial metrics are meaningless at best [@tvrebicky2016focal].
 
 ### Alignment
 
 If your image set isn't highly standardised, you probably want to crop, resize and rotate your images to get them all in approximately the same orientation on images of the same size. There are several reproducible options, each with pros and cons. 
 
-One-point alignment doesn't rotate or resize the image at all, but aligns one of the delineation points across images. This is ideal when you know that your camera-to-head distance and orientation was standard (or meaningfully different) across images and you want to preserve this in the stimuli, but you still need to get them all in the same position and image size.
+One-point alignment (Fig.\ \@ref(fig:norm-comp)A) doesn't rotate or resize the image at all, but aligns one of the delineation points across images. This is ideal when you know that your camera-to-head distance and orientation was standard (or meaningfully different) across images and you want to preserve this in the stimuli, but you still need to get them all in the same position and image size.
 
-Two-point alignment resizes and rotates the images so that two points (usually the centres of the eyes) are in the same position on each image. This will alter relative head size such that people with very close-set eyes will appear to have larger heads than people with very wide-set eyes. This technique is good for getting images into the same orientation when you didn't have any control over image rotation and camera-to-head distance of the original photos. 
+Two-point alignment (Fig.\ \@ref(fig:norm-comp)B) resizes and rotates the images so that two points (usually the centres of the eyes) are in the same position on each image. This will alter relative head size such that people with very close-set eyes will appear to have larger heads than people with very wide-set eyes. This technique is good for getting images into the same orientation when you didn't have any control over image rotation and camera-to-head distance of the original photos. 
 
-Procrustes alignment resizes and rotates the images so that each delineation point is as aligned as possible across all images. This can obscure meaningful differences in relative face size (e.g., a baby's face will be as large as an adult's), but can be superior to two-point alignment. While this requires that the whole face be delineated, you can use a minimal template such as a face outline or the Face++ auto-delineation to achieve good results. While not available in webmorph.org, procrustes alignment is available in webmorphR. 
+Procrustes alignment (Fig.\ \@ref(fig:norm-comp)C) resizes and rotates the images so that each delineation point is as aligned as possible across all images. This can obscure meaningful differences in relative face size (e.g., a baby's face will be as large as an adult's), but can be superior to two-point alignment. While this requires that the whole face be delineated, you can use a minimal template such as a face outline or the Face++ auto-delineation to achieve good results. While not available in webmorph.org, procrustes alignment is available in webmorphR. 
 
 You can very quickly delineate an image set with a custom template using the `quick_delin()` function in webmorphR if auto-delineation doesn't provide suitable points.
 
@@ -321,21 +359,18 @@ twopt <- align(f, pt1 = 0, pt2 = 1, fill = "dodgerblue")
 proc <- align(f, pt1 = 0, pt2 = 1, procrustes = TRUE, fill = "dodgerblue")
 ```
 
-```{r norm-comp, fig.cap="Original images with different alignments. One-point alignment placed the bottom of the nose point in the centre of the image. Two-point alignment placed the eye centre points in the same position as the average image. Procrustes alignment moved, rotated, and resized all images to most closely match the average face. A blue background was used to highlight the difference here, but normally a colour matching the image background would be used or the images would be cropped."}
+```{r norm-comp, fig.cap="Original images with different alignments. (A) One-point alignment placing the bottom of the nose point in the centre of the image. (B) Two-point alignment placing the eye centre points in the same position as the average image. (C) Procrustes alignment moved, rotated, and resized all images to most closely match the average face. A blue background was used to highlight the difference here, but normally a colour matching the image background would be used or the images would be cropped."}
 
-plot_rows("One-point Alignment" = onept, 
-          "Two-point Alignment" = twopt, 
-          "Procrustes Alignment" = proc,
-          top_label = TRUE)
+plot_rows(A = onept, B = twopt, C = proc)
 ```
 
 
 
 ### Masking
 
-(effect in masc paper) [@debruine2006correlated)
+(effect in masc paper) [@debruine2006correlated].
 
-The "standard oval mask" has enjoyed widespread popularity because it is straightforward to add to images using programs like PhotoShop. WebmorphR's `mask_oval()` function allows you to set oval boundaries manually or in relation to minimum and maximum template coordinates for each face. An arguably better way to mask out hair, clothing and background from images is to crop around the curves defined by the template. 
+The "standard oval mask" has enjoyed widespread popularity because it is straightforward to add to images using programs like PhotoShop. WebmorphR's `mask_oval()` function allows you to set oval boundaries manually (Fig.\ \@ref(fig:mask)A) or in relation to minimum and maximum template coordinates for each face (Fig.\ \@ref(fig:mask)B). An arguably better way to mask out hair, clothing and background from images is to crop around the curves defined by the template (Fig.\ \@ref(fig:mask)C). 
 
 ```{r, echo = TRUE}
 # standard oval mask
@@ -357,9 +392,9 @@ plot_rows(A = oval, B = oval_tem, C = masked)
 
 ### Averaging
 
-Creating average images (also called composite or prototype images) through morphing can be a way to visualise the differences between groups [@burton2005robust], manipulate averageness [@Little_2011], or create prototypical faces for image transformations (explained in the next section). 
+Creating average images (also called composite or prototype images) through morphing can be a way to visualise the differences between groups [@burton2005robust], manipulate averageness [@Little_2011], or create prototypical faces for image transformations. 
 
-Averaging faces with texture [@tiddeman2001prototyping;@tiddeman2005towards] makes composite image look more realistic. However, averages created without texture averaging look smoother and may be more appropriate for transforming color. 
+Averaging faces with texture [@tiddeman2001prototyping;@tiddeman2005towards] makes composite image look more realistic (Fig.\ \@ref(fig:avg-texture)A). However, averages created without texture averaging look smoother and may be more appropriate for transforming color (Fig.\ \@ref(fig:avg-texture)B). 
 
 ```{r, echo = TRUE}
 avg_tex <- avg(f, texture = TRUE)
@@ -367,20 +402,72 @@ avg_notex <- avg(f, texture = FALSE)
 ```
 
 
-```{r avg-texture, fig.cap="An average of 5 faces created with texture averaging (left) and without (right)."}
+```{r avg-texture, fig.cap="An average of 5 faces created (A) with texture averaging and (B) without."}
 # close up on the eyes
 eyes <- c(avg_tex, avg_notex) %>% 
   align(x1=100, y1 = 100, x2 = 300, y2 = 100, width = 400, height = 150)
   
 c(avg_tex, avg_notex, eyes) %>% 
+  label(c("A", "B", "", "")) %>%
   resize(width = width(avg_tex)) %>%
   plot(nrow = 2)
 ```
 ### Transforming
 
+Transforming alters the appearance of one face by some proportion of the differences between two other faces. This technique is distinct from morphing. For example, you can transform a face in the dimension of sexual dimorphism by calculating  the shape and color differences between a prototype female face (Fig.\ \@ref(fig:trans-vs-morph)A) and a prototype male face (Fig.\ \@ref(fig:trans-vs-morph)B). If you morph an individual female face with these images, you get faces that are halfway between the indivual and prototype faces (Fig.\ \@ref(fig:trans-vs-morph)C,D). If you transform the individual face by 50% of the prototype differences, you get feminised and masculinized versions of the individual face (Fig.\ \@ref(fig:trans-vs-morph)E,F).
+
+```{r}
+# load individual and composite images
+individual <- demo_stim("london", "019")
+averages <- demo_stim("composite", "white")
+
+# mask the composites so they only transform colour in the face
+masked <- mask(averages, "face")
+
+# make masc and fem versions of the individual
+sexdim <- trans(trans_img = individual,
+              from_img = masked$f_white,
+              to_img  = masked$m_white,
+              shape = c(fem = -0.5, masc = 0.5), 
+              color = c(fem = -0.5, masc = 0.5))
+
+# average the individual face with male and female averages
+masc_morph <- c(individual, averages$m_white) %>% avg()
+fem_morph <- c(individual, averages$f_white) %>% avg()
+```
+
+```{r trans-vs-morph, fig.cap="Morphing versus transforming: (A, B) composite images, (C, D) averages of the composites with an individual image, (E, F) transforms of an individual image along the male-female continuum."}
+
+c(averages, fem_morph, masc_morph, sexdim) %>%
+  label(LETTERS) %>%
+  plot(nrow = 2,byrow = FALSE)
+```
+
+If, for example, the individual female face was more feminine than the average female face, morphing with the average female face produces an image that is *less* feminine than the original individual, while transforming along the male-female dimension produces and image that is always *more* feminine than the original. Morphing with a prototype also results in an image with increased averageness, while transforming maintains individually distinctive features.
+
+
+Transforming also allows you to manipulate shape and colour independently (Fig.\ \@ref(fig:trans-shape-color)).
+
+```{r}
+masc <- trans(trans_img = individual,
+              from_img = masked$f_white,
+              to_img  = masked$m_white,
+              shape = c(shape = 0.5, color = 0, both = 0.5), 
+              color = c(shape = 0, color = 0.5, both = 0.5))
+```
+
+```{r trans-shape-color, fig.cap="Transforming shape and color independently: (A) original individual image, (B) shape only, (C), color only, (D) both shape and color."}
+c(individual, masc) %>%
+  label(LETTERS) %>%
+  plot(nrow = 2)
+```
+
+
+
+
 ### Symmetrising
 
-Although a common technique [e.g., @Mealey_1999], left-left and right-right mirroring is not recommended for investigating perceptions of facial symmetry. this is because this method typically produces unnatural images for any face that isn't already perfectly symmetric. For example, if the nose does not lie in a perfectly straight line from the centre point between the eyes to the centre of the mouth, then one of the mirrored halves will have a much wider nose than the original face, while the the other half will have a much narrower nose than the original face. In extreme cases, one mirrored version can end up with three nostrils and the other with a single nostril. 
+Although a common technique [e.g., @Mealey_1999], left-left and right-right mirroring (Fig.\ \@ref(fig:mirror-sym)) is not recommended for investigating perceptions of facial symmetry. This is because this method typically produces unnatural images for any face that isn't already perfectly symmetric. For example, if the nose does not lie in a perfectly straight line from the centre point between the eyes to the centre of the mouth, then one of the mirrored halves will have a much wider nose than the original face, while the the other half will have a much narrower nose than the original face. In extreme cases, one mirrored version can end up with three nostrils and the other with a single nostril. 
 
 ```{r mirror-sym, fig.cap = "Left-left (top) and right-right (bottom) mirrored images. The code for making these images is in the supplemental materials, but we only recommend using this method to demonstrate how misleading it is."}
 # make eye points exactly horizontal
@@ -411,7 +498,7 @@ right_right <- mapply(function(ls, rs) {
 plot_rows(left_left, right_right)
 ```
 
-A morph-based technique is a more realistic way to manipulate symmetry [@Little_2011,@little2001self,@paukner2017capuchin]. It preserves the individual's characteristic feature shapes and avoids the problem of having to choose an axis of symmetry on a face that isn't perfectly symmetrical. In this method, the original face is mirror-reversed and each template point is re-labeled. The original and mirrored images are averaged together to create a perfectly symmetric version of the image that has the same feature widths as the original face. You can also use this symmetric version to create asymmetric versions of the original face through transforming, exaggerating the differences between the original and the symmetric version.
+A morph-based technique is a more realistic way to manipulate symmetry [@Little_2011,@little2001self,@paukner2017capuchin]. It preserves the individual's characteristic feature shapes and avoids the problem of having to choose an axis of symmetry on a face that isn't perfectly symmetrical. In this method, the original face is mirror-reversed and each template point is re-labelled. The original and mirrored images are averaged together to create a perfectly symmetric version of the image that has the same feature widths as the original face (Fig.\ \@ref(fig:morph-sym)). You can also use this symmetric version to create asymmetric versions of the original face through transforming, exaggerating the differences between the original and the symmetric version.
 
 ```{r, echo = TRUE}
 sym_both <- symmetrize(f)
@@ -420,12 +507,8 @@ sym_color <- symmetrize(f, shape = 0)
 sym_anti <- symmetrize(f, shape = -1.0, color = 0)
 ```
 
-```{r, fig.cap = "Images with different types of symmetry."}
-plot_rows("Symmetric Shape and Color" = sym_both,
-          "Symmetric Color" = sym_color,
-          "Symmetric Shape" = sym_shape,
-          "Asymmetric Shape" = sym_anti,
-          top_label = TRUE)
+```{r morph-sym, fig.cap = "Images with different types of symmetry: (A) symmetric shape and color, (B) symmetric shape, (C) symmetric color, (D) asymmetric shape."}
+plot_rows(A = sym_both, B = sym_color, C = sym_shape, D = sym_anti)
 ```
 
 
@@ -433,7 +516,7 @@ plot_rows("Symmetric Shape and Color" = sym_both,
 
 ### London Face Set
 
-We will use the open-source, CC-BY licensed image set, the Face Research Lab London Set [@FRL_London]. Images are of 102 adults whose pictures were taken in London, UK, in April 2012 for a project with Nikon camera. All individuals were paid and gave signed consent for their images to be "used in lab-based and web-based studies in their original or altered forms and to illustrate research (e.g., in scientific journals, news media or presentations)." 
+We will use the open-source, CC-BY licensed image set, the Face Research Lab London Set [@FRL_London]. Images are of 102 adults whose pictures were taken in London, UK, in April 2012 for a project with Nikon camera (Fig.\ \@ref(fig:london-set)). All individuals were paid and gave signed consent for their images to be "used in lab-based and web-based studies in their original or altered forms and to illustrate research (e.g., in scientific journals, news media or presentations)." 
 
 ```{r london-set, fig.cap = "The 102 neutral front faces in the London Face Set."}
 
@@ -450,11 +533,11 @@ smiling <- demo_stim("smiling") %>%
   add_info(stimsets::london_info)
 ```
 
-Each subject has one smiling and one neutral pose. For each pose, 5 full colour images were simultaneously taken from different angles: left profile, left three-quarter, front, right three-quarter, and right profile. These images were cropped to 1350x1350 pixels and the faces were manually centered. The neutral front images have template files that mark out 189 coordinates delineating face shape for use with Psychomorph or WebMorph.
+Each subject has one smiling and one neutral pose. For each pose, 5 full colour images were simultaneously taken from different angles: left profile, left three-quarter, front, right three-quarter, and right profile, but we will only use the front-facing images in the examples below. These images were cropped to 1350x1350 pixels and the faces were manually centered (I did this many years ago before I made the tools in this paper). The neutral front images have template files that mark out 189 coordinates delineating face shape for use with Psychomorph or WebMorph.
 
 ### Protoypes
 
-The first step for many types of stimuli is to create prototype faces for some categories, such as expression or gender. The faces that make up these averages should be matched for other characteristics that you want to avoid confounding with the categories of interest, such as age or ethnicity. Here, we will choose the 5 White female faces, automatically delineate them, align the images, and create neutral and smiling prototypes.
+The first step for many types of stimuli is to create prototype faces for some categories, such as expression or gender. The faces that make up these averages should be matched for other characteristics that you want to avoid confounding with the categories of interest, such as age or ethnicity. Here, we will choose 5 Black female faces, automatically delineate them, align the images, and create neutral and smiling prototypes (Fig.\ \@ref(fig:emo-avg)).
 
 ```{r, echo = TRUE}
 # select the relevant images and auto-delineate them
@@ -488,9 +571,9 @@ c(neu_avg,
   plot()
 ```
 
-### Continuum
+### Emotion Continuum
 
-Once you have two prototype images, you can set up a continuum that morphs between the images and even exaggerates beyond them. Note that some exaggerations beyond the prototypes can produce impossible shape configurations, such as the negative smile, where the open lips from a smile go to closed at 0% and pass through each other at negative values.
+Once you have two prototype images, you can set up a continuum that morphs between the images and even exaggerates beyond them (Fig.\ \@ref(fig:continuum)). Note that some exaggerations beyond the prototypes can produce impossible shape configurations, such as the negative smile, where the open lips from a smile go to closed at 0% and pass through each other at negative values.
 
 ```{r, echo = TRUE}
 steps <- continuum(neu_avg, smi_avg, from = -0.5, to = 1.5, by = 0.25)
@@ -499,14 +582,14 @@ steps <- continuum(neu_avg, smi_avg, from = -0.5, to = 1.5, by = 0.25)
 ```{r continuum, fig.cap="Continuum from -50% to +150% smiling."}
 lab <- paste0(seq(-0.5, 1.5, .25) * 100, "%")
 steps %>%
-  label(lab, "northwest", "+10+10", size = 70) %>%
+  label(lab) %>%
   plot(nrow = 1)
 ```
 
 
 ### Sexual dimorphism transform
 
-We can use the full templates to create sexual dimorphism transforms from neutral faces. Repeat the process above for 5 male and 5 female neutral faces (skipping the auto-delineation).
+We can use the full templates to create sexual dimorphism transforms from neutral faces. Repeat the process above for 5 male and 5 female neutral faces, skipping the auto-delineation (Fig.\ \@ref(fig:sexdim-avg)).
 
 ```{r, echo = TRUE}
 # select the relevant images
@@ -538,8 +621,7 @@ c(f_avg,
   plot()
 ```
 
-
-Next, transform each individual image using the average female and male faces as transform endpoints.
+Next, transform each individual image using the average female and male faces as transform endpoints (Fig.\ \@ref(fig:sexdim-transform)).
 
 ```{r, echo = TRUE}
 # use a named vector for shape to automatically rename the images
@@ -552,17 +634,17 @@ sexdim <- trans(
 ```
 
 
-```{r, fig.cap="Feminised and masculinised versions of individual faces"}
+```{r sexdim-transform, fig.cap="Versions of individual faces with (A) 50% feminised shape and (B) 50% masculinized shape."}
 
-plot_rows("50% feminised shape" = subset(sexdim, "_fem"),
-          "50% masculinised shape" = subset(sexdim, "_masc"),
-          top_label = TRUE)
+plot_rows(A = subset(sexdim, "_fem"),
+          B = subset(sexdim, "_masc"))
 
 ```
 
 
-
 ### Self-resemblance transform
+
+Much of my own research involves creating "virtual siblings" for participants to test how they perceive and behave towards strangers with phenotypic kinship cues [@DeBruine_2004PRSLB;DeBruine_2005PRSLB;DeBruine_2011PNAS]. As discussed in detail in DeBruine et al. [-@DeBruine_2008ASB], while morphing techniques are sufficient to create same-gender virtual siblings, transforming techniques are required to make other-gender virtual siblings without confounding self-resemblance with androgyny (Fig.\ \@ref(fig:virtual-sibs)).
 
 ```{r, echo = TRUE}
 virtual_sis <- trans(
@@ -580,15 +662,57 @@ virtual_bro <- trans(
   mask(c("face", "neck","ears"))
 ```
 
-```{r virtual-sibs, fig.cap="Virtual siblings"}
-plot_rows(Original = crop_tem(m),
-          "Virtual Brothers" = crop_tem(virtual_bro),
-          "Virtual Sisters" = crop_tem(virtual_sis),
-          top_label = TRUE)
+```{r virtual-sibs, fig.cap="Creating vitual siblings: (A) original images, (B) virtual brothers, (C) virtual sisters."}
+plot_rows(A = crop_tem(m), 
+          B = crop_tem(virtual_bro), 
+          C = crop_tem(virtual_sis))
+```
+
+### Labels
+
+Many social perception studies require labelled images, such a minimal group designs. You can add custom labels and superimpose images on stimuli (Fig.\ \@ref(fig:label-comp)).
+
+```{r}
+# download, resize and save flag images
+
+dir.create("images/flags", FALSE)
+
+magick::image_read_svg("https://upload.wikimedia.org/wikipedia/commons/1/10/Flag_of_Scotland.svg") %>%
+  magick::image_resize(magick::geometry_size_pixels(75)) %>%
+  magick::image_write("images/flags/saltire.png")
+
+magick::image_read_svg("https://upload.wikimedia.org/wikipedia/commons/a/a9/Flag_of_Wales_%281959%E2%80%93present%29.svg") %>%
+  magick::image_resize(magick::geometry_size_pixels(75)) %>%
+  magick::image_write("images/flags/ddraig.png")
 ```
 
 
-# Discussion
+```{r, echo = TRUE}
+
+flags <- read_stim("images/flags")
+
+ingroup <- f %>%
+  # pad 10% at the top with matching color
+  pad(0.1, 0, 0, 0, patch = TRUE) %>% 
+  label("Scottish", "north", "+0+10") %>%
+  image_func("composite", flags$saltire$img, 
+              gravity = "northeast", offset = "+10+10")
+
+outgroup <- f %>%
+  pad(0.1, 0, 0, 0, patch = TRUE) %>% 
+  label("Welsh", "north", "+0+10") %>%
+  image_func("composite", flags$ddraig$img, 
+             gravity = "northeast", offset = "+10+10")
+```
+
+```{r label-comp, fig.cap="Stimuli with text labels and superimposed images."}
+plot_rows(ingroup, outgroup)
+```
+
+
+
+
+## Discussion
 
 * head position in 2D images
   * morphometics
@@ -601,7 +725,7 @@ plot_rows(Original = crop_tem(m),
 
 \newpage
 
-# References
+## References
 
 We used `r cite_r("r-references.bib")` to produce this manuscript.
 

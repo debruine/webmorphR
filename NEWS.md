@@ -1,3 +1,8 @@
+# webmorph 0.0.1.9005
+
+* Changed `label()` to default to `gravity = northwest` and `location = +10+10`
+* Added `metrics()` for calculating facial-metrics.
+
 # webmorph 0.0.1.9004
 
 * Fixed bug in `mask_oval()` when setting bounds manually that had reversed top and bottom values.

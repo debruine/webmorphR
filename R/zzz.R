@@ -2,10 +2,7 @@
 .onLoad <- function(libname, pkgname) {
   op <- options()
   op.webmorph <- list(
-    webmorph.connection = stdin(),
-    webmorph.plot = TRUE,
     webmorph.verbose = TRUE,
-    webmorph.dpi = 300,
     webmorph.line.color = "blue",
     webmorph.pt.color = "green",
     webmorph.fill = "white",
