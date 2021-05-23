@@ -40,7 +40,7 @@ keywords          : "faces; morphing; transforming; reproducible; webmorph"
 wordcount         : "X"
 
 bibliography      : ["r-references.bib","biblio.bib"]
-
+csl               : apa.csl
 floatsintext      : yes
 figurelist        : no
 tablelist         : no
@@ -62,6 +62,7 @@ note              : "Draft"
 ---
 
 ```{r setup, include = FALSE}
+# devtools::install_github("crsh/papaja")
 library("papaja")
 library("kableExtra")
 library("dplyr")
@@ -99,6 +100,8 @@ wm_opts(plot.maxwidth = 850)
 Face stimuli are commonly used in research on visual and social perception. This almost always involves some level of stimulus preparation to rotate, resize, crop, and reposition faces on the image. In addition, many studies systematically manipulate face images by changing color and/or shape properties [e.g., @jones2019biological; reviewed in @Little_2011]. 
 
 Gronenschild and colleagues [-@Gronenschild_2009] argue for the importance of standardizing face stimuli so that they are not "confounded by factors such as brightness and contrast, head size, hair cut and color, skin color, and the presence of glasses and earrings". They describe a three-step standardization process. First, they manually removed features such as glasses and earrings in Photoshop. Second, they geometrically standardized images by semi-automatically defining eye and mouth coordinates used to fit the images within an oval mask, Third, they optically standardized images by converting them to greyscale and remapping values between the minimum and 98% threshold onto the full range of values. While laudable in its aims, this procedure has not achieved widespread adoption, probably because the authors provided no code or tools. In personal communication, the main author said that this is because "the procedure is based on standard image processing algorithms described in many textbooks". However, I was unable to easily replicate the procedure and found several places where instructions had more than one possible interpretation or relied on the starting images having specific properties, such as symmetric lighting reflections in the eyes.
+
+The goal of this paper is to argue for the imortance of reproducible stimulus processing methods in face research and to introduce an open-source R package that allows researchers to create face stimuli with a script that can then be shared so that others can create stimuli using identical methods.
 
 **Scope of this type of research. How many papers, what range of questions?**
 
@@ -188,10 +191,11 @@ The reference above [@gonzalez2002digital] has been cited by 2384 papers on Goog
 
 **TO DO**
 
-[@benson1993extracting]
-[@rowland1995manipulating]
-[@webmorph]
-
+* templates [@tiddeman2001computer]
+* averaging [@benson1993extracting]
+* texture [@tiddeman2001prototyping]
+* transforming [@rowland1995manipulating]
+* webmorph.org [@webmorph]
 
 ### Ethical Issues
 
@@ -243,7 +247,7 @@ padded <- pad(orig, 30, fill = "black")
 grey <- greyscale(orig)
 ```
 
-```{r editing, fig.cap="Examples of image manipulations: (A) original image, (B) mirrored, (C) cropped to 75%, (D) resized to 75%, (E) rotated 180 degrees, (F) 30 pixels of black padding added, and (G) greyscale,."}
+```{r editing, fig.cap="Examples of image manipulations: (A) original image, (B) mirrored, (C) cropped to 75%, (D) resized to 75%, (E) rotated 180 degrees, (F) 30 pixels of black padding added, and (G) greyscale,.", fig.alt="Seven versions of the same average female face with different manipulations applied."}
 
 c(orig, mirrored, cropped, resized, rotated, padded, grey) %>%
   pad(0, 0, 0, 60) %>%
@@ -259,7 +263,7 @@ The image manipulations above work best if your raw images start the same size a
 
 WebMorph's default face template marks 189 points (Fig.\ \@ref(fig:delineate)). Some of these points have very clear anatomical locations, such as point 0 ("left pupil"), while others have only approximate placements and are used mainly for masking or preventing morphing artifacts from affecting the background of images, such as point 147 ("about 2cm to the left of the top of the left ear (creates oval around head)"). Template points numbering is 0-based because PsychoMorph was originally written in Java.
 
-```{r delineate, fig.cap = "Default webmorph FRL template"}
+```{r delineate, fig.cap = "Default webmorph FRL template", fig.alt = "Average female face with the shape delineated using 189 white numeric labels and blue lines connecting the numbers."}
 demo_stim("composite", "f_multi") %>%
   crop_tem(20) %>%
   resize(2) %>%
@@ -279,25 +283,25 @@ FRL$points[1:10, 1:5] %>%
 ```
 
 
-You can automatically delineate faces with a simpler template (Fig.\ \@ref(fig:auto-delin)) using services provided through [Face++](https://www.faceplusplus.com/landmarks/). 
+You can automatically delineate faces with a simpler template (Fig.\ \@ref(fig:auto-delin)) using the python package [@face-recognition] or online services provided through the free web platform Face++ [-@faceplusplus]. 
 
 ```{r, echo = TRUE}
 # load 5 images with FRL templates
 f <- demo_stim("london", "006|038|064|066|135")
 
-# remove templates and auto-delineate with Face++ template
+# remove templates and auto-delineate 
 fpp_tem <- auto_delin(f, replace = TRUE)
 ```
 
-```{r auto-delin, fig.cap="Delineation templates: (A) manual delineations using the FRL template and (B) automatic delineations using the Face++ template."}
+```{r auto-delin, fig.cap="Delineation templates: (A) manual delineations using the FRL template and (B) automatic delineations using the 74-point automatic template.", fig.alt="Five different West Asian female faces showing a 189-point template marking the full face (top row) and a reduced 74-point template marking only the jaw from ear to ear and internal facial features (bottom row)."}
 plot_rows(A = draw_tem(f), B = draw_tem(fpp_tem))
 ```
 
-A study comparing the accuracy of four common measures of face shape (sexual dimorphism, distinctiveness, bilateral asymmetry, and facial width to height ratio) between automatic and manual delineation concluded that automatic delineation had higher replicability and good correlations with manual delineation [@jones2020facial]. However, around 2% of images had noticeably inaccurate automatic delineation, which should be screened for by outlier detection and visual inspection. 
+A study comparing the accuracy of four common measures of face shape (sexual dimorphism, distinctiveness, bilateral asymmetry, and facial width to height ratio) between automatic and manual delineation concluded that automatic delineation had higher replicability and good correlations with manual delineation [@jones2021facial]. However, around 2% of images had noticeably inaccurate automatic delineation, which should be screened for by outlier detection and visual inspection. 
 
 While automatic delineation has the advantage of being very fast and generally more replicable than manual delineation, it is more limited in the areas that can be described. Typically, automatic face detection algorithms outline the lower face shape and internal features of the face, but don't define the hairline, hair, neck, or ears. Manual delineation of these can greatly improve stimuli created through morphing or transforming (Fig.\ \@ref(fig:avg-comp)).
 
-```{r avg-comp, fig.cap="Averages of 5 images made using (A) the full 189-point manual template and (B) the reduced 106-point automatic template."}
+```{r avg-comp, fig.cap="Averages of 5 images made using (A) the full 189-point manual template and (B) the reduced 106-point automatic template.", fig.alt="Averages of the 5 West Asian female faces. The right average has blurrier features then the left one, especially around the ears, neck and hairline."}
 frl_avg <- avg(f)
 fpp_avg <- avg(fpp_tem)
 
@@ -361,7 +365,7 @@ twopt <- align(f, pt1 = 0, pt2 = 1, fill = "dodgerblue")
 proc <- align(f, pt1 = 0, pt2 = 1, procrustes = TRUE, fill = "dodgerblue")
 ```
 
-```{r norm-comp, fig.cap="Original images with different alignments. (A) One-point alignment placing the bottom of the nose point in the centre of the image. (B) Two-point alignment placing the eye centre points in the same position as the average image. (C) Procrustes alignment moved, rotated, and resized all images to most closely match the average face. A blue background was used to highlight the difference here, but normally a colour matching the image background would be used or the images would be cropped."}
+```{r norm-comp, fig.cap="Original images with different alignments. (A) One-point alignment placing the bottom of the nose point in the centre of the image. (B) Two-point alignment placing the eye centre points in the same position as the average image. (C) Procrustes alignment moved, rotated, and resized all images to most closely match the average face. A blue background was used to highlight the difference here, but normally a colour matching the image background would be used or the images would be cropped.", fig.alt="Five West Asian female faces on each row, with the alignments described in the caption."}
 
 plot_rows(A = onept, B = twopt, C = proc)
 ```
@@ -388,7 +392,7 @@ oval_tem <- f %>%
 masked <- mask(f, c("face", "neck", "ears"), fill = "dodgerblue")
 ```
 
-```{r mask, fig.cap = "Images masked with (A) an oval defined by image coordinates, (B) an oval defined by the minimum and maximum x- and y-coordinates of template points, or (C) to include face, ears and neck."}
+```{r mask, fig.cap = "Images masked with (A) an oval defined by image coordinates, (B) an oval defined by the minimum and maximum x- and y-coordinates of template points, or (C) to include face, ears and neck.", fig.alt="Five West Asian female faces on each row, with the masking described in the caption."}
 plot_rows(A = oval, B = oval_tem, C = masked)
 ```
 
@@ -404,7 +408,7 @@ avg_notex <- avg(f, texture = FALSE)
 ```
 
 
-```{r avg-texture, fig.cap="An average of 5 faces created (A) with texture averaging and (B) without."}
+```{r avg-texture, fig.cap="An average of 5 faces created (A) with texture averaging and (B) without.", fig.alt="The average female West Asian face. The Top row shows the full face and the bottom row is a close-up of the eyes. The left image has cripsly defined features and skin texture, such as wrinkles and visible eyebrow hairs, while the right image has blurrier features, smoother skin, and individual hairs are not visible."}
 # close up on the eyes
 eyes <- c(avg_tex, avg_notex) %>% 
   align(x1=100, y1 = 100, x2 = 300, y2 = 100, width = 400, height = 150)
@@ -414,6 +418,7 @@ c(avg_tex, avg_notex, eyes) %>%
   resize(width = width(avg_tex)) %>%
   plot(nrow = 2)
 ```
+
 ### Transforming
 
 Transforming alters the appearance of one face by some proportion of the differences between two other faces. This technique is distinct from morphing. For example, you can transform a face in the dimension of sexual dimorphism by calculating  the shape and color differences between a prototype female face (Fig.\ \@ref(fig:trans-vs-morph)A) and a prototype male face (Fig.\ \@ref(fig:trans-vs-morph)B). If you morph an individual female face with these images, you get faces that are halfway between the indivual and prototype faces (Fig.\ \@ref(fig:trans-vs-morph)C,D). If you transform the individual face by 50% of the prototype differences, you get feminised and masculinized versions of the individual face (Fig.\ \@ref(fig:trans-vs-morph)E,F).
@@ -438,7 +443,7 @@ masc_morph <- c(individual, averages$m_white) %>% avg()
 fem_morph <- c(individual, averages$f_white) %>% avg()
 ```
 
-```{r trans-vs-morph, fig.cap="Morphing versus transforming: (A, B) composite images, (C, D) averages of the composites with an individual image, (E, F) transforms of an individual image along the male-female continuum."}
+```{r trans-vs-morph, fig.cap="Morphing versus transforming: (A, B) composite images, (C, D) averages of the composites with an individual image, (E, F) transforms of an individual image along the male-female continuum.", fig.alt="Six faces in three columns/two rows. The first column is average White faces, female on top and male on the bottom. The second column is the average of the faces in the first column and an individual White female face; the top image looks like a more average version of the individual face and the bottom image looks like an androgynous face. The third column is transforms of the individual female face; the top image looks more like a more feminine version of the individual face and the bottom image looks like a male version of the individual face."}
 
 c(averages, fem_morph, masc_morph, sexdim) %>%
   label(LETTERS) %>%
@@ -465,13 +470,11 @@ c(individual, masc) %>%
 ```
 
 
-
-
 ### Symmetrising
 
 Although a common technique [e.g., @Mealey_1999], left-left and right-right mirroring (Fig.\ \@ref(fig:mirror-sym)) is not recommended for investigating perceptions of facial symmetry. This is because this method typically produces unnatural images for any face that isn't already perfectly symmetric. For example, if the nose does not lie in a perfectly straight line from the centre point between the eyes to the centre of the mouth, then one of the mirrored halves will have a much wider nose than the original face, while the the other half will have a much narrower nose than the original face. In extreme cases, one mirrored version can end up with three nostrils and the other with a single nostril. 
 
-```{r mirror-sym, fig.cap = "Left-left (top) and right-right (bottom) mirrored images. The code for making these images is in the supplemental materials, but we only recommend using this method to demonstrate how misleading it is."}
+```{r mirror-sym, fig.cap = "Left-left (top) and right-right (bottom) mirrored images. The code for making these images is in the supplemental materials, but we only recommend using this method to demonstrate how misleading it is.", fig.alt="The five West Asian women "}
 # make eye points exactly horizontal
 hzeyes <- horiz_eyes(f)
 

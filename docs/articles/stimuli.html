@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorphR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9006</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@
 
       
 
-      </header><script src="stimuli_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><script src="stimuli_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Making Stimuli</h1>
@@ -116,15 +116,31 @@
     
     
 <p>This vignette will show some recipes for common types of stimulus creation.</p>
+<div id="automatic-delineation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#automatic-delineation" class="anchor"></a>Automatic Delineation</h2>
+<p>If your images aren’t delineated, you can use the <code><a href="../reference/auto_delin.html">auto_delin()</a></code> function or upload them to <a href="webmorph.org">webmorph</a> to use the extensive manual delineation functions there and the 189-point FRL template.</p>
+<p>The auto-delineation has three options. The default is “dlib74”, which is a 74-point template used by dlib with the python package <a href="https://github.com/ageitgey/face_recognition">face_recognition</a>.</p>
+<p>Auto-delineation with web-based software <a href="https://www.faceplusplus.com/">Face++</a> is better, but requires a free API key from Face++. After signing up for an account, go to <a href="https://console.faceplusplus.com/app/apikey/list" class="uri">https://console.faceplusplus.com/app/apikey/list</a> and request a free API key. Add the key and secret to your .Renviron file as follows:</p>
+<pre><code>FACEPLUSPLUS_KEY="1234567890abcdefghijk"  
+FACEPLUSPLUS_SECRET="1234567890abcdefghijk"</code></pre>
+<p>The you can access the 106-point (fpp106) and 83-point (fpp83) templates. Remember, this uploads your images to the Face++ website.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">frl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"test"</span>, <span class="st">"f_multi"</span><span class="op">)</span>
+<span class="va">dlib74</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">frl</span>, <span class="st">"dlib74"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">fpp83</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">frl</span>, <span class="st">"fpp83"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">fpp106</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">frl</span>, <span class="st">"fpp106"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><img src="stimuli_files/figure-html/auto-1.png" width="100%"></p>
+</div>
 <div id="averageness" class="section level2">
 <h2 class="hasAnchor">
 <a href="#averageness" class="anchor"></a>Averageness</h2>
 <p>Let’s start with a set of images from the built-in image sets. You can add data to an image set to use in subsetting the images. For demonstration, the London image set from the package <a href="https://github.com/debruine/stimsets">stimsets</a> has a data table called <code>london_info</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"london"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/add_info.html">add_info</a></span><span class="op">(</span><span class="fu">stimsets</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/stimsets/man/london_info.html">london_info</a></span><span class="op">)</span></code></pre></div>
 <p>Select images from your subset to make a new image set. the original images are large, and we don’t need the resulting stimuli to be that large, so we’ll reduce image size by 50% right at the start to reduce processing time.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">subset</span> <span class="op">&lt;-</span> <span class="va">stimuli</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">face_eth</span> <span class="op">==</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">face_gender</span> <span class="op">==</span> <span class="st">"male"</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -132,28 +148,28 @@
 <p><img src="stimuli_files/figure-html/resize-1.png" width="100%"></p>
 <p>Next, align the images using Procrustes normalisation to the position of the first image. They need to have templates fitted to do this. The argument <code>patch = TRUE</code> tries to match the background colour as closely as possible.</p>
 <p>The <code>horiz_eyes</code> function just makes sure that the first image has good alignment, since his head is slightly tilted.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aligned</span> <span class="op">&lt;-</span> <span class="va">subset</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/horiz_eyes.html">horiz_eyes</a></span><span class="op">(</span>patch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span>procrustes <span class="op">=</span> <span class="cn">TRUE</span>, patch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="stimuli_files/figure-html/align-1.png" width="100%"></p>
 <p>You may also want to crop the images to a 3x4 aspect ratio.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cropped</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="va">aligned</span>, width <span class="op">=</span> <span class="fl">0.6</span>, height <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></code></pre></div>
 <p><img src="stimuli_files/figure-html/crop-1.png" width="100%"></p>
 <p>Now we can make an average version of these faces. This uses the morphing functions available on the web app, so you need to have an internet connection. It usually takes 1-4 seconds per image to upload your images to the server for processing.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/avg.html">avg</a></span><span class="op">(</span><span class="va">cropped</span><span class="op">)</span></code></pre></div>
 <p><img src="stimuli_files/figure-html/average-1.png" width="100%"></p>
 <p>You can use this average face to transform the individual faces in distinctiveness and averageness.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">transf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trans.html">trans</a></span><span class="op">(</span>trans_img <span class="op">=</span> <span class="va">cropped</span>,
                 from_img <span class="op">=</span> <span class="va">avg</span>,
                 to_img <span class="op">=</span> <span class="va">cropped</span>,
                 shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>avg <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>, dist <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="stimuli_files/figure-html/male-grid-1.png" width="100%"></p>
 <p>Now you can set names and save your individual stimuli in a directory to use in studies.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">avg</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, <span class="st">"m_avg"</span>, <span class="st">"jpg"</span><span class="op">)</span>
                                          
 <span class="va">cropped</span> <span class="op">%&gt;%</span>
@@ -164,7 +180,7 @@
   <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"_03"</span>, replacement <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, format <span class="op">=</span> <span class="st">"jpg"</span><span class="op">)</span></code></pre></div>
 <p>Now you can pipe all of the commands together and apply them to a new set of images, such as all the black women in the set.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># subset, resize, align, and crop</span>
 <span class="va">cropped</span> <span class="op">&lt;-</span> <span class="va">stimuli</span> <span class="op">%&gt;%</span>
@@ -194,7 +210,7 @@
 <span class="va">transf</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"_03"</span>, replacement <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, format <span class="op">=</span> <span class="st">"jpg"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">avg_i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span>
 <span class="va">dist_i</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span>
 <span class="fu"><a href="../reference/plot_rows.html">plot_rows</a></span><span class="op">(</span>
@@ -209,11 +225,11 @@
 <h2 class="hasAnchor">
 <a href="#sexual-dimorphism" class="anchor"></a>Sexual Dimorphism</h2>
 <p>To manipulate sexual dimorphism, you need male and female average faces like the ones created above. We’ll load them from the saved files.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">avgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_stim.html">read_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, <span class="st">"(f|m)_avg"</span><span class="op">)</span>
 <span class="va">orig</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_stim.html">read_stim</a></span><span class="op">(</span><span class="st">"stimuli"</span>, <span class="st">"orig_"</span><span class="op">)</span></code></pre></div>
 <p>You can then transform them by -50% to feminise and +50% to masculinise. Remember to give your shape vector names to set the output names automatically.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sexdim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trans.html">trans</a></span><span class="op">(</span>trans_img <span class="op">=</span> <span class="va">orig</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,
                 from_img <span class="op">=</span> <span class="va">avgs</span><span class="op">$</span><span class="va">f_avg</span>,
                 to_img <span class="op">=</span> <span class="va">avgs</span><span class="op">$</span><span class="va">m_avg</span>,
@@ -224,13 +240,13 @@
 <h2 class="hasAnchor">
 <a href="#animate" class="anchor"></a>Animate</h2>
 <p>Make a continuum that morphs from the female to the male average in 5% steps.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">continuum</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/continuum.html">continuum</a></span><span class="op">(</span><span class="va">avgs</span><span class="op">$</span><span class="va">f_avg</span>, <span class="va">avgs</span><span class="op">$</span><span class="va">m_avg</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">.05</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">continuum</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
-<p><img src="stimuli_files/figure-html/unnamed-chunk-9-1.png" width="100%"></p>
-<p>You can turn your images into an animated gif. Resize the images to the size you want first.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">continuum</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/continuum.html">continuum</a></span><span class="op">(</span><span class="va">avgs</span><span class="op">$</span><span class="va">f_avg</span>, <span class="va">avgs</span><span class="op">$</span><span class="va">m_avg</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">.05</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">continuum</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<p><img src="stimuli_files/figure-html/unnamed-chunk-10-1.png" width="100%"></p>
+<p>You can turn your images into an animated gif. Resize the images to the size you want first.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">continuum</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">180</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/animate.html">animate</a></span><span class="op">(</span>fps <span class="op">=</span> <span class="fl">20</span>, rev <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -240,7 +256,7 @@
 <h2 class="hasAnchor">
 <a href="#non-face-stimuli" class="anchor"></a>Non-Face Stimuli</h2>
 <p>You can also process images without templates. For example, the following code takes a group of images and crops them to a standard size.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load rainbow images</span>
 <span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"rainbow"</span><span class="op">)</span>
 
@@ -257,18 +273,18 @@
   <span class="fu">`[`</span><span class="op">(</span><span class="va">info</span><span class="op">$</span><span class="va">photo_name</span><span class="op">)</span> <span class="co"># reorder by type and colour</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">stim</span>, ncol <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></code></pre></div>
-<p><img src="stimuli_files/figure-html/unnamed-chunk-10-1.png" width="100%"></p>
+<p><img src="stimuli_files/figure-html/unnamed-chunk-11-1.png" width="100%"></p>
 </div>
 <div id="word-stimuli" class="section level2">
 <h2 class="hasAnchor">
 <a href="#word-stimuli" class="anchor"></a>Word Stimuli</h2>
 <p>Make word stimuli by starting with blank images. You can specify the size and colour.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">new_stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/blank.html">blank</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">6</span>, width <span class="op">=</span> <span class="fl">100</span>, height <span class="op">=</span> <span class="fl">100</span>, 
                      color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"orange"</span>, <span class="st">"yellow"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>, <span class="st">"purple"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="stimuli_files/figure-html/unnamed-chunk-12-1.png" width="100%"></p>
+<p><img src="stimuli_files/figure-html/unnamed-chunk-13-1.png" width="100%"></p>
 <p>Then you can add words to each stimulus with the <code><a href="../reference/label.html">label()</a></code> function.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">colours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>red <span class="op">=</span> <span class="st">"red"</span>, 
              orange <span class="op">=</span> <span class="st">"darkorange"</span>, 
              green <span class="op">=</span> <span class="st">"darkgreen"</span>, 
@@ -280,8 +296,8 @@
 <span class="va">stroop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/blank.html">blank</a></span><span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="va">n</span>, <span class="fl">400</span>, <span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="va">labels</span>, size <span class="op">=</span> <span class="fl">50</span>, color <span class="op">=</span> <span class="va">colours</span>, 
         gravity <span class="op">=</span> <span class="st">"center"</span><span class="op">)</span></code></pre></div>
-<p><img src="stimuli_files/figure-html/unnamed-chunk-14-1.png" width="100%"></p>
-<p>This script took 0.8 minutes to render all the included images from scratch.</p>
+<p><img src="stimuli_files/figure-html/unnamed-chunk-15-1.png" width="100%"></p>
+<p>This script took 0.9 minutes to render all the included images from scratch.</p>
 </div>
   </div>
 

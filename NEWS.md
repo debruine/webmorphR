@@ -1,3 +1,7 @@
+# webmorph 0.0.1.9006
+
+* Added python face detection for `auto_delin()` so there is a local solution
+
 # webmorph 0.0.1.9005
 
 * Changed `label()` to default to `gravity = northwest` and `location = +10+10`

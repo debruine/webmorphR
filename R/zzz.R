@@ -1,5 +1,9 @@
-## set default options for wm_opts:
+face_rec <- NULL
+
 .onLoad <- function(libname, pkgname) {
+  face_rec <<- reticulate::import("face_recognition", convert = FALSE, delay_load = TRUE)
+  
+  ## set default options for wm_opts:
   op <- options()
   op.webmorph <- list(
     webmorph.verbose = TRUE,

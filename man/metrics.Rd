@@ -18,7 +18,7 @@ named vector of the metric
 Get metrics defined by template points.
 }
 \details{
-Reference x and y coordinates by point number like x\link{0} or y\link{188}. Use any R functions to process the numbers, as well as \code{pow()} (same as \verb{^()}, for consistency with webmorph.org). Remember that 0,0 is the top left for images; e.g., \code{min(y[0], y[1])} gives your the \emph{higher} of the two pupil y-coordinates.
+Reference x and y coordinates by point number like \code{x[0]} or \code{y[188]}. Use any R functions to process the numbers, as well as \code{pow()} (same as \verb{^()}, for consistency with webmorph.org). Remember that 0,0 is the top left for images; e.g., \code{min(y[0], y[1])} gives your the \emph{higher} of the two pupil y-coordinates.
 }
 \examples{
 stimuli <- demo_stim()

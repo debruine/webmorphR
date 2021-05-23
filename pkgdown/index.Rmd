@@ -105,31 +105,21 @@ stimuli %>%
 
 ## Automatic Delineation
 
-Read in images with webmorph templates, or automatically delineate images with [Face++](https://www.faceplusplus.com/){target="_blank"}. Auto-delineation requires a free API key from Face++; averaging and transforming require a [webmorph](https://webmorph.org){target="_blank"} account.
+Read in images with webmorph templates, or automatically delineate images with the python module [face_recognition](https://github.com/ageitgey/face_recognition) or the web-based software [Face++](https://www.faceplusplus.com/). Auto-delineation with Face++ is better, but requires a free API key from Face++.
 
 ```{r delin}
-imgdir <- system.file("extdata/zoom", package = "webmorphR")
-stimuli <- read_stim(imgdir, "jpg") %>% 
+stimuli <- demo_stim("zoom") %>% 
   resize(1/2) %>%
-  auto_delin()
+  auto_delin(replace = TRUE)
 
 draw_tem(stimuli) %>% plot()
 ```
 
-Now you can procrustes align the images and crop them all to the same dimensions.
-
-```{r aligned}
-aligned <- align(stimuli, procrustes = TRUE, patch = TRUE) %>%
-  crop_tem(100, 10, 10, 10)
-
-plot(aligned)
-```
-
-
-You can even add image labels and turn your images into an animated gif.
+Now you can procrustes align the images and crop them all to the same dimensions. You can even add image labels and turn your images into an animated gif.
 
 ```{r animate, out.width = "25%"}
-aligned %>%
+align(stimuli, procrustes = TRUE, patch = TRUE) %>%
+  crop_tem(120, 20, 20, 20) %>%
   pad(40, 0, 0, 0, fill = "black") %>%
   label(c("15cm", "30cm", "45cm", "60cm"), color = "white") %>%
   animate(fps = 2)

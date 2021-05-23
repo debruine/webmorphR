@@ -18,6 +18,35 @@ library(dplyr)
 
 This vignette will show some recipes for common types of stimulus creation.
 
+## Automatic Delineation
+
+If your images aren't delineated, you can use the `auto_delin()` function or upload them to [webmorph](webmorph.org) to use the extensive manual delineation functions there and the 189-point FRL template.
+
+The auto-delineation has three options. The default is "dlib74", which is a 74-point template used by dlib with the python package [face_recognition](https://github.com/ageitgey/face_recognition).
+
+Auto-delineation with web-based software [Face++](https://www.faceplusplus.com/) is better, but requires a free API key from Face++. After signing up for an account, go to https://console.faceplusplus.com/app/apikey/list and request a free API key. Add the key and secret to your .Renviron file as follows:
+
+```
+FACEPLUSPLUS_KEY="1234567890abcdefghijk"  
+FACEPLUSPLUS_SECRET="1234567890abcdefghijk"
+```
+
+The you can access the 106-point (fpp106) and 83-point (fpp83) templates. Remember, this uploads your images to the Face++ website.
+
+```{r}
+frl <- demo_stim("test", "f_multi")
+dlib74 <- auto_delin(frl, "dlib74", replace = TRUE)
+fpp83 <- auto_delin(frl, "fpp83", replace = TRUE)
+fpp106 <- auto_delin(frl, "fpp106", replace = TRUE)
+```
+
+```{r auto, echo = FALSE}
+c(dlib74, fpp83, fpp106, frl) %>%
+  draw_tem() %>%
+  label(c("dlib74",  "fpp83", "fpp106", "frl (manual)")) %>%
+  plot_stim()
+```
+
 ## Averageness
 
 Let's start with a set of images from the built-in image sets. You can add data to an image set to use in subsetting the images. For demonstration, the London image set from the package [stimsets](https://github.com/debruine/stimsets) has a data table called `london_info`.

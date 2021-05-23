@@ -22,5 +22,5 @@ magick image
 Create an animated gif from a list of stimuli
 }
 \examples{
-demo_stim() \%>\% animate()
+gif <- demo_stim() \%>\% animate()
 }

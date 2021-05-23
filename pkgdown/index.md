@@ -30,7 +30,7 @@ library(webmorphR)
 #> 
 #> ************
 #> Welcome to webmorphR. For support and examples visit:
-#> https://facelab.github.io/webmorphR/
+#> https://debruine.github.io/webmorphR/
 #> ************
 
 wm_opts(plot.maxwidth = 850*2) # set maximum width for plot output
@@ -115,38 +115,25 @@ stimuli %>%
 
 ## Automatic Delineation
 
-Read in images with webmorph templates, or automatically delineate images with [Face++](https://www.faceplusplus.com/){target="_blank"}. Auto-delineation requires a free API key from Face++; averaging and transforming require a [webmorph](https://webmorph.org){target="_blank"} account.
+Read in images with webmorph templates, or automatically delineate images with the python module [face_recognition](https://github.com/ageitgey/face_recognition) or the web-based software [Face++](https://www.faceplusplus.com/). Auto-delineation with Face++ is better, but requires a free API key from Face++.
 
 
 ```r
-imgdir <- system.file("extdata/zoom", package = "webmorphR")
-stimuli <- read_stim(imgdir, "jpg") %>% 
+stimuli <- demo_stim("zoom") %>% 
   resize(1/2) %>%
-  auto_delin()
+  auto_delin(replace = TRUE)
 
 draw_tem(stimuli) %>% plot()
 ```
 
 <img src="man/figures/delin-1.png" title="plot of chunk delin" alt="plot of chunk delin" width="100%" />
 
-Now you can procrustes align the images and crop them all to the same dimensions.
+Now you can procrustes align the images and crop them all to the same dimensions. You can even add image labels and turn your images into an animated gif.
 
 
 ```r
-aligned <- align(stimuli, procrustes = TRUE, patch = TRUE) %>%
-  crop_pad(100, 10, 10, 10)
-
-plot(aligned)
-```
-
-<img src="man/figures/aligned-1.png" title="plot of chunk aligned" alt="plot of chunk aligned" width="100%" />
-
-
-You can even add image labels and turn your images into an animated gif.
-
-
-```r
-aligned %>%
+align(stimuli, procrustes = TRUE, patch = TRUE) %>%
+  crop_tem(120, 20, 20, 20) %>%
   pad(40, 0, 0, 0, fill = "black") %>%
   label(c("15cm", "30cm", "45cm", "60cm"), color = "white") %>%
   animate(fps = 2)

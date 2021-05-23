@@ -14,7 +14,7 @@ library(tidyverse)
 
 ```{r}
 frl <- demo_stim("london") %>% resize(0.5)
-#fpp <- auto_delin(frl, "high", TRUE)
+#fpp <- auto_delin(frl, "dlib74", TRUE)
 #saveRDS(fpp, file = "fpp.RDS")
 fpp <- readRDS("fpp.RDS")
 ```

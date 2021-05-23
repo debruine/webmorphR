@@ -4,12 +4,17 @@
 \alias{auto_delin}
 \title{Face++ Auto-Delineation}
 \usage{
-auto_delin(stimuli, style = c("fpp106", "fpp83"), replace = FALSE, face = 1)
+auto_delin(
+  stimuli,
+  style = c("dlib74", "fpp106", "fpp83"),
+  replace = FALSE,
+  face = 1
+)
 }
 \arguments{
 \item{stimuli}{list of class stimlist}
 
-\item{style}{Which service and number of landmarks}
+\item{style}{Which service and number of landmarks (dlib74, fpp106, fpp83)}
 
 \item{replace}{if FALSE, only gets templates for images with no template}
 
@@ -19,7 +24,7 @@ auto_delin(stimuli, style = c("fpp106", "fpp83"), replace = FALSE, face = 1)
 stimlist with templates
 }
 \description{
-Automatically delineate faces using Face++ (an external service). Since each delineation counts against a daily limit, you need to set up your own Face++ account (see details below).
+Automatically delineate faces using the face_recognition python library or Face++ (an external service). Since each delineation counts against a daily limit, you need to set up your own Face++ account (see details below).
 }
 \details{
 To use Face++ auto-delineation, you need to get your own free API key from https://www.faceplusplus.com. After signing up for an account, go to https://console.faceplusplus.com/app/apikey/list and request a free API key. Add the key and secret to your .Renviron file as follows:
@@ -30,12 +35,13 @@ FACEPLUSPLUS_SECRET="1234567890abcdefghijk"
 }
 \examples{
 \dontrun{
-  # requires an API key in .Renviron
+  # requires python
   auto_high <- demo_stim()[1] \%>\%
     auto_delin(replace = TRUE) # replace existing templates
 
+  # requires an API key in .Renviron
   auto_low <- demo_stim()[1] \%>\%
-    auto_delin(style = "fpp83", replace = TRUE)
+    auto_delin(style = "fpp106", replace = TRUE)
 
   c(auto_high, auto_low) \%>\% draw_tem() \%>\% plot()
 }

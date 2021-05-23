@@ -67,5 +67,4 @@ two_pt <- align(stimuli, ref_img = 2)
 
 # procrustes align to average position
 proc <- align(stimuli, procrustes = TRUE)
-draw_tem(proc)
 }

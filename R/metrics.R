@@ -2,7 +2,7 @@
 #' 
 #' Get metrics defined by template points. 
 #' 
-#' Reference x and y coordinates by point number like x[0] or y[188]. Use any R functions to process the numbers, as well as `pow()` (same as `^()`, for consistency with webmorph.org). Remember that 0,0 is the top left for images; e.g., `min(y[0], y[1])` gives your the *higher* of the two pupil y-coordinates.
+#' Reference x and y coordinates by point number like `x[0]` or `y[188]`. Use any R functions to process the numbers, as well as `pow()` (same as `^()`, for consistency with webmorph.org). Remember that 0,0 is the top left for images; e.g., `min(y[0], y[1])` gives your the *higher* of the two pupil y-coordinates.
 #'
 #' @param stimuli list of class stimlist with tems
 #' @param formula a vector of two points to measure the distance apart, or a string of the formula for the metric

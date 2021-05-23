@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">webmorphR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9006</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ************</span>
 <span class="co">#&gt; Welcome to webmorphR. For support and examples visit:</span>
-<span class="co">#&gt; https://facelab.github.io/webmorphR/</span>
+<span class="co">#&gt; https://debruine.github.io/webmorphR/</span>
 <span class="co">#&gt; ************</span>
 
 <span class="fu"><a href="reference/wm_opts.html">wm_opts</a></span><span class="op">(</span>plot.maxwidth <span class="op">=</span> <span class="fl">850</span><span class="op">*</span><span class="fl">2</span><span class="op">)</span> <span class="co"># set maximum width for plot output</span></code></pre></div>
@@ -179,25 +179,18 @@
 <div id="automatic-delineation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#automatic-delineation" class="anchor"></a>Automatic Delineation</h2>
-<p>Read in images with webmorph templates, or automatically delineate images with <a href="https://www.faceplusplus.com/">Face++</a>{target="_blank“}. Auto-delineation requires a free API key from Face++; averaging and transforming require a <a href="https://webmorph.org">webmorph</a>{target=”_blank"} account.</p>
+<p>Read in images with webmorph templates, or automatically delineate images with the python module <a href="https://github.com/ageitgey/face_recognition">face_recognition</a> or the web-based software <a href="https://www.faceplusplus.com/">Face++</a>. Auto-delineation with Face++ is better, but requires a free API key from Face++.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">imgdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata/zoom"</span>, package <span class="op">=</span> <span class="st">"webmorphR"</span><span class="op">)</span>
-<span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/read_stim.html">read_stim</a></span><span class="op">(</span><span class="va">imgdir</span>, <span class="st">"jpg"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"zoom"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu"><a href="reference/auto_delin.html">auto_delin</a></span><span class="op">(</span>replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="fu"><a href="reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/delin-1.png" title="plot of chunk delin" alt="plot of chunk delin" width="100%"></p>
-<p>Now you can procrustes align the images and crop them all to the same dimensions.</p>
+<p>Now you can procrustes align the images and crop them all to the same dimensions. You can even add image labels and turn your images into an animated gif.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">aligned</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/align.html">align</a></span><span class="op">(</span><span class="va">stimuli</span>, procrustes <span class="op">=</span> <span class="cn">TRUE</span>, patch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">crop_pad</span><span class="op">(</span><span class="fl">100</span>, <span class="fl">10</span>, <span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">aligned</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/aligned-1.png" title="plot of chunk aligned" alt="plot of chunk aligned" width="100%"></p>
-<p>You can even add image labels and turn your images into an animated gif.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">aligned</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="fu"><a href="reference/align.html">align</a></span><span class="op">(</span><span class="va">stimuli</span>, procrustes <span class="op">=</span> <span class="cn">TRUE</span>, patch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">120</span>, <span class="fl">20</span>, <span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, fill <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/label.html">label</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"15cm"</span>, <span class="st">"30cm"</span>, <span class="st">"45cm"</span>, <span class="st">"60cm"</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="reference/animate.html">animate</a></span><span class="op">(</span>fps <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>

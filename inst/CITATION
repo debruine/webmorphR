@@ -11,7 +11,7 @@ textVersion <- paste0("Lisa DeBruine, (", year, ").",
 citEntry(
   entry    = "Manual",
   title    = "webmorphR: Reproducible Stimuli",
-  author   = "Lisa DeBruine",
+  author   = "Lisa M. DeBruine",
   doi      = doi,
   publisher = "Zenodo",
   year     = year,

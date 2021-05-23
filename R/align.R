@@ -31,7 +31,6 @@
 #'
 #' # procrustes align to average position
 #' proc <- align(stimuli, procrustes = TRUE)
-#' draw_tem(proc)
 
 align <- function(stimuli, pt1 = 0, pt2 = 1,
                   x1 = NULL, y1 = NULL, x2 = NULL, y2 = NULL,
