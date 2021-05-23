@@ -20,6 +20,7 @@ Imports:
     magrittr,
     dplyr,
     tidyr,
+    knitr,
     magick,
     tools,
     grDevices,
@@ -32,7 +33,6 @@ Imports:
     shiny
 Suggests: 
     testthat,
-    knitr,
     rmarkdown,
     covr,
     stimsets
