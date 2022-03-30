@@ -31,6 +31,8 @@ You can install the development version from [GitHub](https://github.com/) with:
 devtools::install_github("debruine/webmorphR")
 ```
 
+Installation can take a few minutes, depending on how many dependency packages you need to install.
+
 ```{r}
 library(webmorphR)
 
@@ -40,24 +42,33 @@ wm_opts(plot.maxwidth = 850*2) # set maximum width for plot output
 
 ## Reproducible stimulus construction
 
-Load 6 faces from the CC-BY licensed [Face Research Lab London Set](https://doi.org/10.6084/m9.figshare.5047666.v3).
+### Averaging Faces
+
+In this example, we'll load a few faces from the CC-BY licensed [Face Research Lab London Set](https://doi.org/10.6084/m9.figshare.5047666.v3), average them together, create a figure
+
+
+Load 6 faces. If you haven't already downloaded the demo stimulus sets, this code will prompt you to download them. The demo sets are large, so this takes a minute or so.
 
 ```{r}
 face_set <- demo_stim("london", "002|006|007|025|030|066")
 ```
 
-These faces already have webmorph templates, so you can make an average.
+These faces already have webmorph templates, so you can make an average. The `avg()` function sends the images and templates to the server at webmorph.org, which does the processing and sends back the average, so it can take a few seconds. This also means you need an internet connection for this step.
 
 ```{r}
 avg <- avg(face_set)
 ```
 
-Create a figure showing the individual faces and the average with the template superimposed.
+Create a figure showing the individual faces and the average with the template superimposed. See `plot_stim()` for an explanation of the arguments to the `plot()` function (an alias for plot_stim).
 
 ```{r avg}
 # plot individual faces in a grid the same height as the average face
-ind <- plot(face_set, ncol = 2, padding = 30, external_pad = FALSE,
-            maxwidth = avg$avg$width, maxheight = avg$avg$height)
+ind <- plot(face_set, 
+            ncol = 2, 
+            padding = 30, 
+            external_pad = FALSE,
+            maxwidth = avg$avg$width, 
+            maxheight = avg$avg$height)
 
 # draw template on the face, join with individual grid, and plot
 tem <- draw_tem(avg, pt.alpha = 0.5, line.alpha = 0.25)
@@ -65,7 +76,12 @@ tem <- draw_tem(avg, pt.alpha = 0.5, line.alpha = 0.25)
 c(ind, tem) %>% plot(nrow = 1)
 ```
 
-Transform images to make them more average.
+
+### Transforming Faces
+
+In this example, we'll transform the individual images, mask and crop them, and put them together in a single compound figure.
+
+First, transform images to make them more average. The `trans()` function also sends images to webmorph.org, so can take a minute and requires and internet connection.
 
 ```{r}
 dist_avg <- trans(trans_img = face_set, 
@@ -76,36 +92,55 @@ dist_avg <- trans(trans_img = face_set,
 ```
 
 
-Mask and crop images.
+Next, mask and crop images. Use `names()` to check the order of the images in the `dist_avg` object 
 
 ```{r}
-rainbow <- c("#983E82", "#E2A458", "#F5DC70", "#59935B", "#467AAC", "#61589C") %>% rep(each = 2)
+names(dist_avg)
+```
 
-stimuli <- dist_avg %>%
-  mask(c("face", "neck", "ears"), fill = rainbow) %>%
+
+```{r}
+rainbow <- c("#983E82", "#E2A458", "#F5DC70", "#59935B", "#467AAC", "#61589C") |> rep(times = 2)
+
+stimuli <- dist_avg[c(7:12, 1:6)] |>
+  mask(c("face", "neck", "ears"), fill = rainbow) |>
   crop(0.6, 0.8)
 ```
 
-Save your stimuli
+Save the stimuli into a new directory. This will create a folder in your working directory called "mystimuli" if it doesn't exist.
 
 ```{r, eval = FALSE}
 write_stim(stimuli, dir = "mystimuli")
 ```
 
 
-Easily create figures to illustrate your research.
+Easily create figures to illustrate your research. The code below adds 120 pixels of black padding to the top of each image, labels them with their name, and plots all images in two rows.
 
 ```{r repro}
-stimuli %>%
-  pad(120, 0, 0, 0) %>%
-  label(size = 90) %>%
-  plot(nrow = 2, byrow = FALSE)
+stimuli |>
+  pad(120, 0, 0, 0, fill = "black") |>
+  label(size = 90, 
+        color = rainbow, 
+        gravity = "north",
+        location = "+0+10") |>
+  plot(nrow = 2)
 ```
 
 
 ## Automatic Delineation
 
-Read in images with webmorph templates, or automatically delineate images with the python module [face_recognition](https://github.com/ageitgey/face_recognition) or the web-based software [Face++](https://www.faceplusplus.com/). Auto-delineation with Face++ is better, but requires a free API key from Face++.
+Read in images with webmorph templates, or automatically delineate images with the python module [face_recognition](https://github.com/ageitgey/face_recognition) or the web-based software [Face++](https://www.faceplusplus.com/). Auto-delineation with Face++ is better, but requires a free API key from Face++. You may be prompted to install a Python module using `reticulate::py_install("face_recognition")`.
+
+```{r, eval = FALSE, include = FALSE}
+# If you get errors about not being able to write to /usr/bin, you may need to create a virtual environment first and install into that.
+library(reticulate)
+virtualenv_create(".venv")
+use_virtualenv(".venv")
+py_install("cmake", envname = ".venv")
+py_install("dlib", envname = ".venv")
+py_install("face_recognition", envname = ".venv")
+```
+
 
 ```{r delin}
 stimuli <- demo_stim("zoom") %>% 
