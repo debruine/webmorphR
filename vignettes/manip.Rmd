@@ -11,7 +11,12 @@ knitr::opts_chunk$set(
 )
 
 starttime <- Sys.time()
+```
 
+This vignette demonstrates the functions you can use to resize, rotate, crop, pad, and align images.
+
+```{r, message=FALSE}
+# load packages and set maximum plot width
 library(webmorphR)
 wm_opts(plot.maxwidth = 850)
 ```
@@ -68,11 +73,31 @@ stimuli %>%
   plot()
 ```
 
-Or you can use the `patch` function to get the median colour from a patch of the image. If you set `patch` to `TRUE`, this will default to the top left 10 pixel square, or you can set the boundaries of the patch manually.
+Or you can use the `patch` function to get the median colour from a patch of the image. If you set `patch` to `TRUE`, this will default to the top left 10 pixel square.
 
-```{r crop-match, fig.cap="Cropped Images with Matched Background"}
-demo_stim("rainbow")[1:8] %>%
-  pad(50, patch = c(x1=1, x2=640, y1=1, y2=10)) %>%
+```{r crop-patch, fig.cap="Cropped images with background matched to top left 10-pixel square"}
+rb <- demo_stim("rainbow")[1:8]
+
+rb %>%
+  pad(50, patch = TRUE) %>%
+  plot(nrow = 2)
+```
+
+Or you can set the boundaries of the patch manually. The code below sets the patch colour to the average colour from a 100x100-pixel square in the center of each image.
+
+```{r crop-match, fig.cap="Cropped Images with background matched to centre."}
+# get stimuli
+
+# get center x and y coordinates of each image
+cx <- width(rb)/2
+cy <- height(rb)/2
+r <- 50 # half-height of patch 
+
+rb %>%
+  pad(50, patch = list(x1 = cx - r, 
+                       x2 = cx + r, 
+                       y1 = cy - r, 
+                       y2 = cy + r)) %>%
   plot(nrow = 2)
 ```
 
@@ -250,7 +275,7 @@ labs <- c("Blur", "Charcoal", "Oilpaint", "Implode",
           "20% Darker", "20% Brighter", "Greyscale", "Saturated")
 
 imglist %>%
-  pad(40, 0, 0, 0, fill = "dodgerblue3") %>%
+  pad(80, 0, 0, 0, fill = "dodgerblue3") %>%
   label(labs, color = "white") %>%
   plot(nrow = 3)
 

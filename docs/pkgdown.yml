@@ -1,5 +1,5 @@
 pandoc: '2.13'
-pkgdown: 1.6.1
+pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   figures: figures.html
@@ -7,8 +7,8 @@ articles:
   masking: masking.html
   similarity: similarity.html
   stimuli: stimuli.html
-last_built: 2021-05-23T21:28Z
+last_built: 2022-04-13T11:26Z
 urls:
-  reference: https://facelab.github.io/webmorph//reference
-  article: https://facelab.github.io/webmorph//articles
+  reference: https://facelab.github.io/webmorph/reference
+  article: https://facelab.github.io/webmorph/articles
 

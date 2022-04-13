@@ -40,13 +40,22 @@ test_that("paste 2 together", {
 test_that("python", {
   skip_on_cran()
   
-  dlib74 <- tem_def("dlib74")
-  stimuli <- demo_stim("test")
+  stimuli <- demo_stim()
   
-  s2 <- auto_delin(stimuli, "dlib74", TRUE)
-
-  draw_tem(s2)
+  s2 <- auto_delin(stimuli, "dlib70", TRUE)
+  s3 <- auto_delin(stimuli, "dlib7", TRUE)
   
   skip("plot")
-  c(f, m) %>% draw_tem() %>% plot(nrow = 2)
+  draw_tem(s2)
+  draw_tem(s3)
+})
+
+
+test_that("frl", {
+  skip("long")
+  
+  stimuli <- demo_stim()
+  s2 <- auto_delin(stimuli, "frl", TRUE)
+  
+  draw_tem(s2)
 })

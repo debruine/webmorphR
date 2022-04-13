@@ -10,100 +10,141 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 starttime <- Sys.time()
-library(webmorphR)
-wm_opts(plot.maxwidth = 850)
 library(dplyr)
 ```
 
 
 This vignette will show some recipes for common types of stimulus creation.
 
+```{r, message=FALSE}
+# load packages and set maximum plot width
+library(webmorphR)
+wm_opts(plot.maxwidth = 850)
+```
+
+
 ## Automatic Delineation
 
 If your images aren't delineated, you can use the `auto_delin()` function or upload them to [webmorph](webmorph.org) to use the extensive manual delineation functions there and the 189-point FRL template.
 
-The auto-delineation has three options. The default is "dlib74", which is a 74-point template used by dlib with the python package [face_recognition](https://github.com/ageitgey/face_recognition).
+The auto-delineation has three options. The default is "dlib7", which is a 7-point template (tip of the nose, corners of the eyes, and their midpoints) and works without access to external services.
 
-Auto-delineation with web-based software [Face++](https://www.faceplusplus.com/) is better, but requires a free API key from Face++. After signing up for an account, go to https://console.faceplusplus.com/app/apikey/list and request a free API key. Add the key and secret to your .Renviron file as follows:
+I'm working on ways to add "dlib70", a 70-point template (68 plus 2 added centre eye points) used by [dlib](https://ibug.doc.ic.ac.uk/resources/facial-point-annotations/). This file is big (~100MB) and it's tricky to include on github or CRAN. Currently, you can add this file (named "dlib70.dat") yourself to the folder at:
+
+```{r, eval = FALSE}
+dlib70 <- tempfile()
+download.file("https://github.com/debruine/webmorphR_dlibs/raw/main/dlib70.dat", dlib70)
+python_dir <- system.file("python", package = "webmorphR")
+file.copy(from = dlib70, to = paste0(python_dir, "/dlib70.dat"))
+
+# now you should see dlib70.dat in this list
+list.files(python_dir)
+```
+
+Auto-delineation with web-based software [Face++](https://www.faceplusplus.com/) is better, but requires a free API key from Face++. After signing up for an account, go to https://console.faceplusplus.com/app/apikey/list and request a free API key. Then add the key and secret to your .Renviron file.
+
+The function `usethis::edit_r_environ()` will open up your .Renviron file (you may need to install `usethis`). Append the following two lines to it, replacing "1234567890abcdefghijk" with your personal key and secret. Then you can save and close the file and restart R to load these into your environment.
 
 ```
 FACEPLUSPLUS_KEY="1234567890abcdefghijk"  
 FACEPLUSPLUS_SECRET="1234567890abcdefghijk"
 ```
 
-The you can access the 106-point (fpp106) and 83-point (fpp83) templates. Remember, this uploads your images to the Face++ website.
+Now you can access the 106-point (fpp106) and 83-point (fpp83) templates. Remember, this uploads your images to the Face++ website.
 
-```{r}
-frl <- demo_stim("test", "f_multi")
-dlib74 <- auto_delin(frl, "dlib74", replace = TRUE)
+```{r auto}
+frl <- demo_stim("test", "f_multi") %>% crop(.8, .8)
+dlib7 <- auto_delin(frl, "dlib7", replace = TRUE)
 fpp83 <- auto_delin(frl, "fpp83", replace = TRUE)
 fpp106 <- auto_delin(frl, "fpp106", replace = TRUE)
-```
 
-```{r auto, echo = FALSE}
-c(dlib74, fpp83, fpp106, frl) %>%
-  draw_tem() %>%
-  label(c("dlib74",  "fpp83", "fpp106", "frl (manual)")) %>%
+# this won't work unless you add dlib70.dat to the python folder
+dlib70 <- auto_delin(frl, "dlib70", replace = TRUE)
+
+c(dlib7, dlib70, fpp83, fpp106) %>%
+  draw_tem(pt.size = 8) %>%
+  label(c("dlib7", "dlib70", "fpp83", "fpp106")) %>%
   plot_stim()
 ```
 
 ## Averageness
 
-Let's start with a set of images from the built-in image sets. You can add data to an image set to use in subsetting the images. For demonstration, the London image set from the package [stimsets](https://github.com/debruine/stimsets) has a data table called `london_info`.
+### Load demo images
 
-```{r subset}
+Let's start with a set of images from the demo image sets. You need to have the [stimsets](https://github.com/debruine/stimsets) package installed if you haven't done that already.
+
+```{r, eval = FALSE}
+remotes::install_github("debruine/stimsets")
+```
+
+### Add info
+
+You can add data to an image set to use in subsetting the images. For demonstration, the "london" image set has a data table called `london_info`.
+
+```{r}
+head(stimsets::london_info)
+```
+
+Use `add_info()` to add the data. If the data table isn't in the same order as the stimuli, you can match the stimulus item names to a data column using `.by`.
+
+```{r add-info}
 stimuli <- demo_stim("london") %>%
   add_info(stimsets::london_info)
 ```
 
-Select images from your subset to make a new image set. the original images are large, and we don't need the resulting stimuli to be that large, so we'll reduce image size by 50% right at the start to reduce processing time.
+### Subset
 
-```{r}
+Select images from your stimuli to make a new image subset. The original images are large, and we don't need the resulting stimuli to be that large, so we'll reduce image size by 50% right at the start to reduce processing time.
+
+```{r subset}
 subset <- stimuli %>%
   subset(face_eth == "black") %>%
   subset(face_gender == "male") %>%
   resize(.5)
-```
 
-```{r resize, echo = FALSE}
 plot(subset, nrow = 2)
 ```
+
+### Align
 
 Next, align the images using Procrustes normalisation to the position of the first image. They need to have templates fitted to do this. The argument `patch = TRUE` tries to match the background colour as closely as possible. 
 
 The `horiz_eyes` function just makes sure that the first image has good alignment, since his head is slightly tilted.
 
-```{r, message=FALSE}
+```{r align, message=FALSE}
 aligned <- subset %>%
   horiz_eyes(patch = TRUE) %>%
   align(procrustes = TRUE, patch = TRUE)
-```
 
-```{r align, echo=FALSE}
 plot(aligned, nrow = 2)
 ```
 
-You may also want to crop the images to a 3x4 aspect ratio.
+**Note**: If you get an error message about rgl or dynlib, and are using a Mac, you may need to install [XQuartz](https://www.xquartz.org/).
 
-```{r}
-cropped <- crop(aligned, width = 0.6, height = 0.8)
-```
+### Crop
 
-```{r crop, echo = FALSE}
+You may also want to crop the images to a 3x4 aspect ratio by setting width to 60% of the image and height to 80%. By default, `crop()` will center the cropping, but you can also manually set the x and y offsets. Values less than 2.0 are interpreted as percentages, while values greater than 2.0 are interpreted as pixels. 
+
+```{r crop}
+cropped <- crop(aligned, width = 0.6, height = 0.8, y_off = .05)
+
 plot(cropped, nrow = 2)
 ```
 
+### Average
+
 Now we can make an average version of these faces. This uses the morphing functions available on the web app, so you need to have an internet connection. It usually takes 1-4 seconds per image to upload your images to the server for processing.
 
-```{r}
+```{r average}
 avg <- avg(cropped)
-```
 
-```{r average, echo = FALSE}
+# show average with and without template
 draw_tem(avg) %>% c(avg) %>% plot()
 ```
 
-You can use this average face to transform the individual faces in distinctiveness and averageness. 
+### Transform
+
+You can use this average face to transform the individual faces in distinctiveness and averageness. Give the shape vector names to set the output names automatically.
 
 ```{r transform}
 transf <- trans(trans_img = cropped,
@@ -112,37 +153,46 @@ transf <- trans(trans_img = cropped,
                 shape = c(avg = -0.5, dist = 0.5))
 ```
 
+Use `subset()` to plot by row.
 
-```{r male-grid, echo = FALSE}
-avg_i <- seq(1, 16, 2)
-dist_i <- seq(2, 16, 2)
-
+```{r male-grid}
 plot_rows(
-  "More Average" = transf[avg_i],
+  "More Average" = subset(transf, "avg"),
   "Original" = cropped,
-  "More Distinctive" = transf[dist_i],
+  "More Distinctive" = subset(transf, "dist"),
   top_label = TRUE
 )
 ```
 
-Now you can set names and save your individual stimuli in a directory to use in studies.
+### Save stimuli
 
-```{r save}
-avg %>% write_stim("stimuli", "m_avg", "jpg")
-                                         
+Now you can set names and save your individual stimuli in a directory to use in studies. The code below will create a directory called "stimuli" in your working directory if there isn't one already. You can write to any format that `magick::image_write()` handles, such as "png", "jpeg", or "gif" (the default is "png").
+
+```{r save-avg}
+avg %>% write_stim(dir = "stimuli", 
+                   names = "m_avg", 
+                   format = "jpg")
+```
+
+Use `setnames()` to search and replace patterns, add prefixes or suffixes, or replace the names with a new vector of names. The London images in the `stimsets` package have "_03" appended to designate that they are the neutral front version from the [larger set](https://figshare.com/articles/dataset/Face_Research_Lab_London_Set/5047666), which also includes smiling images and several different viewpoints.
+
+```{r setnames}
 cropped %>%
-  setnames(pattern = "_03", replacement = "", prefix = "orig_") %>%
-  write_stim("stimuli", format = "jpg")
+  setnames(pattern = "_03", 
+           replacement = "", 
+           prefix = "orig_") %>%
+  write_stim(dir = "stimuli", format = "jpg")
 
 transf %>%
   setnames(pattern = "_03", replacement = "") %>%
-  write_stim("stimuli", format = "jpg")
+  write_stim(dir = "stimuli", format = "jpg")
 ```
+
+### Repeat
 
 Now you can pipe all of the commands together and apply them to a new set of images, such as all the black women in the set.
 
 ```{r}
-
 # subset, resize, align, and crop
 cropped <- stimuli %>%
   subset(face_gender == "female") %>%
@@ -150,7 +200,7 @@ cropped <- stimuli %>%
   resize(.5) %>%
   horiz_eyes(patch = TRUE) %>%
   align(procrustes = TRUE, patch = TRUE) %>%
-  crop(width = 0.6, height = 0.8)
+  crop(width = 0.6, height = 0.8, y_off = 0.05)
 
 # average
 avg <- avg(cropped)
@@ -165,7 +215,9 @@ transf <- trans(trans_img = cropped,
 avg %>% write_stim("stimuli", "f_avg", "jpg")
 
 cropped %>%
-  setnames(pattern = "_03", replacement = "", prefix = "orig_") %>%
+  setnames(pattern = "_03", 
+           replacement = "", 
+           prefix = "orig_") %>%
   write_stim("stimuli", format = "jpg")
 
 transf %>%
@@ -175,58 +227,65 @@ transf %>%
 ```
 
 ```{r female-grid}
-avg_i <- seq(1, 10, 2)
-dist_i <- seq(2, 10, 2)
 plot_rows(
-  "More Average" = transf[avg_i],
+  "More Average" = subset(transf, "avg"),
   "Original" = cropped,
-  "More Distinctive" = transf[dist_i],
+  "More Distinctive" = subset(transf, "dist"),
   top_label = TRUE
 )
 ```
 
 ## Sexual Dimorphism
 
-To manipulate sexual dimorphism, you need male and female average faces like the ones created above. We'll load them from the saved files.
+### Read in images
+
+To manipulate sexual dimorphism, you need male and female average faces like the ones created above. Load them from the saved files in the "stimuli" directory.
 
 ```{r}
-avgs <- read_stim("stimuli", "(f|m)_avg")
-orig <- read_stim("stimuli", "orig_")
+avgs <- read_stim(path = "stimuli", pattern = "(f|m)_avg")
+orig <- read_stim(path = "stimuli", pattern = "orig_")
 ```
+
+### Transform
 
 You can then transform them by -50% to feminise and +50% to masculinise. Remember to give your shape vector names to set the output names automatically.
 
-```{r}
+```{r sexdim}
 sexdim <- trans(trans_img = orig[1:6],
                 from_img = avgs$f_avg,
                 to_img = avgs$m_avg,
                 shape = c(fem = -0.5, masc = 0.5))
-```
 
-```{r sexdim, echo = FALSE}
-plot(sexdim, nrow = 2, byrow = FALSE)
+plot(sexdim, nrow = 2)
 ```
 
 
 ## Animate
 
-Make a continuum that morphs from the female to the male average in 5% steps.
+### Make a continuum
+
+Make a continuum that morphs from the female to the male average in 5% steps. This makes 21 images, so will take a few seconds; be patient.
 
 ```{r}
 continuum <- continuum(avgs$f_avg, avgs$m_avg, 0, 1, .05)
-```
 
-```{r}
 plot(continuum, nrow = 3)
 ```
 
-You can turn your images into an animated gif. Resize the images to the size you want first.
+### Animate
+
+You can turn your images into an animated gif. Resize the images to the size you want first. Save the resulting image as a gif. If you have the `gifski` package installed, this will be used to create the animated gif and is faster than the `magick` algorithm (you don't have to load `gifski` for it to be used, just install it).
 
 ```{r animated-gif, out.width = "180px"}
+#install.packages("gifski") # for faster animation
+
 continuum %>%
   resize(width = 180) %>%
   animate(fps = 20, rev = TRUE)
 ```
+
+When you run this code, even in an R Markdown document, the gif will show in the Viewer pane, but it will display in the document when you knit.
+
 
 ## Non-Face Stimuli
 
@@ -251,38 +310,41 @@ stim <- crop(stimuli, width, height) %>%
 plot(stim, ncol = 6)
 ```
 
+## Blank stimuli
 
-## Word Stimuli
+You can make blank images specifying the size and colour.
 
-Make word stimuli by starting with blank images. You can specify the size and colour.
-
-```{r}
+```{r blank-stim}
 new_stimuli <- blank(n = 6, width = 100, height = 100, 
                      color = c("red", "orange", "yellow", "green", "blue", "purple"))
-```
 
-
-```{r, echo = FALSE}
 plot(new_stimuli, nrow = 1)
 ```
 
-Then you can add words to each stimulus with the `label()` function.
+## Word Stimuli
 
-```{r}
-colours <- c(red = "red", 
+Create word stimuli by starting with blank images and adding words to each stimulus with the `label()` function.
+
+```{r stroop-words}
+# make a vector of the words and colours they should print in
+colours <- c(red = "red3", 
              orange = "darkorange", 
              green = "darkgreen", 
-             blue = "blue", 
-             purple = "purple")
+             blue = "dodgerblue3", 
+             purple = "darkorchid")
+
+# make vector of labels (each word in each colour)
 n <- length(colours)
 labels <- rep(names(colours), each = n)
 
-stroop <- blank(n*n, 400, 100) %>%
-  label(labels, size = 50, color = colours, 
+# make 36 blank 800x200px images and add labels
+stroop <- blank(n*n, 800, 200) %>%
+  label(labels, 
+        size = 100, 
+        color = colours, 
+        weight = 700,
         gravity = "center")
-```
 
-```{r, echo = FALSE}
 plot(stroop, ncol = n, fill = "grey")
 ```
 

@@ -8,21 +8,22 @@
 
 
 
-
 The goal of webmorphR is to make the construction of image stimuli more reproducible, with a focus on face stimuli.
 
 This development of this package was funded by ERC grant #647910 (KINSHIP).
 
-See [articles](https://debruine.github.io/webmorphR/articles/) for details on image manipulations, making figures, and making stimuli.
+The sections below provide brief examples of what webmorphR can be used for. See [articles](articles/) for more detailed instructions on image manipulations, making figures, and making stimuli.
 
 ## Installation
 
 You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("debruine/webmorphR")
+# install.packages("remotes")
+remotes::install_github("debruine/webmorphR")
 ```
+
+Installation can take a few minutes, depending on how many dependency packages you need to install.
 
 
 ```r
@@ -33,43 +34,77 @@ library(webmorphR)
 #> https://debruine.github.io/webmorphR/
 #> ************
 
-wm_opts(plot.maxwidth = 850*2) # set maximum width for plot output
+wm_opts(plot.maxwidth = 850) # set maximum width for plot output
 ```
 
 
-## Reproducible stimulus construction
+## Averaging Faces
 
-Load 6 faces from the CC-BY licensed [Face Research Lab London Set](https://doi.org/10.6084/m9.figshare.5047666.v3).
+In this example, we'll load a few faces from the CC-BY licensed [Face Research Lab London Set](https://doi.org/10.6084/m9.figshare.5047666.v3), average them together, and create a figure.
+
+### Load demo stimuli
+
+Load 6 faces. If you haven't already downloaded the demo stimulus sets, this code will prompt you to download them. The demo sets are large, so this can take a minute or so.
 
 
 ```r
+# remotes::install_github("debruine/stimsets")
 face_set <- demo_stim("london", "002|006|007|025|030|066")
+
+plot(face_set, nrow = 1)
 ```
 
-These faces already have webmorph templates, so you can make an average.
+<img src="man/figures/demo-stim-1.png" title="plot of chunk demo-stim" alt="plot of chunk demo-stim" width="100%" />
+
+### Average faces
+
+These faces already have webmorph templates, so you can make an average. The `avg()` function sends the images and templates to the server at webmorph.org, which does the processing and sends back the average, so it can take a few seconds. This also means you need an internet connection for this step.
+
+**Note**: WebMorph was created because of the difficulty of installing desktop PsychoMorph on many computers, which is why this package uses a web-based API for averaging and transforming. You images are deleted from our server immediately after processing.
 
 
 ```r
 avg <- avg(face_set)
-```
 
-Create a figure showing the individual faces and the average with the template superimposed.
-
-
-```r
-# plot individual faces in a grid the same height as the average face
-ind <- plot(face_set, ncol = 2, padding = 30, external_pad = FALSE,
-            maxwidth = avg$avg$width, maxheight = avg$avg$height)
-
-# draw template on the face, join with individual grid, and plot
-tem <- draw_tem(avg, pt.alpha = 0.5, line.alpha = 0.25)
-
-c(ind, tem) %>% plot(nrow = 1)
+plot(avg)
 ```
 
 <img src="man/figures/avg-1.png" title="plot of chunk avg" alt="plot of chunk avg" width="100%" />
 
-Transform images to make them more average.
+
+### Display figure
+
+Create a figure showing the individual faces and the average with the template superimposed. See `plot_stim()` for an explanation of the arguments to the `plot()` function (an alias for plot_stim).
+
+
+```r
+# plot individual faces in a grid the same height as the average face
+ind <- plot(face_set, 
+            ncol = 2, 
+            padding = 30, 
+            external_pad = FALSE,
+            maxwidth = avg$avg$width, 
+            maxheight = avg$avg$height)
+
+# draw template on the face, join with individual grid, and plot
+tem <- draw_tem(avg, pt.alpha = 0.5, line.alpha = 0.25)
+
+# combine the ind and tem stimuli and plot
+c(ind, tem) %>% plot(nrow = 1)
+```
+
+<img src="man/figures/ind-avg-1.png" title="plot of chunk ind-avg" alt="plot of chunk ind-avg" width="100%" />
+
+
+## Transforming Faces
+
+In this example, we'll transform the individual images, mask and crop them, and put them together in a single compound figure.
+
+### Transform
+
+First, transform images to make them more average. Transforming manipulates the shape, color, and/or texture of the `trans_img` by the specified proportion of the different between the `from_img` and the `to_img`. In this example, each individual face in `face_set` is transformed in shape only either by -50% of the difference between that that face an average face, making them more distinctive by exaggerating the non-average features, or by +50%, making them more average. 
+
+Set names for the `shape`, `color` or `texture` argument vector to automatically name the output stimuli. The `trans()` function also sends images to webmorph.org, so can take a minute and requires an internet connection. 
 
 
 ```r
@@ -78,36 +113,54 @@ dist_avg <- trans(trans_img = face_set,
                   to_img = avg,
                   shape = c(distinctive = -0.5, average = 0.5),
                   color = 0, texture = 0)
+
+plot(dist_avg, nrow = 2)
 ```
 
+<img src="man/figures/dist-avg-1.png" title="plot of chunk dist-avg" alt="plot of chunk dist-avg" width="100%" />
 
-Mask and crop images.
+### Mask and crop
+
+Next, mask the images with rainbow colours and crop them.
 
 
 ```r
-rainbow <- c("#983E82", "#E2A458", "#F5DC70", "#59935B", "#467AAC", "#61589C") %>% rep(each = 2)
+rainbow <- c("#983E82", "#E2A458", "#F5DC70", 
+             "#59935B", "#467AAC", "#61589C")
 
 stimuli <- dist_avg %>%
   mask(c("face", "neck", "ears"), fill = rainbow) %>%
   crop(0.6, 0.8)
+
+plot(stimuli, nrow = 2)
 ```
 
-Save your stimuli
+<img src="man/figures/rainbow-1.png" title="plot of chunk rainbow" alt="plot of chunk rainbow" width="100%" />
+
+### Save images
+
+Save the stimuli into a new directory. This will create a folder in your working directory called "mystimuli" if it doesn't exist.
 
 
 ```r
 write_stim(stimuli, dir = "mystimuli")
 ```
 
+### Display figure
 
-Easily create figures to illustrate your research.
+Easily create figures to illustrate your research. The code below subsets the `stimuli` to reorder them with average faces first, edits the stimulus names to search and replace a part of the name, adds 120 pixels of black padding to the top of each image, labels them with their name, and plots all images in two rows.
 
 
 ```r
-stimuli %>%
-  pad(120, 0, 0, 0) %>%
-  label(size = 90) %>%
-  plot(nrow = 2, byrow = FALSE)
+c(subset(stimuli, "average"),
+  subset(stimuli, "distinctive")) %>%
+  setnames(pattern = "_03_", replacement = " ") %>%
+  pad(120, 0, 0, 0, fill = "black") %>%
+  label(size = 90, 
+        color = rainbow, 
+        gravity = "north",
+        location = "+0+10") %>%
+  plot(nrow = 2)
 ```
 
 <img src="man/figures/repro-1.png" title="plot of chunk repro" alt="plot of chunk repro" width="100%" />
@@ -115,7 +168,14 @@ stimuli %>%
 
 ## Automatic Delineation
 
-Read in images with webmorph templates, or automatically delineate images with the python module [face_recognition](https://github.com/ageitgey/face_recognition) or the web-based software [Face++](https://www.faceplusplus.com/). Auto-delineation with Face++ is better, but requires a free API key from Face++.
+Read in images with webmorph templates, or automatically delineate images with the python module [face_recognition](https://github.com/ageitgey/face_recognition) or the web-based software [Face++](https://www.faceplusplus.com/). Auto-delineation with Face++ is better, but requires a free API key from Face++. You may be prompted to install a Python module using `reticulate::py_install("face_recognition")`.
+
+
+
+
+### Resize and auto-delineate
+
+Auto-delineation takes a few seconds per face, so you will see a progress bar in the console. You may also see some startup output from reticulate the first time you use this function. For now, only the 7-point auto-delineation is available built in. See the [Making Stimuli vignette](articles/stimuli.html) for instructions on adding the 70-point auto-delineation (it's ~100MB, which is too big to include in an R package).
 
 
 ```r
@@ -123,25 +183,66 @@ stimuli <- demo_stim("zoom") %>%
   resize(1/2) %>%
   auto_delin(replace = TRUE)
 
-draw_tem(stimuli) %>% plot()
+draw_tem(stimuli, pt.size = 10) %>% plot()
 ```
 
-<img src="man/figures/delin-1.png" title="plot of chunk delin" alt="plot of chunk delin" width="100%" />
+<img src="man/figures/delin-dlib7-1.png" title="plot of chunk delin-dlib7" alt="plot of chunk delin-dlib7" width="100%" />
 
-Now you can procrustes align the images and crop them all to the same dimensions. You can even add image labels and turn your images into an animated gif.
+Alternatively, you can use the Face++ auto-delineator by setting `style = "fpp106"`. This requires you to set up a Face++ account and set some environment variables (see the [Making Stimuli vignette](articles/stimuli.html)). It transfers your images to Face++, so make sure you read their privacy information.
 
 
 ```r
-align(stimuli, procrustes = TRUE, patch = TRUE) %>%
-  crop_tem(120, 20, 20, 20) %>%
-  pad(40, 0, 0, 0, fill = "black") %>%
-  label(c("15cm", "30cm", "45cm", "60cm"), color = "white") %>%
-  animate(fps = 2)
+stimuli <- demo_stim("zoom") %>% 
+  resize(1/2) %>%
+  auto_delin(style = "fpp106", replace = TRUE)
+
+draw_tem(stimuli, pt.size = 8) %>% plot()
+```
+
+<img src="man/figures/delin-fpp-1.png" title="plot of chunk delin-fpp" alt="plot of chunk delin-fpp" width="100%" />
+
+### Align and crop
+
+Now you can procrustes align the images and crop them all to the same dimensions.
+
+
+```r
+aligned <- stimuli %>%
+  align(procrustes = TRUE, patch = TRUE) %>%
+  crop_tem(120, 20, 20, 20)
+
+plot(aligned)
+```
+
+<img src="man/figures/align-crop-1.png" title="plot of chunk align-crop" alt="plot of chunk align-crop" width="100%" />
+
+### Pad and Label
+
+Add 50 pixels of image labels.
+
+
+```r
+labelled <- aligned %>%
+  pad(50, 0, 0, 0, fill = "black") %>%
+  label(c("15cm", "30cm", "45cm", "60cm"), color = "white")
+  
+plot(labelled)
+```
+
+<img src="man/figures/labelled-1.png" title="plot of chunk labelled" alt="plot of chunk labelled" width="100%" />
+
+### Animate
+
+Turn your images into an animated gif. Make sure you have the `gifski` package installed (it doesn't need to be loaded) to take advantage of faster gif-making algorithms.
+
+
+```r
+animate(labelled, fps = 2)
 ```
 
 <img src="man/figures/animate-1.gif" title="plot of chunk animate" alt="plot of chunk animate" width="25%" />
 
-
+**Note**: If you get an error message about rgl or dynlib when using `align()` with `procrustes = TRUE`, and are using a Mac, you may need to install [XQuartz](https://www.xquartz.org/). You can omit the procrustes argument to default to 2-point alignment, which rotates and resizes all images so the pupils are in the same position (the average of the set, unless you manually specify positions).
 
 
 

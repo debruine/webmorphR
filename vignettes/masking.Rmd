@@ -11,7 +11,13 @@ knitr::opts_chunk$set(
 )
 
 starttime <- Sys.time()
+```
 
+
+This vignette shows you how to mask images relative to a template.
+
+```{r, message=FALSE}
+# load packages and set maximum plot width
 library(webmorphR)
 wm_opts(plot.maxwidth = 850)
 ```
@@ -94,11 +100,25 @@ features <- c("gmm", "oval", "face", "mouth", "nose", "eyes", "brows",
               "ears", "undereyes", "teeth", "smile_lines", 
               "cheekbones", "philtrum", "chin", "neck", "halo")
 
+# crop stimuli to make them easier to see
+crops <-  crop_tem(full_tem)
+
+# plot each feature subset
 new_tems <- lapply(features, function(ft) {
-  full_tem %>% subset_tem(features(ft)) %>% draw_tem()
+  crops %>% 
+    subset_tem(features(ft)) %>% 
+    draw_tem(pt.color = "#FF0099",
+             pt.size = 8,
+             line.color = "#FFFF00",
+             line.size = 5,
+             line.alpha = 1)
 }) %>% do.call(c, .)
 
-new_tems %>% setnames(features) %>% label() %>% plot()
+new_tems %>% 
+  pad(50, 0, 0, 0, fill = "white") %>%
+  setnames(features) %>% 
+  label() %>% 
+  plot()
 ```
 
 
@@ -109,9 +129,9 @@ Now it's relatively straightforward to create a stimulus set that matches old pa
 ```{r mask-oval-all}
 demo_stim("london")[1:10] %>%
   greyscale() %>%
+  align() %>%
   # remove template points to make the oval tighter around the face
   subset_tem(features("face")) %>%
-  align(procrustes = TRUE) %>%
   mask_oval(fill = "grey") %>%
   crop_tem(50) %>% #  crop to template boundary and add 50px on each side 
   plot(nrow = 2)

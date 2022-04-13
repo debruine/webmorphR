@@ -25,7 +25,7 @@ draw_tem(
 
 \item{pt.size, line.size}{size in pixels (scales to image if NULL)}
 
-\item{pt.shape}{the shape of the points}
+\item{pt.shape}{the shape of the points ("circle", "cross", "index")}
 
 \item{bg}{background color ("image" uses original image)}
 }

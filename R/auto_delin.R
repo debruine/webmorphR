@@ -1,6 +1,6 @@
 #' Face++ Auto-Delineation
 #'
-#' Automatically delineate faces using the face_recognition python library or Face++ (an external service). Since each delineation counts against a daily limit, you need to set up your own Face++ account (see details below).
+#' Automatically delineate faces using dlib in python or Face++ (an external service). Since each delineation counts against a daily limit, you need to set up your own Face++ account (see details below).
 #'
 #' To use Face++ auto-delineation, you need to get your own free API key from https://www.faceplusplus.com. After signing up for an account, go to https://console.faceplusplus.com/app/apikey/list and request a free API key. Add the key and secret to your .Renviron file as follows:
 #'
@@ -9,7 +9,7 @@
 #' FACEPLUSPLUS_SECRET="1234567890abcdefghijk"
 #'
 #' @param stimuli list of class stimlist
-#' @param style Which service and number of landmarks (dlib74, fpp106, fpp83)
+#' @param style Which service and number of landmarks (dlib7, fpp106, fpp83)
 #' @param replace if FALSE, only gets templates for images with no template
 #' @param face which face to delineate in each image if there is more than 1
 #'
@@ -28,7 +28,7 @@
 #'
 #'   c(auto_high, auto_low) %>% draw_tem() %>% plot()
 #' }
-auto_delin <- function(stimuli, style = c("dlib74", "fpp106", "fpp83"), replace = FALSE, face = 1) {
+auto_delin <- function(stimuli, style = c("dlib7", "dlib70", "fpp106", "fpp83"), replace = FALSE, face = 1) {
   stimuli <- validate_stimlist(stimuli)
   style <- match.arg(style)
 
@@ -58,21 +58,30 @@ auto_delin <- function(stimuli, style = c("dlib74", "fpp106", "fpp83"), replace 
       'return_landmark' = ifelse(style == "fpp106", 2, 1),
       'image_file' = NULL
     )
-  } else if (style == "dlib74") {
-    if (!suppressMessages(reticulate::py_available(TRUE))) {
-      stop("You need to install Python to use the dlib74 template")
+  } else if (style %in% c("frl", "dlib70", "dlib7")) {
+    if (!reticulate::py_available(TRUE)) {
+      stop("You need to install Python to use the dlib templates")
     }
     
-    if (!reticulate::py_module_available("face_recognition")) {
-      stop("You need to install the Python module face_recognition using reticulate::py_install(\"face_recognition\")")
+    # load script
+    pyscript <- system.file("python/facedetect.py", package = "webmorphR")
+    pred_file <- paste0("python/", style, ".dat") %>%
+      system.file(package = "webmorphR")
+    if (pred_file == "") {
+      stop("The dlib file could not be found")
     }
+    
+    reticulate::source_python(pyscript)
   }
 
   # get line definitions
   fpp <- tem_def(style)
   
   tempdir <- tempfile()
-  write_stim(stimuli, tempdir, format = "jpg")
+  paths <- stimuli %>%
+    remove_tem() %>%
+    write_stim(tempdir, format = "jpg") %>%
+    unlist()
 
   face <- rep(face, length.out = length(stimuli))
 
@@ -86,25 +95,43 @@ auto_delin <- function(stimuli, style = c("dlib74", "fpp106", "fpp83"), replace 
     pb$tick(0)
   }
   
-  if (style == "dlib74") {
+  if (style == "frl") {
     for (i in seq_along(stimuli)) {
-      pts <- names(stimuli)[[i]] %>% paste0(".jpg") %>% 
-        file.path(tempdir, .) %>%
-        face_rec$load_image_file() %>%
-        face_rec$face_landmarks() %>%
-        reticulate::py_to_r() %>%
+      pts <- get_points(paths[i], pred_file) %>%
+        unlist() %>%
+        matrix(nrow = 2, dimnames = list(c("x", "y"), fpp$points$name))
+      
+      stimuli[[i]]$points <- pts
+      
+      # replace lines
+      stimuli[[i]]$lines <- fpp$lines
+      stimuli[[i]]$closed <- fpp$closed
+      
+      if (wm_opts("verbose")) pb$tick()
+    }
+  } else if (style %in% c("dlib70", "dlib7")) {
+    for (i in seq_along(stimuli)) {
+      pts <- get_points(paths[i], pred_file) %>%
         unlist() %>%
         matrix(nrow = 2, dimnames = list(c("x", "y"), c()))
       
       # calculate centres of pupils
-      left_eye <- pts[, c(37, 38, 40, 41)] %>% apply(1, mean)
-      right_eye <- pts[, c(43, 44, 46, 47)] %>% apply(1, mean)
+      if (style == "dlib70") {
+        le <- c(38, 39, 41, 42)
+        re <- c(44, 45, 47, 48)
+      } else if (style == "dlib7") {
+        le <- c(3, 4)
+        re <- c(1, 2)
+      }
+      
+      left_eye <- pts[, le] %>% apply(1, mean)
+      right_eye <- pts[, re] %>% apply(1, mean)
       
       x <- c(left_eye[["x"]], right_eye[["x"]], pts["x", ])
       y <- c(left_eye[["y"]], right_eye[["y"]], pts["y", ])
       
       stimuli[[i]]$points <- matrix(c(x, y), nrow = 2, byrow = TRUE,
-                                    dimnames = list(c("x", "y"), fpp$points$name))
+                                  dimnames = list(c("x", "y"), fpp$points$name))
       
       # replace lines
       stimuli[[i]]$lines <- fpp$lines

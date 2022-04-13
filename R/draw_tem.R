@@ -6,7 +6,7 @@
 #' @param pt.color,line.color line or point color
 #' @param pt.alpha,line.alpha transparency (0-1), ignored if color is a hex value with transparency
 #' @param pt.size,line.size size in pixels (scales to image if NULL)
-#' @param pt.shape the shape of the points
+#' @param pt.shape the shape of the points ("circle", "cross", "index")
 #' @param bg background color ("image" uses original image)
 #'
 #' @return stimlist with template images

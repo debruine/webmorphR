@@ -34,12 +34,20 @@ crop <- function(stimuli,
   stimuli <- validate_stimlist(stimuli)
 
   suppressWarnings({
-    width <- rep(width, length.out = length(stimuli))
-    height <- rep(height, length.out = length(stimuli))
-    x_off <- rep(x_off, length.out = length(stimuli))
-    y_off <- rep(y_off, length.out = length(stimuli))
-    fill <- rep(fill, length.out = length(stimuli))
-    #patch <- rep(patch, length.out = length(stimuli))
+    l <- length(stimuli)
+    width <- rep(width, length.out = l)
+    height <- rep(height, length.out = l)
+    x_off <- rep(x_off, length.out = l)
+    y_off <- rep(y_off, length.out = l)
+    fill <- rep(fill, length.out = l)
+    if (is.list(patch)) {
+      x1 <- rep(patch[["x1"]] %||% 1, length.out = l) %>% unname()
+      x2 <- rep(patch[["x2"]] %||% 10, length.out = l) %>% unname()
+      y1 <- rep(patch[["y1"]] %||% 1, length.out = l) %>% unname()
+      y2 <- rep(patch[["y2"]] %||% 10, length.out = l) %>% unname()
+      color <- rep(patch[["color"]] %||% "hex", length.out = l) %>% unname()
+      patch <- list(x1 = x1, x2 = x2, y1 = y1, y2 = y2, color = color)
+    }
   })
 
   for (i in seq_along(stimuli)) {
@@ -84,7 +92,17 @@ crop <- function(stimuli,
       # set fill from patch
       if (isTRUE(patch)) {
         fill[i] <- patch(stimuli[[i]]$img)
+      } else if (is.list(patch)) {
+        # patch is a list
+        fill[i] <- patch(img = stimuli[[i]]$img,
+                         x1 = patch$x1[i],
+                         x2 = patch$x2[i],
+                         y1 = patch$y1[i],
+                         y2 = patch$y2[i],
+                         color = patch$color[i],
+                         func = patch$func %||% stats::median)
       } else if (!isFALSE(patch)) {
+        # single patch value
         plist <- c(list(img = stimuli[[i]]$img), patch)
         fill[i] <- do.call("patch", plist)
       }

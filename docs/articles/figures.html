@@ -30,6 +30,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -42,18 +44,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">webmorphR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9006</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1.9007</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -87,7 +83,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/debruine/webmorphR/">
+  <a href="https://github.com/debruine/webmorphR/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -102,13 +98,13 @@
 
       
 
-      </header><script src="figures_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Making Figures</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/debruine/webmorphR/blob/master/vignettes/figures.Rmd"><code>vignettes/figures.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/debruine/webmorphR/blob/HEAD/vignettes/figures.Rmd" class="external-link"><code>vignettes/figures.Rmd</code></a></small>
       <div class="hidden name"><code>figures.Rmd</code></div>
 
     </div>
@@ -119,112 +115,112 @@
 <p>When working interactively in an R Markdown document, the figures plot in the Viewer window, but will be shown in the document when you knit.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/plot-1.png" width="100%"></p>
-<div id="borders-and-background" class="section level2">
-<h2 class="hasAnchor">
-<a href="#borders-and-background" class="anchor"></a>Borders and Background</h2>
+<div class="section level2">
+<h2 id="borders-and-background">Borders and Background<a class="anchor" aria-label="anchor" href="#borders-and-background"></a>
+</h2>
 <p>You can add a border to each image using pad. Values less than 1 will set border width as a percentage of the image width, while values greater than 1 will set it as pixels. You can also change the border colour using <code>fill</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">0.05</span>, fill <span class="op">=</span> <span class="st">"hotpink"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">0.05</span>, fill <span class="op">=</span> <span class="st">"hotpink"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/pink-1.png" width="100%"></p>
 <p>You can set different border sizes for the top, right, bottom and left sides (think “TRouBLe”). This can be useful for creating space for labels outside the image.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, fill <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, fill <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/border-1.png" width="100%"></p>
 <p>You can set the border colour separately for each image.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">10</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#F9DEC9"</span>, <span class="st">"#BAEDDD"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">10</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#F9DEC9"</span>, <span class="st">"#BAEDDD"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-1-1.png" width="100%"></p>
 </div>
-<div id="rows-and-columns" class="section level2">
-<h2 class="hasAnchor">
-<a href="#rows-and-columns" class="anchor"></a>Rows and columns</h2>
+<div class="section level2">
+<h2 id="rows-and-columns">Rows and columns<a class="anchor" aria-label="anchor" href="#rows-and-columns"></a>
+</h2>
 <p>Set <code>nrow`` or</code>ncol` to control the number of rows and columns.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"composite"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"composite"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">comp</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">comp</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-2-1.png" width="100%"></p>
 <p>To make a multipart figure, you usually don’t want padding around the outside of an image, so set <code>external_pad = FALSE</code>. Set <code>byrow = FALSE</code> to distribute images by column.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ind</span> <span class="op">&lt;-</span> <span class="va">comp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="fl">4</span><span class="op">:</span><span class="fl">7</span>,<span class="fl">9</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">]</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">FALSE</span>, padding <span class="op">=</span> <span class="fl">60</span>, external_pad <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">ind</span> <span class="op">&lt;-</span> <span class="va">comp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="fl">4</span><span class="op">:</span><span class="fl">7</span>,<span class="fl">9</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">]</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">FALSE</span>, padding <span class="op">=</span> <span class="fl">60</span>, external_pad <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">comp</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, <span class="va">ind</span>, <span class="va">comp</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># make sure parts are the same height</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">comp</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, <span class="va">ind</span>, <span class="va">comp</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># make sure parts are the same height</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-3-1.png" width="100%"></p>
 </div>
-<div id="delineations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#delineations" class="anchor"></a>Delineations</h2>
+<div class="section level2">
+<h2 id="delineations">Delineations<a class="anchor" aria-label="anchor" href="#delineations"></a>
+</h2>
 <p>Use the <code><a href="../reference/draw_tem.html">draw_tem()</a></code> function to show the delineations. By default, points are translucent green circles and lines are translucent blue.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/delin-1.png" width="100%"></p>
 <p>You can change the default colours and translucency with the <code>line.color</code> <code>pt.color</code> and <code>line.alpha</code> and <code>pt.alpha</code> arguments. Remove the image and set the background to grey by setting <code>bg = "grey"</code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>line.color <span class="op">=</span> <span class="st">"grey"</span>, line.size <span class="op">=</span> <span class="fl">2</span>, line.alpha <span class="op">=</span> <span class="fl">0.2</span>, 
-           pt.color <span class="op">=</span> <span class="st">"red"</span>, pt.size <span class="op">=</span> <span class="fl">4</span>, bg <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+           pt.color <span class="op">=</span> <span class="st">"red"</span>, pt.size <span class="op">=</span> <span class="fl">4</span>, bg <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/delin-custom-1.png" width="100%"></p>
 </div>
-<div id="delete-some-points" class="section level2">
-<h2 class="hasAnchor">
-<a href="#delete-some-points" class="anchor"></a>Delete some points</h2>
+<div class="section level2">
+<h2 id="delete-some-points">Delete some points<a class="anchor" aria-label="anchor" href="#delete-some-points"></a>
+</h2>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"gmm"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"gmm"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/point-remove-1.png" width="100%"></p>
 </div>
-<div id="labels" class="section level2">
-<h2 class="hasAnchor">
-<a href="#labels" class="anchor"></a>Labels</h2>
+<div class="section level2">
+<h2 id="labels">Labels<a class="anchor" aria-label="anchor" href="#labels"></a>
+</h2>
 <p>Label figure panels with the image name.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-4-1.png" width="100%"></p>
 <p>Use the <code><a href="../reference/setnames.html">setnames()</a></code> function to set new names or set labels to a vector of labels to use.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"composite"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"f_"</span>, replacement <span class="op">=</span> <span class="st">"Female "</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"m_"</span>, replacement <span class="op">=</span> <span class="st">"Male "</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"composite"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"f_"</span>, replacement <span class="op">=</span> <span class="st">"Female "</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"m_"</span>, replacement <span class="op">=</span> <span class="st">"Male "</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
 <p>Labels can be positioned with the <code>gravity</code> and <code>location</code> arguments from the {magick} package.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span>,
     gravity <span class="op">=</span> <span class="st">"northwest"</span>,
     location <span class="op">=</span> <span class="st">"+10+10"</span>,
-    color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"darkgreen"</span>, <span class="st">"darkmagenta"</span><span class="op">)</span>,
+    color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkgreen"</span>, <span class="st">"darkmagenta"</span><span class="op">)</span>,
     size <span class="op">=</span> <span class="fl">20</span>, 
-    style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"normal"</span>, <span class="st">"italic"</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+    style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"normal"</span>, <span class="st">"italic"</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/custom-labels-1.png" width="100%"></p>
 <p>You can also get more fine control of label position.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="cn">TRUE</span>,
         color <span class="op">=</span> <span class="st">"dodgerblue3"</span>,
         size <span class="op">=</span> <span class="fl">20</span>,
@@ -232,8 +228,8 @@
         gravity <span class="op">=</span> <span class="st">"southwest"</span>,
         location <span class="op">=</span> <span class="st">"+10+50"</span>,
         degrees <span class="op">=</span> <span class="fl">45</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/label-position-1.png" width="100%"></p>
 <p>This script took 0.1 minutes to render all the included images from scratch.</p>
 </div>
@@ -250,11 +246,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Lisa DeBruine.</p>
+  <p></p>
+<p>Developed by Lisa DeBruine.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -262,6 +260,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -62,3 +62,30 @@ test_that("multi-color patches", {
                c(red = 120.7895, green = 0, blue = 0, alpha = 255),
                tolerance = 0.001)
 })
+
+test_that("list", {
+  f <- tempfile(fileext = ".png")
+  image_write(img, f, "png")
+  
+  # read in 8 times
+  stim <- read_stim(rep(f, 8))
+  
+  # set patch to each square
+  patch <- list(x1 = rep(c(1, 11, 21, 31), 2),
+                x2 = rep(c(10, 20, 30, 40), 2),
+                y1 = rep(c(1, 11), each = 4),
+                y2 = rep(c(10, 20), each = 4)
+                )
+  
+  # pad each with a different color
+  padded <- pad(stim, patch = patch)
+  #plot(padded)
+  
+  # extract pad colours
+  pad_colors <- get_imgs(padded) %>%
+    sapply(patch, x1=1, x2=1, y1=1, y2=1, color = "rgb")
+  
+  expect_equal(pad_colors["red",], rep(c(0, 255), 4))
+  expect_equal(pad_colors["green",], rep(c(0, 255), times = 2, each = 2))
+  expect_equal(pad_colors["blue",], rep(c(0, 255), each = 4))
+})

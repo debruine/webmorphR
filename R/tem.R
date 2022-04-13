@@ -78,7 +78,7 @@ tem_def <- function(tem_id = "FRL", path = NULL) {
     lines <- utils::read.csv(text = tem_def[linerange]) %>%
       dplyr::arrange(.data$n) # probably already in order, but make sure
     tem$lines <- sapply(lines$points, strsplit, ",", USE.NAMES = FALSE) %>%
-      sapply(as.integer)
+      lapply(as.integer)
     tem$closed <- lines$linetype == "closed"
     tem$linecolor <- lines$color
   } else if (tem$lines == 0) {
@@ -224,4 +224,102 @@ features <- function(..., tem_id = "FRL") {
     unlist() %>% unname() %>%
     unique() %>% sort()
 }
+
+
+#' Templates to XML
+#' 
+#' Make an XML file with the template points for a set of stimuli. For use with training dlib.
+#'
+#' @param stimuli list of class stimlist
+#' @param dir path to save XML file and images
+#'
+#' @export
+#'
+tem_to_xml <- function(stimuli, dir = "images") {
+  stimuli <- validate_stimlist(stimuli)
+  
+  # write images to dir ----
+  if (wm_opts("verbose")) message("Writing images to directory")
+  
+  paths <- stimuli %>%
+    remove_tem() %>%
+    write_stim(dir, format = "jpg") %>%
+    unlist() %>% # gets rid of NULL entries for tems
+    sapply(normalizePath)
+  
+  # get bounding boxes ----
+  if (wm_opts("verbose")) {
+    pb <- progress::progress_bar$new(
+      total = length(paths), clear = FALSE,
+      format = "Detecting face locations [:bar] :current/:total :elapsedfull"
+    )
+    pb$tick(0)
+    Sys.sleep(0.5)
+    pb$tick(0)
+  }
+  
+  pyscript <- system.file("python/facedetect.py", package = "webmorphR")
+  reticulate::source_python(pyscript)
+  boxes <- lapply(paths, function(p) {
+      if (wm_opts("verbose")) pb$tick()
+      get_location(p)
+    }) %>%
+    lapply(unlist)
+  
+  # create XML ----
+  if (wm_opts("verbose")) {
+    pb <- progress::progress_bar$new(
+      total = length(paths), clear = FALSE,
+      format = "Creating XML file [:bar] :current/:total :elapsedfull"
+    )
+    pb$tick(0)
+    Sys.sleep(0.5)
+    pb$tick(0)
+  }
+  
+  imgs <- mapply(function(stim, path, box) {
+    if (wm_opts("verbose")) pb$tick()
+    
+    i <- -1
+    pts <- apply(stim$points, 2, function(pt) { 
+      i <<- i + 1
+      sprintf("<part name='%03.f' x='%.0f' y='%.0f'/>", i, 
+              round(pt["x"]), round(pt["y"]))
+    }) %>%
+      paste(collapse = "\n      ")
+    
+    if (is.null(box)) {
+      minpt <- apply(stim$points, 1, min)
+      maxpt <- apply(stim$points, 1, max)
+      box <- c(top = max(0, minpt["y"]-10), 
+               right = min(stim$width, maxpt["x"]+10), 
+               bottom = min(stim$height, maxpt["y"]+10), 
+               left = max(0, minpt["x"]-10)
+               ) %>% round()
+    }
+    
+    sprintf("  <image file='%s'>
+    <box top='%d' left='%d' width='%d' height='%d'>
+      %s
+    </box>
+  </image>", path, 
+            box[[1]], box[[4]], 
+            abs(box[[2]]-box[[4]]), 
+            abs(box[[3]]-box[[1]]), pts)
+  }, stimuli, paths, boxes) %>%
+    paste(collapse = "\n")
+  
+  # write XML ----
+  xml <- sprintf("<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml-stylesheet type='text/xsl' href='image_metadata_stylesheet.xsl'?>
+<dataset>
+<name>%s</name>
+<images>
+%s
+</images>
+</dataset>", "Image Set", imgs)
+  
+  write(xml, file.path(dir, "images.xml"))
+}
+
 
