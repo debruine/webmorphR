@@ -125,10 +125,7 @@ knit.</p>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/plot-1.png"</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/plot-1.png" width="100%"></p>
 </div>
 <div class="section level2">
@@ -141,10 +138,7 @@ the border colour using <code>fill</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">0.05</span>, fill <span class="op">=</span> <span class="st">"hotpink"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/pink-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/pink-1.png" width="100%"></p>
 <p>You can set different border sizes for the top, right, bottom and
 left sides (think “TRouBLe”). This can be useful for creating space for
@@ -153,19 +147,13 @@ labels outside the image.</p>
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, fill <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/border-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/border-1.png" width="100%"></p>
 <p>You can set the border colour separately for each image.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">10</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#F9DEC9"</span>, <span class="st">"#BAEDDD"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/unnamed-chunk-2-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-2-1.png" width="100%"></p>
 </div>
 <div class="section level2">
@@ -176,10 +164,7 @@ rows and columns.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"composite"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">comp</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/unnamed-chunk-3-1.png"</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">comp</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-3-1.png" width="100%"></p>
 <p>Set <code>byrow = FALSE</code> to order the images by column instead
 of the default. You can control the space between images with
@@ -188,10 +173,7 @@ of the default. You can control the space between images with
 using <code><a href="../reference/wm_opts.html">wm_opts()</a></code>, but you can also set <code>maxwidth</code>
 or <code>maxheight</code> for a specific plot.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">comp</span>, ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">FALSE</span>, padding <span class="op">=</span> <span class="fl">0</span>, maxheight <span class="op">=</span> <span class="fl">850</span><span class="op">*</span><span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/unnamed-chunk-4-1.png"</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">comp</span>, ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">FALSE</span>, padding <span class="op">=</span> <span class="fl">0</span>, maxheight <span class="op">=</span> <span class="fl">850</span><span class="op">*</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-4-1.png" width="100%"></p>
 </div>
 <div class="section level2">
@@ -208,10 +190,7 @@ Set <code>byrow = FALSE</code> to distribute images by column.</p>
 <span class="co"># add multi-ethnic composites to left and right on centre column</span>
 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">comp</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, <span class="va">ind</span>, <span class="va">comp</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># make sure parts are the same height</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/unnamed-chunk-5-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
 </div>
 <div class="section level2">
@@ -229,10 +208,7 @@ Set <code>byrow = FALSE</code> to distribute images by column.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/unnamed-chunk-6-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-6-1.png" width="100%"></p>
 <p>Use the <code><a href="../reference/setnames.html">setnames()</a></code> function to set new names.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -240,10 +216,7 @@ Set <code>byrow = FALSE</code> to distribute images by column.</p>
   <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"f_"</span>, replacement <span class="op">=</span> <span class="st">"Female "</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"m_"</span>, replacement <span class="op">=</span> <span class="st">"Male "</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/unnamed-chunk-7-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
 <p>Alternatively, set <code>text</code> to a vector of labels to use.
 Labels can be positioned with the <code>gravity</code> and
@@ -260,10 +233,7 @@ corner, 10 pixels to the right and 5 pixels down.</p>
     size <span class="op">=</span> <span class="fl">40</span>, 
     style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"normal"</span>, <span class="st">"italic"</span><span class="op">)</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/custom-labels-label-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/custom-labels-label-1.png" width="100%"></p>
 <p>You can customise the labels further, including vectors with a
 different value for each image. Vectors that are too long will be
@@ -284,10 +254,7 @@ truncated and short vectors will be recycled.</p>
     style <span class="op">=</span> <span class="st">"italic"</span>,
     kerning <span class="op">=</span> <span class="fl">1.2</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/unnamed-chunk-8-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-8-1.png" width="100%"></p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -299,10 +266,7 @@ truncated and short vectors will be recycled.</p>
         location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"+10+100"</span>, <span class="st">"+10+110"</span><span class="op">)</span>,
         degrees <span class="op">=</span> <span class="fl">45</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/label-position-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/label-position-1.png" width="100%"></p>
 </div>
 <div class="section level3">
@@ -312,10 +276,7 @@ truncated and short vectors will be recycled.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gglabel.html">gglabel</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/unnamed-chunk-9-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-9-1.png" width="100%"></p>
 <p>Use the <code><a href="../reference/setnames.html">setnames()</a></code> function to set new names.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -352,10 +313,7 @@ truncated and short vectors will be recycled.</p>
 <span class="co">#&gt; length &gt; 1 and only the first element will be used</span>
 
 <span class="co">#&gt; Warning in if (class(stimuli[[i]]$img) == "magick-image") {: the condition has</span>
-<span class="co">#&gt; length &gt; 1 and only the first element will be used</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/unnamed-chunk-10-1.png"</span></code></pre></div>
+<span class="co">#&gt; length &gt; 1 and only the first element will be used</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-10-1.png" width="100%"></p>
 <p>Alternatively, set <code>label</code> to a vector of labels to use.
 Labels can be positioned with the <code>x</code> and <code>y</code>
@@ -374,10 +332,7 @@ ggplot <code>size</code> argument; I just use trial-and-error.</p>
     size <span class="op">=</span> <span class="fl">10</span>, 
     fontface <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plain"</span>, <span class="st">"italic"</span><span class="op">)</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/custom-labels-gglabel-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/custom-labels-gglabel-1.png" width="100%"></p>
 <p>You can customise the labels further, including vectors with a
 different value for each image. Vectors that are too long will be
@@ -427,10 +382,7 @@ truncated and short vectors will be recycled.</p>
 <span class="co">#&gt; length &gt; 1 and only the first element will be used</span>
 
 <span class="co">#&gt; Warning in if (class(stimuli[[i]]$img) == "magick-image") {: the condition has</span>
-<span class="co">#&gt; length &gt; 1 and only the first element will be used</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/unnamed-chunk-11-1.png"</span></code></pre></div>
+<span class="co">#&gt; length &gt; 1 and only the first element will be used</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-11-1.png" width="100%"></p>
 <p>You can set <code>alpha</code> and <code>angle</code> to create
 watermarked images.</p>
@@ -447,10 +399,7 @@ watermarked images.</p>
     angle <span class="op">=</span> <span class="op">-</span><span class="fl">30</span>,
     alpha <span class="op">=</span> <span class="fl">0.25</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/unnamed-chunk-12-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-12-1.png" width="100%"></p>
 </div>
 <div class="section level3">
@@ -487,10 +436,7 @@ and “label” geoms, you can use it for other ggplot geoms.</p>
     yintercept <span class="op">=</span> <span class="va">intercepts</span><span class="op">$</span><span class="va">y</span>,
     color <span class="op">=</span> <span class="st">"purple"</span>, size <span class="op">=</span> <span class="fl">2</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/figures_files/figure-html/unnamed-chunk-14-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-14-1.png" width="100%"></p>
 <p>This script took 0.7 minutes to render all the included images from
 scratch.</p>

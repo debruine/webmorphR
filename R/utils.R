@@ -67,8 +67,11 @@ print.stimlist <- function(x, ...) {
     })
   }
   
-  # prints in the viewer if not in an Rmd document
-  print(img, FALSE)
+  # prints in the viewer if multiple images or not in an Rmd document
+  suppressWarnings({
+    # suppress warning about absolute paths
+    print(img, FALSE)
+  })
 }
 
 #' Subset Stimulus Lists

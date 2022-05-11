@@ -256,10 +256,7 @@ blue.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/unnamed-chunk-10-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/unnamed-chunk-10-1.png" width="100%"></p>
 <p>You can change the default colours and translucency with the
 <code>line.color</code> <code>pt.color</code> and
@@ -272,10 +269,7 @@ background color with the <code>bg</code> argument.</p>
            pt.color <span class="op">=</span> <span class="st">"red"</span>, pt.size <span class="op">=</span> <span class="fl">5</span>, pt.alpha <span class="op">=</span> <span class="fl">1</span>,
            pt.shape <span class="op">=</span> <span class="st">"cross"</span>, bg <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co"># crop with 20px space around the largest tem</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/delin-custom-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/delin-custom-1.png" width="100%"></p>
 </div>
 </div>
@@ -309,10 +303,7 @@ deleted.</p>
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"gmm"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/point-subset-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/point-subset-1.png" width="100%"></p>
 <p>Make sure to add the <code>tem_id</code> for faces with other
 templates, such as the 70-point auto-delineation “dlib70”. You can also
@@ -328,10 +319,7 @@ add points manually.</p>
 <span class="va">stimuli_newdelin</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="va">keep_pts</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/point-remove-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/point-remove-1.png" width="100%"></p>
 </div>
 <div class="section level3">
@@ -345,10 +333,7 @@ make sense.</p>
 <span class="va">s</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>line.color <span class="op">=</span> <span class="st">"hotpink"</span>, line.alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/unnamed-chunk-11-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/unnamed-chunk-11-1.png" width="100%"></p>
 <p>Notice the extra lines at the ears; they’re the lines that went
 around the outside of the ears, and weren’t automatically deleted
@@ -359,10 +344,7 @@ there.</p>
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.shape <span class="op">=</span> <span class="st">"index"</span>, pt.size <span class="op">=</span> <span class="fl">10</span>,
            line.color <span class="op">=</span> <span class="st">"hotpink"</span>, line.alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/unnamed-chunk-12-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/unnamed-chunk-12-1.png" width="100%"></p>
 <p>Figure out the relevant line numbers from the template. Here, they
 are the lines connecting points 0 and 2, and connecting points 3 and 5,
@@ -386,10 +368,7 @@ so lines 3 and 4.</p>
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.shape <span class="op">=</span> <span class="st">"index"</span>, pt.size <span class="op">=</span> <span class="fl">10</span>,
            line.color <span class="op">=</span> <span class="st">"hotpink"</span>, line.alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/unnamed-chunk-14-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/unnamed-chunk-14-1.png" width="100%"></p>
 <p>Alternatively, you can delete all of the lines and start over.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
@@ -402,10 +381,7 @@ so lines 3 and 4.</p>
 <span class="va">s2</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.shape <span class="op">=</span> <span class="st">"index"</span>, pt.size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/unnamed-chunk-15-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/unnamed-chunk-15-1.png" width="100%"></p>
 <p>The numbering is odd here for historical reasons. The 189-point Face
 Research Lab (FRL) template was derived from an earlier 179-point
@@ -422,10 +398,7 @@ late to change.</p>
 <span class="va">s3</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>line.color <span class="op">=</span> <span class="st">"hotpink"</span>, line.alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/unnamed-chunk-16-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/unnamed-chunk-16-1.png" width="100%"></p>
 </div>
 </div>
@@ -442,30 +415,21 @@ webmorph), you can use the built-in masking features.</p>
 <span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"composite"</span>, pattern <span class="op">=</span> <span class="st">"multi"</span><span class="op">)</span></code></pre></div>
 <p>The default mask crops around the face with a white background.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/mask-default-1.png"</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/mask-default-1.png" width="100%"></p>
 <p>You can set the mask to any combination of the following: oval, face,
 neck, ears (left_ear, right_ear), eyes (left_eye, right_eye), brows
 (left_brow, right_brow), mouth, teeth, nose.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span>, mask <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"face"</span>, <span class="st">"neck"</span>, <span class="st">"ears"</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/mask-combo-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/mask-combo-1.png" width="100%"></p>
 <p>You can reverse the mask. You can also use alpha transparency for the
 fill colour.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span>, mask <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"eyes"</span>, <span class="st">"mouth"</span><span class="op">)</span>, 
      fill <span class="op">=</span> <span class="st">"#00000099"</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/mask-reverse-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/mask-reverse-1.png" width="100%"></p>
 </div>
 <div class="section level3">
@@ -478,10 +442,7 @@ want to replicate some stimuli from the 80s…</p>
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/greyscale.html">greyscale</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/mask_oval.html">mask_oval</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/mask-oval-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/mask-oval-1.png" width="100%"></p>
 <p>By default, the oval mask calculates the maximum and minimum x and y
 coordinates in the template and masks each face according to this. Set
@@ -493,10 +454,7 @@ the same oval to each.</p>
   <span class="co"># remove template points to make the oval tighter around the face</span>
   <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"face"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/mask_oval.html">mask_oval</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"black"</span>, each <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/mask-oval-each-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/mask-oval-each-1.png" width="100%"></p>
 </div>
 <div class="section level3">
@@ -515,10 +473,7 @@ template using the convenience function <code><a href="../reference/features.htm
 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">full_tem</span>, <span class="va">internal_features</span>, <span class="va">no_lines</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/features-demo-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/features-demo-1.png" width="100%"></p>
 <p>Here are all of the available named features. The feature “gmm” is
 the subset of points commonly used for geometric morphometrics, which
@@ -548,10 +503,7 @@ excludes points that don’t have clear anatomical definitions.</p>
   <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span><span class="va">features</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/features-all-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/features-all-1.png" width="100%"></p>
 </div>
 </div>
@@ -568,10 +520,7 @@ matches old papers.</p>
   <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"face"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/mask_oval.html">mask_oval</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="co">#  crop to template boundary and add 50px on each side </span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/mask-oval-all-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/mask-oval-all-1.png" width="100%"></p>
 <p>Although I still think the delineated masking is better :)</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
@@ -583,10 +532,7 @@ matches old papers.</p>
   <span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span>procrustes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="co"># crop to template boundary and add 50px on each side </span>
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/mask-oval-better-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/mask-oval-better-1.png" width="100%"></p>
 </div>
 <div class="section level2">
@@ -606,10 +552,7 @@ higher-resolution), and plots it with the point indices.</p>
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.size <span class="op">=</span> <span class="fl">35</span>, pt.shape <span class="op">=</span> <span class="st">"circle"</span>, pt.alpha <span class="op">=</span> <span class="fl">1</span>, pt.color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.size <span class="op">=</span> <span class="fl">20</span>, pt.shape <span class="op">=</span> <span class="st">"index"</span>, pt.alpha <span class="op">=</span> <span class="fl">1</span>, pt.color <span class="op">=</span> <span class="st">"black"</span>,
            line.alpha <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/unnamed-chunk-18-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/unnamed-chunk-18-1.png" width="100%"></p>
 <p>Let’s say you wanted to mask the right side of the face and the left
 eye. You set up the mask as a list of named areas, and each area is a
@@ -630,12 +573,9 @@ mask.</p>
 
 <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span>, <span class="va">mask</span>, fill <span class="op">=</span> <span class="st">"hotpink"</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">.6</span>, <span class="fl">.6</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Warning in knitr::include_graphics(tmp): It is highly recommended to use</span>
-<span class="co">#&gt; relative paths for images. You had absolute paths: "/Users/lisad/rproj/debruine/</span>
-<span class="co">#&gt; webmorphR/docs/articles/masking_files/figure-html/unnamed-chunk-19-1.png"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="masking_files/figure-html/unnamed-chunk-19-1.png" width="100%"></p>
-<p>This script took 1.2 minutes to render all the included images from
+<p>This script took 0.8 minutes to render all the included images from
 scratch.</p>
 </div>
   </div>
