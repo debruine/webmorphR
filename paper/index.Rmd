@@ -474,7 +474,7 @@ hzeyes <- horiz_eyes(f)
 
 # calculate midpoint of eyes for each image
 pts <- get_point(hzeyes, pt = 0:1)
-midpoint <- (pts$x0 + pts$x1)/2
+midpoint <- mean(pts$x)
 
 # crop and mirror images
 left_side <- crop(hzeyes, width = midpoint, x_off = 0)

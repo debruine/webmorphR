@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{plot_stim}
 \alias{plot_stim}
-\title{PLot stimuli}
+\title{Plot stimuli}
 \usage{
 plot_stim(
   stimuli,

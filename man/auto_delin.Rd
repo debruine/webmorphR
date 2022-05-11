@@ -6,7 +6,7 @@
 \usage{
 auto_delin(
   stimuli,
-  style = c("dlib70", "dlib7", "fpp106", "fpp83"),
+  style = c("dlib7", "dlib70", "fpp106", "fpp83"),
   replace = FALSE,
   face = 1
 )
@@ -14,7 +14,7 @@ auto_delin(
 \arguments{
 \item{stimuli}{list of class stimlist}
 
-\item{style}{Which service and number of landmarks (dlib70, dlib7, fpp106, fpp83)}
+\item{style}{Which service and number of landmarks (dlib7, fpp106, fpp83)}
 
 \item{replace}{if FALSE, only gets templates for images with no template}
 

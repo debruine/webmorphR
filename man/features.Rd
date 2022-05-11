@@ -4,7 +4,7 @@
 \alias{features}
 \title{Feature Points}
 \usage{
-features(..., tem_id = "FRL")
+features(..., tem_id = c("FRL", "dlib70"))
 }
 \arguments{
 \item{...}{a vector of feature names (see Details)}

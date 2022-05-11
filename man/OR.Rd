@@ -24,3 +24,4 @@ x$a \%||\% x$b \%||\% x$c
 x$a \%||\% "default_value"
 
 }
+\keyword{internal}

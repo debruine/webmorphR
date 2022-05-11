@@ -38,7 +38,7 @@
       <a href="../articles/manip.html">Image Manipulations</a>
     </li>
     <li>
-      <a href="../articles/masking.html">Masking</a>
+      <a href="../articles/masking.html">Templates and Masking</a>
     </li>
     <li>
       <a href="../articles/figures.html">Making Figures</a>
@@ -99,9 +99,6 @@
 <span class="r-in"><span class="co"># use magick::image_* functions</span></span>
 <span class="r-in"><span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"fill"</span>, color <span class="op">=</span> <span class="st">"black"</span>, fuzz <span class="op">=</span> <span class="fl">10</span>, point <span class="op">=</span> <span class="st">"+0+10"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/6w/y3tyzgs1403cz7tgw8k4lk600000gq/T//RtmppbY1Yu/file33882747596c.png"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "knit_image_paths" "knit_asis"       </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">blur</span> <span class="op">&lt;-</span> <span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"blur"</span>, <span class="fl">5</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">oilpaint</span> <span class="op">&lt;-</span> <span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"oilpaint"</span>, radius <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
@@ -116,9 +113,6 @@
 <span class="r-in">  <span class="fu">magick</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html" class="external-link">image_read</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">magick</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/transform.html" class="external-link">image_resize</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"composite"</span>, <span class="va">logo</span>, offset <span class="op">=</span> <span class="st">"+10+10"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/6w/y3tyzgs1403cz7tgw8k4lk600000gq/T//RtmppbY1Yu/file33883d3fd599.png"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "knit_image_paths" "knit_asis"       </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># use a self-defined function</span></span>
 <span class="r-in"><span class="va">testfunc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">image</span><span class="op">)</span> <span class="op">{</span></span>
@@ -140,7 +134,8 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer></div>

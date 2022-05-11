@@ -102,6 +102,47 @@ tem_def <- function(tem_id = "FRL", path = NULL) {
   tem
 }
 
+
+#' Change the points in a line
+#'
+#' @param stimuli list of class stimlist
+#' @param line_id IDs of the lines to change
+#' @param pts vector of points to change the line_id to (deletes line if NULL)
+#'
+#' @return stimlist with altered templates
+#' @export
+#'
+#' @examples
+#' s <- demo_stim()[1] %>%
+#'   subset_tem(features("face"))
+#' s[[1]]$lines
+#' 
+#' # remove all lines
+#' s2 <- s %>%
+#'   change_lines(line_id = 1:8, pts = NULL)
+#' s2[[1]]$lines
+#' 
+#' draw_tem(s2, pt.shape = "index", pt.size = 10)
+#' 
+#' # add new line
+#' s3 <- s2 %>%
+#'   change_lines(line_id = 1, pts = c(0, 26, 1, 27, 2, 6:14, 5, 29, 4, 28, 3, 25:15, 0))
+#' s3[[1]]$lines
+#' draw_tem(s3, line.color = "hotpink", line.alpha = 1)
+change_lines <- function(stimuli, line_id = 1, pts = NULL) {
+  for (i in seq_along(stimuli)) {
+    oldlines <- stimuli[[i]]$lines
+    if (is.null(pts)) {
+      oldlines[line_id] <- pts
+    } else {
+      oldlines[[line_id]] <- pts
+    }
+    stimuli[[i]]$lines <- oldlines
+  }
+  
+  stimuli
+}
+
 #' Subset template points
 #'
 #' @param stimuli list of class stimlist
@@ -186,38 +227,56 @@ subset_tem <- function(stimuli, ..., keep = TRUE) {
 #' features("mouth")
 #' features("gmm")
 #'
-features <- function(..., tem_id = "FRL") {
+features <- function(..., tem_id = c("FRL", "dlib70")) {
   # 0-based for compatibility with webmorph
+  tem_id <- match.arg(tem_id)
   
   named_features <- list(...) %>% unlist()
   
-  features <- list(
-    # imprecise
-    undereyes = c(44:49),
-    ears = c(115:124),
-    halo = c(146:156),
-    teeth = c(99:103),
-    smile_lines = c(158:163),
-    cheekbones = c(164:169),
-    philtrum = c(170:173),
-    chin = c(174:178),
-    neck = c(183:184, 145, 157),
-    # features
-    left_eye = c(0, 2:9, 18:22, 28:30, 34:38),
-    right_eye = c(1, 10:17, 23:27, 31:33, 39:43),
-    left_brow = c(71:76, 83:84),
-    right_brow = c(77:82, 85:86),
-    nose = c(50:70, 170, 172, 179:182),
-    mouth = c(87:108),
-    face = c(109:114, 125:144, 185:188)
-  )
+  if (tem_id == "FRL") {
+    features <- list(
+      # imprecise
+      undereyes = c(44:49),
+      ears = c(115:124),
+      halo = c(146:156),
+      teeth = c(99:103),
+      smile_lines = c(158:163),
+      cheekbones = c(164:169),
+      philtrum = c(170:173),
+      chin = c(174:178),
+      neck = c(183:184, 145, 157),
+      # features
+      left_eye = c(0, 2:9, 18:22, 28:30, 34:38),
+      right_eye = c(1, 10:17, 23:27, 31:33, 39:43),
+      left_brow = c(71:76, 83:84),
+      right_brow = c(77:82, 85:86),
+      nose = c(50:70, 170, 172, 179:182),
+      mouth = c(87:108),
+      face = c(109:114, 125:144, 185:188)
+    )
+    
+    features$oval <- c(features$halo, features$neck)
+  } else if (tem_id == "dlib70") {
+    features <- list(
+      # imprecise
+      teeth = c(62:69),
+      # features
+      left_eye = c(0, 38:43),
+      right_eye = c(1, 44:49),
+      left_brow = c(19:23),
+      right_brow = c(24:28),
+      nose = c(29:37),
+      mouth = c(50:69),
+      face = c(2:18)
+    )
+  }
   
   # combo features
   features$eyes <- c(features$left_eye, features$right_eye)
   features$brows <- c(features$left_brow, features$right_brow)
-  features$oval <- c(features$halo, features$neck)
   features$gmm <- c(features$face, features$eyes, features$brows, 
                     features$nose, features$mouth)
+  features$all <- 0:max(unlist(features))
   
   # unavailable and duplicate features are ignored
   features[named_features] %>%
@@ -321,5 +380,4 @@ tem_to_xml <- function(stimuli, dir = "images") {
   
   write(xml, file.path(dir, "images.xml"))
 }
-
 

@@ -61,7 +61,10 @@ print.stimlist <- function(x, ...) {
       !isTRUE(getOption("knitr.in.progress"))) {
     tmp <- tempfile(fileext = ".png")
     magick::image_write(img, tmp)
-    knitr::include_graphics(tmp) %>% print()
+    suppressWarnings({
+      # suppress warning about absolute paths
+      knitr::include_graphics(tmp) %>% print()
+    })
   }
   
   # prints in the viewer if not in an Rmd document
@@ -215,7 +218,7 @@ message <- function(...) {
 #' @param .default default value if no names found
 #'
 #' @return list or vector item
-#' @export
+#' @keywords internal
 #'
 #' @examples
 #' x <- c(h = 100, w = 200)

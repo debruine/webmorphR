@@ -66,7 +66,7 @@ draw_tem <- function(stimuli, pt.color = wm_opts("pt.color"), pt.alpha = 0.75, p
           #         x-cross_arm, x+cross_arm, y, y)
         } else if (pt.shape == "index") {
           idx <<- idx + 1 # dumb but works
-          sprintf("<text x=\"%.2f\" y=\"%.2f\">%s</text>", x, y, idx)
+          sprintf("<text x=\"%.2f\" y=\"%.2f\">%s</text>", x, y+(pt.size/2), idx)
         }
       }) %>%
       paste(collapse = "\n          ")
@@ -92,7 +92,10 @@ draw_tem <- function(stimuli, pt.color = wm_opts("pt.color"), pt.alpha = 0.75, p
       <g id=\"lines\" stroke-width=\"%f\" stroke=\"%s\" fill=\"none\">
           %s
       </g>
-      <g id=\"points\" stroke-width=\"%f\" stroke=\"%s\" fill=\"%s\" font-size=\"%f\" font-family=\"Helvetica, sans-serif\" font-weight=\"100\" text-anchor=\"middle\" dominant-baseline=\"middle\">
+      <g id=\"points\" stroke-width=\"%f\" stroke=\"%s\" fill=\"%s\" 
+         font-size=\"%f\" font-weight=\"100\" 
+         font-family=\"FiraCode, Consolas, Courier, monospace\" 
+         text-anchor=\"middle\">
           %s
       </g>
   </svg>",

@@ -213,16 +213,22 @@ get_point <- function(stimuli, pt = 0) {
   stimuli <- validate_stimlist(stimuli, TRUE)
 
   pts <- lapply(stimuli, `[[`, "points") %>%
-    sapply(`[`, , pt+1) %>%
+    sapply(`[`, c('x', 'y'), pt+1) %>%
     t() %>%
     as.data.frame()
 
-  if (ncol(pts) == 2) {
-    names(pts) <- c("x", "y")
-  } else {
-    combo <- expand.grid(coord = c("x", "y"), pt = pt)
-    names(pts) <- paste0(combo$coord, combo$pt)
-  }
-
-  pts
+  combo <- expand.grid(coord = c("x", "y"), pt = pt)
+  names(pts) <- paste(combo$coord, combo$pt, sep = "_")
+  
+  dplyr::as_tibble(pts, rownames = "image") %>%
+    tidyr::pivot_longer(cols = -(image),
+      names_to = c("coord", "point"),
+      names_sep = "_",
+      names_transform = list(point = as.integer),
+      values_to = "value"
+    ) %>%
+    tidyr::pivot_wider(
+      names_from = coord,
+      values_from = value
+    )
 }

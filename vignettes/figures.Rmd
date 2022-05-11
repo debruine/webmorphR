@@ -11,15 +11,19 @@ knitr::opts_chunk$set(
 )
 
 starttime <- Sys.time()
-
-library(webmorphR)
-wm_opts(plot.maxwidth = 850)
 ```
-
 
 WebmorphR has plotting functions to make it easier to create reproducible figures from your stimuli.
 
 When working interactively in an R Markdown document, the figures plot in the Viewer window, but will be shown in the document when you knit.
+
+```{r, message=FALSE}
+library(webmorphR)
+library(tidyverse)
+wm_opts(plot.maxwidth = 850*2)
+```
+
+## Load stimuli
 
 ```{r plot}
 stimuli <- demo_stim()
@@ -29,7 +33,7 @@ plot(stimuli)
 
 ## Borders and Background
 
-You can add a border to each image using pad. Values less than 1 will set border width as a percentage of the image width, while values greater than 1 will set it as pixels. You can also change the border colour using `fill`.
+You can add a border to each image using `pad`. Values less than 1 will set border width as a percentage of the image width, while values greater than 1 will set it as pixels. You can also change the border colour using `fill`.
 
 
 ```{r pink}
@@ -43,7 +47,7 @@ You can set different border sizes for the top, right, bottom and left sides (th
 
 ```{r border}
 stimuli %>%
-  pad(40, 0, 0, 0, fill = "black") %>%
+  pad(80, 0, 0, 0, fill = "black") %>%
   label(color = "white") %>%
   plot()
 ```
@@ -59,7 +63,7 @@ stimuli %>%
 
 ## Rows and columns
 
-Set `nrow`` or `ncol` to control the number of rows and columns.
+Set `nrow` or `ncol` to control the number of rows and columns.
 
 ```{r}
 comp <- demo_stim("composite") %>% resize(0.5)
@@ -67,51 +71,35 @@ comp <- demo_stim("composite") %>% resize(0.5)
 plot(comp, nrow = 2)
 ```
 
+Set `byrow = FALSE` to order the images by column instead of the default. You can control the space between images with `padding`. 
 
-To make a multipart figure, you usually don't want padding around the outside of an image, so set `external_pad = FALSE`.  Set `byrow = FALSE` to distribute images by column.
+We'd set `maxwidth` globally at the top of the script using `wm_opts()`, but you can also set `maxwidth` or `maxheight` for a specific plot.
 
 ```{r}
+plot(comp, ncol = 2, byrow = FALSE, padding = 0, maxheight = 850*2)
+```
+
+## Multipart figure
+
+To make a multipart figure, you usually don't want padding around the outside of a component image, so set `external_pad = FALSE`.  Set `byrow = FALSE` to distribute images by column.
+
+```{r}
+# make the centre columns
 ind <- comp[c(1:2,4:7,9:10)] %>%
   plot(ncol = 2, byrow = FALSE, padding = 60, external_pad = FALSE)
 
+# add multi-ethnic composites to left and right on centre column
 c(comp[3], ind, comp[8]) %>%
   resize(height = 500) %>% # make sure parts are the same height
   plot(nrow = 1)
 ```
 
 
-## Delineations
-
-Use the `draw_tem()` function to show the delineations. By default, points are translucent green circles and lines are translucent blue.
-
-```{r delin}
-stimuli %>%
-  draw_tem() %>%
-  plot()
-```
-
-You can change the default colours and translucency with the `line.color` `pt.color` and `line.alpha` and `pt.alpha` arguments. Remove the image and set the background to grey by setting `bg = "grey"`.
-
-```{r delin-custom}
-stimuli %>%
-  resize(1000) %>%
-  draw_tem(line.color = "grey", line.size = 2, line.alpha = 0.2, 
-           pt.color = "red", pt.size = 4, bg = "grey") %>%
-  crop_tem(50) %>%
-  plot()
-```
-
-
-## Delete some points
-
-```{r point-remove}
-stimuli %>%
-  subset_tem(features("gmm")) %>%
-  draw_tem() %>%
-  plot()
-```
-
 ## Labels
+
+There are two labelling functions. The original one, `label()` uses syntax like `magick::image_annotate()` to configure labels. The new one, `gglabel()`, uses syntax like `ggplot2::annotate()` to configure labels.
+
+### label()
 
 Label figure panels with the image name.
 
@@ -121,7 +109,7 @@ stimuli %>%
   plot()
 ```
 
-Use the `setnames()` function to set new names or set labels to a vector of labels to use.
+Use the `setnames()` function to set new names.
 
 ```{r}
 demo_stim("composite") %>%
@@ -131,37 +119,178 @@ demo_stim("composite") %>%
   plot(nrow = 2)
 ```
 
-Labels can be positioned with the `gravity` and `location` arguments from the {magick} package.
+Alternatively, set `text` to a vector of labels to use. Labels can be positioned with the `gravity` and `location` arguments from the {magick} package. In the example below, the text is positioned at the northwest (upper-left) corner, 10 pixels to the right and 5 pixels down. 
 
-```{r custom-labels}
+```{r custom-labels-label}
 stimuli %>%
   label(
-    c("Female", "Male"),
+    text = c("Female", "Male"),
     gravity = "northwest",
-    location = "+10+10",
+    location = "+10+5",
     color = c("darkgreen", "darkmagenta"),
-    size = 20, 
+    size = 40, 
     style = c("normal", "italic")
   ) %>%
   plot()
 ```
 
-You can also get more fine control of label position.
+You can customise the labels further, including vectors with a different value for each image. Vectors that are too long will be truncated and short vectors will be recycled.
+
+```{r}
+directions <- c("north", "northeast", "east", "southeast", 
+                "south", "southwest", "west", "northwest")
+
+rep(stimuli, 4) %>%
+  label(
+    text = paste0(" ", directions, " "),
+    gravity = directions,
+    color = "white",
+    boxcolor = rainbow(4),
+    strokecolor = "black",
+    font = "Arial",
+    weight = 800,
+    style = "italic",
+    kerning = 1.2
+  ) %>%
+  plot(nrow = 2)
+```
+
 
 ```{r label-position}
 stimuli %>%
   label(TRUE,
         color = "dodgerblue3",
-        size = 20,
+        size = 40,
         weight = 700,
         gravity = "southwest",
-        location = "+10+50",
+        location = c("+10+100", "+10+110"),
         degrees = 45
   ) %>%
   plot()
 ```
 
+### gglabel()
 
+Label figure panels with the image name.
+
+```{r}
+stimuli %>%
+  gglabel() %>%
+  plot()
+```
+
+Use the `setnames()` function to set new names.
+
+```{r}
+demo_stim("composite") %>%
+  setnames(pattern = "f_", replacement = "Female ") %>%
+  setnames(pattern = "m_", replacement = "Male ") %>%
+  gglabel(size = 20) %>%
+  plot(nrow = 2)
+```
+
+
+Alternatively, set `label` to a vector of labels to use. Labels can be positioned with the `x` and `y` arguments. Unlike ggplot, x and y values less than or equal to 1 are interpreted as percentages.
+Adjust label alignment with `hjust` and `vjust`. I can't help you with the ggplot `size` argument; I just use trial-and-error.
+
+```{r custom-labels-gglabel}
+stimuli %>%
+  gglabel(
+    label = c("Female", "Male"),
+    x = 0.01,
+    y = 0.99,
+    hjust = 0, vjust = 1,
+    color = c("darkgreen", "darkmagenta"),
+    size = 10, 
+    fontface = c("plain", "italic")
+  ) %>%
+  plot()
+```
+
+You can customise the labels further, including vectors with a different value for each image. Vectors that are too long will be truncated and short vectors will be recycled.
+
+The "label" geom lets you set fill and passing for the labels. 
+
+```{r}
+directions <- c("north", "northeast", "east", "southeast", 
+                "south", "southwest", "west", "northwest")
+
+rep(stimuli, 4) %>%
+  gglabel(
+    geom = "label",
+    label = directions,
+    size = 10,
+    x = c(0.5, 1, 1, 1, 0.5, 0, 0, 0),
+    y = c(1, 1, 0.5, 0, 0, 0, 0.5, 1),
+    hjust = c(0.5, 1, 1, 1, 0.5, 0, 0, 0),
+    vjust = c(1, 1, 0.5, 0, 0, 0, 0.5, 1),
+    color = "white",
+    fill = rainbow(4),
+    family = "Arial",
+    fontface = "bold.italic",
+    label.padding = unit(3, "mm"),
+    label.r = unit(0.5, "lines"), # round corners
+    label.size = unit(1, "lines") # label border
+  ) %>%
+  plot(nrow = 2)
+```
+
+You can set `alpha` and `angle` to create watermarked images. 
+
+```{r}
+stimuli %>%
+  gglabel(
+    label = "watermark",
+    x = 0.5,
+    y = 0.5,
+    geom = "text",
+    size = 20,
+    color = "black",
+    fontface = "bold",
+    angle = -30,
+    alpha = 0.25
+  ) %>%
+  plot()
+```
+
+### Other annotations
+
+While the `gglabel()` function is mainly meant for "text" and "label" geoms, you can use it for other ggplot geoms.
+
+```{r}
+# get eye points and calculate mean x and y coordinates for each image
+intercepts <- get_point(stimuli, 0:1) %>%
+  group_by(image) %>%
+  summarise(x = mean(x),
+            y = mean(y),
+            .groups = "drop") %>%
+  # face coordinate y-axis is opposite to ggplot y-axis
+  mutate(y = height(stimuli) - y)
+```
+
+
+```{r}
+stimuli %>%
+  gglabel(
+    geom = "rect",
+    xmin = 0,
+    xmax = intercepts$x,
+    ymin = 0, 
+    ymax = intercepts$y,
+    fill = "grey"
+  ) %>%
+  gglabel(
+    geom = "vline",
+    xintercept = intercepts$x,
+    color = "red", size = 2
+  ) %>%
+  gglabel(
+    geom = "hline",
+    yintercept = intercepts$y,
+    color = "purple", size = 2
+  ) %>%
+  plot()
+```
 
 
 ```{r, echo = FALSE}

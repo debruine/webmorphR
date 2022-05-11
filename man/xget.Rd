@@ -25,3 +25,4 @@ x <- c(h = 100, w = 200)
 width <- xget(x, "width", "w", 1)
 height <- xget(x, "height", "h", 2)
 }
+\keyword{internal}

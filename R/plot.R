@@ -34,7 +34,7 @@ plot.stim <- function(x, y, ...) {
 }
 
 
-#' PLot stimuli
+#' Plot stimuli
 #'
 #' Show all your stimuli in a grid.
 #'

@@ -38,7 +38,7 @@
       <a href="../articles/manip.html">Image Manipulations</a>
     </li>
     <li>
-      <a href="../articles/masking.html">Masking</a>
+      <a href="../articles/masking.html">Templates and Masking</a>
     </li>
     <li>
       <a href="../articles/figures.html">Making Figures</a>
@@ -97,7 +97,9 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">100</span>, w <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">width</span> <span class="op">&lt;-</span> <span class="fu">xget</span><span class="op">(</span><span class="va">x</span>, <span class="st">"width"</span>, <span class="st">"w"</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in xget(x, "width", "w", 1):</span> could not find function "xget"</span>
 <span class="r-in"><span class="va">height</span> <span class="op">&lt;-</span> <span class="fu">xget</span><span class="op">(</span><span class="va">x</span>, <span class="st">"height"</span>, <span class="st">"h"</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in xget(x, "height", "h", 2):</span> could not find function "xget"</span>
 </code></pre></div>
     </div>
   </div>
@@ -112,7 +114,8 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer></div>

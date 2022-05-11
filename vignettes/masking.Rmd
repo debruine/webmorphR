@@ -1,5 +1,5 @@
 ---
-title: "Masking"
+title: "Templates and Masking"
 output: rmarkdown::html_document
 ---
 
@@ -14,22 +14,242 @@ starttime <- Sys.time()
 ```
 
 
-This vignette shows you how to mask images relative to a template.
+This vignette explains templates and shows you how to mask images relative to their delineation.
 
 ```{r, message=FALSE}
 # load packages and set maximum plot width
 library(webmorphR)
-wm_opts(plot.maxwidth = 850)
+wm_opts(plot.maxwidth = 850*2)
+
+# load the demo stimuli
+stimuli <- demo_stim("test")
+```
+
+## Delineations
+
+A delineation is a description of the shape of the face using points connected by lines. The points are describe by their index and x and y coordinates. The upper left corner is the 0 origin, so the y-coordinates may go the opposite direction to what you expect.
+
+```{r}
+# the first 10 points
+stimuli[[1]]$points[, 1:10]
+```
+
+There is a function so you can get selected point coordinates for a whole stimulus list.
+
+```{r}
+get_point(stimuli, 0:2)
 ```
 
 
-## Masking with Templates
+The lines are a list of vectors. Each vector contains the line's point indices, but 0-based (yes, I know this is annoying, but psychomorph was developed in Java and all existing template files index the points starting with 0).
+
+```{r}
+# the first 10 lines
+stimuli[[1]]$lines[1:10] %>% str()
+```
+
+NB: Currently, I'm assuming any lines that start and end with the same point are closed shapes, so you can't make tear-drop shapes without doubling the end coordinate. I might change this someday, so there is also a vector for flagging whether shapes are closed; this is currently always FALSE.
+
+```{r}
+stimuli[[1]]$closed
+```
+
+### Templates
+
+Delineations need to follow the same template in order to work together. For example, you can't average faces that are delineated with different templates. 
+R
+ead in images with webmorph templates, or automatically delineate images with the python module [face_recognition](https://github.com/ageitgey/face_recognition) or the web-based software [Face++](https://www.faceplusplus.com/). Auto-delineation with Face++ is better, but requires a free API key from Face++. Fr the internal dlib templates, you may be prompted to install a Python module using `reticulate::py_install("face_recognition")`.
+
+WebmorphR uses 5 main templates:
+
+* FRL: the 1889-point Face Research Lab template that is the default manual template at [webmorph.org](https://webmorph.org). This template is also used in the demo stimuli and the Chicago Face Database delineations.
+* dlib7: The 7-point internal automatic face detection. This algorithm requires a python installation, so is a little harder to set up, but doesn't send your images to an external company. This is actually a 5-point template (corners of the eyes and tip of the nose), but I added the centre points of the corners of the eyes as point 0 and 1 for consistency with all of the other templates. The "pupil" points don't always line up with the pupils, as they're jus calculated from the corners.
+* dlib70: The 70-point internal automatic face detection. The files for this are quite large, so you will be prompted to download them the first time you try to use this delineation.
+* fpp106: The 106-point Face++ template. This is a high-qulaity and detailed template, but requires you to set up your own API key with [Face++](https://www.faceplusplus.com/) and will transfer your images to Face++, so make sure you understand the privacy consequences of this.
+* fpp83: The 83-point Face++ template. This is an old template, but I keep it for consistency with the old auto-delineation template on [webmorph.org](https://webmorph.org). 
+
+```{r, cache = TRUE}
+s <- demo_stim("london", "030")
+dlib7 <- auto_delin(s, "dlib7", replace = TRUE)
+dlib70 <- auto_delin(s, "dlib70", replace = TRUE)
+fpp106 <- auto_delin(s, "fpp106", replace = TRUE)
+fpp83 <- auto_delin(s, "fpp83", replace = TRUE)
+```
+
+
+```{r, warning = FALSE}
+c(s, dlib7, dlib70, fpp106, fpp83) %>%
+  setnames(c("frl", "dlib7", "dlib70", "fpp106", "fpp83")) %>%
+  draw_tem() %>%
+  crop_tem(50) %>%
+  pad(.15, 0, 0, 0) %>%
+  gglabel(size = 20) %>%
+  plot()
+```
+
+The "smiling" demo dataset doesn't have FRL templates yet (it will soon), but can demonstrate how the automatic delineation algorithms deal with open mouths.
+
+```{r, cache = TRUE}
+smile <- demo_stim("smiling", "030")
+dlib7s <- auto_delin(smile, "dlib7", replace = TRUE)
+dlib70s <- auto_delin(smile, "dlib70", replace = TRUE)
+fpp106s <- auto_delin(smile, "fpp106", replace = TRUE)
+fpp83s <- auto_delin(smile, "fpp83", replace = TRUE)
+```
+
+```{r, warning = FALSE}
+c(dlib7s, dlib70s, fpp106s, fpp83s) %>%
+  setnames(c("dlib7", "dlib70", "fpp106", "fpp83")) %>%
+  draw_tem() %>%
+  crop_tem(50) %>%
+  pad(.15, 0, 0, 0) %>%
+  gglabel(size = 20) %>%
+  plot()
+```
+
+
+### Visualise delineations
+
+Use the `draw_tem()` function to show the delineations. By default, points are translucent green circles and lines are translucent blue.
+
+```{r}
+stimuli %>%
+  draw_tem() %>%
+  plot()
+```
+
+You can change the default colours and translucency with the `line.color` `pt.color` and `line.alpha` and `pt.alpha` arguments. Change the point shape with `pt.shape`. Remove the image and set the background color with the `bg` argument.
+
+```{r delin-custom}
+stimuli %>%
+  draw_tem(line.color = "grey", line.size = 1, line.alpha = 0.2, 
+           pt.color = "red", pt.size = 5, pt.alpha = 1,
+           pt.shape = "cross", bg = "grey") %>%
+  crop_tem(20) %>% # crop with 20px space around the largest tem
+  plot()
+```
+
+
+## Subset template
+
+It can be useful to subset or change delineation points or lines for analysis or visualisation. 
+
+### Features
+
+The `features()` function returns the points that make up different subsets of the FRL template (the default manual template for webmorph.org) or the dlib70 template.
+
+```{r features}
+features("left_eye", "right_eye")
+```
+
+### Subset template
+
+The "gmm" features are the eyebrows, eyes, nose, and mouth points, plus the face oval. This is a common subset to use for geometric morphometric analyses. Use the `subset_tem()` function to select just those delineation points. The line definitions will be automatically updated and any lines that no longer have points will be deleted.
+
+```{r point-subset}
+stimuli %>%
+  crop_tem() %>%
+  subset_tem(features("gmm")) %>%
+  draw_tem(pt.size = 5) %>%
+  plot()
+```
+
+Make sure to add the `tem_id` for faces with other templates, such as the 70-point auto-delineation "dlib70". You can also add points manually.
+
+```{r point-remove, message=FALSE}
+# add 70-point delineation
+stimuli_newdelin <- stimuli %>%
+  crop_tem() %>%
+  auto_delin("dlib70", replace = TRUE)
+
+keep_pts <- c(0, 1, features("face", tem_id = "dlib70"))
+
+stimuli_newdelin %>%
+  subset_tem(keep_pts) %>%
+  draw_tem(pt.size = 5) %>%
+  plot()
+```
+
+### Change lines
+
+When you alter the number of points, the remaining lines don't always make sense. 
+
+```{r}
+s <- stimuli %>% subset_tem(features("face"))
+
+s %>%
+  draw_tem(line.color = "hotpink", line.alpha = 1) %>% 
+  crop_tem(50) %>%
+  plot()
+```
+
+
+Notice the extra lines at the ears; they're the lines that went around the outside of the ears, and weren't automatically deleted because the two points that connect them to the head are still there.
+
+```{r}
+s[[1]] %>%
+  draw_tem(pt.shape = "index", pt.size = 10,
+           line.color = "hotpink", line.alpha = 1) %>% 
+  crop_tem(50) %>%
+  plot()
+```
+
+Figure out the relevant line numbers from the template. Here, they are the lines connecting points 0 and 2, and connecting points 3 and 5, so lines 3 and 4.
+
+```{r}
+s[[1]]$lines %>% str()
+```
+
+
+```{r}
+s1 <- s %>%
+  change_lines(line_id = 3:4, pts = NULL)
+
+s1[[1]] %>%
+  draw_tem(pt.shape = "index", pt.size = 10,
+           line.color = "hotpink", line.alpha = 1) %>% 
+  crop_tem(50) %>%
+  plot()
+```
+
+Alternatively, you can delete all of the lines and start over.
+
+```{r}
+# remove all lines
+s2 <- s %>%
+  change_lines(line_id = 1:8, pts = NULL)
+s2[[1]]$lines
+
+s2[[1]] %>%
+  draw_tem(pt.shape = "index", pt.size = 10) %>% 
+  crop_tem(50) %>%
+  plot()
+```
+
+The numbering is odd here for historical reasons. The 189-point Face Research Lab (FRL) template was derived from an earlier 179-point template from the Perception Lab in St Andrews. The extra points around the ears, nose, and neck were added then, so they're out of order. But there are thousands of faces delineated with this template, so it's too late to change.
+
+```{r}
+face_oval <- c(0, 26, 1, 27, 2, 6:14, 5, 29, 4, 28, 3, 25:15, 0)
+
+s3 <- s2 %>%
+  change_lines(line_id = 1, pts = face_oval)
+
+s3[[1]] %>%
+  draw_tem(line.color = "hotpink", line.alpha = 1) %>%
+  crop_tem(50) %>%
+  plot()
+```
+
+
+## Masking
+
+### Masking with Templates
 
 If your images are delineated with the FRL template (default in webmorph), you can use the built-in masking features.
 
 ```{r}
 # load your stimuli with templates
-stimuli <- demo_stim("composite", "multi")
+stimuli <- demo_stim("composite", pattern = "multi")
 ```
 
 The default mask crops around the face with a white background.
@@ -54,7 +274,7 @@ mask(stimuli, mask = c("eyes", "mouth"),
 ```
 
 
-## Oval Mask
+### Oval Mask
 
 I hate the "standard oval mask", which was mainly used because it was easy, rather than a good idea for face perception. But if you really want to replicate some stimuli from the 80s...
 
@@ -76,7 +296,7 @@ stimuli %>%
   plot()
 ```
 
-## Subset templates
+### Subset templates
 
 You can subset template points for images delineated with the FRL template using the convenience function `features()`. 
 
@@ -88,7 +308,10 @@ pts_to_delete <- features("cheekbones", "undereyes", "smile_lines")
 internal_features <- subset_tem(full_tem, pts_to_keep)
 no_lines <- subset_tem(full_tem, pts_to_delete, keep = FALSE)
 
-c(full_tem, internal_features, no_lines) %>% draw_tem() %>% plot()
+c(full_tem, internal_features, no_lines) %>% 
+  draw_tem() %>% 
+  crop_tem() %>%
+  plot()
 ```
 
 Here are all of the available named features. The feature "gmm" is the subset of points commonly used for geometric morphometrics, which excludes points that don't have clear anatomical definitions.
@@ -141,9 +364,13 @@ Although I still think the delineated masking is better :)
 
 ```{r mask-oval-better}
 demo_stim("london")[1:10] %>%
-  align(procrustes = TRUE) %>%
+  resize(0.5) %>% # resize to process faster
   mask(fill = "grey") %>%
-  crop_tem(50) %>% #  crop to template boundary and add 50px on each side 
+  # remove external features before procrustes alignment
+  subset_tem(features("gmm")) %>%
+  align(procrustes = TRUE) %>%
+  # crop to template boundary and add 50px on each side 
+  crop_tem(50) %>% 
   plot(nrow = 2)
 ```
 
@@ -152,13 +379,15 @@ demo_stim("london")[1:10] %>%
 You can define a custom mask. The code below is useful for finding the template points you want to outline. It crops around the points, makes the image darker, makes it larger (so the text is higher-resolution), and plots it with the point indices.
 
 ```{r}
-stimuli <- demo_stim("lisa") 
+stimuli <- demo_stim("smiling", pattern = "030") %>%
+  auto_delin("dlib70", replace = TRUE)
 
-stimuli[1] %>% 
+stimuli %>% 
   crop_tem() %>% 
-  image_func("modulate", brightness = 50) %>%
-  resize(4) %>%
-  draw_tem(pt.size = 30, pt.shape = "index", pt.alpha = 1, pt.color = "white") %>%
+  resize(2) %>%
+  draw_tem(pt.size = 35, pt.shape = "circle", pt.alpha = 1, pt.color = "white") %>%
+  draw_tem(pt.size = 20, pt.shape = "index", pt.alpha = 1, pt.color = "black",
+           line.alpha = 0) %>%
   plot()
 ```
 
@@ -167,17 +396,18 @@ Let's say you wanted to mask the right side of the face and the left eye. You se
 ```{r}
 mask <- list(
   right_face = list(
-    18:34, #chin to right temple
-    c(34, 66:63, 71), # right temple to between eyes
-    c(71:74, 80, 89, 99, 103, 18) # midline points
+    10:18, #chin to right temple
+    c(18, 28:24, 29), # right temple to between eyes
+    c(29:32, 35, 53, 64, 68, 59, 10) # midline points
   ),
   left_eye = list(
-    35:39, # top lid
-    c(39:42, 35) # bottom lid
+    38:41, # top lid
+    c(41:43, 38) # bottom lid
   )
 )
 
 mask(stimuli, mask, fill = "hotpink", reverse = TRUE) %>%
+  crop(.6, .6) %>%
   plot()
 
 ```

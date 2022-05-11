@@ -56,6 +56,12 @@ test_that("subset_tem", {
 
 # features ----
 test_that("features", {
+  expect_error(features("all", tem_id = "nope"))
+  
+  expect_null(features())
+})
+
+test_that("frl", {
   stimuli <- demo_stim()[1]
   features <- c("gmm", "oval", "face", "mouth", "nose", "eyes", "brows",
                 "left_eye",  "right_eye", "left_brow",  "right_brow",
@@ -71,3 +77,27 @@ test_that("features", {
   new %>% setnames(features) %>% label() %>% plot()
 })
 
+test_that("dlib70", {
+  stimuli <- demo_stim()[1] %>% auto_delin("dlib70", replace = TRUE)
+  
+  features <- c("face", "mouth", "nose", "eyes", "brows",
+                "left_eye",  "right_eye", "left_brow", "right_brow",
+                "teeth", "gmm")
+  names(features) <- features
+  
+  stimuli %>% subset_tem(features("mouth", tem_id = "dlib70")) %>% draw_tem()
+  
+  new <- lapply(features, function(ft) {
+    stimuli %>% 
+      subset_tem(features(ft, tem_id = "dlib70")) %>% 
+      draw_tem()
+  }) %>% do.call(c, .)
+  
+  skip("needs visual check")
+  new %>% setnames(features) %>% label() %>% plot()
+})
+
+# change_lines ----
+test_that("change_lines", {
+  
+})

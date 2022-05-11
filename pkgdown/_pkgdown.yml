@@ -58,9 +58,10 @@ reference:
   desc: ~
   contents:
   - '`draw_tem`'
+  - '`gglabel`'
+  - '`label`'
   - '`plot_rows`'
   - '`plot_stim`'
-  - '`plot.stimlist`'
 - title: Image Manipulation
   desc: ~
   contents:
@@ -71,7 +72,6 @@ reference:
   - '`greyscale`'
   - '`horiz_eyes`'
   - '`image_func`'
-  - '`label`'
   - '`mask`'
   - '`mask_oval`'
   - '`mirror`'
@@ -86,6 +86,7 @@ reference:
   - '`subset_tem`'
   - '`remove_tem`'
   - '`squash_tem`'
+  - '`change_lines`'
 - title: Metrics/Info
   desc: ~
   contents:
@@ -112,11 +113,16 @@ reference:
 - title: Geomorph functions
   desc: ~
   contents:
+  - '`tem_to_xml`'
   - '`tems_to_array`'
   - '`write_tps`'
 - title: Utilities
   desc: Mainly internally used functions
   contents:
+  - '`[.stimlist`'
+  - '`[[<-.stimlist`'
+  - '`c.stim`'
+  - '`c.stimlist`'
   - '`col2lab`'
   - '`color_conv`'
   - '`format_size`'
@@ -125,7 +131,12 @@ reference:
   - '`list_to_tbl`'
   - '`new_stim`'
   - '`new_stimlist`'
-  - '`OR`'
+  - '`plot.stim`'
+  - '`plot.stimlist`'
+  - '`print.stim`'
+  - '`print.stimlist`'
+  - '`rep.stim`'
+  - '`rep.stimlist`'
   - '`rotated_size`'
   - '`svgBezier`'
   - '`svgControlPoints`'
@@ -135,4 +146,3 @@ reference:
   - '`svgQuadraticTo`'
   - '`unique_names`'
   - '`validate_stimlist`'
-  - '`xget`'

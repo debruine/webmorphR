@@ -7,8 +7,8 @@
 label(
   stimuli,
   text = TRUE,
-  gravity = "northwest",
-  location = "+10+10",
+  gravity = "north",
+  location = "+0+0",
   degrees = 0,
   size = 0.1,
   font = "sans",
@@ -54,11 +54,15 @@ label(
 stimlist with labelled images
 }
 \description{
-This is just a wrapper function for magick::image_annotate that allows more flexibility in color input.
+This is just a wrapper function for \code{magick::\link[magick]{image_annotate}} that allows more flexibility in color input. Setting a font, weight, style only works if your imagemagick is compiled with fontconfig support.
 }
 \examples{
-
-demo_stim("test") \%>\%
-  label(c("CHINWE", "GEORGE"), color = "red") \%>\%
-  plot()
+stimuli <- demo_stim("test")
+labelled_stimuli <- stimuli \%>\%
+  label(text = c("CHINWE", "GEORGE"), 
+        gravity = c("north", "south"),
+        color = "red")
+}
+\seealso{
+\code{\link[=gglabel]{gglabel()}} for a labeller using syntax like \code{ggplot2::\link[ggplot2]{annotate}}
 }

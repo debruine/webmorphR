@@ -37,8 +37,14 @@ mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
 
   # check masks
   if (is.list(mask)) {
-    default_masks <- mask
-    mask <- names(default_masks)
+    if (is.numeric(unlist(mask))) {
+      default_masks <- mask
+      names(default_masks) <- paste0("custom_", seq_along(default_masks))
+      mask <- names(default_masks)
+    } else {
+      default_masks <- mask
+      mask <- names(default_masks)
+    }
   } else if (length(mask) == 1 && grepl("^([0-9]|,|;|:|\\s)+$", mask)) {
     # parse mask
     default_masks <- tryCatch({

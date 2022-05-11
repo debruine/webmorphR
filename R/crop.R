@@ -226,15 +226,24 @@ bounds <- function(stimuli, each = FALSE) {
     rownames(b) <- names(stimuli)
     return(b)
   }
+  
+  min_vals <- lapply(stimuli, `[[`, "points") %>%
+    sapply(apply, 1, min) %>%
+    apply(1, min)
+    
+  max_vals <- lapply(stimuli, `[[`, "points") %>%
+    sapply(apply, 1, max) %>%
+    apply(1, max)
 
-  A <- tems_to_array(stimuli)
-  x <- (A[, "X", ])
-  y <- (A[, "Y", ]) * -1
+  # only work if all tems are the same
+  # A <- tems_to_array(stimuli)
+  # x <- (A[, "X", ])
+  # y <- (A[, "Y", ]) * -1
 
-  list(min_x = min(x),
-       max_x = max(x),
-       min_y = min(y),
-       max_y = max(y))
+  list(min_x = min_vals[["x"]],
+       max_x = max_vals[["x"]],
+       min_y = min_vals[["y"]],
+       max_y = max_vals[["y"]])
 }
 
 

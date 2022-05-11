@@ -19,7 +19,7 @@ NULL
 #' @return LHS if not \code{NULL}, otherwise RHS.
 #' @name OR
 #'
-#' @export
+#' @keywords internal
 #'
 #' @examples
 #' x <- list(b = 2, c = 3)

@@ -70,6 +70,9 @@
     <loc>https://facelab.github.io/webmorph/reference/c.stimlist.html</loc>
   </url>
   <url>
+    <loc>https://facelab.github.io/webmorph/reference/change_lines.html</loc>
+  </url>
+  <url>
     <loc>https://facelab.github.io/webmorph/reference/col2lab.html</loc>
   </url>
   <url>
@@ -104,6 +107,9 @@
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph/reference/get_point.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph/reference/gglabel.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph/reference/greyscale.html</loc>
@@ -257,6 +263,9 @@
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph/reference/tem_def.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph/reference/tem_to_xml.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph/reference/tems_to_array.html</loc>

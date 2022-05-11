@@ -67,7 +67,7 @@
       <a href="articles/manip.html">Image Manipulations</a>
     </li>
     <li>
-      <a href="articles/masking.html">Masking</a>
+      <a href="articles/masking.html">Templates and Masking</a>
     </li>
     <li>
       <a href="articles/figures.html">Making Figures</a>
@@ -101,22 +101,29 @@
       </header><div class="row">
   <div class="contents col-md-9">
 <div class="section level1">
-<div class="page-header"><h1 id="webmorphr-">webmorphR <img src="reference/figures/logo.png" align="right" alt="" width="120"><a class="anchor" aria-label="anchor" href="#webmorphr-"></a>
+<div class="page-header"><h1 id="webmorphr-">webmorphR
+<img src="reference/figures/logo.png" align="right" alt="" width="120"><a class="anchor" aria-label="anchor" href="#webmorphr-"></a>
 </h1></div>
 <!-- rmarkdown v1 -->
 <!-- badges: start -->
 
-<p>The goal of webmorphR is to make the construction of image stimuli more reproducible, with a focus on face stimuli.</p>
-<p>This development of this package was funded by ERC grant #647910 (KINSHIP).</p>
-<p>The sections below provide brief examples of what webmorphR can be used for. See <a href="articles/">articles</a> for more detailed instructions on image manipulations, making figures, and making stimuli.</p>
+<p>The goal of webmorphR is to make the construction of image stimuli
+more reproducible, with a focus on face stimuli.</p>
+<p>This development of this package was funded by ERC grant #647910
+(KINSHIP).</p>
+<p>The sections below provide brief examples of what webmorphR can be
+used for. See <a href="articles/">articles</a> for more detailed
+instructions on image manipulations, making figures, and making
+stimuli.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/remotes/man/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"debruine/webmorphR"</span><span class="op">)</span></code></pre></div>
-<p>Installation can take a few minutes, depending on how many dependency packages you need to install.</p>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"debruine/webmorphR"</span><span class="op">)</span></code></pre></div>
+<p>Installation can take a few minutes, depending on how many dependency
+packages you need to install.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/debruine/webmorphR" class="external-link">webmorphR</a></span><span class="op">)</span>
 <span class="co">#&gt; </span>
@@ -130,11 +137,14 @@
 <div class="section level2">
 <h2 id="averaging-faces">Averaging Faces<a class="anchor" aria-label="anchor" href="#averaging-faces"></a>
 </h2>
-<p>In this example, we’ll load a few faces from the CC-BY licensed <a href="https://doi.org/10.6084/m9.figshare.5047666.v3" class="external-link">Face Research Lab London Set</a>, average them together, and create a figure.</p>
+<p>In this example, we’ll load a few faces from the CC-BY licensed <a href="https://doi.org/10.6084/m9.figshare.5047666.v3" class="external-link">Face Research Lab
+London Set</a>, average them together, and create a figure.</p>
 <div class="section level3">
 <h3 id="load-demo-stimuli">Load demo stimuli<a class="anchor" aria-label="anchor" href="#load-demo-stimuli"></a>
 </h3>
-<p>Load 6 faces. If you haven’t already downloaded the demo stimulus sets, this code will prompt you to download them. The demo sets are large, so this can take a minute or so.</p>
+<p>Load 6 faces. If you haven’t already downloaded the demo stimulus
+sets, this code will prompt you to download them. The demo sets are
+large, so this can take a minute or so.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># remotes::install_github("debruine/stimsets")</span>
 <span class="va">face_set</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"london"</span>, <span class="st">"002|006|007|025|030|066"</span><span class="op">)</span>
@@ -145,8 +155,15 @@
 <div class="section level3">
 <h3 id="average-faces">Average faces<a class="anchor" aria-label="anchor" href="#average-faces"></a>
 </h3>
-<p>These faces already have webmorph templates, so you can make an average. The <code><a href="reference/avg.html">avg()</a></code> function sends the images and templates to the server at webmorph.org, which does the processing and sends back the average, so it can take a few seconds. This also means you need an internet connection for this step.</p>
-<p><strong>Note</strong>: WebMorph was created because of the difficulty of installing desktop PsychoMorph on many computers, which is why this package uses a web-based API for averaging and transforming. You images are deleted from our server immediately after processing.</p>
+<p>These faces already have webmorph templates, so you can make an
+average. The <code><a href="reference/avg.html">avg()</a></code> function sends the images and templates
+to the server at webmorph.org, which does the processing and sends back
+the average, so it can take a few seconds. This also means you need an
+internet connection for this step.</p>
+<p><strong>Note</strong>: WebMorph was created because of the difficulty
+of installing desktop PsychoMorph on many computers, which is why this
+package uses a web-based API for averaging and transforming. You images
+are deleted from our server immediately after processing.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/avg.html">avg</a></span><span class="op">(</span><span class="va">face_set</span><span class="op">)</span>
 
@@ -156,7 +173,10 @@
 <div class="section level3">
 <h3 id="display-figure">Display figure<a class="anchor" aria-label="anchor" href="#display-figure"></a>
 </h3>
-<p>Create a figure showing the individual faces and the average with the template superimposed. See <code><a href="reference/plot_stim.html">plot_stim()</a></code> for an explanation of the arguments to the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function (an alias for plot_stim).</p>
+<p>Create a figure showing the individual faces and the average with the
+template superimposed. See <code><a href="reference/plot_stim.html">plot_stim()</a></code> for an explanation
+of the arguments to the <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function (an alias for
+plot_stim).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot individual faces in a grid the same height as the average face</span>
 <span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">face_set</span>, 
@@ -177,12 +197,24 @@
 <div class="section level2">
 <h2 id="transforming-faces">Transforming Faces<a class="anchor" aria-label="anchor" href="#transforming-faces"></a>
 </h2>
-<p>In this example, we’ll transform the individual images, mask and crop them, and put them together in a single compound figure.</p>
+<p>In this example, we’ll transform the individual images, mask and crop
+them, and put them together in a single compound figure.</p>
 <div class="section level3">
 <h3 id="transform">Transform<a class="anchor" aria-label="anchor" href="#transform"></a>
 </h3>
-<p>First, transform images to make them more average. Transforming manipulates the shape, color, and/or texture of the <code>trans_img</code> by the specified proportion of the different between the <code>from_img</code> and the <code>to_img</code>. In this example, each individual face in <code>face_set</code> is transformed in shape only either by -50% of the difference between that that face an average face, making them more distinctive by exaggerating the non-average features, or by +50%, making them more average.</p>
-<p>Set names for the <code>shape</code>, <code>color</code> or <code>texture</code> argument vector to automatically name the output stimuli. The <code><a href="reference/trans.html">trans()</a></code> function also sends images to webmorph.org, so can take a minute and requires an internet connection.</p>
+<p>First, transform images to make them more average. Transforming
+manipulates the shape, color, and/or texture of the
+<code>trans_img</code> by the specified proportion of the different
+between the <code>from_img</code> and the <code>to_img</code>. In this
+example, each individual face in <code>face_set</code> is transformed in
+shape only either by -50% of the difference between that that face an
+average face, making them more distinctive by exaggerating the
+non-average features, or by +50%, making them more average.</p>
+<p>Set names for the <code>shape</code>, <code>color</code> or
+<code>texture</code> argument vector to automatically name the output
+stimuli. The <code><a href="reference/trans.html">trans()</a></code> function also sends images to
+webmorph.org, so can take a minute and requires an internet
+connection.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dist_avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/trans.html">trans</a></span><span class="op">(</span>trans_img <span class="op">=</span> <span class="va">face_set</span>, 
                   from_img <span class="op">=</span> <span class="va">face_set</span>, 
@@ -211,14 +243,19 @@
 <div class="section level3">
 <h3 id="save-images">Save images<a class="anchor" aria-label="anchor" href="#save-images"></a>
 </h3>
-<p>Save the stimuli into a new directory. This will create a folder in your working directory called “mystimuli” if it doesn’t exist.</p>
+<p>Save the stimuli into a new directory. This will create a folder in
+your working directory called “mystimuli” if it doesn’t exist.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/write_stim.html">write_stim</a></span><span class="op">(</span><span class="va">stimuli</span>, dir <span class="op">=</span> <span class="st">"mystimuli"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="display-figure-1">Display figure<a class="anchor" aria-label="anchor" href="#display-figure-1"></a>
 </h3>
-<p>Easily create figures to illustrate your research. The code below subsets the <code>stimuli</code> to reorder them with average faces first, edits the stimulus names to search and replace a part of the name, adds 120 pixels of black padding to the top of each image, labels them with their name, and plots all images in two rows.</p>
+<p>Easily create figures to illustrate your research. The code below
+subsets the <code>stimuli</code> to reorder them with average faces
+first, edits the stimulus names to search and replace a part of the
+name, adds 120 pixels of black padding to the top of each image, labels
+them with their name, and plots all images in two rows.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"average"</span><span class="op">)</span>,
   <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"distinctive"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
@@ -235,24 +272,47 @@
 <div class="section level2">
 <h2 id="automatic-delineation">Automatic Delineation<a class="anchor" aria-label="anchor" href="#automatic-delineation"></a>
 </h2>
-<p>Read in images with webmorph templates, or automatically delineate images with the python module <a href="https://github.com/ageitgey/face_recognition" class="external-link">face_recognition</a> or the web-based software <a href="https://www.faceplusplus.com/" class="external-link">Face++</a>. Auto-delineation with Face++ is better, but requires a free API key from Face++. You may be prompted to install a Python module using <code>reticulate::py_install("face_recognition")</code>.</p>
+<p>Read in images with webmorph templates, or automatically delineate
+images with the python module <a href="https://github.com/ageitgey/face_recognition" class="external-link">face_recognition</a>
+or the web-based software <a href="https://www.faceplusplus.com/" class="external-link">Face++</a>. Auto-delineation with
+Face++ is better, but requires a free API key from Face++. You may be
+prompted to install a Python module using
+<code>reticulate::py_install("face_recognition")</code>.</p>
 <div class="section level3">
 <h3 id="resize-and-auto-delineate">Resize and auto-delineate<a class="anchor" aria-label="anchor" href="#resize-and-auto-delineate"></a>
 </h3>
-<p>Auto-delineation takes a few seconds per face, so you will see a progress bar in the console. You may also see some startup output from reticulate the first time you use this function.</p>
+<p>Auto-delineation takes a few seconds per face, so you will see a
+progress bar in the console. You may also see some startup output from
+reticulate the first time you use this function. For now, only the
+7-point auto-delineation is available built in. See the <a href="articles/stimuli.html">Making Stimuli vignette</a> for
+instructions on adding the 70-point auto-delineation (it’s ~100MB, which
+is too big to include in an R package).</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"zoom"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/auto_delin.html">auto_delin</a></span><span class="op">(</span>replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="fu"><a href="reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/delin-1.png" title="plot of chunk delin" alt="plot of chunk delin" width="100%"></p>
+<span class="fu"><a href="reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="va">stimuli</span>, pt.size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/delin-dlib7-1.png" title="plot of chunk delin-dlib7" alt="plot of chunk delin-dlib7" width="100%"></p>
+<p>Alternatively, you can use the Face++ auto-delineator by setting
+<code>style = "fpp106"</code>. This requires you to set up a Face++
+account and set some environment variables (see the <a href="articles/stimuli.html">Making Stimuli vignette</a>). It transfers
+your images to Face++, so make sure you read their privacy
+information.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"zoom"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="reference/auto_delin.html">auto_delin</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"fpp106"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
+<span class="fu"><a href="reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="va">stimuli</span>, pt.size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/delin-fpp-1.png" title="plot of chunk delin-fpp" alt="plot of chunk delin-fpp" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="align-and-crop">Align and crop<a class="anchor" aria-label="anchor" href="#align-and-crop"></a>
 </h3>
-<p>Now you can procrustes align the images and crop them all to the same dimensions.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<p>Now you can procrustes align the images and crop them all to the same
+dimensions.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aligned</span> <span class="op">&lt;-</span> <span class="va">stimuli</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/align.html">align</a></span><span class="op">(</span>procrustes <span class="op">=</span> <span class="cn">TRUE</span>, patch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">120</span>, <span class="fl">20</span>, <span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span>
@@ -264,7 +324,7 @@
 <h3 id="pad-and-label">Pad and Label<a class="anchor" aria-label="anchor" href="#pad-and-label"></a>
 </h3>
 <p>Add 50 pixels of image labels.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">labelled</span> <span class="op">&lt;-</span> <span class="va">aligned</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, fill <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="reference/label.html">label</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"15cm"</span>, <span class="st">"30cm"</span>, <span class="st">"45cm"</span>, <span class="st">"60cm"</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>
@@ -275,11 +335,19 @@
 <div class="section level3">
 <h3 id="animate">Animate<a class="anchor" aria-label="anchor" href="#animate"></a>
 </h3>
-<p>Turn your images into an animated gif. Make sure you have the <code>gifski</code> package installed (it doesn’t need to be loaded) to take advantage of faster gif-making algorithms.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<p>Turn your images into an animated gif. Make sure you have the
+<code>gifski</code> package installed (it doesn’t need to be loaded) to
+take advantage of faster gif-making algorithms.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/animate.html">animate</a></span><span class="op">(</span><span class="va">labelled</span>, fps <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/animate-1.gif" title="plot of chunk animate" alt="plot of chunk animate" width="25%"></p>
-<p><strong>Note</strong>: If you get an error message about rgl or dynlib when using <code><a href="reference/align.html">align()</a></code> with <code>procrustes = TRUE</code>, and are using a Mac, you may need to install <a href="https://www.xquartz.org/" class="external-link">XQuartz</a>. You can omit the procrustes argument to default to 2-point alignment, which rotates and resizes all images so the pupils are in the same position (the average of the set, unless you manually specify positions).</p>
+<p><strong>Note</strong>: If you get an error message about rgl or
+dynlib when using <code><a href="reference/align.html">align()</a></code> with
+<code>procrustes = TRUE</code>, and are using a Mac, you may need to
+install <a href="https://www.xquartz.org/" class="external-link">XQuartz</a>. You can omit the
+procrustes argument to default to 2-point alignment, which rotates and
+resizes all images so the pupils are in the same position (the average
+of the set, unless you manually specify positions).</p>
 </div>
 </div>
 </div>
@@ -336,7 +404,8 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.2.</p>
 </div>
 
       </footer>

@@ -1,3 +1,12 @@
+# webmorph 0.0.1.9007
+
+* Custom masks take lists for the `mask` argument now.
+* added `change_lines()` function to update lines in templates.
+* Updated `crop_tem()` to handle stimlists with different tems.
+* Updated `get_point()` to return a long table.
+* Added `gglabel()` for ggplot-style annotations.
+* Updated some vignettes for new functions.
+
 # webmorph 0.0.1.9006
 
 * Added python face detection for `auto_delin()` so there is a local solution
