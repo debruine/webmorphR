@@ -8,17 +8,20 @@ auto_delin(
   stimuli,
   style = c("dlib7", "dlib70", "fpp106", "fpp83"),
   replace = FALSE,
-  face = 1
+  face = 1,
+  dlib_path = NULL
 )
 }
 \arguments{
 \item{stimuli}{list of class stimlist}
 
-\item{style}{Which service and number of landmarks (dlib7, fpp106, fpp83)}
+\item{style}{Which service and number of landmarks (dlib7, dlib70, fpp106, fpp83)}
 
 \item{replace}{if FALSE, only gets templates for images with no template}
 
 \item{face}{which face to delineate in each image if there is more than 1}
+
+\item{dlib_path}{path to a custom dlib.dat landmark file to use (style is ignored if set)}
 }
 \value{
 stimlist with templates

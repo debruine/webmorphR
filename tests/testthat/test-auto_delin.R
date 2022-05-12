@@ -59,11 +59,11 @@ test_that("python", {
   
   stimuli <- demo_stim("test", "f_")
   
-  s3 <- auto_delin(stimuli, "dlib7", TRUE)
-  expect_equal(s3[[1]]$points %>% dim(), c(2, 7))
+  s7 <- auto_delin(stimuli, "dlib7", TRUE)
+  expect_equal(s7[[1]]$points %>% dim(), c(2, 7))
   
-  #s2 <- auto_delin(stimuli, "dlib70", TRUE)
-  #expect_equal(s2[[1]]$points %>% dim(), c(2, 70))
+  #s70 <- auto_delin(stimuli, "dlib70", TRUE)
+  #expect_equal(s70[[1]]$points %>% dim(), c(2, 70))
   
   skip("plot")
   draw_tem(s2)

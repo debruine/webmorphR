@@ -54,7 +54,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -111,8 +111,7 @@
 
     
     
-<p>This vignette will show some recipes for common types of stimulus
-creation.</p>
+<p>This vignette will show some recipes for common types of stimulus creation.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load packages and set maximum plot width</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/debruine/webmorphR" class="external-link">webmorphR</a></span><span class="op">)</span>
@@ -123,18 +122,14 @@ creation.</p>
 <div class="section level3">
 <h3 id="load-demo-images">Load demo images<a class="anchor" aria-label="anchor" href="#load-demo-images"></a>
 </h3>
-<p>Let’s start with a set of images from the demo image sets. You need
-to have the <a href="https://github.com/debruine/stimsets" class="external-link">stimsets</a>
-package installed if you haven’t done that already.</p>
+<p>Let’s start with a set of images from the demo image sets. You need to have the <a href="https://github.com/debruine/stimsets" class="external-link">stimsets</a> package installed if you haven’t done that already.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"debruine/stimsets"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="add-info">Add info<a class="anchor" aria-label="anchor" href="#add-info"></a>
 </h3>
-<p>You can add data to an image set to use in subsetting the images. For
-demonstration, the “london” image set has a data table called
-<code>london_info</code>.</p>
+<p>You can add data to an image set to use in subsetting the images. For demonstration, the “london” image set has a data table called <code>london_info</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">stimsets</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/stimsets/man/london_info.html" class="external-link">london_info</a></span><span class="op">)</span>
 <span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span>
@@ -146,9 +141,7 @@ demonstration, the “london” image set has a data table called
 <span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 004           30 male        white     </span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 005           28 male        east_asian</span>
 <span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 006           31 female      west_asian</span></code></pre></div>
-<p>Use <code><a href="../reference/add_info.html">add_info()</a></code> to add the data. If the data table isn’t
-in the same order as the stimuli, you can match the stimulus item names
-to a data column using <code>.by</code>.</p>
+<p>Use <code><a href="../reference/add_info.html">add_info()</a></code> to add the data. If the data table isn’t in the same order as the stimuli, you can match the stimulus item names to a data column using <code>.by</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"london"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/add_info.html">add_info</a></span><span class="op">(</span><span class="fu">stimsets</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/stimsets/man/london_info.html" class="external-link">london_info</a></span><span class="op">)</span></code></pre></div>
@@ -156,10 +149,7 @@ to a data column using <code>.by</code>.</p>
 <div class="section level3">
 <h3 id="subset">Subset<a class="anchor" aria-label="anchor" href="#subset"></a>
 </h3>
-<p>Select images from your stimuli to make a new image subset. The
-original images are large, and we don’t need the resulting stimuli to be
-that large, so we’ll reduce image size by 50% right at the start to
-reduce processing time.</p>
+<p>Select images from your stimuli to make a new image subset. The original images are large, and we don’t need the resulting stimuli to be that large, so we’ll reduce image size by 50% right at the start to reduce processing time.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">subset</span> <span class="op">&lt;-</span> <span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">face_eth</span> <span class="op">==</span> <span class="st">"black"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -172,12 +162,8 @@ reduce processing time.</p>
 <div class="section level3">
 <h3 id="align">Align<a class="anchor" aria-label="anchor" href="#align"></a>
 </h3>
-<p>Next, align the images using Procrustes normalisation to the position
-of the first image. They need to have templates fitted to do this. The
-argument <code>patch = TRUE</code> tries to match the background colour
-as closely as possible.</p>
-<p>The <code>horiz_eyes</code> function just makes sure that the first
-image has good alignment, since his head is slightly tilted.</p>
+<p>Next, align the images using Procrustes normalisation to the position of the first image. They need to have templates fitted to do this. The argument <code>patch = TRUE</code> tries to match the background colour as closely as possible.</p>
+<p>The <code>horiz_eyes</code> function just makes sure that the first image has good alignment, since his head is slightly tilted.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aligned</span> <span class="op">&lt;-</span> <span class="va">subset</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/horiz_eyes.html">horiz_eyes</a></span><span class="op">(</span>patch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -185,18 +171,12 @@ image has good alignment, since his head is slightly tilted.</p>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">aligned</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="stimuli_files/figure-html/align-1.png" width="100%"></p>
-<p><strong>Note</strong>: If you get an error message about rgl or
-dynlib, and are using a Mac, you may need to install <a href="https://www.xquartz.org/" class="external-link">XQuartz</a>.</p>
+<p><strong>Note</strong>: If you get an error message about rgl or dynlib, and are using a Mac, you may need to install <a href="https://www.xquartz.org/" class="external-link">XQuartz</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="crop">Crop<a class="anchor" aria-label="anchor" href="#crop"></a>
 </h3>
-<p>You may also want to crop the images to a 3x4 aspect ratio by setting
-width to 60% of the image and height to 80%. By default,
-<code><a href="../reference/crop.html">crop()</a></code> will center the cropping, but you can also manually
-set the x and y offsets. Values less than 2.0 are interpreted as
-percentages, while values greater than 2.0 are interpreted as
-pixels.</p>
+<p>You may also want to crop the images to a 3x4 aspect ratio by setting width to 60% of the image and height to 80%. By default, <code><a href="../reference/crop.html">crop()</a></code> will center the cropping, but you can also manually set the x and y offsets. Values less than 2.0 are interpreted as percentages, while values greater than 2.0 are interpreted as pixels.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cropped</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="va">aligned</span>, width <span class="op">=</span> <span class="fl">0.6</span>, height <span class="op">=</span> <span class="fl">0.8</span>, y_off <span class="op">=</span> <span class="fl">.05</span><span class="op">)</span>
 
@@ -206,10 +186,7 @@ pixels.</p>
 <div class="section level3">
 <h3 id="average">Average<a class="anchor" aria-label="anchor" href="#average"></a>
 </h3>
-<p>Now we can make an average version of these faces. This uses the
-morphing functions available on the web app, so you need to have an
-internet connection. It usually takes 1-4 seconds per image to upload
-your images to the server for processing.</p>
+<p>Now we can make an average version of these faces. This uses the morphing functions available on the web app, so you need to have an internet connection. It usually takes 1-4 seconds per image to upload your images to the server for processing.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">avg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/avg.html">avg</a></span><span class="op">(</span><span class="va">cropped</span><span class="op">)</span>
 
@@ -220,9 +197,7 @@ your images to the server for processing.</p>
 <div class="section level3">
 <h3 id="transform">Transform<a class="anchor" aria-label="anchor" href="#transform"></a>
 </h3>
-<p>You can use this average face to transform the individual faces in
-distinctiveness and averageness. Give the shape vector names to set the
-output names automatically.</p>
+<p>You can use this average face to transform the individual faces in distinctiveness and averageness. Give the shape vector names to set the output names automatically.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">transf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trans.html">trans</a></span><span class="op">(</span>trans_img <span class="op">=</span> <span class="va">cropped</span>,
                 from_img <span class="op">=</span> <span class="va">avg</span>,
@@ -241,22 +216,12 @@ output names automatically.</p>
 <div class="section level3">
 <h3 id="save-stimuli">Save stimuli<a class="anchor" aria-label="anchor" href="#save-stimuli"></a>
 </h3>
-<p>Now you can set names and save your individual stimuli in a directory
-to use in studies. The code below will create a directory called
-“stimuli” in your working directory if there isn’t one already. You can
-write to any format that <code><a href="https://docs.ropensci.org/magick/reference/editing.html" class="external-link">magick::image_write()</a></code> handles,
-such as “png”, “jpeg”, or “gif” (the default is “png”).</p>
+<p>Now you can set names and save your individual stimuli in a directory to use in studies. The code below will create a directory called “stimuli” in your working directory if there isn’t one already. You can write to any format that <code><a href="https://docs.ropensci.org/magick/reference/editing.html" class="external-link">magick::image_write()</a></code> handles, such as “png”, “jpeg”, or “gif” (the default is “png”).</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">avg</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/write_stim.html">write_stim</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="st">"stimuli"</span>, 
                    names <span class="op">=</span> <span class="st">"m_avg"</span>, 
                    format <span class="op">=</span> <span class="st">"jpg"</span><span class="op">)</span></code></pre></div>
-<p>Use <code><a href="../reference/setnames.html">setnames()</a></code> to search and replace patterns, add
-prefixes or suffixes, or replace the names with a new vector of names.
-The London images in the <code>stimsets</code> package have “_03”
-appended to designate that they are the neutral front version from the
-<a href="https://figshare.com/articles/dataset/Face_Research_Lab_London_Set/5047666" class="external-link">larger
-set</a>, which also includes smiling images and several different
-viewpoints.</p>
+<p>Use <code><a href="../reference/setnames.html">setnames()</a></code> to search and replace patterns, add prefixes or suffixes, or replace the names with a new vector of names. The London images in the <code>stimsets</code> package have “_03” appended to designate that they are the neutral front version from the <a href="https://figshare.com/articles/dataset/Face_Research_Lab_London_Set/5047666" class="external-link">larger set</a>, which also includes smiling images and several different viewpoints.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cropped</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"_03"</span>, 
@@ -271,8 +236,7 @@ viewpoints.</p>
 <div class="section level3">
 <h3 id="repeat">Repeat<a class="anchor" aria-label="anchor" href="#repeat"></a>
 </h3>
-<p>Now you can pipe all of the commands together and apply them to a new
-set of images, such as all the black women in the set.</p>
+<p>Now you can pipe all of the commands together and apply them to a new set of images, such as all the black women in the set.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># subset, resize, align, and crop</span>
 <span class="va">cropped</span> <span class="op">&lt;-</span> <span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
@@ -320,9 +284,7 @@ set of images, such as all the black women in the set.</p>
 <div class="section level3">
 <h3 id="read-in-images">Read in images<a class="anchor" aria-label="anchor" href="#read-in-images"></a>
 </h3>
-<p>To manipulate sexual dimorphism, you need male and female average
-faces like the ones created above. Load them from the saved files in the
-“stimuli” directory.</p>
+<p>To manipulate sexual dimorphism, you need male and female average faces like the ones created above. Load them from the saved files in the “stimuli” directory.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">avgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_stim.html">read_stim</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"stimuli"</span>, pattern <span class="op">=</span> <span class="st">"(f|m)_avg"</span><span class="op">)</span>
 <span class="va">orig</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_stim.html">read_stim</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"stimuli"</span>, pattern <span class="op">=</span> <span class="st">"orig_"</span><span class="op">)</span></code></pre></div>
@@ -330,9 +292,7 @@ faces like the ones created above. Load them from the saved files in the
 <div class="section level3">
 <h3 id="transform-1">Transform<a class="anchor" aria-label="anchor" href="#transform-1"></a>
 </h3>
-<p>You can then transform them by -50% to feminise and +50% to
-masculinise. Remember to give your shape vector names to set the output
-names automatically.</p>
+<p>You can then transform them by -50% to feminise and +50% to masculinise. Remember to give your shape vector names to set the output names automatically.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sexdim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/trans.html">trans</a></span><span class="op">(</span>trans_img <span class="op">=</span> <span class="va">orig</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,
                 from_img <span class="op">=</span> <span class="va">avgs</span><span class="op">$</span><span class="va">f_avg</span>,
@@ -349,9 +309,7 @@ names automatically.</p>
 <div class="section level3">
 <h3 id="make-a-continuum">Make a continuum<a class="anchor" aria-label="anchor" href="#make-a-continuum"></a>
 </h3>
-<p>Make a continuum that morphs from the female to the male average in
-5% steps. This makes 21 images, so will take a few seconds; be
-patient.</p>
+<p>Make a continuum that morphs from the female to the male average in 5% steps. This makes 21 images, so will take a few seconds; be patient.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">continuum</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/continuum.html">continuum</a></span><span class="op">(</span><span class="va">avgs</span><span class="op">$</span><span class="va">f_avg</span>, <span class="va">avgs</span><span class="op">$</span><span class="va">m_avg</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">.05</span><span class="op">)</span>
 
@@ -361,12 +319,7 @@ patient.</p>
 <div class="section level3">
 <h3 id="animate-1">Animate<a class="anchor" aria-label="anchor" href="#animate-1"></a>
 </h3>
-<p>You can turn your images into an animated gif. Resize the images to
-the size you want first. Save the resulting image as a gif. If you have
-the <code>gifski</code> package installed, this will be used to create
-the animated gif and is faster than the <code>magick</code> algorithm
-(you don’t have to load <code>gifski</code> for it to be used, just
-install it).</p>
+<p>You can turn your images into an animated gif. Resize the images to the size you want first. Save the resulting image as a gif. If you have the <code>gifski</code> package installed, this will be used to create the animated gif and is faster than the <code>magick</code> algorithm (you don’t have to load <code>gifski</code> for it to be used, just install it).</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#install.packages("gifski") # for faster animation</span>
 
@@ -374,17 +327,13 @@ install it).</p>
   <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">180</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/animate.html">animate</a></span><span class="op">(</span>fps <span class="op">=</span> <span class="fl">20</span>, rev <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="stimuli_files/figure-html/animated-gif-1.gif" width="180px"></p>
-<p>When you run this code, even in an R Markdown document, the gif will
-show in the Viewer pane, but it will display in the document when you
-knit.</p>
+<p>When you run this code, even in an R Markdown document, the gif will show in the Viewer pane, but it will display in the document when you knit.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="non-face-stimuli">Non-Face Stimuli<a class="anchor" aria-label="anchor" href="#non-face-stimuli"></a>
 </h2>
-<p>You can also process images without templates. For example, the
-following code takes a group of images and crops them to a standard
-size.</p>
+<p>You can also process images without templates. For example, the following code takes a group of images and crops them to a standard size.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load rainbow images</span>
 <span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"rainbow"</span><span class="op">)</span>
@@ -418,8 +367,7 @@ size.</p>
 <div class="section level2">
 <h2 id="word-stimuli">Word Stimuli<a class="anchor" aria-label="anchor" href="#word-stimuli"></a>
 </h2>
-<p>Create word stimuli by starting with blank images and adding words to
-each stimulus with the <code><a href="../reference/label.html">label()</a></code> function.</p>
+<p>Create word stimuli by starting with blank images and adding words to each stimulus with the <code><a href="../reference/label.html">label()</a></code> function.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make a vector of the words and colours they should print in</span>
 <span class="va">colours</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>red <span class="op">=</span> <span class="st">"red3"</span>, 
@@ -442,8 +390,7 @@ each stimulus with the <code><a href="../reference/label.html">label()</a></code
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">stroop</span>, ncol <span class="op">=</span> <span class="va">n</span>, fill <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span></code></pre></div>
 <p><img src="stimuli_files/figure-html/stroop-words-1.png" width="100%"></p>
-<p>This script took 0.8 minutes to render all the included images from
-scratch.</p>
+<p>This script took 0.7 minutes to render all the included images from scratch.</p>
 </div>
   </div>
 
@@ -464,8 +411,7 @@ scratch.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>

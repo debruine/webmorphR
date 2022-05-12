@@ -2,67 +2,35 @@
 % Please edit documentation in R/label.R
 \name{label}
 \alias{label}
-\title{Add a label}
+\title{Label images}
 \usage{
-label(
-  stimuli,
-  text = TRUE,
-  gravity = "north",
-  location = "+0+0",
-  degrees = 0,
-  size = 0.1,
-  font = "sans",
-  style = "normal",
-  weight = 400,
-  kerning = 0,
-  decoration = NULL,
-  color = "black",
-  strokecolor = NULL,
-  boxcolor = NULL
-)
+label(stimuli, ...)
 }
 \arguments{
 \item{stimuli}{list of class stimlist}
 
-\item{text}{a vector of the label text(s) or TRUE to use stimlist names}
-
-\item{gravity}{string with gravity value from \code{magick::gravity_types}.}
-
-\item{location}{geometry string with location relative to gravity}
-
-\item{degrees}{rotates text around center point}
-
-\item{size}{font size in pixels or proportion of image width (if < 1.0)}
-
-\item{font}{string with font family such as "sans", "mono", "serif", "Times", "Helvetica", "Trebuchet", "Georgia", "Palatino" or "Comic Sans".}
-
-\item{style}{value of style_types for example "italic"}
-
-\item{weight}{thickness of the font, 400 is normal and 700 is bold.}
-
-\item{kerning}{increases or decreases whitespace between letters}
-
-\item{decoration}{value of decoration_types: "LineThrough" "None", "Overline", "Underline"}
-
-\item{color}{a vector of the label colour(s)}
-
-\item{strokecolor}{adds a stroke (border around the text)}
-
-\item{boxcolor}{adds a background color}
+\item{...}{arguments to pass on to \code{mlabel} or \code{gglabel}}
 }
 \value{
-stimlist with labelled images
+
 }
 \description{
-This is just a wrapper function for \code{magick::\link[magick]{image_annotate}} that allows more flexibility in color input. Setting a font, weight, style only works if your imagemagick is compiled with fontconfig support.
+Defaults to \link{mlabel} unless you use arguments specific to \link{gglabel}.
 }
 \examples{
 stimuli <- demo_stim("test")
-labelled_stimuli <- stimuli \%>\%
+m_stimuli <- stimuli |>
   label(text = c("CHINWE", "GEORGE"), 
         gravity = c("north", "south"),
         color = "red")
-}
-\seealso{
-\code{\link[=gglabel]{gglabel()}} for a labeller using syntax like \code{ggplot2::\link[ggplot2]{annotate}}
+        
+gg_stimuli <- stimuli |>
+  label(label = c("CHINWE", "GEORGE"), 
+        x = 0.5, 
+        y = c(1, 0.02),
+        vjust = c(1, 0), 
+        size = 10,
+        color = "red")
+        
+# c(stimuli, gg_stimuli, m_stimuli) |> plot(nrow = 3)
 }

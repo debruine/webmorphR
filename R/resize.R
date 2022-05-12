@@ -60,7 +60,7 @@ resize <- function(stimuli, width = NULL, height = NULL) {
     stimuli[[i]]$width <- round(stimuli[[i]]$width*w)
     stimuli[[i]]$height <- round(stimuli[[i]]$height*h)
 
-    if (class(stimuli[[i]]$img) == "magick-image") {
+    if ("magick-image" %in% class(stimuli[[i]]$img)) {
       # resize image
       stimuli[[i]]$img <- magick::image_resize(
         stimuli[[i]]$img,

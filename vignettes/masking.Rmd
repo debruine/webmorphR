@@ -110,19 +110,80 @@ c(dlib7s, dlib70s, fpp106s, fpp83s) %>%
 
 If your images aren't delineated, you can use the `auto_delin()` function or upload them to [webmorph](webmorph.org) to use the extensive manual delineation functions there and the 189-point FRL template.
 
-The auto-delineation has three options. The default is "dlib7", which is a 7-point template (tip of the nose, corners of the eyes, and their midpoints) and works without access to external services.
+The auto-delineation has three options. 
 
-I'm working on ways to add "dlib70", a 70-point template (68 plus 2 added centre eye points) used by [dlib](https://ibug.doc.ic.ac.uk/resources/facial-point-annotations/). This file is big (~100MB) and it's tricky to include on github or CRAN. Currently, you can add this file (named "dlib70.dat") yourself to the folder at:
+#### dlib
+
+You can use the face recognition algorithms from [dlib](http://dlib.net/) to delineate faces on your computer without transferring them to a third-party service. This requires [reticulate](https://rstudio.github.io/reticulate/), python and the installation of a few packages, and can be tricky. 
+
+Many of my issues were solved by setting up a [virtual environment](https://rstudio.github.io/reticulate/) for webmorph, [installing dlib](https://stackoverflow.com/questions/54719496/how-to-install-dlib-for-python-on-mac), and then setting RETICULATE_PYTHON in my .Revniron using `usethis::edit_r_environ()`.
+
+<!-- what other python installs? pandas, numpy, scipy -->
+
+``` 
+RETICULATE_PYTHON="~/.virtualenvs/webmorph/bin/python"
+```
+
+```{r}
+frl <- demo_stim("test", "m_multi") %>% crop(.8, .8)
+dlib7 <- auto_delin(frl, "dlib7", replace = TRUE)
+dlib70 <- auto_delin(frl, "dlib70", replace = TRUE)
+```
+
+
+```{r, echo = FALSE}
+c(dlib7, dlib70) |> 
+  draw_tem() |> 
+  pad(50) |>
+  label(c("dlib7", "dlib70"), size = 35) |> 
+  plot_stim()
+```
+
+The default is "dlib7", which is a 7-point template (tip of the nose, corners of the eyes, and their midpoints) and works without access to external services. It uses Davis King's [shape_predictor_5_face_landmarks.dat](https://github.com/davisking/dlib-models#shape_predictor_5_face_landmarksdatbz2).
+
+A better (but slower) option is "dlib70", a 70-point template (68 plus 2 added centre eye points) from Davis King's [shape_predictor_68_face_landmarks.dat](https://github.com/davisking/dlib-models#shape_predictor_68_face_landmarksdatbz2). This file is big (~100MB) and it's tricky to include on CRAN, so you can download it from github:
 
 ```{r, eval = FALSE}
-dlib70 <- tempfile()
-download.file("https://github.com/debruine/webmorphR_dlibs/raw/main/dlib70.dat", dlib70)
-python_dir <- system.file("python", package = "webmorphR")
-file.copy(from = dlib70, to = paste0(python_dir, "/dlib70.dat"))
-
-# now you should see dlib70.dat in this list
-list.files(python_dir)
+remotes::install_github("debruine/webmorphR.dlibs")
 ```
+
+You can also use your own landmark file by including it with the argument `dlib_path`. Learn more about [training landmark models](https://pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/) or search for pre-trained models, such as this [81-point model](https://github.com/codeniko/shape_predictor_81_face_landmarks). (I don't think it handles the hairline well, so am working on training my own model using stimuli more typical to face research.)
+
+```{r}
+dlib_custom <- auto_delin(frl, replace = TRUE, 
+                          dlib_path = "../stuff/shape_predictor_81_face_landmarks.dat")
+
+dlib_custom |> draw_tem(pt.shape = "index", pt.size = 18) |> plot()
+```
+
+I added the lines and pupil centres to the existing 5-point and 68-point shape landmark files for webmorphR; you can add your own lines with `change_lines()`. Yes, all of the available landmark files use a bonkers numbering system like this. The lines don't do much for image processing, but do help you to visually assess the accuracy of the delineation.
+
+```{r}
+dlib_custom_lines <- dlib_custom |>
+  change_lines(line_id = "face", pts = c(0:16, 78, 74, 79, 73, 72, 80, 
+                                         71, 70, 69, 68, 76, 75, 77, 0)) |>
+  change_lines(line_id = "left_eyebrow", pts = c(17:21)) |>
+  change_lines(line_id = "right_eyebrow", pts = c(22:26)) |>
+  change_lines(line_id = "top_left_eye", pts = c(36:39)) |>
+  change_lines(line_id = "bottom_left_eye", pts = c(39, 40, 41, 36)) |>
+  change_lines(line_id = "top_right_eye", pts = c(42:45)) |>
+  change_lines(line_id = "bottom_right_eye", pts = c(45, 46, 47, 42)) |>
+  change_lines(line_id = "nose", pts = c(27:30, 33)) |>
+  change_lines(line_id = "under_nose", pts = c(31:35)) |>
+  change_lines(line_id = "outer_upper_lip", pts = c(48:54)) |>
+  change_lines(line_id = "outer_lower_lip", pts = c(54:59, 48)) |>
+  change_lines(line_id = "inner_upper_lip", pts = c(60:64)) |>
+  change_lines(line_id = "inner_lower_lip", pts = c(64:67, 60))
+
+dlib_custom_lines |>
+  draw_tem() |> 
+  plot()
+```
+
+
+
+
+#### Face++
 
 Auto-delineation with web-based software [Face++](https://www.faceplusplus.com/) is better, but requires a free API key from Face++. After signing up for an account, go to https://console.faceplusplus.com/app/apikey/list and request a free API key. Then add the key and secret to your .Renviron file.
 
@@ -133,22 +194,22 @@ FACEPLUSPLUS_KEY="1234567890abcdefghijk"
 FACEPLUSPLUS_SECRET="1234567890abcdefghijk"
 ```
 
-Now you can access the 106-point (fpp106) and 83-point (fpp83) templates. Remember, this uploads your images to the Face++ website.
+Now you can access the 106-point (fpp106) and 83-point (fpp83) templates. Remember, this uploads your images to the Face++ website. 
 
 ```{r auto}
-frl <- demo_stim("test", "f_multi") %>% crop(.8, .8)
-dlib7 <- auto_delin(frl, "dlib7", replace = TRUE)
 fpp83 <- auto_delin(frl, "fpp83", replace = TRUE)
 fpp106 <- auto_delin(frl, "fpp106", replace = TRUE)
+```
 
-# this won't work unless you add dlib70.dat to the python folder
-dlib70 <- auto_delin(frl, "dlib70", replace = TRUE)
-
-c(dlib7, dlib70, fpp83, fpp106) %>%
-  draw_tem(pt.size = 8) %>%
-  label(c("dlib7", "dlib70", "fpp83", "fpp106")) %>%
+```{r, echo = FALSE}
+c(fpp83, fpp106) |> 
+  draw_tem() |> 
+  pad(50) |>
+  label(c("fpp83", "fpp106"), size = 35) |> 
   plot_stim()
 ```
+
+The 83-point template has a confusing structure and is the only template where the first two points aren't the left and right pupil, so I don't recommend using it, but it's available for consistency with the old method used on [webmorh.org](https://webmorph.org).
 
 ### Visualise delineations
 
@@ -287,7 +348,7 @@ s3[[1]] %>%
 
 ### Masking with Templates
 
-If your images are delineated with the FRL template (default in webmorph), you can use the built-in masking features.
+If your images are delineated with the FRL template (the default for example stimuli in webmorph), you can use the built-in masking features.
 
 ```{r}
 # load your stimuli with templates

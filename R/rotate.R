@@ -39,7 +39,7 @@ rotate <- function(stimuli, degrees = 0,
     h <- stimuli[[i]]$height
 
     # rotate image ----
-    if (class(stimuli[[i]]$img) == "magick-image") {
+    if ("magick-image" %in% class(stimuli[[i]]$img)) {
       xm1 <- w/2
       ym1 <- h/2
 

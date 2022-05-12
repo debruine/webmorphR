@@ -1,4 +1,59 @@
-#' Add a label
+
+#' Label images
+#' 
+#' Defaults to [mlabel] unless you use arguments specific to [gglabel].
+#'
+#' @param stimuli list of class stimlist
+#' @param ... arguments to pass on to \code{mlabel} or \code{gglabel}
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' stimuli <- demo_stim("test")
+#' m_stimuli <- stimuli |>
+#'   label(text = c("CHINWE", "GEORGE"), 
+#'         gravity = c("north", "south"),
+#'         color = "red")
+#'         
+#' gg_stimuli <- stimuli |>
+#'   label(label = c("CHINWE", "GEORGE"), 
+#'         x = 0.5, 
+#'         y = c(1, 0.02),
+#'         vjust = c(1, 0), 
+#'         size = 10,
+#'         color = "red")
+#'         
+#' # c(stimuli, gg_stimuli, m_stimuli) |> plot(nrow = 3)
+label <- function(stimuli, ...) {
+  args <- list(...) |> names()
+  
+  # list unique args
+  magick_args <- c("text", "gravity", "location", "degrees", 
+                   "font", "style", "weight", "kerning", 
+                   "decoration", "strokecolor", "boxcolor")
+  
+  gg_args <- c("label", "x", "y", "geom", "hjust", "vjust", 
+              "xintercept", "yintercept", "xmax", "xmin", "ymax", "ymin",
+              "stat", "label.padding", "label.r", "label.size", "alpha",
+              "family", "fontface", "angle")
+  
+  has_magic_args <- any(args %in% magick_args)
+  has_gg_args <- any(args %in% gg_args)
+  
+  if (has_magic_args & has_gg_args) {
+    stop("You're using arguments for both mlabel() and gglabel(). Fix this or use one of those functions.")
+  } else if (has_magic_args) {
+    mlabel(stimuli, ...)
+  } else if (has_gg_args) {
+    gglabel(stimuli, ...)
+  } else { # default to mlabel
+    mlabel(stimuli, ...)
+  }
+}
+
+
+#' Label with magick annotations
 #'
 #' This is just a wrapper function for \code{magick::\link[magick]{image_annotate}} that allows more flexibility in color input. Setting a font, weight, style only works if your imagemagick is compiled with fontconfig support.
 #'
@@ -23,11 +78,11 @@
 #'
 #' @examples
 #' stimuli <- demo_stim("test")
-#' labelled_stimuli <- stimuli %>%
-#'   label(text = c("CHINWE", "GEORGE"), 
+#' labelled_stimuli <- stimuli |>
+#'   mlabel(text = c("CHINWE", "GEORGE"), 
 #'         gravity = c("north", "south"),
 #'         color = "red")
-label <- function(stimuli,
+mlabel <- function(stimuli,
                   text = TRUE,
                   gravity = "north",
                   location = "+0+0",
@@ -169,16 +224,22 @@ gglabel <- function(stimuli, label = TRUE, x = 0.5, y = 0.95, geom = "text", ...
   
   for (i in seq_along(stimuli)) {
     args <- lapply(dots, `[[`, i)
-    
+    info <- magick::image_info(stimuli[[i]]$img)
+    res <- gsub("x.*$", "", info$density) |> as.integer()
     
     # TODO: only suppress warnings that start with "Ignoring unknown"
     suppressWarnings({
-      gg <- stimuli[[i]]$img %>% 
+      gg <- stimuli[[i]]$img |> 
         magick::image_ggplot() +
         do.call(ggplot2::annotate, args)
     })
     
-    img <- magick::image_graph(width = w[i], height = h[i], res = 100)
+    img <- magick::image_graph(width = w[i], 
+                               height = h[i], 
+                               bg = "white",
+                               res = res,
+                               clip = FALSE, # TODO: check if this makes a difference
+                               antialias = TRUE)
     print(gg)
     grDevices::dev.off()
     stimuli[[i]]$img <- img

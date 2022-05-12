@@ -74,7 +74,7 @@ crop <- function(stimuli,
     stimuli[[i]]$height <- h
 
     if (!is.null(stimuli[[i]]$img) &&
-        class(stimuli[[i]]$img) == "magick-image") {
+        "magick-image" %in% class(stimuli[[i]]$img)) {
       # crop doesn't handle negative offsets well
       ga <- magick::geometry_area(
         width = min(w, origw),

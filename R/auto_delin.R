@@ -9,9 +9,10 @@
 #' FACEPLUSPLUS_SECRET="1234567890abcdefghijk"
 #'
 #' @param stimuli list of class stimlist
-#' @param style Which service and number of landmarks (dlib7, fpp106, fpp83)
+#' @param style Which service and number of landmarks (dlib7, dlib70, fpp106, fpp83)
 #' @param replace if FALSE, only gets templates for images with no template
 #' @param face which face to delineate in each image if there is more than 1
+#' @param dlib_path path to a custom dlib.dat landmark file to use (style is ignored if set)
 #'
 #' @return stimlist with templates
 #' @export
@@ -28,13 +29,17 @@
 #'
 #'   c(auto_high, auto_low) %>% draw_tem() %>% plot()
 #' }
-auto_delin <- function(stimuli, style = c("dlib7", "dlib70", "fpp106", "fpp83"), replace = FALSE, face = 1) {
+auto_delin <- function(stimuli, 
+                       style = c("dlib7", "dlib70", "fpp106", "fpp83"), 
+                       replace = FALSE, 
+                       face = 1,
+                       dlib_path = NULL) {
   stimuli <- validate_stimlist(stimuli)
   style <- match.arg(style)
 
+  # find out which stimuli need tems ----
   if (isTRUE(replace)) stimuli <- remove_tem(stimuli)
-
-  # find out which stimuli need tems
+  
   notems <- sapply(stimuli, `[[`, "points") %>% sapply(is.null)
 
   if (all(notems == FALSE)) {
@@ -42,9 +47,44 @@ auto_delin <- function(stimuli, style = c("dlib7", "dlib70", "fpp106", "fpp83"),
     return(stimuli)
   }
   
-  # check for rquired things
-  if (style %in% c("fpp106", "fpp83")) {
-    ## face++ version
+  # check for required things ----
+  if (style %in% c("frl", "dlib70", "dlib7") ||
+      !is.null(dlib_path)) {
+    ## load/check python stuff ----
+    if (!reticulate::py_available(TRUE)) {
+      stop("You need to install Python to use the dlib templates")
+    }
+    
+    # load script
+    pyscript <- system.file("python/facedetect.py", package = "webmorphR")
+    
+    if (!is.null(dlib_path)) {
+      pred_file <- normalizePath(dlib_path)
+    } else {
+      # get pred_file location from webmorphR or webmorphR.dlibs
+      pred_file <- paste0("python/", style, ".dat") %>%
+        system.file(package = "webmorphR")
+      if (pred_file == "") {
+        # check the webmorphR.dlibs package
+        if (requireNamespace("webmorphR.dlibs", quietly = TRUE)) {
+          pred_file <- paste0("python/", style, ".dat") %>%
+            system.file(package = "webmorphR.dlibs")
+        } else {
+          stop("The landmark file for ", style, " could not be found.\n",
+               "Install the package webmorphR.dlibs ",
+               "to access more landmark files\n\n",
+               "remotes::install_github(\"debruine/webmorphR.dlibs\")")
+        }
+      }
+    }
+    
+    if (pred_file == "" || !file.exists(pred_file)) {
+      stop("The landmark file could not be found at ", pred_file)
+    }
+    
+    reticulate::source_python(pyscript)
+  } else if (style %in% c("fpp106", "fpp83")) {
+    ## face++ version ----
     url <- "https://api-us.faceplusplus.com/facepp/v3/detect"
     key <- Sys.getenv("FACEPLUSPLUS_KEY")
     secret <- Sys.getenv("FACEPLUSPLUS_SECRET")
@@ -58,25 +98,12 @@ auto_delin <- function(stimuli, style = c("dlib7", "dlib70", "fpp106", "fpp83"),
       'return_landmark' = ifelse(style == "fpp106", 2, 1),
       'image_file' = NULL
     )
-  } else if (style %in% c("frl", "dlib70", "dlib7")) {
-    if (!reticulate::py_available(TRUE)) {
-      stop("You need to install Python to use the dlib templates")
-    }
-    
-    # load script
-    pyscript <- system.file("python/facedetect.py", package = "webmorphR")
-    pred_file <- paste0("python/", style, ".dat") %>%
-      system.file(package = "webmorphR")
-    if (pred_file == "") {
-      stop("The dlib file could not be found")
-    }
-    
-    reticulate::source_python(pyscript)
   }
 
-  # get line definitions
+  # get line definitions 
   fpp <- tem_def(style)
   
+  # save images to temp file ----
   tempdir <- tempfile()
   paths <- stimuli %>%
     remove_tem() %>%
@@ -96,7 +123,22 @@ auto_delin <- function(stimuli, style = c("dlib7", "dlib70", "fpp106", "fpp83"),
     pb$tick(0)
   }
   
-  if (style == "frl") {
+  if (!is.null(dlib_path)) {
+    # custom dlib template ----
+    for (i in seq_along(stimuli)) {
+      pts <- py_get_points(paths[i], pred_file) %>%
+        unlist() %>%
+        matrix(nrow = 2, dimnames = list(c("x", "y"), c()))
+      
+      stimuli[[i]]$points <- pts
+      
+      # delete lines
+      stimuli[[i]]$lines <- NULL
+      stimuli[[i]]$closed <- NULL
+      
+      if (wm_opts("verbose")) pb$tick()
+    }
+  } else if (style == "frl") {
     for (i in seq_along(stimuli)) {
       pts <- py_get_points(paths[i], pred_file) %>%
         unlist() %>%
@@ -111,6 +153,7 @@ auto_delin <- function(stimuli, style = c("dlib7", "dlib70", "fpp106", "fpp83"),
       if (wm_opts("verbose")) pb$tick()
     }
   } else if (style %in% c("dlib70", "dlib7")) {
+    ## internal dlib ----
     for (i in seq_along(stimuli)) {
       pts <- py_get_points(paths[i], pred_file) %>%
         unlist() %>%
@@ -141,6 +184,7 @@ auto_delin <- function(stimuli, style = c("dlib7", "dlib70", "fpp106", "fpp83"),
       if (wm_opts("verbose")) pb$tick()
     }
   } else {
+    ## Face++ model ----
     for (i in seq_along(stimuli)) {
       imgname <- names(stimuli)[[i]]
       data$image_file <- paste0(imgname, ".jpg") %>%
