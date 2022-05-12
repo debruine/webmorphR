@@ -20,9 +20,10 @@ list or vector item
 If a user gives you a named vector or list and there are a few possibilities for the item you want to get, list the possible names in order, using integers for indices.
 }
 \examples{
+\dontrun{
 x <- c(h = 100, w = 200)
-
 width <- xget(x, "width", "w", 1)
 height <- xget(x, "height", "h", 2)
+}
 }
 \keyword{internal}

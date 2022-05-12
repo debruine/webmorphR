@@ -82,6 +82,9 @@
     <loc>https://facelab.github.io/webmorph/reference/continuum.html</loc>
   </url>
   <url>
+    <loc>https://facelab.github.io/webmorph/reference/convert_tem.html</loc>
+  </url>
+  <url>
     <loc>https://facelab.github.io/webmorph/reference/crop.html</loc>
   </url>
   <url>
@@ -197,6 +200,9 @@
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph/reference/read_stim.html</loc>
+  </url>
+  <url>
+    <loc>https://facelab.github.io/webmorph/reference/readline_check.html</loc>
   </url>
   <url>
     <loc>https://facelab.github.io/webmorph/reference/remove_tem.html</loc>

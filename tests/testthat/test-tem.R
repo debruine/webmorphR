@@ -19,7 +19,7 @@ test_that("tem_def", {
   expect_equal(fpp106$delin_pts, c(0, 1, 95))
 
   # from file
-  file <- system.file("extdata/tem_defs/FRL.csv", package = "webmorphR")
+  file <- system.file("extdata/tem_defs/frl.json", package = "webmorphR")
   frl2 <- tem_def(path = file)
   expect_equal(names(frl2), def_parts)
   expect_equal(frl2$delin_pts, c(0, 1, 96))
@@ -78,20 +78,26 @@ test_that("frl", {
 })
 
 test_that("dlib70", {
-  stimuli <- demo_stim()[1] %>% auto_delin("dlib70", replace = TRUE)
+  stimuli <- demo_stim("tem_examples", "dlib70")
   
   features <- c("face", "mouth", "nose", "eyes", "brows",
                 "left_eye",  "right_eye", "left_brow", "right_brow",
                 "teeth", "gmm")
   names(features) <- features
   
-  stimuli %>% subset_tem(features("mouth", tem_id = "dlib70")) %>% draw_tem()
+  mouth_pts <- features("mouth", tem_id = "dlib70")
   
-  new <- lapply(features, function(ft) {
-    stimuli %>% 
-      subset_tem(features(ft, tem_id = "dlib70")) %>% 
-      draw_tem()
-  }) %>% do.call(c, .)
+  mouth <- stimuli %>% subset_tem(mouth_pts)
+  expect_equal(mouth[[1]]$points, 
+               stimuli[[1]]$points[, mouth_pts+1])
+  
+  expect_silent(
+    new <- lapply(features, function(ft) {
+      stimuli %>% 
+        subset_tem(features(ft, tem_id = "dlib70")) %>% 
+        draw_tem()
+    }) %>% do.call(c, .)
+  )
   
   skip("needs visual check")
   new %>% setnames(features) %>% label() %>% plot()

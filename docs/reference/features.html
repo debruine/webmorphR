@@ -75,7 +75,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">features</span><span class="op">(</span><span class="va">...</span>, tem_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"FRL"</span>, <span class="st">"dlib70"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">features</span><span class="op">(</span><span class="va">...</span>, tem_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"frl"</span>, <span class="st">"dlib70"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -83,15 +83,16 @@
     <dl><dt>...</dt>
 <dd><p>a vector of feature names (see Details)</p></dd>
 <dt>tem_id</dt>
-<dd><p>template ID (currently only works for FRL)</p></dd>
+<dd><p>template ID (currently only works for frl and dlib70)</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>vector of corresponding FRL template indices</p>
+    <p>vector of corresponding template indices</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Available features for the FRL template are: "gmm", "oval", "face", "mouth", "nose", "eyes", "brows", "left_eye",  "right_eye", "left_brow",  "right_brow", "ears", "undereyes", "teeth", "smile_lines", "cheekbones", "philtrum", "chin", "neck", "halo".</p>
+    <p>Available features for the frl template are: "gmm", "oval", "face", "mouth", "nose", "eyes", "brows", "left_eye", "right_eye", "left_brow",  "right_brow", "ears", "undereyes", "teeth", "smile_lines", "cheekbones", "philtrum", "chin", "neck", "halo".</p>
+<p>Available features for the dlib70 template are: "teeth", "left_eye", "right_eye", "left_brow", "right_brow", "nose", "mouth", "face".</p>
     </div>
 
     <div id="ref-examples">
@@ -108,6 +109,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [91]  96  97  98  99 100 101 102 103 104 105 106 107 108 109 110 111 112 113</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [109] 114 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [127] 142 143 144 170 172 179 180 181 182 185 186 187 188</span>
+<span class="r-in"><span class="fu">features</span><span class="op">(</span><span class="st">"nose"</span>, tem_id <span class="op">=</span> <span class="st">"dlib70"</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 29 30 31 32 33 34 35 36 37</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

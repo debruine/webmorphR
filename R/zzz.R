@@ -2,6 +2,7 @@
   ## set default options for wm_opts:
   op <- options()
   op.webmorph <- list(
+    webmorph.connection = stdin(),
     webmorph.verbose = TRUE,
     webmorph.line.color = "blue",
     webmorph.pt.color = "green",

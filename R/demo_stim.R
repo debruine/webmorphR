@@ -12,11 +12,11 @@
 #' @examples
 #' demo_stim() %>% plot()
 #'
-demo_stim <- function(dir = c("test", "composite", "london", "smiling", "lisa", "zoom", "rainbow"),
+demo_stim <- function(dir = c("test", "tem_examples", "composite", "london", "smiling", "lisa", "zoom", "rainbow"),
                      pattern = NULL, ...) {
   dir <- match.arg(dir)
   
-  if (dir == "test") { # included in webmorphR
+  if (dir %in% c("test", "tem_examples")) { # included in webmorphR
     path <- system.file(file.path("extdata", dir), package = "webmorphR")
   } else if (requireNamespace("stimsets", quietly = TRUE)) {
     path <- system.file(file.path(dir), package = "stimsets")

@@ -4,7 +4,15 @@
 \alias{write_stim}
 \title{Write tems and images to files}
 \usage{
-write_stim(stimuli, dir = ".", names = NULL, format = "png", ...)
+write_stim(
+  stimuli,
+  dir = ".",
+  names = NULL,
+  format = "png",
+  ...,
+  ask = interactive(),
+  overwrite = !ask
+)
 }
 \arguments{
 \item{stimuli}{list of class stimlist}
@@ -16,6 +24,10 @@ write_stim(stimuli, dir = ".", names = NULL, format = "png", ...)
 \item{format}{output format such as "png", "jpeg", "gif"}
 
 \item{...}{other arguments to pass to magick::image_write}
+
+\item{ask}{ask if you want to overwrite existing files}
+
+\item{overwrite}{whether to overwrite existing files}
 }
 \value{
 list of saved paths

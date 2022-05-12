@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+.Renviron
 paper/index.html
 paper/index_cache
 paper/index_files

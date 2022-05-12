@@ -119,7 +119,7 @@ knit.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/debruine/webmorphR" class="external-link">webmorphR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
-<span class="fu"><a href="../reference/wm_opts.html">wm_opts</a></span><span class="op">(</span>plot.maxwidth <span class="op">=</span> <span class="fl">850</span><span class="op">*</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/wm_opts.html">wm_opts</a></span><span class="op">(</span>plot.maxwidth <span class="op">=</span> <span class="fl">850</span><span class="op">)</span></code></pre></div>
 <div class="section level2">
 <h2 id="load-stimuli">Load stimuli<a class="anchor" aria-label="anchor" href="#load-stimuli"></a>
 </h2>
@@ -276,7 +276,12 @@ truncated and short vectors will be recycled.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
   <span class="fu"><a href="../reference/gglabel.html">gglabel</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Warning in if (class(stimuli[[i]]$img) == "magick-image") {: the condition has</span>
+<span class="co">#&gt; length &gt; 1 and only the first element will be used</span>
+
+<span class="co">#&gt; Warning in if (class(stimuli[[i]]$img) == "magick-image") {: the condition has</span>
+<span class="co">#&gt; length &gt; 1 and only the first element will be used</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-9-1.png" width="100%"></p>
 <p>Use the <code><a href="../reference/setnames.html">setnames()</a></code> function to set new names.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -332,7 +337,12 @@ ggplot <code>size</code> argument; I just use trial-and-error.</p>
     size <span class="op">=</span> <span class="fl">10</span>, 
     fontface <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plain"</span>, <span class="st">"italic"</span><span class="op">)</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Warning in if (class(stimuli[[i]]$img) == "magick-image") {: the condition has</span>
+<span class="co">#&gt; length &gt; 1 and only the first element will be used</span>
+
+<span class="co">#&gt; Warning in if (class(stimuli[[i]]$img) == "magick-image") {: the condition has</span>
+<span class="co">#&gt; length &gt; 1 and only the first element will be used</span></code></pre></div>
 <p><img src="figures_files/figure-html/custom-labels-gglabel-1.png" width="100%"></p>
 <p>You can customise the labels further, including vectors with a
 different value for each image. Vectors that are too long will be
@@ -399,7 +409,12 @@ watermarked images.</p>
     angle <span class="op">=</span> <span class="op">-</span><span class="fl">30</span>,
     alpha <span class="op">=</span> <span class="fl">0.25</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Warning in if (class(stimuli[[i]]$img) == "magick-image") {: the condition has</span>
+<span class="co">#&gt; length &gt; 1 and only the first element will be used</span>
+
+<span class="co">#&gt; Warning in if (class(stimuli[[i]]$img) == "magick-image") {: the condition has</span>
+<span class="co">#&gt; length &gt; 1 and only the first element will be used</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-12-1.png" width="100%"></p>
 </div>
 <div class="section level3">
@@ -436,7 +451,12 @@ and “label” geoms, you can use it for other ggplot geoms.</p>
     yintercept <span class="op">=</span> <span class="va">intercepts</span><span class="op">$</span><span class="va">y</span>,
     color <span class="op">=</span> <span class="st">"purple"</span>, size <span class="op">=</span> <span class="fl">2</span>
   <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Warning in if (class(stimuli[[i]]$img) == "magick-image") {: the condition has</span>
+<span class="co">#&gt; length &gt; 1 and only the first element will be used</span>
+
+<span class="co">#&gt; Warning in if (class(stimuli[[i]]$img) == "magick-image") {: the condition has</span>
+<span class="co">#&gt; length &gt; 1 and only the first element will be used</span></code></pre></div>
 <p><img src="figures_files/figure-html/unnamed-chunk-14-1.png" width="100%"></p>
 <p>This script took 0.7 minutes to render all the included images from
 scratch.</p>

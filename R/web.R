@@ -394,7 +394,7 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
 #'   sym_color <- symmetrize(stimuli, shape = 0)
 #'   sym_anti <- symmetrize(stimuli, shape = -1.0, color = 0)
 #' }
-symmetrize <- function(stimuli, shape = 1.0, color = 1.0, tem_id = "FRL", ...) {
+symmetrize <- function(stimuli, shape = 1.0, color = 1.0, tem_id = "frl", ...) {
   stimuli <- validate_stimlist(stimuli, TRUE)
 
   mirror <- mirror(stimuli, tem_id) %>%

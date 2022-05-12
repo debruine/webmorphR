@@ -180,7 +180,7 @@ gglabel <- function(stimuli, label = TRUE, x = 0.5, y = 0.95, geom = "text", ...
     
     img <- magick::image_graph(width = w[i], height = h[i], res = 100)
     print(gg)
-    dev.off()
+    grDevices::dev.off()
     stimuli[[i]]$img <- img
   }
   

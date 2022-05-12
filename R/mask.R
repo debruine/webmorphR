@@ -17,7 +17,7 @@
 #' @param fill color to make the mask
 #' @param reverse if TRUE, the mask covers the listed areas
 #' @param expand how many pixels to expand the mask
-#' @param tem_id template ID to pass on to \code{tem_def} to get built-in mask definitions, usually one of "FRL", "fpp106" or "fpp83"
+#' @param tem_id template ID to pass on to \code{tem_def} to get built-in mask definitions, usually one of "frl", "fpp106" or "fpp83"
 #'
 #' @return stimlist with masked images
 #' @export
@@ -32,7 +32,7 @@
 #'   mask("mouth", "blue", TRUE)
 #'
 mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
-                 reverse = FALSE, expand = 1, tem_id = "FRL") {
+                 reverse = FALSE, expand = 1, tem_id = "frl") {
   stimuli <- validate_stimlist(stimuli, TRUE)
 
   # check masks

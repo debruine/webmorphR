@@ -10,7 +10,7 @@ mask(
   fill = wm_opts("fill"),
   reverse = FALSE,
   expand = 1,
-  tem_id = "FRL"
+  tem_id = "frl"
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ mask(
 
 \item{expand}{how many pixels to expand the mask}
 
-\item{tem_id}{template ID to pass on to \code{tem_def} to get built-in mask definitions, usually one of "FRL", "fpp106" or "fpp83"}
+\item{tem_id}{template ID to pass on to \code{tem_def} to get built-in mask definitions, usually one of "frl", "fpp106" or "fpp83"}
 }
 \value{
 stimlist with masked images

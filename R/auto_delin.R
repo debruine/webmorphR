@@ -80,8 +80,9 @@ auto_delin <- function(stimuli, style = c("dlib7", "dlib70", "fpp106", "fpp83"),
   tempdir <- tempfile()
   paths <- stimuli %>%
     remove_tem() %>%
-    write_stim(tempdir, format = "jpg") %>%
-    unlist()
+    write_stim(tempdir, format = "jpg", ask = FALSE, overwrite = TRUE) %>%
+    unlist() %>%
+    setdiff(FALSE) # remove FALSE for unsaved tems
 
   face <- rep(face, length.out = length(stimuli))
 
@@ -97,7 +98,7 @@ auto_delin <- function(stimuli, style = c("dlib7", "dlib70", "fpp106", "fpp83"),
   
   if (style == "frl") {
     for (i in seq_along(stimuli)) {
-      pts <- get_points(paths[i], pred_file) %>%
+      pts <- py_get_points(paths[i], pred_file) %>%
         unlist() %>%
         matrix(nrow = 2, dimnames = list(c("x", "y"), fpp$points$name))
       
@@ -111,7 +112,7 @@ auto_delin <- function(stimuli, style = c("dlib7", "dlib70", "fpp106", "fpp83"),
     }
   } else if (style %in% c("dlib70", "dlib7")) {
     for (i in seq_along(stimuli)) {
-      pts <- get_points(paths[i], pred_file) %>%
+      pts <- py_get_points(paths[i], pred_file) %>%
         unlist() %>%
         matrix(nrow = 2, dimnames = list(c("x", "y"), c()))
       

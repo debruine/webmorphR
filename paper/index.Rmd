@@ -260,7 +260,7 @@ The function `tem_def()` retrieves a template definition that includes point nam
 
 ```{r tem-def}
 # get all information about a standard template
-FRL <- tem_def("FRL")
+FRL <- tem_def("frl")
 
 FRL$points[1:10, 1:5] %>% 
   kableExtra::kable(caption = "The first 10 landmark points of WebMorph's default \"FRL\" template.") %>%

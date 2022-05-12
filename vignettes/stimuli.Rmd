@@ -23,50 +23,6 @@ wm_opts(plot.maxwidth = 850)
 ```
 
 
-## Automatic Delineation
-
-If your images aren't delineated, you can use the `auto_delin()` function or upload them to [webmorph](webmorph.org) to use the extensive manual delineation functions there and the 189-point FRL template.
-
-The auto-delineation has three options. The default is "dlib7", which is a 7-point template (tip of the nose, corners of the eyes, and their midpoints) and works without access to external services.
-
-I'm working on ways to add "dlib70", a 70-point template (68 plus 2 added centre eye points) used by [dlib](https://ibug.doc.ic.ac.uk/resources/facial-point-annotations/). This file is big (~100MB) and it's tricky to include on github or CRAN. Currently, you can add this file (named "dlib70.dat") yourself to the folder at:
-
-```{r, eval = FALSE}
-dlib70 <- tempfile()
-download.file("https://github.com/debruine/webmorphR_dlibs/raw/main/dlib70.dat", dlib70)
-python_dir <- system.file("python", package = "webmorphR")
-file.copy(from = dlib70, to = paste0(python_dir, "/dlib70.dat"))
-
-# now you should see dlib70.dat in this list
-list.files(python_dir)
-```
-
-Auto-delineation with web-based software [Face++](https://www.faceplusplus.com/) is better, but requires a free API key from Face++. After signing up for an account, go to https://console.faceplusplus.com/app/apikey/list and request a free API key. Then add the key and secret to your .Renviron file.
-
-The function `usethis::edit_r_environ()` will open up your .Renviron file (you may need to install `usethis`). Append the following two lines to it, replacing "1234567890abcdefghijk" with your personal key and secret. Then you can save and close the file and restart R to load these into your environment.
-
-```
-FACEPLUSPLUS_KEY="1234567890abcdefghijk"  
-FACEPLUSPLUS_SECRET="1234567890abcdefghijk"
-```
-
-Now you can access the 106-point (fpp106) and 83-point (fpp83) templates. Remember, this uploads your images to the Face++ website.
-
-```{r auto}
-frl <- demo_stim("test", "f_multi") %>% crop(.8, .8)
-dlib7 <- auto_delin(frl, "dlib7", replace = TRUE)
-fpp83 <- auto_delin(frl, "fpp83", replace = TRUE)
-fpp106 <- auto_delin(frl, "fpp106", replace = TRUE)
-
-# this won't work unless you add dlib70.dat to the python folder
-dlib70 <- auto_delin(frl, "dlib70", replace = TRUE)
-
-c(dlib7, dlib70, fpp83, fpp106) %>%
-  draw_tem(pt.size = 8) %>%
-  label(c("dlib7", "dlib70", "fpp83", "fpp106")) %>%
-  plot_stim()
-```
-
 ## Averageness
 
 ### Load demo images
@@ -302,8 +258,8 @@ info <- system.file("rainbow/_info.csv", package = "stimsets") %>%
   dplyr::arrange(type, colour)
 
 # crop to smallest size
-width <- width(stimuli) %>% min()
-height <- height(stimuli) %>% min()
+width <- width(stimuli, "min")
+height <- height(stimuli, "min")
 stim <- crop(stimuli, width, height) %>%
   `[`(info$photo_name) # reorder by type and colour
 

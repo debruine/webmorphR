@@ -4,7 +4,7 @@
 \alias{symmetrize}
 \title{Symmetrise Images}
 \usage{
-symmetrize(stimuli, shape = 1, color = 1, tem_id = "FRL", ...)
+symmetrize(stimuli, shape = 1, color = 1, tem_id = "frl", ...)
 }
 \arguments{
 \item{stimuli}{images to symmatrise (list of class stimlist)}

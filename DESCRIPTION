@@ -1,6 +1,6 @@
 Package: webmorphR
 Title: Reproducible Stimuli
-Date: 2022-05-11
+Date: 2022-05-12
 Version: 0.0.1.9007
 Authors@R: 
     c(person(
@@ -32,6 +32,7 @@ Imports:
     magrittr,
     dplyr,
     tidyr,
+    ggplot2,
     knitr,
     magick,
     gifski,

@@ -6,6 +6,7 @@
 * Updated `get_point()` to return a long table.
 * Added `gglabel()` for ggplot-style annotations.
 * Updated some vignettes for new functions.
+* Changed how template definitions are stored
 
 # webmorph 0.0.1.9006
 

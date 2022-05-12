@@ -223,11 +223,12 @@ message <- function(...) {
 #' @return list or vector item
 #' @keywords internal
 #'
-#' @examples
+#' @examples 
+#' \dontrun{
 #' x <- c(h = 100, w = 200)
-#'
 #' width <- xget(x, "width", "w", 1)
 #' height <- xget(x, "height", "h", 2)
+#' }
 xget <- function(x, ..., .default = NULL) {
   list(...) %>%           # get possible names
     lapply(function(y) {  # retrieve from x

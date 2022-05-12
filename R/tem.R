@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-#' frl <- tem_def("FRL")
+#' frl <- tem_def("frl")
 #' frl$points[1:10, ]
 #'
 #' fpp106 <- tem_def("fpp106")
@@ -18,7 +18,7 @@
 #' fpp83 <- tem_def("fpp83")
 #' fpp83$mask %>% str()
 #'
-tem_def <- function(tem_id = "FRL", path = NULL) {
+tem_def <- function(tem_id = "frl", path = NULL) {
 
   # read file or url ----
   if (!is.null(path)) {
@@ -26,80 +26,38 @@ tem_def <- function(tem_id = "FRL", path = NULL) {
       stop(sprintf("The file at %s does not exist", path))
     }
     tem_def <- tryCatch({
-      readLines(path)
+      jsonlite::read_json(path, simplifyVector = TRUE,
+                          simplifyMatrix = FALSE)
     }, error = function(e) {
       stop("The file couldn't be read")
     })
   } else if (is.numeric(tem_id)) {
-    url <- sprintf("https://webmorph.org/scripts/temDownload?tem_id=%d",
+    url <- sprintf("https://webmorph.org/scripts/temDownloadJSON?tem_id=%d",
                    tem_id)
     tem_def <- tryCatch({
-      readLines(url)
+      jsonlite::read_json(url, simplifyVector = TRUE,
+                          simplifyMatrix = FALSE)
     }, error = function(e) {
       stop("You might not have an internet connection")
     })
   } else if (is.character(tem_id)) {
     temdir <- system.file("extdata/tem_defs", package = "webmorphR")
-    temdefs <- list.files(temdir, full.names = TRUE)
-    match <- grepl(tolower(tem_id), tolower(temdefs), fixed = TRUE)
+    temdefs <- list.files(temdir, "\\.json$", full.names = TRUE)
+    match <- grepl(tolower(tem_id), 
+                   tolower(temdefs), 
+                   fixed = TRUE)
     if (all(match == FALSE)) {
       stop(tem_id, " is not a built-in template")
     }
 
-    tem_def <- readLines(temdefs[match][[1]])
+    tem_def <- jsonlite::read_json(temdefs[match][[1]],
+                                   simplifyVector = TRUE,
+                                   simplifyMatrix = FALSE)
   } else {
     stop("You must supply a numeric tem_id or a valid path to a template definition file.")
   }
 
-  # parse text ----
-  infotable <- utils::read.csv(text = tem_def[1:8],
-                        header = FALSE,
-                        row.names = 1) %>%
-    t() %>% as.data.frame()
-  tem <- list()
-  for (i in 1:8) {
-    tem[i] <- strsplit(infotable[ , i], ";") %>%
-      utils::type.convert(as.is = TRUE)
-  }
-  names(tem) <- colnames(infotable)
-
-  # get points (required)
-  ptstart <- grepl("n\\s*,\\s*name\\s*,\\s*x\\s*,\\s*y\\s*,\\s*sym\\s*", tem_def) %>% which()
-  if (length(ptstart) == 0) {
-    stop("No points were found in the template definition")
-  }
-  ptrange <- ptstart:(ptstart+tem$points)
-  tem$points <- utils::read.csv(text = tem_def[ptrange])
-
-  # get lines (optional)
-  lnstart <- grepl("n\\s*,\\s*linetype\\s*,\\s*color\\s*,\\s*points\\s*", tem_def) %>% which()
-  if (length(lnstart) == 1) {
-    linerange <- lnstart:(lnstart+tem$lines)
-    lines <- utils::read.csv(text = tem_def[linerange]) %>%
-      dplyr::arrange(.data$n) # probably already in order, but make sure
-    tem$lines <- sapply(lines$points, strsplit, ",", USE.NAMES = FALSE) %>%
-      lapply(as.integer)
-    tem$closed <- lines$linetype == "closed"
-    tem$linecolor <- lines$color
-  } else if (tem$lines == 0) {
-    tem$lines <- NULL
-  } else {
-    warning("No line definitions were found, but the template is meant to have ", tem$lines, " lines")
-    tem$lines <- NULL
-  }
-
-  # get masks (optional)
-  maskstart <- grepl("mask\\s*,\\s*points\\s*", tem_def) %>% which()
-  if (length(maskstart) == 1) {
-    maskrange <- maskstart:length(tem_def)
-    m <- utils::read.csv(text = tem_def[maskrange])
-    tem$masks <- lapply(m$points, strsplit, "\\s*;\\s*") %>%
-      lapply(sapply, strsplit, "\\s*,\\s*") %>%
-      lapply(sapply, as.integer, simplify = FALSE)
-    names(tem$masks) <- m$mask
-  }
-
-  tem
+  tem_def
 }
 
 
@@ -215,25 +173,28 @@ subset_tem <- function(stimuli, ..., keep = TRUE) {
 #' 
 #' Get point indices for features, usually for use with \code{\link{subset_tem}}.
 #' 
-#' Available features for the FRL template are: "gmm", "oval", "face", "mouth", "nose", "eyes", "brows", "left_eye",  "right_eye", "left_brow",  "right_brow", "ears", "undereyes", "teeth", "smile_lines", "cheekbones", "philtrum", "chin", "neck", "halo".
+#' Available features for the frl template are: "gmm", "oval", "face", "mouth", "nose", "eyes", "brows", "left_eye", "right_eye", "left_brow",  "right_brow", "ears", "undereyes", "teeth", "smile_lines", "cheekbones", "philtrum", "chin", "neck", "halo".
+#' 
+#' Available features for the dlib70 template are: "teeth", "left_eye", "right_eye", "left_brow", "right_brow", "nose", "mouth", "face".
 #'
 #' @param ... a vector of feature names (see Details)
-#' @param tem_id template ID (currently only works for FRL)
+#' @param tem_id template ID (currently only works for frl and dlib70)
 #'
-#' @return vector of corresponding FRL template indices
+#' @return vector of corresponding template indices
 #' @export
 #'
 #' @examples
 #' features("mouth")
 #' features("gmm")
+#' features("nose", tem_id = "dlib70")
 #'
-features <- function(..., tem_id = c("FRL", "dlib70")) {
+features <- function(..., tem_id = c("frl", "dlib70")) {
   # 0-based for compatibility with webmorph
   tem_id <- match.arg(tem_id)
   
   named_features <- list(...) %>% unlist()
   
-  if (tem_id == "FRL") {
+  if (tem_id == "frl") {
     features <- list(
       # imprecise
       undereyes = c(44:49),
@@ -321,7 +282,7 @@ tem_to_xml <- function(stimuli, dir = "images") {
   reticulate::source_python(pyscript)
   boxes <- lapply(paths, function(p) {
       if (wm_opts("verbose")) pb$tick()
-      get_location(p)
+      py_get_location(p)
     }) %>%
     lapply(unlist)
   
@@ -381,3 +342,93 @@ tem_to_xml <- function(stimuli, dir = "images") {
   write(xml, file.path(dir, "images.xml"))
 }
 
+#' Remove templates
+#'
+#' @param stimuli list of class stimlist
+#'
+#' @return list of class stimlist
+#' @export
+#'
+#' @examples
+#' demo_stim() %>% remove_tem()
+remove_tem <- function(stimuli) {
+  stimuli <- validate_stimlist(stimuli)
+  
+  for (i in seq_along(stimuli)) {
+    stimuli[[i]]$tempath <- NULL
+    stimuli[[i]]$points <- NULL
+    stimuli[[i]]$lines <- NULL
+    stimuli[[i]]$closed <- NULL
+  }
+  
+  stimuli
+}
+
+
+#' Check All Templates are the Same
+#'
+#' @param stimuli list of class stimlist
+#'
+#' @return logical
+#' @export
+#'
+#' @examples
+#' stim <- demo_stim()
+#' stim2 <- subset_tem(stim, features("gmm"))
+#' 
+#' same_tems(stim)
+#' 
+#' c(stim, stim2) %>% same_tems()
+same_tems <- function(stimuli) {
+  stimuli <- validate_stimlist(stimuli)
+  
+  pts <- lapply(stimuli, `[[`, "points") %>%
+    sapply(ncol) %>%
+    unique()
+  
+  lines <- lapply(stimuli, `[[`, "lines") %>%
+    unique()
+  
+  if (length(pts) == 1 && length(lines) == 1) {
+    TRUE
+  } else {
+    FALSE
+  }
+}
+
+
+#' Get Point Coordinates
+#'
+#' Get a data frame of the x and y coordinates of a template point
+#'
+#' @param stimuli list of class stimlist with templates
+#' @param pt point(s) to return
+#'
+#' @return data frame of x and y coordinates of the specified point(s) for each stimulus
+#' @export
+#'
+#' @examples
+#' demo_stim() %>% get_point(0:1)
+get_point <- function(stimuli, pt = 0) {
+  stimuli <- validate_stimlist(stimuli, TRUE)
+  
+  pts <- lapply(stimuli, `[[`, "points") %>%
+    sapply(`[`, c('x', 'y'), pt+1) %>%
+    t() %>%
+    as.data.frame()
+  
+  combo <- expand.grid(coord = c("x", "y"), pt = pt)
+  names(pts) <- paste(combo$coord, combo$pt, sep = "_")
+  
+  dplyr::as_tibble(pts, rownames = "image") %>%
+    tidyr::pivot_longer(cols = -("image"),
+                        names_to = c("coord", "point"),
+                        names_sep = "_",
+                        names_transform = list(point = as.integer),
+                        values_to = "value"
+    ) %>%
+    tidyr::pivot_wider(
+      names_from = .data$coord,
+      values_from = .data$value
+    )
+}

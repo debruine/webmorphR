@@ -78,3 +78,8 @@ test_that("by index", {
   stim4 <- read_stim(path, c(2, 1))
   expect_equal(names(stim4), nm[c(2, 1)])
 })
+
+test_that("multiple tems", {
+  path <- system.file("extdata/tem_examples", package = "webmorphR")
+  expect_silent(s <- read_stim(path))
+})

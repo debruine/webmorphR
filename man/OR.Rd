@@ -18,10 +18,4 @@ LHS if not \code{NULL}, otherwise RHS.
 \description{
 LHS if not \code{NULL}, otherwise RHS
 }
-\examples{
-x <- list(b = 2, c = 3)
-x$a \%||\% x$b \%||\% x$c
-x$a \%||\% "default_value"
-
-}
 \keyword{internal}

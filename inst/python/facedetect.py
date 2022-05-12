@@ -5,7 +5,7 @@ import numpy as np
 # modified from:
 # https://github.com/ageitgey/face_recognition/blob/master/face_recognition/api.py
 
-def get_points(file, pred_file):
+def py_get_points(file, pred_file):
   # load pose predictor
   # https://github.com/davisking/dlib-models
   pose_predictor = dlib.shape_predictor(pred_file)
@@ -24,7 +24,7 @@ def get_points(file, pred_file):
   
   return landmarks_as_tuples
 
-def get_location(file):
+def py_get_location(file):
   # load image 
   im = PIL.Image.open(file).convert("RGB")
   face_image = np.array(im)

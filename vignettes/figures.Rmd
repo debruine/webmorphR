@@ -20,7 +20,7 @@ When working interactively in an R Markdown document, the figures plot in the Vi
 ```{r, message=FALSE}
 library(webmorphR)
 library(tidyverse)
-wm_opts(plot.maxwidth = 850*2)
+wm_opts(plot.maxwidth = 850)
 ```
 
 ## Load stimuli

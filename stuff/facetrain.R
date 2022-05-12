@@ -13,7 +13,7 @@ stim <- c(london, f_3dsk, m_3dsk, ea) %>% resize(0.5)
 rot <- stim %>% rotate(-45:45) %>% setnames(prefix = "rot_")
 
 # mirror reverse
-mirror <- c(stim, rot) %>% mirror("FRL") %>% setnames(prefix = "mirror_")
+mirror <- c(stim, rot) %>% mirror("frl") %>% setnames(prefix = "mirror_")
 
 
 stimuli <- c(stim, mirror, rot)

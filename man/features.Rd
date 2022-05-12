@@ -4,24 +4,27 @@
 \alias{features}
 \title{Feature Points}
 \usage{
-features(..., tem_id = c("FRL", "dlib70"))
+features(..., tem_id = c("frl", "dlib70"))
 }
 \arguments{
 \item{...}{a vector of feature names (see Details)}
 
-\item{tem_id}{template ID (currently only works for FRL)}
+\item{tem_id}{template ID (currently only works for frl and dlib70)}
 }
 \value{
-vector of corresponding FRL template indices
+vector of corresponding template indices
 }
 \description{
 Get point indices for features, usually for use with \code{\link{subset_tem}}.
 }
 \details{
-Available features for the FRL template are: "gmm", "oval", "face", "mouth", "nose", "eyes", "brows", "left_eye",  "right_eye", "left_brow",  "right_brow", "ears", "undereyes", "teeth", "smile_lines", "cheekbones", "philtrum", "chin", "neck", "halo".
+Available features for the frl template are: "gmm", "oval", "face", "mouth", "nose", "eyes", "brows", "left_eye", "right_eye", "left_brow",  "right_brow", "ears", "undereyes", "teeth", "smile_lines", "cheekbones", "philtrum", "chin", "neck", "halo".
+
+Available features for the dlib70 template are: "teeth", "left_eye", "right_eye", "left_brow", "right_brow", "nose", "mouth", "face".
 }
 \examples{
 features("mouth")
 features("gmm")
+features("nose", tem_id = "dlib70")
 
 }

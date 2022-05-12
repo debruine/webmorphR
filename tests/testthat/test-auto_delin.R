@@ -4,6 +4,23 @@ test_that("auto_delin", {
   # all images have templates
   expect_warning(x <- auto_delin(stimuli))
   expect_equal(x, stimuli)
+  
+  expect_error( auto_delin(x, "dd") )
+  
+  # remove key and secret to test error message
+  key <- Sys.getenv("FACEPLUSPLUS_KEY")
+  secret <- Sys.getenv("FACEPLUSPLUS_SECRET")
+  on.exit(Sys.setenv(FACEPLUSPLUS_KEY = key))
+  on.exit(Sys.setenv(FACEPLUSPLUS_SECRET = secret))
+  Sys.setenv(FACEPLUSPLUS_KEY = "")
+  Sys.setenv(FACEPLUSPLUS_SECRET = "")
+  fpp_error <- "You need to set FACEPLUSPLUS_KEY and FACEPLUSPLUS_SECRET in your .Renviron (see ?auto_delin)"
+  expect_error( auto_delin(x, "fpp106", replace = TRUE),
+                fpp_error, fixed = TRUE)
+  expect_error( auto_delin(x, "fpp83", replace = TRUE),
+                fpp_error, fixed = TRUE)
+  Sys.setenv(FACEPLUSPLUS_KEY = key)
+  Sys.setenv(FACEPLUSPLUS_SECRET = secret)
 })
 
 test_that("face++", {
@@ -40,22 +57,16 @@ test_that("paste 2 together", {
 test_that("python", {
   skip_on_cran()
   
-  stimuli <- demo_stim()
+  stimuli <- demo_stim("test", "f_")
   
-  s2 <- auto_delin(stimuli, "dlib70", TRUE)
   s3 <- auto_delin(stimuli, "dlib7", TRUE)
+  expect_equal(s3[[1]]$points %>% dim(), c(2, 7))
+  
+  #s2 <- auto_delin(stimuli, "dlib70", TRUE)
+  #expect_equal(s2[[1]]$points %>% dim(), c(2, 70))
   
   skip("plot")
   draw_tem(s2)
   draw_tem(s3)
 })
 
-
-test_that("frl", {
-  skip("long")
-  
-  stimuli <- demo_stim()
-  s2 <- auto_delin(stimuli, "frl", TRUE)
-  
-  draw_tem(s2)
-})

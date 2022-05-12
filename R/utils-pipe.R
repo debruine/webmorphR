@@ -21,15 +21,14 @@ NULL
 #'
 #' @keywords internal
 #'
-#' @examples
-#' x <- list(b = 2, c = 3)
-#' x$a %||% x$b %||% x$c
-#' x$a %||% "default_value"
-#'
 `%||%` <- function(l, r) {
   if (is.null(l)) r else l
 }
 
 
 ## quiets concerns of R CMD check re: the .'s that appear in pipelines
-if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
+if(getRversion() >= "2.15.1")  
+  utils::globalVariables(c(".", 
+                           "py_get_location",
+                           "py_get_points"))
+

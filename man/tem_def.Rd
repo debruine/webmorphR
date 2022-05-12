@@ -4,7 +4,7 @@
 \alias{tem_def}
 \title{Get template definition}
 \usage{
-tem_def(tem_id = "FRL", path = NULL)
+tem_def(tem_id = "frl", path = NULL)
 }
 \arguments{
 \item{tem_id}{numeric ID of template to retrieve from webmorph.org}
@@ -18,7 +18,7 @@ list with template definition
 Template definitions are specially formatted files that contain information about templates that are needed to do things like symmetrising and masking images. This function is mostly used internally.
 }
 \examples{
-frl <- tem_def("FRL")
+frl <- tem_def("frl")
 frl$points[1:10, ]
 
 fpp106 <- tem_def("fpp106")
