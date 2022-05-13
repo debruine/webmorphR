@@ -22,9 +22,9 @@ frl <- tem_def("frl")
 frl$points[1:10, ]
 
 fpp106 <- tem_def("fpp106")
-fpp106$lines \%>\% str()
+fpp106$lines |> str()
 
 fpp83 <- tem_def("fpp83")
-fpp83$mask \%>\% str()
+fpp83$mask |> str()
 
 }

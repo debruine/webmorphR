@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' demo_stim() %>% plot()
+#' demo_stim() |> plot()
 #'
 demo_stim <- function(dir = c("test", "tem_examples", "composite", "london", "smiling", "lisa", "zoom", "rainbow"),
                      pattern = NULL, ...) {

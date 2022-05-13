@@ -82,7 +82,7 @@ test_that("list", {
   #plot(padded)
   
   # extract pad colours
-  pad_colors <- get_imgs(padded) %>%
+  pad_colors <- get_imgs(padded) |>
     sapply(patch, x1=1, x2=1, y1=1, y2=1, color = "rgb")
   
   expect_equal(pad_colors["red",], rep(c(0, 255), 4))

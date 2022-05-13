@@ -16,7 +16,7 @@ tems_to_array(stimuli)
 Convert stimuli to array for geomorph
 }
 \examples{
-data <- demo_stim() \%>\% tems_to_array()
+data <- demo_stim() |> tems_to_array()
 dim(data)
 
 }

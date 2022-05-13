@@ -41,11 +41,11 @@ crop <- function(stimuli,
     y_off <- rep(y_off, length.out = l)
     fill <- rep(fill, length.out = l)
     if (is.list(patch)) {
-      x1 <- rep(patch[["x1"]] %||% 1, length.out = l) %>% unname()
-      x2 <- rep(patch[["x2"]] %||% 10, length.out = l) %>% unname()
-      y1 <- rep(patch[["y1"]] %||% 1, length.out = l) %>% unname()
-      y2 <- rep(patch[["y2"]] %||% 10, length.out = l) %>% unname()
-      color <- rep(patch[["color"]] %||% "hex", length.out = l) %>% unname()
+      x1 <- rep(patch[["x1"]] %||% 1, length.out = l) |> unname()
+      x2 <- rep(patch[["x2"]] %||% 10, length.out = l) |> unname()
+      y1 <- rep(patch[["y1"]] %||% 1, length.out = l) |> unname()
+      y2 <- rep(patch[["y2"]] %||% 10, length.out = l) |> unname()
+      color <- rep(patch[["color"]] %||% "hex", length.out = l) |> unname()
       patch <- list(x1 = x1, x2 = x2, y1 = y1, y2 = y2, color = color)
     }
   })
@@ -149,7 +149,7 @@ crop <- function(stimuli,
 #' @export
 #'
 #' @examples
-#' padded <- demo_stim() %>% pad(10, fill = "red")
+#' padded <- demo_stim() |> pad(10, fill = "red")
 #' plot(padded)
 pad <- function(stimuli, top = 10, right = top, bottom = top, left = right, ...) {
   stimuli <- validate_stimlist(stimuli)
@@ -161,7 +161,7 @@ pad <- function(stimuli, top = 10, right = top, bottom = top, left = right, ...)
   right  <- ifelse(abs(right) < 1,  right * width(stimuli),   right)
 
 
-  stimuli %>%
+  stimuli |>
     crop(width = width(stimuli) + left + right,
          height = height(stimuli) + top + bottom,
          x_off = - left, y_off = - top, ...
@@ -185,14 +185,14 @@ pad <- function(stimuli, top = 10, right = top, bottom = top, left = right, ...)
 #' @export
 #'
 #' @examples
-#' ctem <- demo_stim() %>% crop_tem(20) %>% draw_tem()
+#' ctem <- demo_stim() |> crop_tem(20) |> draw_tem()
 #' plot(ctem)
 crop_tem <- function(stimuli, top = 10, right = top, bottom = top, left = right, each = FALSE, ...) {
   stimuli <- validate_stimlist(stimuli, TRUE)
 
   b <- bounds(stimuli, each = each)
 
-  stimuli %>%
+  stimuli |>
     crop(width = ceiling(b$max_x - b$min_x + left + right),
          height = ceiling(b$max_y - b$min_y + top + bottom),
          x_off = floor(b$min_x - left),
@@ -210,29 +210,25 @@ crop_tem <- function(stimuli, top = 10, right = top, bottom = top, left = right,
 #' @export
 #'
 #' @examples
-#' demo_stim() %>% bounds() %>% str()
+#' demo_stim() |> bounds() |> str()
 #'
-#' demo_stim() %>% bounds(each = TRUE)
+#' demo_stim() |> bounds(each = TRUE)
 bounds <- function(stimuli, each = FALSE) {
   stimuli <- validate_stimlist(stimuli, TRUE)
 
   if (isTRUE(each)) {
     # get separate bounds for each stimulus
-    b <- sapply(stimuli, bounds) %>%
-      t() %>%
-      as.data.frame() %>%
-      tidyr::unnest(cols = c("min_x", "max_x", "min_y", "max_y")) %>%
-      as.data.frame()
-    rownames(b) <- names(stimuli)
+    b <- lapply(stimuli, bounds) |> 
+      do.call(rbind, args = _)
     return(b)
   }
   
-  min_vals <- lapply(stimuli, `[[`, "points") %>%
-    sapply(apply, 1, min) %>%
+  min_vals <- lapply(stimuli, `[[`, "points") |>
+    sapply(apply, 1, min) |>
     apply(1, min)
     
-  max_vals <- lapply(stimuli, `[[`, "points") %>%
-    sapply(apply, 1, max) %>%
+  max_vals <- lapply(stimuli, `[[`, "points") |>
+    sapply(apply, 1, max) |>
     apply(1, max)
 
   # only work if all tems are the same
@@ -240,10 +236,10 @@ bounds <- function(stimuli, each = FALSE) {
   # x <- (A[, "X", ])
   # y <- (A[, "Y", ]) * -1
 
-  list(min_x = min_vals[["x"]],
-       max_x = max_vals[["x"]],
-       min_y = min_vals[["y"]],
-       max_y = max_vals[["y"]])
+  data.frame(min_x = min_vals[["x"]],
+             max_x = max_vals[["x"]],
+             min_y = min_vals[["y"]],
+             max_y = max_vals[["y"]])
 }
 
 
@@ -257,15 +253,15 @@ bounds <- function(stimuli, each = FALSE) {
 #' @export
 #'
 #' @examples
-#' nosquash <- demo_stim()[1] %>% 
-#'   crop(0.4, 0.5) %>% pad(50) %>% 
+#' nosquash <- demo_stim()[1] |> 
+#'   crop(0.4, 0.5) |> pad(50) |> 
 #'   draw_tem(line.size = 3)
 #' 
-#' squashed <- demo_stim()[1] %>% 
-#'   crop(0.4, 0.5) %>% squash_tem() %>% pad(50) %>% 
+#' squashed <- demo_stim()[1] |> 
+#'   crop(0.4, 0.5) |> squash_tem() |> pad(50) |> 
 #'   draw_tem(line.size = 3)
 #'   
-#' # c(nosquash, squashed) %>% plot()
+#' # c(nosquash, squashed) |> plot()
 squash_tem <- function(stimuli) {
   stimuli <- validate_stimlist(stimuli, TRUE)
   
@@ -276,8 +272,8 @@ squash_tem <- function(stimuli) {
       
       stimuli[[i]]$points <- apply(stimuli[[i]]$points, 2, function(pt) {
         # move points into image boundaries
-        pt %>%
-          pmax(c(0, 0)) %>%
+        pt |>
+          pmax(c(0, 0)) |>
           pmin(c(w-1, h-1)) # subtract 1 for 0-vs 1-based origin
       })
     }

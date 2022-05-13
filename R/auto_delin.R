@@ -20,14 +20,14 @@
 #' @examples
 #' \dontrun{
 #'   # requires python
-#'   auto_high <- demo_stim()[1] %>%
+#'   auto_high <- demo_stim()[1] |>
 #'     auto_delin(replace = TRUE) # replace existing templates
 #'
 #'   # requires an API key in .Renviron
-#'   auto_low <- demo_stim()[1] %>%
+#'   auto_low <- demo_stim()[1] |>
 #'     auto_delin(style = "fpp106", replace = TRUE)
 #'
-#'   c(auto_high, auto_low) %>% draw_tem() %>% plot()
+#'   c(auto_high, auto_low) |> draw_tem() |> plot()
 #' }
 auto_delin <- function(stimuli, 
                        style = c("dlib7", "dlib70", "fpp106", "fpp83"), 
@@ -40,7 +40,7 @@ auto_delin <- function(stimuli,
   # find out which stimuli need tems ----
   if (isTRUE(replace)) stimuli <- remove_tem(stimuli)
   
-  notems <- sapply(stimuli, `[[`, "points") %>% sapply(is.null)
+  notems <- sapply(stimuli, `[[`, "points") |> sapply(is.null)
 
   if (all(notems == FALSE)) {
     warning("No images needed templates; set replace = TRUE to replace existing templates")
@@ -55,19 +55,16 @@ auto_delin <- function(stimuli,
       stop("You need to install Python to use the dlib templates")
     }
     
-    # load script
-    pyscript <- system.file("python/facedetect.py", package = "webmorphR")
-    
     if (!is.null(dlib_path)) {
       pred_file <- normalizePath(dlib_path)
     } else {
       # get pred_file location from webmorphR or webmorphR.dlibs
-      pred_file <- paste0("python/", style, ".dat") %>%
+      pred_file <- paste0("python/", style, ".dat") |>
         system.file(package = "webmorphR")
       if (pred_file == "") {
         # check the webmorphR.dlibs package
         if (requireNamespace("webmorphR.dlibs", quietly = TRUE)) {
-          pred_file <- paste0("python/", style, ".dat") %>%
+          pred_file <- paste0("python/", style, ".dat") |>
             system.file(package = "webmorphR.dlibs")
         } else {
           stop("The landmark file for ", style, " could not be found.\n",
@@ -82,6 +79,9 @@ auto_delin <- function(stimuli,
       stop("The landmark file could not be found at ", pred_file)
     }
     
+    # load script
+    py_get_points <- NULL # stops CMD check from complaining
+    pyscript <- system.file("python/facedetect.py", package = "webmorphR")
     reticulate::source_python(pyscript)
   } else if (style %in% c("fpp106", "fpp83")) {
     ## face++ version ----
@@ -105,10 +105,10 @@ auto_delin <- function(stimuli,
   
   # save images to temp file ----
   tempdir <- tempfile()
-  paths <- stimuli %>%
-    remove_tem() %>%
-    write_stim(tempdir, format = "jpg", ask = FALSE, overwrite = TRUE) %>%
-    unlist() %>%
+  paths <- stimuli |>
+    remove_tem() |>
+    write_stim(tempdir, format = "jpg", ask = FALSE, overwrite = TRUE) |>
+    unlist() |>
     setdiff(FALSE) # remove FALSE for unsaved tems
 
   face <- rep(face, length.out = length(stimuli))
@@ -126,8 +126,8 @@ auto_delin <- function(stimuli,
   if (!is.null(dlib_path)) {
     # custom dlib template ----
     for (i in seq_along(stimuli)) {
-      pts <- py_get_points(paths[i], pred_file) %>%
-        unlist() %>%
+      pts <- py_get_points(paths[i], pred_file) |>
+        unlist() |>
         matrix(nrow = 2, dimnames = list(c("x", "y"), c()))
       
       stimuli[[i]]$points <- pts
@@ -140,8 +140,8 @@ auto_delin <- function(stimuli,
     }
   } else if (style == "frl") {
     for (i in seq_along(stimuli)) {
-      pts <- py_get_points(paths[i], pred_file) %>%
-        unlist() %>%
+      pts <- py_get_points(paths[i], pred_file) |>
+        unlist() |>
         matrix(nrow = 2, dimnames = list(c("x", "y"), fpp$points$name))
       
       stimuli[[i]]$points <- pts
@@ -155,8 +155,8 @@ auto_delin <- function(stimuli,
   } else if (style %in% c("dlib70", "dlib7")) {
     ## internal dlib ----
     for (i in seq_along(stimuli)) {
-      pts <- py_get_points(paths[i], pred_file) %>%
-        unlist() %>%
+      pts <- py_get_points(paths[i], pred_file) |>
+        unlist() |>
         matrix(nrow = 2, dimnames = list(c("x", "y"), c()))
       
       # calculate centres of pupils
@@ -168,8 +168,8 @@ auto_delin <- function(stimuli,
         re <- c(1, 2)
       }
       
-      left_eye <- pts[, le] %>% apply(1, mean)
-      right_eye <- pts[, re] %>% apply(1, mean)
+      left_eye <- pts[, le] |> apply(1, mean)
+      right_eye <- pts[, re] |> apply(1, mean)
       
       x <- c(left_eye[["x"]], right_eye[["x"]], pts["x", ])
       y <- c(left_eye[["y"]], right_eye[["y"]], pts["y", ])
@@ -187,17 +187,16 @@ auto_delin <- function(stimuli,
     ## Face++ model ----
     for (i in seq_along(stimuli)) {
       imgname <- names(stimuli)[[i]]
-      data$image_file <- paste0(imgname, ".jpg") %>%
-        file.path(tempdir, .) %>%
+      data$image_file <- file.path(tempdir, paste0(imgname, ".jpg")) |>
         httr::upload_file()
   
       r <- httr::POST(url, body = data)
       resp <- httr::content(r)
   
       if (!is.null(resp$error_message)) {
-        e <- resp$error_message %>%
-          paste(collapse = "\n") %>%
-          paste0(imgname, ": ", .)
+        e <- resp$error_message |>
+          paste(collapse = "\n")
+        ce <- paste0(imgname, ": ", e)
         warning(e, call. = FALSE)
       } else {
         # put in order from fpp

@@ -53,7 +53,7 @@ readline_check <- function(prompt, type = c("numeric", "integer", "length", "gre
     } else {
       warn_text <- "The input must be an integer:"
     }
-    check <- grep("^\\d+$", input) %>% length() > 0
+    check <- grep("^\\d+$", input) |> length() > 0
     input <- suppressWarnings(as.integer(input))
     check <- check & (input >= min) & (input <= max)
   } else if (type == "length") {
@@ -62,7 +62,7 @@ readline_check <- function(prompt, type = c("numeric", "integer", "length", "gre
     check <- (nchar(input) >= min) & (nchar(input) <= max)
   } else if (type == "grep") {
     warn_text <- "The input is incorrect:"
-    check <- grep(x = input, ...) %>% length() > 0
+    check <- grep(x = input, ...) |> length() > 0
   } else {
     warn_text <- "The input is incorrect:"
     check <- FALSE # default false if type is wrong?

@@ -11,11 +11,11 @@
 #' @export
 #'
 #' @examples
-#' rotated <- demo_stim() %>%
-#'   rotate(45, fill = "dodgerblue") %>%
+#' rotated <- demo_stim() |>
+#'   rotate(45, fill = "dodgerblue") |>
 #'   draw_tem()
 #'
-#' rotate_patch <- demo_stim() %>%
+#' rotate_patch <- demo_stim() |>
 #'   rotate(45, patch = TRUE, keep_size = FALSE)
 #'
 rotate <- function(stimuli, degrees = 0,
@@ -24,8 +24,8 @@ rotate <- function(stimuli, degrees = 0,
   stimuli <- validate_stimlist(stimuli)
   n <- length(stimuli)
 
-  degrees <- degrees %>%
-    rep(length.out = length(stimuli)) %>%
+  degrees <- degrees |>
+    rep(length.out = length(stimuli)) |>
     sapply(`%%`, 360)
   radians <- degrees * (pi/180)
 
@@ -51,8 +51,8 @@ rotate <- function(stimuli, degrees = 0,
         fill[i] <- do.call("patch", plist)
       }
 
-      rotimg <- stimuli[[i]]$img %>%
-        magick::image_background(color = fill[i]) %>%
+      rotimg <- stimuli[[i]]$img |>
+        magick::image_background(color = fill[i]) |>
         magick::image_rotate(degrees[i])
       if (keep_size) {
         rotimg <- magick::image_crop(rotimg, magick::geometry_area(w, h))
@@ -159,12 +159,12 @@ rotated_size <- function(width, height, degrees) {
 #' @export
 #'
 #' @examples
-#' demo_stim() %>% horiz_eyes()
+#' demo_stim() |> horiz_eyes()
 #'
 horiz_eyes <- function(stimuli, left_eye = 0, right_eye = 1, fill = wm_opts("fill"), patch = FALSE) {
   stimuli <- validate_stimlist(stimuli, TRUE)
 
-  degrees <- lapply(stimuli, `[[`, "points") %>%
+  degrees <- lapply(stimuli, `[[`, "points") |>
     lapply(function(pt) {
       x1 = pt[[1, left_eye+1]]
       y1 = pt[[2, left_eye+1]]
@@ -174,7 +174,7 @@ horiz_eyes <- function(stimuli, left_eye = 0, right_eye = 1, fill = wm_opts("fil
       180 - (rad / (pi/180))
   })
 
-  stimuli %>%
+  stimuli |>
     rotate(degrees = degrees, fill = fill,
            patch = patch, keep_size = TRUE)
 }

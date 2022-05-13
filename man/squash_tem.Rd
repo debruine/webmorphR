@@ -16,13 +16,13 @@ list of class stimlist
 Move template points that are outside the image boundaries (e.g., negative values or larger than image width or height) to the borders of the image.
 }
 \examples{
-nosquash <- demo_stim()[1] \%>\% 
-  crop(0.4, 0.5) \%>\% pad(50) \%>\% 
+nosquash <- demo_stim()[1] |> 
+  crop(0.4, 0.5) |> pad(50) |> 
   draw_tem(line.size = 3)
 
-squashed <- demo_stim()[1] \%>\% 
-  crop(0.4, 0.5) \%>\% squash_tem() \%>\% pad(50) \%>\% 
+squashed <- demo_stim()[1] |> 
+  crop(0.4, 0.5) |> squash_tem() |> pad(50) |> 
   draw_tem(line.size = 3)
   
-# c(nosquash, squashed) \%>\% plot()
+# c(nosquash, squashed) |> plot()
 }

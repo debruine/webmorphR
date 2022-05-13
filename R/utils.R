@@ -28,7 +28,7 @@ print.stim <- function(x, ...) {
   #                       info$format)
   # }
   #
-  # paste(attr, collapse = ", ") %>% cat()
+  # paste(attr, collapse = ", ") |> cat()
   #
   # invisible(x)
   print(x$img, FALSE)
@@ -44,7 +44,7 @@ print.stim <- function(x, ...) {
 #'
 print.stimlist <- function(x, ...) {
   # mapply(function(xi, nm) {
-  #   sprintf("* %s: ", nm) %>% cat()
+  #   sprintf("* %s: ", nm) |> cat()
   #   print(xi, ...)
   #   cat("\n")
   # }, x, names(x) %||% seq_along(x)) # in case names are null
@@ -63,7 +63,7 @@ print.stimlist <- function(x, ...) {
     magick::image_write(img, tmp)
     suppressWarnings({
       # suppress warning about absolute paths
-      knitr::include_graphics(tmp) %>% print()
+      knitr::include_graphics(tmp) |> print()
     })
   }
   
@@ -86,7 +86,7 @@ print.stimlist <- function(x, ...) {
 #' @export
 #'
 #' @examples
-#' f <- demo_stim() %>% subset("f_")
+#' f <- demo_stim() |> subset("f_")
 subset.stimlist <- function (x, subset, ...) {
   e <- substitute(subset)
   info <- get_info(x)
@@ -129,9 +129,9 @@ rep.stim <- function (x, ...) {
 #' @export
 #'
 #' @examples
-#' demo_stim() %>%
-#'   rep(3) %>%
-#'   rotate(seq(10, 60, 10), fill = rainbow(6)) %>%
+#' demo_stim() |>
+#'   rep(3) |>
+#'   rotate(seq(10, 60, 10), fill = rainbow(6)) |>
 #'   plot()
 rep.stimlist <- function(x, ...) {
   nm <- names(x)
@@ -151,7 +151,7 @@ rep.stimlist <- function(x, ...) {
 c.stim <- function(...) {
   # turn into a stimlist and handle below
   dots <- lapply(list(...), validate_stimlist)
-  do.call("c", dots)
+  do.call(c, dots)
 }
 
 
@@ -163,9 +163,9 @@ c.stim <- function(...) {
 #' @export
 #'
 c.stimlist <- function(...) {
-  dots <- lapply(list(...), validate_stimlist) %>%
+  dots <- lapply(list(...), validate_stimlist) |>
     lapply(unclass) # prevent infinite recursion
-  x <- do.call("c", dots)
+  x <- do.call(c, dots)
   class(x) <- c("stimlist", "list")
   x
 }
@@ -230,14 +230,17 @@ message <- function(...) {
 #' height <- xget(x, "height", "h", 2)
 #' }
 xget <- function(x, ..., .default = NULL) {
-  list(...) %>%           # get possible names
-    lapply(function(y) {  # retrieve from x
-      z <- x[y][[1]]      # missing from vectors = NA, from list = NULL
+  possible <- list(...) |> # get possible names
+    lapply(function(y) {   
+      # retrieve from x
+      z <- x[y][[1]]
+      # missing from vectors = NA, # from list = NULL
       if (is.null(z)) NA else z
-    }) %>%
-    c(list(.default)) %>% # add default to the end
-    `[`(., !is.na(.)) %>% # get rid of NAs
-    `[[`(1)               # return first item
+    }) |>
+    c(list(.default)) # add default to the end
+  
+  # get rid of NAs and return first item
+  possible[!is.na(possible)][[1]]
 }
 
 
@@ -268,9 +271,10 @@ format_size <- function (x) {
 #' @export
 #'
 #' @examples
-#' demo_stim() %>% get_imgs
+#' demo_stim() |> get_imgs
 get_imgs <- function(stimuli) {
-  validate_stimlist(stimuli) %>%
-    lapply(`[[`, "img") %>%
-    do.call(c, .)
+  args <- validate_stimlist(stimuli) |>
+    lapply(`[[`, "img")
+  
+  do.call(c, args)
 }

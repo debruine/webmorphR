@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' \dontrun{
-#'   demo_stim() %>% write_stim("test_faces", format = "jpg")
+#'   demo_stim() |> write_stim("test_faces", format = "jpg")
 #' }
 write_stim <- function(stimuli, dir = ".", names = NULL, format = "png", ..., ask = interactive(), overwrite = !ask) {
   stimuli <- validate_stimlist(stimuli)
@@ -23,7 +23,7 @@ write_stim <- function(stimuli, dir = ".", names = NULL, format = "png", ..., as
     if (length(names) > n) {
       names <- names[1:n]
     } else if (length(names) < n) {
-      names <- rep_len(names, n) %>% paste0("_", 1:n)
+      names <- rep_len(names, n) |> paste0("_", 1:n)
     }
     
     stimuli <- setnames(stimuli, names)
@@ -35,8 +35,8 @@ write_stim <- function(stimuli, dir = ".", names = NULL, format = "png", ..., as
   }
 
   paths <- mapply(function(stim, name) {
-    imgsaved <- FALSE
-    temsaved <- FALSE
+    imgsaved <- NULL
+    temsaved <- NULL
     
     # save images
     if (!is.null(stim$img)) {

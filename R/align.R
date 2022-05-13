@@ -19,8 +19,8 @@
 #'
 #' @examples
 #' # load stimuli and crop/rotate differently
-#' stimuli <- demo_stim() %>% 
-#'   crop(c(0.8, 0.9), c(1.0, 0.9), x_off = c(0, 0.2)) %>%
+#' stimuli <- demo_stim() |> 
+#'   crop(c(0.8, 0.9), c(1.0, 0.9), x_off = c(0, 0.2)) |>
 #'   rotate(c(-5, + 5))
 #'
 #' # align to bottom-centre of nose (average position)
@@ -73,10 +73,10 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
     orig_avg <- apply(data, c(1, 2), mean)
     pro_avg <- apply(coords, c(1, 2), mean)
 
-    oEyeWidth <- (orig_avg[pt1+1, ] - orig_avg[pt2+1, ])^2 %>%
-      sum() %>% sqrt(.)
-    pEyeWidth <- (pro_avg[pt1+1, ] - pro_avg[pt2+1, ])^2 %>%
-      sum() %>% sqrt(.)
+    oEyeWidth <- (orig_avg[pt1+1, ] - orig_avg[pt2+1, ])^2 |>
+      sum() |> sqrt()
+    pEyeWidth <- (pro_avg[pt1+1, ] - pro_avg[pt2+1, ])^2 |>
+      sum() |> sqrt()
     mult <- oEyeWidth/pEyeWidth
 
     # resize and convert to webmorph coordinates
@@ -133,8 +133,8 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
                         1, aEyeWidth / oEyeWidth)
   }
 
-  newstimuli <- stimuli %>%
-    rotate(degrees = rotate, fill = fill, patch = patch) %>%
+  newstimuli <- stimuli |>
+    rotate(degrees = rotate, fill = fill, patch = patch) |>
     resize(newsize)
 
   # recalculate eye position for cropping
@@ -168,7 +168,7 @@ procrustes_align <- function(data, ref_img = NULL) {
   n <- dim(data)[3]
   if (is.null(ref_img)) {
     # calcuate average and add as img 1
-    avg <- apply(data, c(1, 2), mean) %>% 
+    avg <- apply(data, c(1, 2), mean) |> 
       array(dim = dim(data) - c(0, 0, 1))
     newdata <- array(c(avg, data), dim = dim(data) + c(0, 0, 1))
 
@@ -194,7 +194,7 @@ procrustes_align <- function(data, ref_img = NULL) {
   #   if (rotate == 90) {
   #     coords <- geomorph::rotate.coords(gpa$coords, "rotateC")
   #   } else if (rotate == 180) {
-  #     coords <- geomorph::rotate.coords(gpa$coords, "rotateC") %>%
+  #     coords <- geomorph::rotate.coords(gpa$coords, "rotateC") |>
   #       geomorph::rotate.coords("rotateC")
   #   } else if (rotate == 270) {
   #     coords <- geomorph::rotate.coords(gpa$coords, "rotateCC")
@@ -209,18 +209,18 @@ procrustes_align <- function(data, ref_img = NULL) {
   #   pro_avg <- apply(gpa$coords, c(1, 2), mean)
   #
   #   all_pts <- expand.grid(x = 1:nrow(orig_avg),
-  #                          y = 1:nrow(orig_avg)) %>%
-  #     dplyr::filter(x != y) %>%
+  #                          y = 1:nrow(orig_avg)) |>
+  #     dplyr::filter(x != y) |>
   #     dplyr::sample_n(min(100, nrow(.)))
   #
   #   angles <- list(
   #     o = orig_avg,
   #     p0 = pro_avg,
   #     p1 = geomorph::rotate.coords(pro_avg, "rotateC"),
-  #     p2 = geomorph::rotate.coords(pro_avg, "rotateC") %>%
+  #     p2 = geomorph::rotate.coords(pro_avg, "rotateC") |>
   #       geomorph::rotate.coords("rotateC"),
   #     p3 = geomorph::rotate.coords(pro_avg, "rotateCC")
-  #   ) %>%
+  #   ) |>
   #     lapply(function(coords) {
   #       mapply(function(pt1, pt2) { angle_from_2pts(coords, pt1, pt2) },
   #               all_pts$x, all_pts$y)
@@ -231,7 +231,7 @@ procrustes_align <- function(data, ref_img = NULL) {
   #     p1 = angles$p1 - angles$o,
   #     p2 = angles$p2 - angles$o,
   #     p3 = angles$p3 - angles$o
-  #   ) %>%
+  #   ) |>
   #     # take care of values near +-2pi (better way?)
   #     dplyr::mutate_all(function(x) {
   #       x <- ifelse(x > 2*pi, x - (2*pi), x)
@@ -239,16 +239,16 @@ procrustes_align <- function(data, ref_img = NULL) {
   #       x <- ifelse(x < -2*pi, x + (2*pi), x)
   #       x <- ifelse(x > 0, x + (2*pi), x)
   #       x
-  #     }) %>%
+  #     }) |>
   #     dplyr::summarise_all(mean)
   #
-  #   min_diff <- as.list(dd) %>% sapply(abs) %>% `[`(. == min(.)) %>% names()
+  #   min_diff <- as.list(dd) |> sapply(abs) |> .b(. == min(.)) |> names()
   #   #message("rotation: ", min_diff)
   #
   #   if (min_diff == "p1") {
   #     coords <- geomorph::rotate.coords(gpa$coords, "rotateC")
   #   } else if (min_diff == "p2") {
-  #     coords <- geomorph::rotate.coords(gpa$coords, "rotateC") %>%
+  #     coords <- geomorph::rotate.coords(gpa$coords, "rotateC") |>
   #       geomorph::rotate.coords("rotateC")
   #   } else if (min_diff == "p3") {
   #     coords <- geomorph::rotate.coords(gpa$coords, "rotateCC")

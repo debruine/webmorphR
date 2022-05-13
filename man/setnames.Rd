@@ -36,7 +36,7 @@ a stimlist
 Set stimulus names in a stimlist
 }
 \examples{
-demo_stim() \%>\%
-  setnames(prefix = "new_") \%>\%
+demo_stim() |>
+  setnames(prefix = "new_") |>
   names()
 }

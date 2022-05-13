@@ -12,7 +12,7 @@ test_that("setnames", {
   b <- setnames(a, new_names = paste0("face", 1:2))
   expect_equal(names(b)[2], "face2")
 
-  b <- setnames(a, pattern = "f_", replacement = "w-") %>%
+  b <- setnames(a, pattern = "f_", replacement = "w-") |>
     setnames(pattern = "m_", replacement = "m-")
   expect_equal(names(b), c("w-multi", "m-multi"))
 })

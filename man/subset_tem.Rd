@@ -20,8 +20,8 @@ stimlist with altered templates
 Subset template points
 }
 \examples{
-demo_stim()[1] \%>\%
-  subset_tem(features("gmm")) \%>\%
+demo_stim()[1] |>
+  subset_tem(features("gmm")) |>
   draw_tem()
 
 }

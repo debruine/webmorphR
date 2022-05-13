@@ -34,8 +34,8 @@ stimuli <- demo_stim("composite", "multi")
 Resizing your images at the start of a chain can make everything go faster if you're working with very large images, but can make them blurry if you make them too small.
 
 ```{r resize, fig.cap="Resized Images"}
-stimuli %>%
-  resize(.05) %>%
+stimuli |>
+  resize(.05) |>
   plot()
 ```
 
@@ -43,9 +43,9 @@ stimuli %>%
 ## Rotate
 
 ```{r rotate, fig.cap="Rotated Images and Templates"}
-stimuli %>%
-  rotate(45, patch = TRUE) %>%
-  draw_tem() %>%
+stimuli |>
+  rotate(45, patch = TRUE) |>
+  draw_tem() |>
   plot()
 ```
 
@@ -55,10 +55,10 @@ stimuli %>%
 You can set the new width, height, x-offset and y-offset in pixels (must be > 2) or proportions.
 
 ```{r crop, fig.cap="Cropped Images and Templates"}
-stimuli %>%
+stimuli |>
   crop(width = .6, height = .8, 
-       x_off = .2, y_off = .1) %>%
-  draw_tem() %>%
+       x_off = .2, y_off = .1) |>
+  draw_tem() |>
   plot()
 ```
 
@@ -67,9 +67,9 @@ stimuli %>%
 Pad the top, right, bottom and left borders; set the colour with `fill`.
 
 ```{r pad, fig.cap="Padded Images and Templates"}
-stimuli %>%
+stimuli |>
   pad(top = 100, right = 200, bottom = 300, left = 400,
-       fill = c("dodgerblue", "hotpink")) %>%
+       fill = c("dodgerblue", "hotpink")) |>
   plot()
 ```
 
@@ -78,8 +78,8 @@ Or you can use the `patch` function to get the median colour from a patch of the
 ```{r crop-patch, fig.cap="Cropped images with background matched to top left 10-pixel square"}
 rb <- demo_stim("rainbow")[1:8]
 
-rb %>%
-  pad(50, patch = TRUE) %>%
+rb |>
+  pad(50, patch = TRUE) |>
   plot(nrow = 2)
 ```
 
@@ -93,11 +93,11 @@ cx <- width(rb)/2
 cy <- height(rb)/2
 r <- 50 # half-height of patch 
 
-rb %>%
+rb |>
   pad(50, patch = list(x1 = cx - r, 
                        x2 = cx + r, 
                        y1 = cy - r, 
-                       y2 = cy + r)) %>%
+                       y2 = cy + r)) |>
   plot(nrow = 2)
 ```
 
@@ -108,16 +108,16 @@ You can use the `crop_tem()` function to get the minimum and maximum x- and y-va
 ```{r bounds}
 lisa <- demo_stim("lisa")
 
-crop_tem(lisa, 100) %>%
-  draw_tem() %>%
+crop_tem(lisa, 100) |>
+  draw_tem() |>
   plot()
 ```
 
 Set `each` to TRUE to calculate the boundaries separately for each template in the list instead of the full set.
 
 ```{r bounds-each}
-lisa %>%
-  crop_tem(20, each = TRUE) %>%
+lisa |>
+  crop_tem(20, each = TRUE) |>
   plot()
 ```
 
@@ -129,10 +129,10 @@ The function`to_size()` combines crop and resize to get a batch of images to the
 s <- demo_stim()[1]
 multisize <- c(
     s,
-    s %>% resize(.5),
-    s %>% crop(0.6),
-    s %>% crop(1, 0.8)
-  ) %>% pad(10, fill = "hotpink")
+    s |> resize(.5),
+    s |> crop(0.6),
+    s |> crop(1, 0.8)
+  ) |> pad(10, fill = "hotpink")
 ```
 
 A 10-pixel pink border has been added to these original images so you can see what has been cropped in the subsequent images.
@@ -140,9 +140,9 @@ A 10-pixel pink border has been added to these original images so you can see wh
 ```{r fig-to-size, echo = FALSE}
 lab <- paste0(width(multisize), "x", height(multisize))
 
-multisize %>% 
-  pad(60, 0, 0, 0) %>%
-  label(lab, size = 40) %>%
+multisize |> 
+  pad(60, 0, 0, 0) |>
+  label(lab, size = 40) |>
   plot()
 ```
 
@@ -179,10 +179,10 @@ plot(rel_crop)
 You can align a set of images on two points. By default, these are the first two points in the template, which correspond to the left and right eye in the standard FRL template and the Face++ autodelineation template.
 
 ```{r align}
-stimuli %>%
+stimuli |>
   align(x1 = 350, y1 = 350, x2 = 450, y2 = 450,
-        width = 800, height = 800, fill = "grey80") %>%
-  draw_tem() %>%
+        width = 800, height = 800, fill = "grey80") |>
+  draw_tem() |>
   plot()
 ```
 
@@ -190,14 +190,14 @@ If you have a set of misaligned images and don't fill in coordinates or dimensio
 
 
 ```{r realign1}
-align(lisa, fill = "grey80") %>% 
+align(lisa, fill = "grey80") |> 
   plot()
 ```
 
 Or you can specify the reference image by index or name.
 
 ```{r realign2}
-align(lisa, ref_img = "lisa3", patch = TRUE) %>% 
+align(lisa, ref_img = "lisa3", patch = TRUE) |> 
   plot()
 ```
 
@@ -206,7 +206,7 @@ align(lisa, ref_img = "lisa3", patch = TRUE) %>%
 You can set the `procrustes` argument to TRUE to procrustes-align the images and templates.
 
 ```{r procrustes}
-align(lisa, procrustes = TRUE, patch = TRUE) %>%
+align(lisa, procrustes = TRUE, patch = TRUE) |>
   plot()
 ```
 
@@ -217,10 +217,10 @@ Currently, [webmorph](https://webmorph.org) does not have this capability, but y
 You can also chain image manipulation commands. 
 
 ```{r chain}
-stimuli %>%
-  rotate(c(45, -45)) %>%
-  crop(.5, .5) %>%
-  pad(0.1, fill = "dodgerblue") %>%
+stimuli |>
+  rotate(c(45, -45)) |>
+  crop(.5, .5) |>
+  pad(0.1, fill = "dodgerblue") |>
   plot()
 ```
 
@@ -237,12 +237,12 @@ rainbow <- c(pink = "#983E82",
              blue = "#467AAC",
              purple = "#61589C")
 
-stimuli %>%
-  resize(0.5) %>%
-  rep(each = 3) %>%
-  rotate(seq(10, 60, 10), fill = rainbow) %>%
-  crop(250, 250, fill = rainbow) %>%
-  draw_tem(pt.color = rainbow, pt.alpha = 1, pt.size = 5) %>%
+stimuli |>
+  resize(0.5) |>
+  rep(each = 3) |>
+  rotate(seq(10, 60, 10), fill = rainbow) |>
+  crop(250, 250, fill = rainbow) |>
+  draw_tem(pt.color = rainbow, pt.alpha = 1, pt.size = 5) |>
   plot(nrow = 2)
 ```
 
@@ -274,9 +274,9 @@ labs <- c("Blur", "Charcoal", "Oilpaint", "Implode",
           "Explode", "Negate", "Canny", "Edge", 
           "20% Darker", "20% Brighter", "Greyscale", "Saturated")
 
-imglist %>%
-  pad(80, 0, 0, 0, fill = "dodgerblue3") %>%
-  label(labs, color = "white") %>%
+imglist |>
+  pad(80, 0, 0, 0, fill = "dodgerblue3") |>
+  label(labs, color = "white") |>
   plot(nrow = 3)
 
 ```
@@ -290,8 +290,8 @@ image_func_types()
 
 
 ```{r, echo = FALSE}
-elapsed <- (Sys.time() - starttime) %>%
-  as.numeric(units="mins") %>%
+elapsed <- (Sys.time() - starttime) |>
+  as.numeric(units="mins") |>
   round(1)
 ```
 

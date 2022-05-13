@@ -12,7 +12,7 @@ quick_delin <- function(stimuli, n_points = 0) {
   if (!is.numeric(n_points) || n_points < 0) {
     stop("n_points must be an integer >= 0")
   }
-  stimuli <- validate_stimlist(stimuli) %>%
+  stimuli <- validate_stimlist(stimuli) |>
     remove_tem()
 
   # save images to temp dir

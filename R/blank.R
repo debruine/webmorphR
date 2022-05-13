@@ -14,11 +14,11 @@
 blank <- function(n = 1, width = 100, height = 100, color = "white", names = "img") {
   # fix name length
   if (length(names) < n && n > 1) {
-    names <- rep_len(names, n) %>% paste0("_", 1:n)
+    names <- rep_len(names, n)|> paste0("_", 1:n)
   }
 
   # fix color length
-  color <- sapply(color, color_conv) %>% rep_len(n)
+  color <- sapply(color, color_conv) |> rep_len(n)
   names(color) <- names
 
   # make stim

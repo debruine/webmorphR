@@ -1,129 +1,3 @@
-#' Average Images
-#'
-#' @param stimuli images to average (list of class stimlist)
-#' @param texture logical, textured average
-#' @param norm how to normalise
-#' @param normpoint points for twopoint normalisation
-#'
-#' @return stimlist with average image and template
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#'   avg <- demo_stim() %>% avg()
-#' }
-avg <- function(stimuli,
-                texture = TRUE,
-                norm = c("none", "twopoint", "rigid"),
-                normpoint = 0:1) {
-  stimuli <- validate_stimlist(stimuli, TRUE)
-  if (length(stimuli) > 100) {
-    stop("We can't average more than 100 images at a time. You can create sub-averages with equal numbers of faces and average those together.")
-  }
-
-  norm <- match.arg(norm)
-  format <- "jpg" #match.arg(format)
-
-  # save images locally
-  tdir <- tempfile()
-  files <- write_stim(stimuli, tdir, format = "jpg") %>% unlist()
-  upload <- lapply(files, httr::upload_file)
-  names(upload) <- sprintf("upload[%d]", 0:(length(upload)-1))
-
-  settings <- list(
-    texture = ifelse(isTRUE(as.logical(texture)), "true", "false"),
-    norm = norm,
-    normPoint0 = normpoint[[1]],
-    normPoint1 = normpoint[[2]],
-    format = format
-  )
-
-  # send request to webmorph and handle zip file
-  ziptmp <- paste0(tdir, "/avg.zip")
-  httr::timeout(30 + 10*length(stimuli))
-  httr::set_config( httr::config( ssl_verifypeer = 0L ) )
-  url <- paste0(wm_opts("server"), "/scripts/webmorphR_avg")
-  r <- httr::POST(url, body = c(upload, settings) ,
-                  httr::write_disk(ziptmp, TRUE))
-
-  utils::unzip(ziptmp, exdir = paste0(tdir, "/avg"))
-  #resp <- httr::content(r)
-
-  avg <- paste0(tdir, "/avg") %>%
-    read_stim() %>%
-    setnames("avg")
-  unlink(tdir, recursive = TRUE) # clean up temp directory
-  # avg %>% draw_tem() %>% plot()
-
-  avg
-}
-
-#' Continuum
-#'
-#' @param from_img image to start at
-#' @param to_img image to end at
-#' @param from starting percentage
-#' @param to ending percentage
-#' @param by step size
-#' @param ... arguments to pass to \code{\link{trans}}
-#'
-#' @return stimlist
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#'   stimuli <- demo_stim()
-#'   cont <- continuum(stimuli$f_multi, stimuli$m_multi)
-#'   animate(cont, 20, rev = TRUE)
-#' }
-continuum <- function(from_img, to_img, from = 0, to = 1, by = 0.1, ...) {
-  steps <- seq(from, to, by)
-  trans(from_img, from_img, to_img, steps, steps, steps, ...)
-}
-
-#' Loop
-#'
-#' @param stimuli list of images to morph between
-#' @param steps number of steps from one image to the next
-#' @param ... arguments to pass to \code{\link{trans}}
-#'
-#' @return stimlist
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#'   stimuli <- demo_stim("zoom") %>%
-#'     align(procrustes = TRUE) %>%
-#'     crop_tem(250, 50, 50, 50) %>%
-#'     resize(300)
-#'   loop <- loop(stimuli, 5)
-#'   animate(loop, 10)
-#' }
-loop <- function(stimuli, steps = 10, ...) {
-  stimuli <- validate_stimlist(stimuli, TRUE)
-  if (length(stimuli) < 2) {
-    stop("You need at least 2 stimuli")
-  }
-  if (steps < 2) {
-    stop("You need at least 2 steps")
-  }
-
-  from_img <- stimuli
-  to_img <- c(stimuli[2:length(stimuli)], stimuli[1])
-  p <- seq(0, 1, length.out = steps+1)
-  p <- p[1:(length(p)-1)]
-  loop <- trans(from_img, from_img, to_img, p, p, p)
-
-  # get the right order
-  order <- paste0(names(from_img), "_", names(to_img)) %>%
-    lapply(grepl, names(loop)) %>%
-    lapply(which) %>%
-    unlist()
-
-  loop[order]
-}
-
-
 #' Transform Images
 #'
 #' @param trans_img image(s) to transform (list of class stimlist)
@@ -144,7 +18,7 @@ loop <- function(stimuli, steps = 10, ...) {
 #'   stimuli <- demo_stim()
 #'   sexdim <- trans(stimuli, stimuli$f_multi, stimuli$m_multi,
 #'                   shape = c(fem = -0.5, masc = 0.5))
-#'   sexdim %>% draw_tem() %>% label() %>% plot()
+#'   sexdim |> draw_tem() |> label() |> plot()
 #' }
 #'
 trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
@@ -176,12 +50,12 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
   nondupes <- setdiff(1:n, dupes$b)
 
   # take care of duplicate names
-  dupenames <- duplicated(names(to_upload)[nondupes]) %>% which()
+  dupenames <- duplicated(names(to_upload)[nondupes]) |> which()
   while(length(dupenames) > 0) {
     dnames <- nondupes[dupenames]
     names(to_upload)[dnames] <- paste0(
       names(to_upload[dnames]), "_")
-    dupenames <- duplicated(names(to_upload)[nondupes]) %>% which()
+    dupenames <- duplicated(names(to_upload)[nondupes]) |> which()
   }
   from_start <- length(trans_img)+1
   to_start <- length(trans_img)+length(from_img) +1
@@ -191,7 +65,7 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
 
   # save images locally
   tdir <- tempfile()
-  files <- write_stim(to_upload[nondupes], tdir, format = "jpg") %>% unlist()
+  files <- write_stim(to_upload[nondupes], tdir, format = "jpg") |> unlist()
   if (length(files) > 200) {
     stop("Sorry! We can't upload more than 100 images at a time. You will need to break your transform into smaller chunks.")
   }
@@ -202,14 +76,14 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
   filenames <- list(trans = names(trans_img),
                     from = names(from_img),
                     to = names(to_img))
-  n_img <- sapply(filenames, length) %>% max()
-  filenames <- lapply(filenames, rep_len, n_img) %>% as.data.frame()
+  n_img <- sapply(filenames, length) |> max()
+  filenames <- lapply(filenames, rep_len, n_img) |> as.data.frame()
   filenames$trans <- factor(filenames$trans, unique(filenames$trans))
   filenames$from <- factor(filenames$from, unique(filenames$from))
   filenames$to <- factor(filenames$to, unique(filenames$to))
 
-  n_param <- list(shape, color, texture) %>%
-    sapply(length) %>% max()
+  n_param <- list(shape, color, texture) |>
+    sapply(length) |> max()
   # use indices, not values, so crossing doesn't mangle order
   param <- data.frame(
     shape = rep_len(seq_along(shape), n_param),
@@ -217,7 +91,17 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
     texture = rep_len(seq_along(texture), n_param)
   )
 
-  batch <- tidyr::crossing(param, filenames)
+  #batch <- tidyr::crossing(param, filenames)
+  n <- nrow(filenames)
+  batch <- data.frame(
+    shape = rep(param$shape, each = n),
+    color = rep(param$color, each = n),
+    texture = rep(param$texture, each = n),
+    trans = rep(filenames$trans, times = n_param),
+    from = rep(filenames$from, times = n_param),
+    to = rep(filenames$to, times = n_param)
+  )
+  
   
   # translate back to characters or numbers
   batch$trans <- as.character(batch$trans)
@@ -230,7 +114,8 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
   # clean params
   for (x in c("shape", "color", "texture")) {
     is_pcnt <- grepl("%", batch[[x]])
-    if (is.character(batch[[x]])) batch[x] <- gsub("%", "", batch[[x]]) %>% as.numeric()
+    if (is.character(batch[[x]])) 
+      batch[x] <- gsub("%", "", batch[[x]]) |> as.numeric()
     # percents are definitely percents
     batch[[x]][is_pcnt] <- batch[[x]][is_pcnt] / 100
 
@@ -244,7 +129,7 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
     n <- nrow(batch)
     outname <- gsub("\\.(jpg|gif|png)$", "", outname)
     if (length(outname) < n) {
-      outname <- rep_len(outname, n) %>%
+      outname <- rep_len(outname, n) |>
         paste0("_", 1:n)
     }
     batch$outname <- outname[1:n]
@@ -259,9 +144,9 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
 
     imgnames <- list(trans = trans_names,
                      from = from_names,
-                     to = to_names) %>%
-      lapply(function(x) if (length(x)==1) "" else x) %>%
-      lapply(rep_len, n_img) %>%
+                     to = to_names) |>
+      lapply(function(x) if (length(x)==1) "" else x) |>
+      lapply(rep_len, n_img) |>
       as.data.frame()
 
     # factorise to keep order
@@ -286,10 +171,10 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
         is.null(names(shape)) &&
         is.null(names(color)) &&
         is.null(names(texture))) {
-      paramnames$shape <- nrow(paramnames) %>%
-        as.character() %>%
-        nchar() %>%
-        paste0("%0", ., "d") %>%
+      paramnames$shape <- nrow(paramnames) |>
+        as.character() |>
+        nchar() |>
+        paste0("%0", . = _, "d") |>
         sprintf(1:nrow(paramnames))
     }
 
@@ -311,18 +196,32 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
     if (all(paramnames$color == paramnames$texture))
       paramnames$texture <- ""
 
-    o <- tidyr::crossing(paramnames, imgnames)
-    batch$outname <- paste(o$trans, o$from, o$to,
-                           o$shape, o$color, o$texture,
-                           sep = "_") %>%
-      gsub("_{2,}", "_", .) %>%
-      gsub("^_", "", .) %>%
-      gsub("_$", "", .)
+    # o <- tidyr::crossing(paramnames, imgnames)
+    # batch$outname <- paste(o$trans, o$from, o$to,
+    #                        o$shape, o$color, o$texture,
+    #                        sep = "_") |>
+    #   gsub("_{2,}", "_", x = _) |>
+    #   gsub("^_", "", x = _) |>
+    #   gsub("_$", "", x = _)
+    
+    pn <- nrow(paramnames)
+    imgn <- nrow(imgnames)
+    batch$outname <- paste(sep = "_",
+      rep(imgnames$trans, times = pn),
+      rep(imgnames$from, times = pn),
+      rep(imgnames$to, times = pn),
+      rep(paramnames$shape, each = imgn),
+      rep(paramnames$color, each = imgn),
+      rep(paramnames$texture, each = imgn)
+    ) |>
+      gsub("_{2,}", "_", x = _) |>
+      gsub("^_", "", x = _) |>
+      gsub("_$", "", x = _)
   }
 
   # fix missing or duplicate outnames
   if (all(batch$outname == "") ||
-      unique(batch$outname) %>% length() == 1) {
+      unique(batch$outname) |> length() == 1) {
     batch$outname <- paste0("trans", seq_along(batch$outname))
   }
 
@@ -360,49 +259,16 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
   utils::unzip(ziptmp, exdir = file.path(tdir, "trans"))
 
   # check return zip
-  nfiles <- file.path(tdir, "trans") %>% list.files() %>% length()
+  nfiles <- file.path(tdir, "trans") |> list.files() |> length()
   if (nfiles == 0) {
     resp <- httr::content(r)
     stop(resp$errorText, call. = FALSE)
   }
 
-  trans <- file.path(tdir, "trans") %>%
+  trans <- file.path(tdir, "trans") |>
     read_stim()
   unlink(tdir, recursive = TRUE) # clean up temp directory
-  # trans %>% draw_tem() %>% plot()
+  # trans |> draw_tem() |> plot()
 
   trans[batch$outname]
-}
-
-
-#' Symmetrise Images
-#'
-#' @param stimuli images to symmatrise (list of class stimlist)
-#' @param shape,color amount of symmetry (0 for none, 1.0 for perfect)
-#' @param tem_id template ID to be passed to \code{\link{tem_def}} (usually "frl" or "fpp106")
-#' @param ... Additional arguments to pass to \code{\link{trans}}
-#'
-#' @return stimlist with symmetrised images and templates
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#'   stimuli <- demo_stim()[1]
-#'
-#'   sym_both <- symmetrize(stimuli)
-#'   sym_shape <- symmetrize(stimuli, color = 0)
-#'   sym_color <- symmetrize(stimuli, shape = 0)
-#'   sym_anti <- symmetrize(stimuli, shape = -1.0, color = 0)
-#' }
-symmetrize <- function(stimuli, shape = 1.0, color = 1.0, tem_id = "frl", ...) {
-  stimuli <- validate_stimlist(stimuli, TRUE)
-
-  mirror <- mirror(stimuli, tem_id) %>%
-    setnames(prefix = "mirror_")
-
-  sym <- trans(trans_img = stimuli, from_img = stimuli, to_img = mirror,
-               shape = shape[[1]]/2, color = color[[1]]/2, texture = color[[1]]/2,
-               outname = names(stimuli), ...)
-
-  sym
 }

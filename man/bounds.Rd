@@ -18,7 +18,7 @@ A list of min and max x and y values
 Get template bounds
 }
 \examples{
-demo_stim() \%>\% bounds() \%>\% str()
+demo_stim() |> bounds() |> str()
 
-demo_stim() \%>\% bounds(each = TRUE)
+demo_stim() |> bounds(each = TRUE)
 }

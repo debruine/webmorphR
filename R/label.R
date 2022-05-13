@@ -6,7 +6,7 @@
 #' @param stimuli list of class stimlist
 #' @param ... arguments to pass on to \code{mlabel} or \code{gglabel}
 #'
-#' @return
+#' @return stimlist with labelled images
 #' @export
 #'
 #' @examples
@@ -194,6 +194,10 @@ mlabel <- function(stimuli,
 #'   alpha = 0.5
 #' )
 gglabel <- function(stimuli, label = TRUE, x = 0.5, y = 0.95, geom = "text", ...) {
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("You need to install the package ggplot2 to use gglabel or label with ggplot options")
+  }
+  
   stimuli <- validate_stimlist(stimuli)
   
   if (isTRUE(label)) label <- names(stimuli)
@@ -223,7 +227,7 @@ gglabel <- function(stimuli, label = TRUE, x = 0.5, y = 0.95, geom = "text", ...
   dots$y <- ifelse(dots$y <= 1, dots$y*h, dots$y)
   
   for (i in seq_along(stimuli)) {
-    args <- lapply(dots, `[[`, i)
+    args <- lapply(dots, .bb, i)
     info <- magick::image_info(stimuli[[i]]$img)
     res <- gsub("x.*$", "", info$density) |> as.integer()
     

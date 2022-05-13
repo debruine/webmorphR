@@ -20,5 +20,5 @@ stimlist
 Plot stim
 }
 \examples{
-demo_stim("test")[[1]] \%>\% plot()
+demo_stim("test")[[1]] |> plot()
 }

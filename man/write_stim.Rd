@@ -37,6 +37,6 @@ Write tems and images to files
 }
 \examples{
 \dontrun{
-  demo_stim() \%>\% write_stim("test_faces", format = "jpg")
+  demo_stim() |> write_stim("test_faces", format = "jpg")
 }
 }

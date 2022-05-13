@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-#' gif <- demo_stim() %>% animate()
+#' gif <- demo_stim() |> animate()
 animate <- function(stimuli, fps = 1, loop = 0, rev = FALSE) {
   if (length(stimuli) < 2) {
     stop("You need at least two images in the list to make an animated gif")
@@ -26,6 +26,6 @@ animate <- function(stimuli, fps = 1, loop = 0, rev = FALSE) {
     loop = loop,
     optimize = TRUE)
 
-  new_stim(x, "animation.gif") %>%
+  new_stim(x, "animation.gif") |>
     new_stimlist()
 }

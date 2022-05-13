@@ -13,10 +13,10 @@
 #' frl$points[1:10, ]
 #'
 #' fpp106 <- tem_def("fpp106")
-#' fpp106$lines %>% str()
+#' fpp106$lines |> str()
 #'
 #' fpp83 <- tem_def("fpp83")
-#' fpp83$mask %>% str()
+#' fpp83$mask |> str()
 #'
 tem_def <- function(tem_id = "frl", path = NULL) {
 
@@ -71,19 +71,19 @@ tem_def <- function(tem_id = "frl", path = NULL) {
 #' @export
 #'
 #' @examples
-#' s <- demo_stim()[1] %>%
+#' s <- demo_stim()[1] |>
 #'   subset_tem(features("face"))
 #' s[[1]]$lines
 #' 
 #' # remove all lines
-#' s2 <- s %>%
+#' s2 <- s |>
 #'   change_lines(line_id = 1:8, pts = NULL)
 #' s2[[1]]$lines
 #' 
 #' draw_tem(s2, pt.shape = "index", pt.size = 10)
 #' 
 #' # add new line
-#' s3 <- s2 %>%
+#' s3 <- s2 |>
 #'   change_lines(line_id = 1, pts = c(0, 26, 1, 27, 2, 6:14, 5, 29, 4, 28, 3, 25:15, 0))
 #' s3[[1]]$lines
 #' draw_tem(s3, line.color = "hotpink", line.alpha = 1)
@@ -111,13 +111,13 @@ change_lines <- function(stimuli, line_id = 1, pts = NULL) {
 #' @export
 #'
 #' @examples
-#' demo_stim()[1] %>%
-#'   subset_tem(features("gmm")) %>%
+#' demo_stim()[1] |>
+#'   subset_tem(features("gmm")) |>
 #'   draw_tem()
 #'
 subset_tem <- function(stimuli, ..., keep = TRUE) {
   stimuli <- validate_stimlist(stimuli)
-  points <- list(...) %>% unlist() %>% unique() %>% sort()
+  points <- list(...) |> unlist() |> unique() |> sort()
   
   for (i in seq_along(stimuli)) {
     oldpts <- stimuli[[i]]$points
@@ -134,7 +134,7 @@ subset_tem <- function(stimuli, ..., keep = TRUE) {
     }
     
     # check for bad points
-    if (setdiff(keep_idx, full_idx) %>% length() > 0) {
+    if (setdiff(keep_idx, full_idx) |> length() > 0) {
       stop("Some points are not in the template")
     }
     
@@ -148,8 +148,8 @@ subset_tem <- function(stimuli, ..., keep = TRUE) {
     # remove points from lines and renumber
     newlines <- lapply(oldlines, function(x) {
       # translate tem idx to r idx
-      l <- trans[(x + 1)] %>%
-        stats::na.omit() %>%
+      l <- trans[(x + 1)] |>
+        stats::na.omit() |>
         as.vector()
       if (length(l) > 1) {
         # only return if >1 points remain
@@ -192,7 +192,7 @@ features <- function(..., tem_id = c("frl", "dlib70")) {
   # 0-based for compatibility with webmorph
   tem_id <- match.arg(tem_id)
   
-  named_features <- list(...) %>% unlist()
+  named_features <- list(...) |> unlist()
   
   if (tem_id == "frl") {
     features <- list(
@@ -240,107 +240,12 @@ features <- function(..., tem_id = c("frl", "dlib70")) {
   features$all <- 0:max(unlist(features))
   
   # unavailable and duplicate features are ignored
-  features[named_features] %>%
-    unlist() %>% unname() %>%
-    unique() %>% sort()
+  features[named_features] |>
+    unlist() |> unname() |>
+    unique() |> sort()
 }
 
 
-#' Templates to XML
-#' 
-#' Make an XML file with the template points for a set of stimuli. For use with training dlib.
-#'
-#' @param stimuli list of class stimlist
-#' @param dir path to save XML file and images
-#'
-#' @export
-#'
-tem_to_xml <- function(stimuli, dir = "images") {
-  stimuli <- validate_stimlist(stimuli)
-  
-  # write images to dir ----
-  if (wm_opts("verbose")) message("Writing images to directory")
-  
-  paths <- stimuli %>%
-    remove_tem() %>%
-    write_stim(dir, format = "jpg") %>%
-    unlist() %>% # gets rid of NULL entries for tems
-    sapply(normalizePath)
-  
-  # get bounding boxes ----
-  if (wm_opts("verbose")) {
-    pb <- progress::progress_bar$new(
-      total = length(paths), clear = FALSE,
-      format = "Detecting face locations [:bar] :current/:total :elapsedfull"
-    )
-    pb$tick(0)
-    Sys.sleep(0.5)
-    pb$tick(0)
-  }
-  
-  pyscript <- system.file("python/facedetect.py", package = "webmorphR")
-  reticulate::source_python(pyscript)
-  boxes <- lapply(paths, function(p) {
-      if (wm_opts("verbose")) pb$tick()
-      py_get_location(p)
-    }) %>%
-    lapply(unlist)
-  
-  # create XML ----
-  if (wm_opts("verbose")) {
-    pb <- progress::progress_bar$new(
-      total = length(paths), clear = FALSE,
-      format = "Creating XML file [:bar] :current/:total :elapsedfull"
-    )
-    pb$tick(0)
-    Sys.sleep(0.5)
-    pb$tick(0)
-  }
-  
-  imgs <- mapply(function(stim, path, box) {
-    if (wm_opts("verbose")) pb$tick()
-    
-    i <- -1
-    pts <- apply(stim$points, 2, function(pt) { 
-      i <<- i + 1
-      sprintf("<part name='%03.f' x='%.0f' y='%.0f'/>", i, 
-              round(pt["x"]), round(pt["y"]))
-    }) %>%
-      paste(collapse = "\n      ")
-    
-    if (is.null(box)) {
-      minpt <- apply(stim$points, 1, min)
-      maxpt <- apply(stim$points, 1, max)
-      box <- c(top = max(0, minpt["y"]-10), 
-               right = min(stim$width, maxpt["x"]+10), 
-               bottom = min(stim$height, maxpt["y"]+10), 
-               left = max(0, minpt["x"]-10)
-               ) %>% round()
-    }
-    
-    sprintf("  <image file='%s'>
-    <box top='%d' left='%d' width='%d' height='%d'>
-      %s
-    </box>
-  </image>", path, 
-            box[[1]], box[[4]], 
-            abs(box[[2]]-box[[4]]), 
-            abs(box[[3]]-box[[1]]), pts)
-  }, stimuli, paths, boxes) %>%
-    paste(collapse = "\n")
-  
-  # write XML ----
-  xml <- sprintf("<?xml version='1.0' encoding='ISO-8859-1'?>
-<?xml-stylesheet type='text/xsl' href='image_metadata_stylesheet.xsl'?>
-<dataset>
-<name>%s</name>
-<images>
-%s
-</images>
-</dataset>", "Image Set", imgs)
-  
-  write(xml, file.path(dir, "images.xml"))
-}
 
 #' Remove templates
 #'
@@ -350,7 +255,7 @@ tem_to_xml <- function(stimuli, dir = "images") {
 #' @export
 #'
 #' @examples
-#' demo_stim() %>% remove_tem()
+#' demo_stim() |> remove_tem()
 remove_tem <- function(stimuli) {
   stimuli <- validate_stimlist(stimuli)
   
@@ -378,15 +283,15 @@ remove_tem <- function(stimuli) {
 #' 
 #' same_tems(stim)
 #' 
-#' c(stim, stim2) %>% same_tems()
+#' c(stim, stim2) |> same_tems()
 same_tems <- function(stimuli) {
   stimuli <- validate_stimlist(stimuli)
   
-  pts <- lapply(stimuli, `[[`, "points") %>%
-    sapply(ncol) %>%
+  pts <- lapply(stimuli, `[[`, "points") |>
+    sapply(ncol) |>
     unique()
   
-  lines <- lapply(stimuli, `[[`, "lines") %>%
+  lines <- lapply(stimuli, `[[`, "lines") |>
     unique()
   
   if (length(pts) == 1 && length(lines) == 1) {
@@ -408,27 +313,17 @@ same_tems <- function(stimuli) {
 #' @export
 #'
 #' @examples
-#' demo_stim() %>% get_point(0:1)
+#' demo_stim() |> get_point(0:1)
 get_point <- function(stimuli, pt = 0) {
   stimuli <- validate_stimlist(stimuli, TRUE)
   
-  pts <- lapply(stimuli, `[[`, "points") %>%
-    sapply(`[`, c('x', 'y'), pt+1) %>%
-    t() %>%
-    as.data.frame()
+  all_pts <- tems_to_array(stimuli)
+  # this function reverses y-coordinates
   
-  combo <- expand.grid(coord = c("x", "y"), pt = pt)
-  names(pts) <- paste(combo$coord, combo$pt, sep = "_")
-  
-  dplyr::as_tibble(pts, rownames = "image") %>%
-    tidyr::pivot_longer(cols = -("image"),
-                        names_to = c("coord", "point"),
-                        names_sep = "_",
-                        names_transform = list(point = as.integer),
-                        values_to = "value"
-    ) %>%
-    tidyr::pivot_wider(
-      names_from = .data$coord,
-      values_from = .data$value
-    )
+  data.frame(
+    image = rep(names(stimuli), each = length(pt)),
+    point = rep(pt, times = length(stimuli)),
+    x = all_pts[pt+1, "X", ] |> matrix(ncol = 1),
+    y = all_pts[pt+1, "Y", ] |> matrix(ncol = 1) * -1
+  )
 }

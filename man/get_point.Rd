@@ -18,5 +18,5 @@ data frame of x and y coordinates of the specified point(s) for each stimulus
 Get a data frame of the x and y coordinates of a template point
 }
 \examples{
-demo_stim() \%>\% get_point(0:1)
+demo_stim() |> get_point(0:1)
 }

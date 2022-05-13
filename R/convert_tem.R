@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-#' fpp106 <- demo_stim() %>% convert_tem("guess", "fpp106")
+#' fpp106 <- demo_stim() |> convert_tem("guess", "fpp106")
 convert_tem <- function(stimuli, 
                         from = c("guess", "frl", "fpp106", "fpp83", "dlib70", "dlib7"), 
                         to = c("frl", "fpp106", "fpp83", "dlib70", "dlib7")) {
@@ -18,7 +18,7 @@ convert_tem <- function(stimuli,
   to <- match.arg(to)
   
   if (from == "guess") {
-    pt_n <- lapply(stimuli, `[[`, "points") %>% sapply(ncol)
+    pt_n <- lapply(stimuli, `[[`, "points") |> sapply(ncol)
     
     from <- dplyr::case_when(
       pt_n == 189 ~ "frl",
@@ -43,7 +43,7 @@ convert_tem <- function(stimuli,
               dimnames = list(
                 to_tem$points$name,
                 c("x", "y")
-              )) %>% t()
+              )) |> t()
   
   for (i in seq_along(stimuli)) {
     if (to == from[i]) next # skip if the same
@@ -68,15 +68,15 @@ convert_tem <- function(stimuli,
     draw_tem(stimuli[[i]], pt.shape = "index", pt.size = 15)
     
     # check for conversion
-    x_conversion <- paste0(from[i], ".x") %>% tolower()
-    y_conversion <- paste0(from[i], ".y") %>% tolower()
+    x_conversion <- paste0(from[i], ".x") |> tolower()
+    y_conversion <- paste0(from[i], ".y") |> tolower()
     
     if (all(c(x_conversion, y_conversion) %in% names(to_tem$points))) {
-      from_x   <- as.list(to_tem$points[[x_conversion]]) %>%
+      from_x   <- as.list(to_tem$points[[x_conversion]]) |>
         lapply(`+`, 1)
       to_x <- which(!sapply(from_x, is.null))
       from_x <- from_x[to_x]
-      from_y <- as.list(to_tem$points[[y_conversion]]) %>%
+      from_y <- as.list(to_tem$points[[y_conversion]]) |>
         lapply(`+`, 1)
       to_y <- which(!sapply(from_y, is.null))
       from_y <- from_y[to_y]

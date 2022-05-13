@@ -46,14 +46,14 @@ test_that("different crops", {
 
   w <- c(0.5, .6)
   ctems <- crop(stimuli, w, w)
-  expect_equivalent(width(ctems) %>% unname(), ow*w)
-  expect_equivalent(height(ctems) %>% unname(), ow*w)
+  expect_equivalent(width(ctems) |> unname(), ow*w)
+  expect_equivalent(height(ctems) |> unname(), ow*w)
   expect_equal(stimuli[[1]]$points - c(ow/4, ow/4), ctems[[1]]$points)
   expect_equal(stimuli[[2]]$points  - c(ow*.2, ow*.2), ctems[[2]]$points)
 })
 
 test_that("no tem", {
-  notem <- demo_stim() %>% remove_tem()
+  notem <- demo_stim() |> remove_tem()
   x <- crop(notem, 300, 300)
   comp <- c(f_multi = 300, m_multi = 300)
   expect_equal(width(x), comp)

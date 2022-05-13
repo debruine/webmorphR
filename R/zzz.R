@@ -27,5 +27,5 @@
     #paste0("http://doi.org/", utils::citation("webmorphR")$doi),
     "************\n",
     sep = "\n"
-  ) %>% packageStartupMessage()
+  ) |> packageStartupMessage()
 }

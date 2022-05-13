@@ -84,7 +84,7 @@ ind <- plot(face_set,
 tem <- draw_tem(avg, pt.alpha = 0.5, line.alpha = 0.25)
 
 # combine the ind and tem stimuli and plot
-c(ind, tem) %>% plot(nrow = 1)
+c(ind, tem) |> plot(nrow = 1)
 ```
 
 
@@ -116,8 +116,8 @@ Next, mask the images with rainbow colours and crop them.
 rainbow <- c("#983E82", "#E2A458", "#F5DC70", 
              "#59935B", "#467AAC", "#61589C")
 
-stimuli <- dist_avg %>%
-  mask(c("face", "neck", "ears"), fill = rainbow) %>%
+stimuli <- dist_avg |>
+  mask(c("face", "neck", "ears"), fill = rainbow) |>
   crop(0.6, 0.8)
 
 plot(stimuli, nrow = 2)
@@ -137,13 +137,13 @@ Easily create figures to illustrate your research. The code below subsets the `s
 
 ```{r repro}
 c(subset(stimuli, "average"),
-  subset(stimuli, "distinctive")) %>%
-  setnames(pattern = "_03_", replacement = " ") %>%
-  pad(120, 0, 0, 0, fill = "black") %>%
+  subset(stimuli, "distinctive")) |>
+  setnames(pattern = "_03_", replacement = " ") |>
+  pad(120, 0, 0, 0, fill = "black") |>
   label(size = 90, 
         color = rainbow, 
         gravity = "north",
-        location = "+0+10") %>%
+        location = "+0+10") |>
   plot(nrow = 2)
 ```
 
@@ -168,21 +168,21 @@ py_install("face_recognition", envname = ".venv")
 Auto-delineation takes a few seconds per face, so you will see a progress bar in the console. You may also see some startup output from reticulate the first time you use this function. For now, only the 7-point auto-delineation is available built in. See the [Making Stimuli vignette](articles/stimuli.html) for instructions on adding the 70-point auto-delineation (it's ~100MB, which is too big to include in an R package).
 
 ```{r delin-dlib7}
-stimuli <- demo_stim("zoom") %>% 
-  resize(1/2) %>%
+stimuli <- demo_stim("zoom") |> 
+  resize(1/2) |>
   auto_delin(replace = TRUE)
 
-draw_tem(stimuli, pt.size = 10) %>% plot()
+draw_tem(stimuli, pt.size = 10) |> plot()
 ```
 
 Alternatively, you can use the Face++ auto-delineator by setting `style = "fpp106"`. This requires you to set up a Face++ account and set some environment variables (see the [Making Stimuli vignette](articles/stimuli.html)). It transfers your images to Face++, so make sure you read their privacy information.
 
 ```{r delin-fpp}
-stimuli <- demo_stim("zoom") %>% 
-  resize(1/2) %>%
+stimuli <- demo_stim("zoom") |> 
+  resize(1/2) |>
   auto_delin(style = "fpp106", replace = TRUE)
 
-draw_tem(stimuli, pt.size = 8) %>% plot()
+draw_tem(stimuli, pt.size = 8) |> plot()
 ```
 
 ### Align and crop
@@ -190,8 +190,8 @@ draw_tem(stimuli, pt.size = 8) %>% plot()
 Now you can procrustes align the images and crop them all to the same dimensions.
 
 ```{r align-crop}
-aligned <- stimuli %>%
-  align(procrustes = TRUE, patch = TRUE) %>%
+aligned <- stimuli |>
+  align(procrustes = TRUE, patch = TRUE) |>
   crop_tem(120, 20, 20, 20)
 
 plot(aligned)
@@ -202,8 +202,8 @@ plot(aligned)
 Add 50 pixels of image labels.
 
 ```{r labelled}
-labelled <- aligned %>%
-  pad(50, 0, 0, 0, fill = "black") %>%
+labelled <- aligned |>
+  pad(50, 0, 0, 0, fill = "black") |>
   label(c("15cm", "30cm", "45cm", "60cm"), color = "white")
   
 plot(labelled)

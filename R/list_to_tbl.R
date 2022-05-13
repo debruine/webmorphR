@@ -20,15 +20,15 @@
 #' list_to_tbl(list_format, rownames = "item")
 #'
 list_to_tbl <- function(list, rownames = NULL) {
-  tbl_format <- list %>%
+  tbl_format <- list |>
     # handle list() and NULL
     lapply(function(x) {
       if (length(x) == 0) { list(._. = NA) } else { x }
-    })  %>%
+    })  |>
     # handle list(x = NULL)
     lapply(lapply, function(x) {
       if (length(x) == 0) { NA } else { x }
-    })  %>%
+    })  |>
     dplyr::bind_rows()
 
   tbl_format$._. <- NULL

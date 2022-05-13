@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-#' demo_stim() %>% average_tem()
+#' demo_stim() |> average_tem()
 #'
 average_tem <- function(stimuli, name = "average") {
   stimuli <- validate_stimlist(stimuli, TRUE)
@@ -19,9 +19,9 @@ average_tem <- function(stimuli, name = "average") {
 
   avg <- apply(pt, c(1, 2), mean)
 
-  w <- width(stimuli) %>% mean()
-  h <- height(stimuli) %>% mean()
-  img <- crop(stimuli, w, h) %>% get_imgs()
+  w <- width(stimuli) |> mean()
+  h <- height(stimuli) |> mean()
+  img <- crop(stimuli, w, h) |> get_imgs()
 
   stim <- new_stim(
     magick::image_average(img),

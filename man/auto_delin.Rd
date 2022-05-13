@@ -39,13 +39,13 @@ FACEPLUSPLUS_SECRET="1234567890abcdefghijk"
 \examples{
 \dontrun{
   # requires python
-  auto_high <- demo_stim()[1] \%>\%
+  auto_high <- demo_stim()[1] |>
     auto_delin(replace = TRUE) # replace existing templates
 
   # requires an API key in .Renviron
-  auto_low <- demo_stim()[1] \%>\%
+  auto_low <- demo_stim()[1] |>
     auto_delin(style = "fpp106", replace = TRUE)
 
-  c(auto_high, auto_low) \%>\% draw_tem() \%>\% plot()
+  c(auto_high, auto_low) |> draw_tem() |> plot()
 }
 }

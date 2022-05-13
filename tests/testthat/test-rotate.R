@@ -49,7 +49,7 @@ test_that("works", {
 })
 
 test_that("no tem", {
-  notem <- stimuli %>% crop(c(0.7, 1.2)) %>% remove_tem()
+  notem <- stimuli |> crop(c(0.7, 1.2)) |> remove_tem()
   x <- rotate(notem, 90, keep_size = FALSE)
   expect_equal(width(x), height(notem))
   expect_equal(height(x), width(notem))
@@ -57,8 +57,8 @@ test_that("no tem", {
 
 
 test_that("horiz_eyes", {
-  z <- stimuli %>% rotate(45) %>% horiz_eyes()
-  pt <- lapply(z, `[[`, "points") %>%
+  z <- stimuli |> rotate(45) |> horiz_eyes()
+  pt <- lapply(z, `[[`, "points") |>
     sapply(`[`, 2, 1:2)
 
   expect_equal(pt[1, ], pt[2, ], tolerance = .0001)

@@ -45,7 +45,7 @@ The lines are a list of vectors. Each vector contains the line's point indices, 
 
 ```{r}
 # the first 10 lines
-stimuli[[1]]$lines[1:10] %>% str()
+stimuli[[1]]$lines[1:10] |> str()
 ```
 
 NB: Currently, I'm assuming any lines that start and end with the same point are closed shapes, so you can't make tear-drop shapes without doubling the end coordinate. I might change this someday, so there is also a vector for flagging whether shapes are closed; this is currently always FALSE.
@@ -77,12 +77,12 @@ fpp83 <- auto_delin(s, "fpp83", replace = TRUE)
 
 
 ```{r, warning = FALSE}
-c(s, dlib7, dlib70, fpp106, fpp83) %>%
-  setnames(c("frl", "dlib7", "dlib70", "fpp106", "fpp83")) %>%
-  draw_tem() %>%
-  crop_tem(50) %>%
-  pad(.15, 0, 0, 0) %>%
-  gglabel(size = 20) %>%
+c(s, dlib7, dlib70, fpp106, fpp83) |>
+  setnames(c("frl", "dlib7", "dlib70", "fpp106", "fpp83")) |>
+  draw_tem() |>
+  crop_tem(50) |>
+  pad(.15, 0, 0, 0) |>
+  gglabel(size = 20) |>
   plot()
 ```
 
@@ -97,12 +97,12 @@ fpp83s <- auto_delin(smile, "fpp83", replace = TRUE)
 ```
 
 ```{r, warning = FALSE}
-c(dlib7s, dlib70s, fpp106s, fpp83s) %>%
-  setnames(c("dlib7", "dlib70", "fpp106", "fpp83")) %>%
-  draw_tem() %>%
-  crop_tem(50) %>%
-  pad(.15, 0, 0, 0) %>%
-  gglabel(size = 20) %>%
+c(dlib7s, dlib70s, fpp106s, fpp83s) |>
+  setnames(c("dlib7", "dlib70", "fpp106", "fpp83")) |>
+  draw_tem() |>
+  crop_tem(50) |>
+  pad(.15, 0, 0, 0) |>
+  gglabel(size = 20) |>
   plot()
 ```
 
@@ -125,7 +125,7 @@ RETICULATE_PYTHON="~/.virtualenvs/webmorph/bin/python"
 ```
 
 ```{r}
-frl <- demo_stim("test", "m_multi") %>% crop(.8, .8)
+frl <- demo_stim("test", "m_multi") |> crop(.8, .8)
 dlib7 <- auto_delin(frl, "dlib7", replace = TRUE)
 dlib70 <- auto_delin(frl, "dlib70", replace = TRUE)
 ```
@@ -216,19 +216,19 @@ The 83-point template has a confusing structure and is the only template where t
 Use the `draw_tem()` function to show the delineations. By default, points are translucent green circles and lines are translucent blue.
 
 ```{r}
-stimuli %>%
-  draw_tem() %>%
+stimuli |>
+  draw_tem() |>
   plot()
 ```
 
 You can change the default colours and translucency with the `line.color` `pt.color` and `line.alpha` and `pt.alpha` arguments. Change the point shape with `pt.shape`. Remove the image and set the background color with the `bg` argument.
 
 ```{r delin-custom}
-stimuli %>%
+stimuli |>
   draw_tem(line.color = "grey", line.size = 1, line.alpha = 0.2, 
            pt.color = "red", pt.size = 5, pt.alpha = 1,
-           pt.shape = "cross", bg = "grey") %>%
-  crop_tem(20) %>% # crop with 20px space around the largest tem
+           pt.shape = "cross", bg = "grey") |>
+  crop_tem(20) |> # crop with 20px space around the largest tem
   plot()
 ```
 
@@ -250,10 +250,10 @@ features("left_eye", "right_eye")
 The "gmm" features are the eyebrows, eyes, nose, and mouth points, plus the face oval. This is a common subset to use for geometric morphometric analyses. Use the `subset_tem()` function to select just those delineation points. The line definitions will be automatically updated and any lines that no longer have points will be deleted.
 
 ```{r point-subset}
-stimuli %>%
-  crop_tem() %>%
-  subset_tem(features("gmm")) %>%
-  draw_tem(pt.size = 5) %>%
+stimuli |>
+  crop_tem() |>
+  subset_tem(features("gmm")) |>
+  draw_tem(pt.size = 5) |>
   plot()
 ```
 
@@ -261,15 +261,15 @@ Make sure to add the `tem_id` for faces with other templates, such as the 70-poi
 
 ```{r point-remove, message=FALSE}
 # add 70-point delineation
-stimuli_newdelin <- stimuli %>%
-  crop_tem() %>%
+stimuli_newdelin <- stimuli |>
+  crop_tem() |>
   auto_delin("dlib70", replace = TRUE)
 
 keep_pts <- c(0, 1, features("face", tem_id = "dlib70"))
 
-stimuli_newdelin %>%
-  subset_tem(keep_pts) %>%
-  draw_tem(pt.size = 5) %>%
+stimuli_newdelin |>
+  subset_tem(keep_pts) |>
+  draw_tem(pt.size = 5) |>
   plot()
 ```
 
@@ -278,11 +278,11 @@ stimuli_newdelin %>%
 When you alter the number of points, the remaining lines don't always make sense. 
 
 ```{r}
-s <- stimuli %>% subset_tem(features("face"))
+s <- stimuli |> subset_tem(features("face"))
 
-s %>%
-  draw_tem(line.color = "hotpink", line.alpha = 1) %>% 
-  crop_tem(50) %>%
+s |>
+  draw_tem(line.color = "hotpink", line.alpha = 1) |> 
+  crop_tem(50) |>
   plot()
 ```
 
@@ -290,28 +290,28 @@ s %>%
 Notice the extra lines at the ears; they're the lines that went around the outside of the ears, and weren't automatically deleted because the two points that connect them to the head are still there.
 
 ```{r}
-s[[1]] %>%
+s[[1]] |>
   draw_tem(pt.shape = "index", pt.size = 10,
-           line.color = "hotpink", line.alpha = 1) %>% 
-  crop_tem(50) %>%
+           line.color = "hotpink", line.alpha = 1) |> 
+  crop_tem(50) |>
   plot()
 ```
 
 Figure out the relevant line numbers from the template. Here, they are the lines connecting points 0 and 2, and connecting points 3 and 5, so lines 3 and 4.
 
 ```{r}
-s[[1]]$lines %>% str()
+s[[1]]$lines |> str()
 ```
 
 
 ```{r}
-s1 <- s %>%
+s1 <- s |>
   change_lines(line_id = 3:4, pts = NULL)
 
-s1[[1]] %>%
+s1[[1]] |>
   draw_tem(pt.shape = "index", pt.size = 10,
-           line.color = "hotpink", line.alpha = 1) %>% 
-  crop_tem(50) %>%
+           line.color = "hotpink", line.alpha = 1) |> 
+  crop_tem(50) |>
   plot()
 ```
 
@@ -319,13 +319,13 @@ Alternatively, you can delete all of the lines and start over.
 
 ```{r}
 # remove all lines
-s2 <- s %>%
+s2 <- s |>
   change_lines(line_id = 1:8, pts = NULL)
 s2[[1]]$lines
 
-s2[[1]] %>%
-  draw_tem(pt.shape = "index", pt.size = 10) %>% 
-  crop_tem(50) %>%
+s2[[1]] |>
+  draw_tem(pt.shape = "index", pt.size = 10) |> 
+  crop_tem(50) |>
   plot()
 ```
 
@@ -334,12 +334,12 @@ The numbering is odd here for historical reasons. The 189-point Face Research La
 ```{r}
 face_oval <- c(0, 26, 1, 27, 2, 6:14, 5, 29, 4, 28, 3, 25:15, 0)
 
-s3 <- s2 %>%
+s3 <- s2 |>
   change_lines(line_id = 1, pts = face_oval)
 
-s3[[1]] %>%
-  draw_tem(line.color = "hotpink", line.alpha = 1) %>%
-  crop_tem(50) %>%
+s3[[1]] |>
+  draw_tem(line.color = "hotpink", line.alpha = 1) |>
+  crop_tem(50) |>
   plot()
 ```
 
@@ -358,13 +358,13 @@ stimuli <- demo_stim("composite", pattern = "multi")
 The default mask crops around the face with a white background.
 
 ```{r mask-default}
-mask(stimuli) %>% plot()
+mask(stimuli) |> plot()
 ```
 
 You can set the mask to any combination of the following: oval, face, neck, ears (left_ear, right_ear), eyes (left_eye, right_eye), brows (left_brow, right_brow), mouth, teeth, nose.
 
 ```{r mask-combo}
-mask(stimuli, mask = c("face", "neck", "ears"), fill = "dodgerblue") %>%
+mask(stimuli, mask = c("face", "neck", "ears"), fill = "dodgerblue") |>
   plot()
 ```
 
@@ -372,7 +372,7 @@ You can reverse the mask. You can also use alpha transparency for the fill colou
 
 ```{r mask-reverse}
 mask(stimuli, mask = c("eyes", "mouth"), 
-     fill = "#00000099", reverse = TRUE) %>%
+     fill = "#00000099", reverse = TRUE) |>
   plot()
 ```
 
@@ -382,20 +382,20 @@ mask(stimuli, mask = c("eyes", "mouth"),
 I hate the "standard oval mask", which was mainly used because it was easy, rather than a good idea for face perception. But if you really want to replicate some stimuli from the 80s...
 
 ```{r mask-oval}
-stimuli %>%
-  greyscale() %>%
-  mask_oval() %>%
+stimuli |>
+  greyscale() |>
+  mask_oval() |>
   plot()
 ```
 
 By default, the oval mask calculates the maximum and minimum x and y coordinates in the template and masks each face according to this. Set `each = FALSE` to calculate this across all images and apply the same oval to each. 
 
 ```{r mask-oval-each}
-stimuli %>%
-  greyscale() %>%
+stimuli |>
+  greyscale() |>
   # remove template points to make the oval tighter around the face
-  subset_tem(features("face")) %>%
-  mask_oval(fill = "black", each = FALSE) %>%
+  subset_tem(features("face")) |>
+  mask_oval(fill = "black", each = FALSE) |>
   plot()
 ```
 
@@ -411,9 +411,9 @@ pts_to_delete <- features("cheekbones", "undereyes", "smile_lines")
 internal_features <- subset_tem(full_tem, pts_to_keep)
 no_lines <- subset_tem(full_tem, pts_to_delete, keep = FALSE)
 
-c(full_tem, internal_features, no_lines) %>% 
-  draw_tem() %>% 
-  crop_tem() %>%
+c(full_tem, internal_features, no_lines) |> 
+  draw_tem() |> 
+  crop_tem() |>
   plot()
 ```
 
@@ -431,19 +431,19 @@ crops <-  crop_tem(full_tem)
 
 # plot each feature subset
 new_tems <- lapply(features, function(ft) {
-  crops %>% 
-    subset_tem(features(ft)) %>% 
+  crops |> 
+    subset_tem(features(ft)) |> 
     draw_tem(pt.color = "#FF0099",
              pt.size = 8,
              line.color = "#FFFF00",
              line.size = 5,
              line.alpha = 1)
-}) %>% do.call(c, .)
+}) |> do.call(c, .)
 
-new_tems %>% 
-  pad(50, 0, 0, 0, fill = "white") %>%
-  setnames(features) %>% 
-  label() %>% 
+new_tems |> 
+  pad(50, 0, 0, 0, fill = "white") |>
+  setnames(features) |> 
+  label() |> 
   plot()
 ```
 
@@ -453,27 +453,27 @@ new_tems %>%
 Now it's relatively straightforward to create a stimulus set that matches old papers.
 
 ```{r mask-oval-all}
-demo_stim("london")[1:10] %>%
-  greyscale() %>%
-  align() %>%
+demo_stim("london")[1:10] |>
+  greyscale() |>
+  align() |>
   # remove template points to make the oval tighter around the face
-  subset_tem(features("face")) %>%
-  mask_oval(fill = "grey") %>%
-  crop_tem(50) %>% #  crop to template boundary and add 50px on each side 
+  subset_tem(features("face")) |>
+  mask_oval(fill = "grey") |>
+  crop_tem(50) |> #  crop to template boundary and add 50px on each side 
   plot(nrow = 2)
 ```
 
 Although I still think the delineated masking is better :)
 
 ```{r mask-oval-better}
-demo_stim("london")[1:10] %>%
-  resize(0.5) %>% # resize to process faster
-  mask(fill = "grey") %>%
+demo_stim("london")[1:10] |>
+  resize(0.5) |> # resize to process faster
+  mask(fill = "grey") |>
   # remove external features before procrustes alignment
-  subset_tem(features("gmm")) %>%
-  align(procrustes = TRUE) %>%
+  subset_tem(features("gmm")) |>
+  align(procrustes = TRUE) |>
   # crop to template boundary and add 50px on each side 
-  crop_tem(50) %>% 
+  crop_tem(50) |> 
   plot(nrow = 2)
 ```
 
@@ -482,15 +482,15 @@ demo_stim("london")[1:10] %>%
 You can define a custom mask. The code below is useful for finding the template points you want to outline. It crops around the points, makes the image darker, makes it larger (so the text is higher-resolution), and plots it with the point indices.
 
 ```{r}
-stimuli <- demo_stim("smiling", pattern = "030") %>%
+stimuli <- demo_stim("smiling", pattern = "030") |>
   auto_delin("dlib70", replace = TRUE)
 
-stimuli %>% 
-  crop_tem() %>% 
-  resize(2) %>%
-  draw_tem(pt.size = 35, pt.shape = "circle", pt.alpha = 1, pt.color = "white") %>%
+stimuli |> 
+  crop_tem() |> 
+  resize(2) |>
+  draw_tem(pt.size = 35, pt.shape = "circle", pt.alpha = 1, pt.color = "white") |>
   draw_tem(pt.size = 20, pt.shape = "index", pt.alpha = 1, pt.color = "black",
-           line.alpha = 0) %>%
+           line.alpha = 0) |>
   plot()
 ```
 
@@ -509,8 +509,8 @@ mask <- list(
   )
 )
 
-mask(stimuli, mask, fill = "hotpink", reverse = TRUE) %>%
-  crop(.6, .6) %>%
+mask(stimuli, mask, fill = "hotpink", reverse = TRUE) |>
+  crop(.6, .6) |>
   plot()
 
 ```
@@ -518,8 +518,8 @@ mask(stimuli, mask, fill = "hotpink", reverse = TRUE) %>%
 
 
 ```{r, echo = FALSE}
-elapsed <- (Sys.time() - starttime) %>%
-  as.numeric(units="mins") %>%
+elapsed <- (Sys.time() - starttime) |>
+  as.numeric(units="mins") |>
   round(1)
 ```
 

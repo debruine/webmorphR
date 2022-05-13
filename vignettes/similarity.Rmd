@@ -28,9 +28,9 @@ While this metric does capture something about similarity between morphed images
 
 ```{r, fig.width = 11, fig.height = 1.5}
 stimuli <- demo_stim()
-s <- continuum(stimuli[1], stimuli[2]) %>%
-  mask("face") %>%
-  subset_tem(features("face")) %>%
+s <- continuum(stimuli[1], stimuli[2]) |>
+  mask("face") |>
+  subset_tem(features("face")) |>
   crop_tem()
 
 plot(s, nrow = 1)
@@ -89,7 +89,7 @@ df2 <- pivot_longer(df2, cols = all_of(mtypes),
 df$fuzz = "0"
 df2$fuzz = "50"
 
-dplyr::bind_rows(df, df2) %>%
+dplyr::bind_rows(df, df2) |>
   ggplot(aes(morph_distance, value, color = fuzz, shape = fuzz)) +
   geom_point() +
   facet_wrap(~metric, nrow = 3) +
@@ -114,7 +114,7 @@ df3$morph_distance <- seq(0,100,10)
 
 df3 <- pivot_longer(df3, cols = 1:length(fuzzes),
                  names_to = "fuzz",
-                 values_to = "value") %>%
+                 values_to = "value") |>
   readr::type_convert()
 
 ggplot(df3, aes(morph_distance, value, color = fuzz, group = fuzz)) +

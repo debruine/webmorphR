@@ -13,7 +13,7 @@ library(tidyverse)
 
 
 ```{r}
-frl <- demo_stim("london") %>% resize(0.5)
+frl <- demo_stim("london") |> resize(0.5)
 #fpp <- auto_delin(frl, "dlib70", TRUE)
 #saveRDS(fpp, file = "fpp.RDS")
 fpp <- readRDS("fpp.RDS")
@@ -26,29 +26,29 @@ plot(fpp[1], pt.plot = TRUE)
 ## Get points from each image
 
 ```{r}
-frl_pt <- lapply(frl, `[[`, "points") %>%
-  lapply(t) %>% lapply(as.data.frame) %>%
-  as.data.frame() %>%
+frl_pt <- lapply(frl, `[[`, "points") |>
+  lapply(t) |> lapply(as.data.frame) |>
+  as.data.frame() |>
   mutate(n = 0:(nrow(.)-1),
-         tem = "frl") %>%
+         tem = "frl") |>
   pivot_longer(cols = 1:(ncol(.)-2),
                names_to = c("img", "coord"),
                names_sep = "\\.",
-               values_to = "value") %>%
+               values_to = "value") |>
   pivot_wider(names_from = c(tem, coord, n),
               values_from = "value")
 ```
 
 ```{r}
-fpp_pt <- lapply(fpp, `[[`, "points") %>%
-  lapply(t) %>% lapply(as.data.frame) %>%
-  as.data.frame() %>%
+fpp_pt <- lapply(fpp, `[[`, "points") |>
+  lapply(t) |> lapply(as.data.frame) |>
+  as.data.frame() |>
   mutate(n = 0:(nrow(.)-1),
-         tem = "fpp") %>%
+         tem = "fpp") |>
   pivot_longer(cols = 1:(ncol(.)-2),
                names_to = c("img", "coord"),
                names_sep = "\\.",
-               values_to = "value") %>%
+               values_to = "value") |>
   pivot_wider(names_from = c(tem, coord, n),
               values_from = "value")
 ```
@@ -68,7 +68,7 @@ pca <- psych::principal(
 )
 
 
-fpp_scores <- as.data.frame(pca$scores) %>%
+fpp_scores <- as.data.frame(pca$scores) |>
   mutate(img = fpp_pt$img)
 ```
 
@@ -92,10 +92,10 @@ px_off <- lapply(ynam, function(y) {
 ```{r}
 off <- data.frame(
   ptname = ynam,
-  off = lapply(px_off, abs) %>% sapply(mean)
-) %>%
-  separate(ptname, c("frl", "coord", "n"), convert = TRUE) %>%
-  spread(coord, off) %>%
+  off = lapply(px_off, abs) |> sapply(mean)
+) |>
+  separate(ptname, c("frl", "coord", "n"), convert = TRUE) |>
+  spread(coord, off) |>
   mutate(off = sqrt(x^2 + y^2))
 ```
 
@@ -106,37 +106,37 @@ hist(off$off, breaks = seq(0,max(off$off)+1, .25))
 ### Accurate <4 pixels
 
 ```{r}
-pt <- off %>%
-  filter(off <4) %>%
+pt <- off |>
+  filter(off <4) |>
   pull(n)
 
 avg <- demo_stim("composite", "f_multi")
 
-avg %>% subset_tem(pt) %>% draw_tem() %>% plot()
+avg |> subset_tem(pt) |> draw_tem() |> plot()
 ```
 
 
 ### Accurate 4-7 pixels
 
 ```{r}
-pt <- off %>%
-  filter(off > 4 | off < 7) %>%
+pt <- off |>
+  filter(off > 4 | off < 7) |>
   pull(n)
 
 avg <- demo_stim("composite", "f_multi")
 
-avg %>% subset_tem(pt) %>% draw_tem() %>% plot()
+avg |> subset_tem(pt) |> draw_tem() |> plot()
 ```
 
 
 ### Accurate > 7 pixels
 
 ```{r}
-pt <- off %>%
-  filter(off > 7) %>%
+pt <- off |>
+  filter(off > 7) |>
   pull(n)
 
-avg %>% subset_tem(pt) %>% draw_tem() %>% plot()
+avg |> subset_tem(pt) |> draw_tem() |> plot()
 ```
 
 

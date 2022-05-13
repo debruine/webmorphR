@@ -55,8 +55,8 @@ Align templates and images
 }
 \examples{
 # load stimuli and crop/rotate differently
-stimuli <- demo_stim() \%>\% 
-  crop(c(0.8, 0.9), c(1.0, 0.9), x_off = c(0, 0.2)) \%>\%
+stimuli <- demo_stim() |> 
+  crop(c(0.8, 0.9), c(1.0, 0.9), x_off = c(0, 0.2)) |>
   rotate(c(-5, + 5))
 
 # align to bottom-centre of nose (average position)

@@ -206,10 +206,10 @@ terms <- tibble::tribble(
   "lines", "connections between landmarks; these may be used to interpolate new landmarks for morphing",
   "prototype", "an average of faces with similar characteristics, such as expression, gender, age, and/or ethnic group",
   "composite", "an average of more than one face image"
-) %>%
+) |>
   dplyr::arrange(Term)
 
-kableExtra::kable(terms, caption = "Glossary of terms.") %>%
+kableExtra::kable(terms, caption = "Glossary of terms.") |>
   kable_styling(bootstrap_options = c("striped", "responsive"))
 ```
 
@@ -234,10 +234,10 @@ grey <- greyscale(orig)
 
 ```{r editing, fig.cap="Examples of image manipulations: (A) original image, (B) mirrored, (C) cropped to 75%, (D) resized to 75%, (E) rotated 180 degrees, (F) 30 pixels of black padding added, and (G) greyscale,.", fig.alt="Seven versions of the same average female face with different manipulations applied."}
 
-c(orig, mirrored, cropped, resized, rotated, padded, grey) %>%
-  pad(0, 0, 0, 60) %>%
-  #draw_tem() %>%
-  label(LETTERS, size = 60) %>% 
+c(orig, mirrored, cropped, resized, rotated, padded, grey) |>
+  pad(0, 0, 0, 60) |>
+  #draw_tem() |>
+  label(LETTERS, size = 60) |> 
   plot(nrow = 1)
 ```
 
@@ -249,10 +249,10 @@ The image manipulations above work best if your raw images start the same size a
 WebMorph's default face template marks 189 points (Fig.\ \@ref(fig:delineate)). Some of these points have very clear anatomical locations, such as point 0 ("left pupil"), while others have only approximate placements and are used mainly for masking or preventing morphing artifacts from affecting the background of images, such as point 147 ("about 2cm to the left of the top of the left ear (creates oval around head)"). Template points numbering is 0-based because PsychoMorph was originally written in Java.
 
 ```{r delineate, fig.cap = "Default webmorph FRL template", fig.alt = "Average female face with the shape delineated using 189 white numeric labels and blue lines connecting the numbers."}
-demo_stim("composite", "f_multi") %>%
-  crop_tem(20) %>%
-  resize(2) %>%
-  draw_tem(pt.shape = "index", pt.color = "#FFFFFFFF", pt.size = 25) %>%
+demo_stim("composite", "f_multi") |>
+  crop_tem(20) |>
+  resize(2) |>
+  draw_tem(pt.shape = "index", pt.color = "#FFFFFFFF", pt.size = 25) |>
   plot()
 ```
 
@@ -262,8 +262,8 @@ The function `tem_def()` retrieves a template definition that includes point nam
 # get all information about a standard template
 FRL <- tem_def("frl")
 
-FRL$points[1:10, 1:5] %>% 
-  kableExtra::kable(caption = "The first 10 landmark points of WebMorph's default \"FRL\" template.") %>%
+FRL$points[1:10, 1:5] |> 
+  kableExtra::kable(caption = "The first 10 landmark points of WebMorph's default \"FRL\" template.") |>
   kable_styling(bootstrap_options = c("striped"))
 ```
 
@@ -285,9 +285,9 @@ fpp83_tem <- auto_delin(f[1], "fpp83", replace = TRUE)
 
 ```{r auto-delin, fig.cap="Delineation templates: (A) manual delineation using the FRL template, (B) automatic delineation using the Face++ 106-point template, (C) automatic delineation using the Face++ 83-point template, (D) automatic delineation using the 70-point dlib template, and (E) automatic delineation using the 7-point dlib template.", fig.alt="A West Asian female face showing dots and lines marking the full face (top row), three reduced template marking only the jaw from ear to ear and internal facial features, and one marking only the eyes and nose."}
 
-c(f[1], fpp106_tem, fpp83_tem, dlib70_tem, dlib7_tem) %>%
-  draw_tem() %>%
-  label(LETTERS) %>%
+c(f[1], fpp106_tem, fpp83_tem, dlib70_tem, dlib7_tem) |>
+  draw_tem() |>
+  label(LETTERS) |>
   plot()
 ```
 
@@ -299,8 +299,8 @@ While automatic delineation has the advantage of being very fast and generally m
 frl_avg <- avg(f)
 fpp_avg <- avg(fpp_tem)
 
-c(frl_avg, fpp_avg) %>% 
-  label(LETTERS) %>%
+c(frl_avg, fpp_avg) |> 
+  label(LETTERS) |>
   plot()
 ```
 
@@ -327,8 +327,8 @@ data.frame(
   y1 = metrics(f, "y[1]"),
   ipd = ipd,
   fwh = fwh
-) %>%
-  kable(caption = "Facial metric measurements.", row.names = FALSE) %>%
+) |>
+  kable(caption = "Facial metric measurements.", row.names = FALSE) |>
   kable_styling(bootstrap_options = c("striped", "responsive"))
 ```
 
@@ -378,8 +378,8 @@ bounds <- list(t = 200, r = 400, b = 300, l = 400)
 oval <- mask_oval(f, bounds, fill = "dodgerblue")
 
 # template-aware oval mask
-oval_tem <- f %>%
-  subset_tem(features("gmm")) %>% # remove external points
+oval_tem <- f |>
+  subset_tem(features("gmm")) |> # remove external points
   mask_oval(fill = "dodgerblue") # oval boundaries to max and min template points
 
 # template aware mask
@@ -404,12 +404,12 @@ avg_notex <- avg(f, texture = FALSE)
 
 ```{r avg-texture, fig.cap="An average of 5 faces created (A) with texture averaging and (B) without.", fig.alt="The average female West Asian face. The Top row shows the full face and the bottom row is a close-up of the eyes. The left image has cripsly defined features and skin texture, such as wrinkles and visible eyebrow hairs, while the right image has blurrier features, smoother skin, and individual hairs are not visible."}
 # close up on the eyes
-eyes <- c(avg_tex, avg_notex) %>% 
+eyes <- c(avg_tex, avg_notex) |> 
   align(x1=100, y1 = 100, x2 = 300, y2 = 100, width = 400, height = 150)
   
-c(avg_tex, avg_notex, eyes) %>% 
-  label(c("A", "B", "", "")) %>%
-  resize(width = width(avg_tex)) %>%
+c(avg_tex, avg_notex, eyes) |> 
+  label(c("A", "B", "", "")) |>
+  resize(width = width(avg_tex)) |>
   plot(nrow = 2)
 ```
 
@@ -433,14 +433,14 @@ sexdim <- trans(trans_img = individual,
               color = c(fem = -0.5, masc = 0.5))
 
 # average the individual face with male and female averages
-masc_morph <- c(individual, averages$m_white) %>% avg()
-fem_morph <- c(individual, averages$f_white) %>% avg()
+masc_morph <- c(individual, averages$m_white) |> avg()
+fem_morph <- c(individual, averages$f_white) |> avg()
 ```
 
 ```{r trans-vs-morph, fig.cap="Morphing versus transforming: (A, B) composite images, (C, D) averages of the composites with an individual image, (E, F) transforms of an individual image along the male-female continuum.", fig.alt="Six faces in three columns/two rows. The first column is average White faces, female on top and male on the bottom. The second column is the average of the faces in the first column and an individual White female face; the top image looks like a more average version of the individual face and the bottom image looks like an androgynous face. The third column is transforms of the individual female face; the top image looks more like a more feminine version of the individual face and the bottom image looks like a male version of the individual face."}
 
-c(averages, fem_morph, masc_morph, sexdim) %>%
-  label(LETTERS) %>%
+c(averages, fem_morph, masc_morph, sexdim) |>
+  label(LETTERS) |>
   plot(nrow = 2,byrow = FALSE)
 ```
 
@@ -458,8 +458,8 @@ masc <- trans(trans_img = individual,
 ```
 
 ```{r trans-shape-color, fig.cap="Transforming shape and color independently: (A) original individual image, (B) shape only, (C), color only, (D) both shape and color."}
-c(individual, masc) %>%
-  label(LETTERS) %>%
+c(individual, masc) |>
+  label(LETTERS) |>
   plot(nrow = 2)
 ```
 
@@ -484,14 +484,14 @@ right_mirror <- mirror(right_side)
 
 # paste images together
 left_left <- mapply(function(ls, rs) {
-  c(ls, rs) %>% plot(padding = 0)
-}, left_side, left_mirror) %>%
+  c(ls, rs) |> plot(padding = 0)
+}, left_side, left_mirror) |>
   crop(width(., "max"), height(., "max"))
 
 
 right_right <- mapply(function(ls, rs) {
-  c(ls, rs) %>% plot(padding = 0)
-}, right_mirror, right_side) %>%
+  c(ls, rs) |> plot(padding = 0)
+}, right_mirror, right_side) |>
   crop(width(., "max"), height(., "max"))
 
 plot_rows(left_left, right_right)
@@ -519,16 +519,16 @@ We will use the open-source, CC-BY licensed image set, the Face Research Lab Lon
 
 ```{r london-set, fig.cap = "The 102 neutral front faces in the London Face Set."}
 
-london <- demo_stim("london") %>%
-  resize(0.5) %>% # makes the demo run faster, change for final
+london <- demo_stim("london") |>
+  resize(0.5) |> # makes the demo run faster, change for final
   add_info(stimsets::london_info)
 
-london %>% plot(nrow=6, maxwidth = 2000)
+london |> plot(nrow=6, maxwidth = 2000)
 ```
 
 ```{r}
-smiling <- demo_stim("smiling") %>%
-  resize(0.5) %>% # makes the demo run faster, change for final
+smiling <- demo_stim("smiling") |>
+  resize(0.5) |> # makes the demo run faster, change for final
   add_info(stimsets::london_info)
 ```
 
@@ -540,17 +540,17 @@ The first step for many types of stimuli is to create prototype faces for some c
 
 ```{r, echo = TRUE}
 # select the relevant images and auto-delineate them
-neu_orig <- subset(london, face_gender == "female") %>% 
-  subset(face_eth == "black") %>% subset(1:5) %>%
+neu_orig <- subset(london, face_gender == "female") |> 
+  subset(face_eth == "black") |> subset(1:5) |>
   auto_delin(replace = TRUE)
 
-smi_orig <- subset(smiling, face_gender == "female") %>% 
-  subset(face_eth == "black") %>% subset(1:5) %>%
+smi_orig <- subset(smiling, face_gender == "female") |> 
+  subset(face_eth == "black") |> subset(1:5) |>
   auto_delin(replace = TRUE)
 
 # align the images
-aligned <- c(neu_orig, smi_orig) %>%
-  align(procrustes = TRUE, patch = TRUE) %>%
+aligned <- c(neu_orig, smi_orig) |>
+  align(procrustes = TRUE, patch = TRUE) |>
   crop(.6, .8, y_off = 0.05)
 
 neu <- subset(aligned, 1:5)
@@ -565,8 +565,8 @@ c(neu_avg,
   plot(neu, external_pad = 0, ncol = 1), 
   plot(smi, external_pad = 0, ncol = 1),
   smi_avg
-) %>% 
-  resize(height = height(neu_avg)) %>%
+) |> 
+  resize(height = height(neu_avg)) |>
   plot()
 ```
 
@@ -580,8 +580,8 @@ steps <- continuum(neu_avg, smi_avg, from = -0.5, to = 1.5, by = 0.25)
 
 ```{r continuum, fig.cap="Continuum from -50% to +150% smiling."}
 lab <- paste0(seq(-0.5, 1.5, .25) * 100, "%")
-steps %>%
-  label(lab) %>%
+steps |>
+  label(lab) |>
   plot(nrow = 1)
 ```
 
@@ -592,15 +592,15 @@ We can use the full templates to create sexual dimorphism transforms from neutra
 
 ```{r, echo = TRUE}
 # select the relevant images
-f_orig <- subset(london, face_gender == "female") %>% 
-  subset(face_eth == "black") %>% subset(1:5)
+f_orig <- subset(london, face_gender == "female") |> 
+  subset(face_eth == "black") |> subset(1:5)
 
-m_orig <- subset(london, face_gender == "male") %>% 
-  subset(face_eth == "black") %>% subset(1:5)
+m_orig <- subset(london, face_gender == "male") |> 
+  subset(face_eth == "black") |> subset(1:5)
 
 # align the images
-aligned <- c(f_orig, m_orig) %>%
-  align(procrustes = TRUE, patch = TRUE) %>%
+aligned <- c(f_orig, m_orig) |>
+  align(procrustes = TRUE, patch = TRUE) |>
   crop(.6, .8, y_off = 0.05)
 
 f <- subset(aligned, 1:5)
@@ -615,8 +615,8 @@ c(f_avg,
   plot(f, external_pad = 0, ncol = 1), 
   plot(m, external_pad = 0, ncol = 1),
   m_avg
-) %>% 
-  resize(height = height(f_avg)) %>%
+) |> 
+  resize(height = height(f_avg)) |>
   plot()
 ```
 
@@ -650,14 +650,14 @@ virtual_sis <- trans(
   trans_img = f_avg,   # transform an average female face
   shape = 0.5,         # by 50% of the shape differences
   from_img = m_avg,    # between an average male face
-  to_img = m) %>%      # and individual male faces
+  to_img = m) |>      # and individual male faces
   mask(c("face", "neck","ears")) 
 
 virtual_bro <- trans(
   trans_img = m_avg,   # transform an average male face
   shape = 0.5,         # by 50% of the shape differences
   from_img = m_avg,    # between an average male face
-  to_img = m) %>%      # and individual male faces
+  to_img = m) |>      # and individual male faces
   mask(c("face", "neck","ears"))
 ```
 
@@ -676,12 +676,12 @@ Many social perception studies require labelled images, such a minimal group des
 
 dir.create("images/flags", FALSE)
 
-magick::image_read_svg("https://upload.wikimedia.org/wikipedia/commons/1/10/Flag_of_Scotland.svg") %>%
-  magick::image_resize(magick::geometry_size_pixels(75)) %>%
+magick::image_read_svg("https://upload.wikimedia.org/wikipedia/commons/1/10/Flag_of_Scotland.svg") |>
+  magick::image_resize(magick::geometry_size_pixels(75)) |>
   magick::image_write("images/flags/saltire.png")
 
-magick::image_read_svg("https://upload.wikimedia.org/wikipedia/commons/a/a9/Flag_of_Wales_%281959%E2%80%93present%29.svg") %>%
-  magick::image_resize(magick::geometry_size_pixels(75)) %>%
+magick::image_read_svg("https://upload.wikimedia.org/wikipedia/commons/a/a9/Flag_of_Wales_%281959%E2%80%93present%29.svg") |>
+  magick::image_resize(magick::geometry_size_pixels(75)) |>
   magick::image_write("images/flags/ddraig.png")
 ```
 
@@ -690,16 +690,16 @@ magick::image_read_svg("https://upload.wikimedia.org/wikipedia/commons/a/a9/Flag
 
 flags <- read_stim("images/flags")
 
-ingroup <- f %>%
+ingroup <- f |>
   # pad 10% at the top with matching color
-  pad(0.1, 0, 0, 0, patch = TRUE) %>% 
-  label("Scottish", "north", "+0+10") %>%
+  pad(0.1, 0, 0, 0, patch = TRUE) |> 
+  label("Scottish", "north", "+0+10") |>
   image_func("composite", flags$saltire$img, 
               gravity = "northeast", offset = "+10+10")
 
-outgroup <- f %>%
-  pad(0.1, 0, 0, 0, patch = TRUE) %>% 
-  label("Welsh", "north", "+0+10") %>%
+outgroup <- f |>
+  pad(0.1, 0, 0, 0, patch = TRUE) |> 
+  label("Welsh", "north", "+0+10") |>
   image_func("composite", flags$ddraig$img, 
              gravity = "northeast", offset = "+10+10")
 ```

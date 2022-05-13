@@ -19,6 +19,6 @@ stimlist with new images
 Make images greyscale
 }
 \examples{
-demo_stim() \%>\% greyscale() \%>\% plot()
-demo_stim() \%>\% grayscale()
+demo_stim() |> greyscale() |> plot()
+demo_stim() |> grayscale()
 }

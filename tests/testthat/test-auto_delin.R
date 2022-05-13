@@ -31,13 +31,13 @@ test_that("face++", {
   stimuli <- demo_stim("test", "f")
   fpp106 <- tem_def("fpp106")
   x106 <- auto_delin(stimuli, "fpp106", replace = TRUE)
-  pnames <- (x106$f_multi$points %>% dimnames())[[2]]
+  pnames <- (x106$f_multi$points |> dimnames())[[2]]
   expect_equal(pnames, fpp106$points$name)
   expect_equal(x106$f_multi$lines, fpp106$lines)
 
   fpp83 <- tem_def("fpp83")
   x83 <- auto_delin(stimuli, "fpp83", replace = TRUE)
-  pnames <- (x83$f_multi$points %>% dimnames())[[2]]
+  pnames <- (x83$f_multi$points |> dimnames())[[2]]
   expect_equal(pnames, fpp83$points$name)
   expect_equal(x83$f_multi$lines, fpp83$lines)
 })
@@ -47,7 +47,7 @@ test_that("paste 2 together", {
   skip_on_cran()
   skip_if_offline()
   
-  s <- demo_stim() %>% plot()
+  s <- demo_stim() |> plot()
   f <- auto_delin(s, "fpp106", TRUE, 1)
   m <- auto_delin(s, "fpp106", TRUE, 2)
   
@@ -60,13 +60,12 @@ test_that("python", {
   stimuli <- demo_stim("test", "f_")
   
   s7 <- auto_delin(stimuli, "dlib7", TRUE)
-  expect_equal(s7[[1]]$points %>% dim(), c(2, 7))
+  expect_equal(s7[[1]]$points |> dim(), c(2, 7))
   
   #s70 <- auto_delin(stimuli, "dlib70", TRUE)
-  #expect_equal(s70[[1]]$points %>% dim(), c(2, 70))
-  
-  skip("plot")
-  draw_tem(s2)
-  draw_tem(s3)
+  #expect_equal(s70[[1]]$points |> dim(), c(2, 70))
+
+  # draw_tem(s2)
+  # draw_tem(s3)
 })
 

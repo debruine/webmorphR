@@ -44,7 +44,7 @@ head(stimsets::london_info)
 Use `add_info()` to add the data. If the data table isn't in the same order as the stimuli, you can match the stimulus item names to a data column using `.by`.
 
 ```{r add-info}
-stimuli <- demo_stim("london") %>%
+stimuli <- demo_stim("london") |>
   add_info(stimsets::london_info)
 ```
 
@@ -53,9 +53,9 @@ stimuli <- demo_stim("london") %>%
 Select images from your stimuli to make a new image subset. The original images are large, and we don't need the resulting stimuli to be that large, so we'll reduce image size by 50% right at the start to reduce processing time.
 
 ```{r subset}
-subset <- stimuli %>%
-  subset(face_eth == "black") %>%
-  subset(face_gender == "male") %>%
+subset <- stimuli |>
+  subset(face_eth == "black") |>
+  subset(face_gender == "male") |>
   resize(.5)
 
 plot(subset, nrow = 2)
@@ -68,8 +68,8 @@ Next, align the images using Procrustes normalisation to the position of the fir
 The `horiz_eyes` function just makes sure that the first image has good alignment, since his head is slightly tilted.
 
 ```{r align, message=FALSE}
-aligned <- subset %>%
-  horiz_eyes(patch = TRUE) %>%
+aligned <- subset |>
+  horiz_eyes(patch = TRUE) |>
   align(procrustes = TRUE, patch = TRUE)
 
 plot(aligned, nrow = 2)
@@ -95,7 +95,7 @@ Now we can make an average version of these faces. This uses the morphing functi
 avg <- avg(cropped)
 
 # show average with and without template
-draw_tem(avg) %>% c(avg) %>% plot()
+draw_tem(avg) |> c(avg) |> plot()
 ```
 
 ### Transform
@@ -125,7 +125,7 @@ plot_rows(
 Now you can set names and save your individual stimuli in a directory to use in studies. The code below will create a directory called "stimuli" in your working directory if there isn't one already. You can write to any format that `magick::image_write()` handles, such as "png", "jpeg", or "gif" (the default is "png").
 
 ```{r save-avg}
-avg %>% write_stim(dir = "stimuli", 
+avg |> write_stim(dir = "stimuli", 
                    names = "m_avg", 
                    format = "jpg")
 ```
@@ -133,14 +133,14 @@ avg %>% write_stim(dir = "stimuli",
 Use `setnames()` to search and replace patterns, add prefixes or suffixes, or replace the names with a new vector of names. The London images in the `stimsets` package have "_03" appended to designate that they are the neutral front version from the [larger set](https://figshare.com/articles/dataset/Face_Research_Lab_London_Set/5047666), which also includes smiling images and several different viewpoints.
 
 ```{r setnames}
-cropped %>%
+cropped |>
   setnames(pattern = "_03", 
            replacement = "", 
-           prefix = "orig_") %>%
+           prefix = "orig_") |>
   write_stim(dir = "stimuli", format = "jpg")
 
-transf %>%
-  setnames(pattern = "_03", replacement = "") %>%
+transf |>
+  setnames(pattern = "_03", replacement = "") |>
   write_stim(dir = "stimuli", format = "jpg")
 ```
 
@@ -150,12 +150,12 @@ Now you can pipe all of the commands together and apply them to a new set of ima
 
 ```{r}
 # subset, resize, align, and crop
-cropped <- stimuli %>%
-  subset(face_gender == "female") %>%
-  subset(face_eth == "black") %>%
-  resize(.5) %>%
-  horiz_eyes(patch = TRUE) %>%
-  align(procrustes = TRUE, patch = TRUE) %>%
+cropped <- stimuli |>
+  subset(face_gender == "female") |>
+  subset(face_eth == "black") |>
+  resize(.5) |>
+  horiz_eyes(patch = TRUE) |>
+  align(procrustes = TRUE, patch = TRUE) |>
   crop(width = 0.6, height = 0.8, y_off = 0.05)
 
 # average
@@ -168,16 +168,16 @@ transf <- trans(trans_img = cropped,
                 shape = c(avg = -0.5, dist = 0.5))
 
 # save
-avg %>% write_stim("stimuli", "f_avg", "jpg")
+avg |> write_stim("stimuli", "f_avg", "jpg")
 
-cropped %>%
+cropped |>
   setnames(pattern = "_03", 
            replacement = "", 
-           prefix = "orig_") %>%
+           prefix = "orig_") |>
   write_stim("stimuli", format = "jpg")
 
-transf %>%
-  setnames(pattern = "_03", replacement = "") %>%
+transf |>
+  setnames(pattern = "_03", replacement = "") |>
   write_stim("stimuli", format = "jpg")
 
 ```
@@ -235,8 +235,8 @@ You can turn your images into an animated gif. Resize the images to the size you
 ```{r animated-gif, out.width = "180px"}
 #install.packages("gifski") # for faster animation
 
-continuum %>%
-  resize(width = 180) %>%
+continuum |>
+  resize(width = 180) |>
   animate(fps = 20, rev = TRUE)
 ```
 
@@ -252,16 +252,16 @@ You can also process images without templates. For example, the following code t
 stimuli <- demo_stim("rainbow")
 
 # get info on the images to put in order by type and colour
-info <- system.file("rainbow/_info.csv", package = "stimsets") %>%
-  readr::read_csv() %>%
-  dplyr::mutate(colour = factor(colour, c("red", "orange", "yellow", "green", "blue", "purple"))) %>%
+info <- system.file("rainbow/_info.csv", package = "stimsets") |>
+  readr::read_csv() |>
+  dplyr::mutate(colour = factor(colour, c("red", "orange", "yellow", "green", "blue", "purple"))) |>
   dplyr::arrange(type, colour)
 
 # crop to smallest size
 width <- width(stimuli, "min")
 height <- height(stimuli, "min")
-stim <- crop(stimuli, width, height) %>%
-  `[`(info$photo_name) # reorder by type and colour
+stim <- crop(stimuli, width, height)
+stim <- stim[info$photo_name] # reorder by type and colour
 
 plot(stim, ncol = 6)
 ```
@@ -294,7 +294,7 @@ n <- length(colours)
 labels <- rep(names(colours), each = n)
 
 # make 36 blank 800x200px images and add labels
-stroop <- blank(n*n, 800, 200) %>%
+stroop <- blank(n*n, 800, 200) |>
   label(labels, 
         size = 100, 
         color = colours, 
@@ -308,8 +308,8 @@ plot(stroop, ncol = n, fill = "grey")
 
 
 ```{r, echo = FALSE}
-elapsed <- (Sys.time() - starttime) %>%
-  as.numeric(units="mins") %>%
+elapsed <- (Sys.time() - starttime) |>
+  as.numeric(units="mins") |>
   round(1)
 ```
 

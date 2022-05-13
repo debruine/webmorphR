@@ -20,6 +20,6 @@ stimlist
 Plot stimuli in a stimlist.
 }
 \examples{
-demo_stim("test") \%>\% plot()
+demo_stim("test") |> plot()
 
 }

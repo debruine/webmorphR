@@ -21,5 +21,5 @@ stim2 <- subset_tem(stim, features("gmm"))
 
 same_tems(stim)
 
-c(stim, stim2) \%>\% same_tems()
+c(stim, stim2) |> same_tems()
 }

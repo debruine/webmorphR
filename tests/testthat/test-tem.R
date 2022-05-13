@@ -63,47 +63,54 @@ test_that("features", {
 
 test_that("frl", {
   stimuli <- demo_stim()[1]
+  
+  mouth_pts <- features("mouth", tem_id = "frl")
+  
+  mouth <- stimuli |> subset_tem(mouth_pts)
+  expect_equal(mouth[[1]]$points, 
+               stimuli[[1]]$points[, mouth_pts+1])
+  
+  
+
   features <- c("gmm", "oval", "face", "mouth", "nose", "eyes", "brows",
                 "left_eye",  "right_eye", "left_brow",  "right_brow",
                 "ears", "undereyes", "teeth", "smile_lines", 
                 "cheekbones", "philtrum", "chin", "neck", "halo")
   names(features) <- features
   
-  new <- lapply(features, function(ft) {
-    stimuli %>% subset_tem(features(ft)) %>% draw_tem()
-  }) %>% do.call(c, .)
+  expect_silent(
+    new <- lapply(features, function(ft) {
+      stimuli |> subset_tem(features(ft)) |> draw_tem()
+    }) |> do.call(c, args = _)
+  )
   
-  skip("needs visual check")
-  new %>% setnames(features) %>% label() %>% plot()
+  # skip("needs visual check")
+  # new |> setnames(features) |> label() |> plot()
 })
 
 test_that("dlib70", {
   stimuli <- demo_stim("tem_examples", "dlib70")
+  
+  mouth_pts <- features("mouth", tem_id = "dlib70")
+  
+  mouth <- stimuli |> subset_tem(mouth_pts)
+  expect_equal(mouth[[1]]$points, 
+               stimuli[[1]]$points[, mouth_pts+1])
   
   features <- c("face", "mouth", "nose", "eyes", "brows",
                 "left_eye",  "right_eye", "left_brow", "right_brow",
                 "teeth", "gmm")
   names(features) <- features
   
-  mouth_pts <- features("mouth", tem_id = "dlib70")
-  
-  mouth <- stimuli %>% subset_tem(mouth_pts)
-  expect_equal(mouth[[1]]$points, 
-               stimuli[[1]]$points[, mouth_pts+1])
-  
-  expect_silent(
+  expect_silent({
     new <- lapply(features, function(ft) {
-      stimuli %>% 
-        subset_tem(features(ft, tem_id = "dlib70")) %>% 
+      stimuli |> 
+        subset_tem(features(ft, tem_id = "dlib70")) |> 
         draw_tem()
-    }) %>% do.call(c, .)
-  )
+    }) |>
+      do.call(c, args = _)
+  })
   
-  skip("needs visual check")
-  new %>% setnames(features) %>% label() %>% plot()
-})
-
-# change_lines ----
-test_that("change_lines", {
-  
+  # skip("needs visual check")
+  # new |> setnames(features) |> label() |> plot()
 })

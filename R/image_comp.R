@@ -47,7 +47,7 @@
 #' image_comp(stimuli, stimuli$m_multi, "AE")
 #' image_comp(stimuli, stimuli$m_multi, "AE", fuzz = 5)
 image_comp <- function(stim, ref_stim, metric = "MSE", fuzz = 0, scale = FALSE) {
-  img1 <- validate_stimlist(stim) %>% get_imgs()
+  img1 <- validate_stimlist(stim) |> get_imgs()
   img2 <- validate_stimlist(ref_stim)[[1]]$img
   comp <- magick::image_compare(img1, img2, metric, fuzz)
 

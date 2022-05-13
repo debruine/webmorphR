@@ -12,7 +12,7 @@ label(stimuli, ...)
 \item{...}{arguments to pass on to \code{mlabel} or \code{gglabel}}
 }
 \value{
-
+stimlist with labelled images
 }
 \description{
 Defaults to \link{mlabel} unless you use arguments specific to \link{gglabel}.

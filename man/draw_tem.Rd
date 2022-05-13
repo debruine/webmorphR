@@ -36,5 +36,5 @@ stimlist with template images
 Set alpha to 0 to omit lines or points.
 }
 \examples{
-demo_stim() \%>\% draw_tem() \%>\% plot()
+demo_stim() |> draw_tem() |> plot()
 }

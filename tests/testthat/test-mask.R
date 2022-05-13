@@ -28,23 +28,21 @@ test_that("basic", {
   expect_silent(listmask <- mask(stimuli, rmask, reverse = TRUE))
 
   # visual checks ----
-  skip("needs visual check")
-
-  plot(default)
-  plot(masked[[1]])
-  plot(revmasked[[5]])
-  plot(textmask[1])
-  plot(listmask[1])
+  # plot(default)
+  # plot(masked[[1]])
+  # plot(revmasked[[5]])
+  # plot(textmask[1])
+  # plot(listmask[1])
 })
 
 ## custom mask from vectors ----
 test_that("custom mask from vectors", {
   stimuli <- demo_stim("test")
   
-  stimuli[1] %>%
-    crop_tem() %>%
-    resize(2) %>%
-  draw_tem(pt.shape = "index", pt.size = 10) %>% plot()
+  stimuli[1] |>
+    crop_tem() |>
+    resize(2) |>
+  draw_tem(pt.shape = "index", pt.size = 10) |> plot()
   
   list_mask <- list(list(
     c(71:75, 50, 56, 78:82),
@@ -54,8 +52,8 @@ test_that("custom mask from vectors", {
     c(46:44),
     c(44, 71)
   ))
-  text_mask <- lapply(list_mask, lapply, paste, collapse = ",") %>%
-    lapply(paste, collapse = ";") %>%
+  text_mask <- lapply(list_mask, lapply, paste, collapse = ",") |>
+    lapply(paste, collapse = ";") |>
     paste(collapse = ":")
   
   t <- mask(stimuli[1], text_mask)

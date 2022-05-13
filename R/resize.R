@@ -8,8 +8,8 @@
 #' @export
 #'
 #' @examples
-#' resized <- demo_stim() %>%
-#'   resize(.5, .75) %>%
+#' resized <- demo_stim() |>
+#'   resize(.5, .75) |>
 #'   draw_tem()
 #'
 resize <- function(stimuli, width = NULL, height = NULL) {

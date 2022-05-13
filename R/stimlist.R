@@ -9,8 +9,8 @@
 new_stimlist <- function(..., .names = NULL) {
   stimuli <- list(...)
 
-  check_stim <- lapply(stimuli, class) %>%
-    sapply(`%in%`, x = "stim") %>% all()
+  check_stim <- lapply(stimuli, class) |>
+    sapply(`%in%`, x = "stim") |> all()
 
   if (!check_stim) {
     stop("All arguments need to have the class 'stim'", call. = FALSE)
@@ -64,12 +64,12 @@ validate_stimlist <- function(x, tem = FALSE) {
       !"stim" %in% class(x)) {
 
     # does x or the items in x have names consistent with a stim?
-    is_stim <- c("points", "lines") %in% names(x) %>% all() ||
-               c("img", "width", "height") %in% names(x) %>% all()
+    is_stim <- c("points", "lines") %in% names(x) |> all() ||
+               c("img", "width", "height") %in% names(x) |> all()
     is_stimlist <- sapply(x, function(xi) {
-      c("points", "lines") %in% names(xi) %>% all() ||
-        c("img", "width", "height") %in% names(xi) %>% all()
-    }) %>% all()
+      c("points", "lines") %in% names(xi) |> all() ||
+        c("img", "width", "height") %in% names(xi) |> all()
+    }) |> all()
 
     if (is_stimlist) {
       class(x) <- c("stimlist", "list")
@@ -114,7 +114,7 @@ validate_stimlist <- function(x, tem = FALSE) {
 
   # check if templates are available
   if (tem) {
-    no_tems <- sapply(stimuli, `[[`, "points") %>% sapply(is.null)
+    no_tems <- sapply(stimuli, `[[`, "points") |> sapply(is.null)
     if (all(no_tems)) {
       stop("No images had templates", call. = FALSE)
     } else if (any(no_tems)) {

@@ -16,7 +16,7 @@ test_that("works", {
 
 
 test_that("procrustes", {
-  data <- demo_stim() %>% tems_to_array()
+  data <- demo_stim() |> tems_to_array()
 
   expect_silent(g <- procrustes_align(data))
   expect_silent(p1 <- procrustes_align(data, 1))
@@ -28,14 +28,14 @@ test_that("procrustes", {
 })
 
 test_that("procrustes align", {
-  stimuli <- demo_stim() %>% crop(0.9, x_off = c(0.1, 0))
+  stimuli <- demo_stim() |> crop(0.9, x_off = c(0.1, 0))
   pr <- align(stimuli, procrustes = TRUE)
 
   # eye points all around the same place (low SD)
   p <- sapply(pr, function(x) {
-    x$points[1:2, 1:2] %>% as.vector()
-  }) %>% t() %>%
-    as.data.frame() %>%
+    x$points[1:2, 1:2] |> as.vector()
+  }) |> t() |>
+    as.data.frame() |>
     dplyr::summarise_all(sd)
 
   expect_true(p[[1]] < 5)

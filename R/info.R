@@ -12,10 +12,10 @@
 #' @export
 #'
 #' @examples
-#' stimuli <- demo_stim() %>%
+#' stimuli <- demo_stim() |>
 #'   add_info(project = "XXX", gender = c("F", "M"))
 #'
-#' stimuli$f_multi$info %>% str()
+#' stimuli$f_multi$info |> str()
 #'
 add_info <- function(stimuli, ..., .by = NULL) {
   stimuli <- validate_stimlist(stimuli)
@@ -63,19 +63,19 @@ add_info <- function(stimuli, ..., .by = NULL) {
 #' @export
 #'
 #' @examples
-#' stimuli <- demo_stim() %>%
+#' stimuli <- demo_stim() |>
 #'   add_info(project = "test", gender = c("F", "M"))
 #'
 #' get_info(stimuli)
 #' get_info(stimuli, "gender")
 get_info <- function(stimuli, ..., .rownames = "id") {
   # get all info from stimuli
-  info <- lapply(stimuli, `[[`, "info") %>%
+  info <- lapply(stimuli, `[[`, "info") |>
     list_to_tbl(rownames = .rownames)
   info$width <- width(stimuli)
   info$height <- height(stimuli)
-  info$tem <- lapply(stimuli, `[[`, "points") %>%
-    sapply(ncol) %>% sapply(`%||%`, NA)
+  info$tem <- lapply(stimuli, `[[`, "points") |>
+    sapply(ncol) |> sapply(`%||%`, NA)
 
   # select specified columns
   dots <- c(...)
@@ -104,7 +104,7 @@ get_info <- function(stimuli, ..., .rownames = "id") {
 #'
 #' @examples
 #'
-#' demo_stim() %>% width()
+#' demo_stim() |> width()
 width <- function(stimuli, type = c("all", "min", "max", "unique")) {
   stimuli <- validate_stimlist(stimuli)
 
@@ -128,7 +128,7 @@ width <- function(stimuli, type = c("all", "min", "max", "unique")) {
 #'
 #' @examples
 #'
-#' demo_stim() %>% height()
+#' demo_stim() |> height()
 height <- function(stimuli, type = c("all", "min", "max", "unique")) {
   stimuli <- validate_stimlist(stimuli)
 

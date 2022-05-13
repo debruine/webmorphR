@@ -12,8 +12,8 @@
 #' @export
 #'
 #' @examples
-#' demo_stim() %>%
-#'   setnames(prefix = "new_") %>%
+#' demo_stim() |>
+#'   setnames(prefix = "new_") |>
 #'   names()
 setnames <- function(stimuli, new_names = NULL, prefix = "", suffix = "",
                    pattern = NULL, replacement = NULL, ...) {

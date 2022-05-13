@@ -13,22 +13,22 @@
 #' @export
 #'
 #' @examples
-#' demo_stim() %>% draw_tem() %>% plot()
+#' demo_stim() |> draw_tem() |> plot()
 draw_tem <- function(stimuli, pt.color = wm_opts("pt.color"), pt.alpha = 0.75, pt.size = NULL, pt.shape = c("circle", "cross", "index"),
                      line.color = wm_opts("line.color"), line.alpha = 0.5, line.size = NULL,
                      bg = "image") {
   stimuli <- validate_stimlist(stimuli, TRUE)
-  w <- width(stimuli) %>% round()
-  h <- height(stimuli) %>% round()
+  w <- width(stimuli) |> round()
+  h <- height(stimuli) |> round()
   n <- length(stimuli)
   pt.shape <- match.arg(pt.shape)
 
   # scale size to image if NULL
   if (is.null(pt.size)) {
-    pt.size <- pmax(1, w/100) %>% round(2)
+    pt.size <- pmax(1, w/100) |> round(2)
   }
   if (is.null(line.size)) {
-    line.size <- pmax(0.5, w/250) %>% round(2)
+    line.size <- pmax(0.5, w/250) |> round(2)
   }
 
   # allow for vectors
@@ -47,7 +47,7 @@ draw_tem <- function(stimuli, pt.color = wm_opts("pt.color"), pt.alpha = 0.75, p
 
     # construct points ----
     idx <- -1
-    points <- round(temPoints, 2) %>%
+    points <- round(temPoints, 2) |>
       apply(2, function(pts) {
         x <- pts[1]
         y <- pts[2]
@@ -68,20 +68,20 @@ draw_tem <- function(stimuli, pt.color = wm_opts("pt.color"), pt.alpha = 0.75, p
           idx <<- idx + 1 # dumb but works
           sprintf("<text x=\"%.2f\" y=\"%.2f\">%s</text>", x, y+(pt.size/2), idx)
         }
-      }) %>%
+      }) |>
       paste(collapse = "\n          ")
 
     # construct Bezier curves for lines ----
     if (line.alpha[i] > 0) {
-      curves <- stimuli[[i]]$lines %>%
+      curves <- stimuli[[i]]$lines |>
         lapply(function(m) {
             v <- temPoints[, m+1]
             svgBezier(v, 1)
-          }) %>%
+          }) |>
         lapply(function(d) {
           sprintf("<path d = \"%s\" />",
                   paste(d, collapse = "\n"))
-        }) %>%
+        }) |>
         paste(collapse = "\n\n")
     } else {
       curves <- ""

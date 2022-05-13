@@ -19,5 +19,5 @@ Image heights
 }
 \examples{
 
-demo_stim() \%>\% height()
+demo_stim() |> height()
 }

@@ -19,8 +19,8 @@ Create a TPS file from a stimlist
 }
 \examples{
 # set path_to_tps to save to a file
-demo_stim() \%>\%
-  write_tps() \%>\%
+demo_stim() |>
+  write_tps() |>
   cat()
 
 }

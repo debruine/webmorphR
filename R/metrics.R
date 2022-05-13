@@ -33,15 +33,15 @@ metrics <- function(stimuli, formula = c(0, 1)) {
   pow <- `^` # webmorph.org uses pow
   rad2deg <- function(degrees) { degrees * (pi/180) }
   
-  lapply(stimuli, `[[`, "points") %>%
+  lapply(stimuli, `[[`, "points") |>
     sapply(function(pt) { 
       x <- pt["x", ]
       y <- pt["y", ]
       
-      formula %>%
-        gsub("(x\\[\\d+)\\]", "\\1+1\\]", .) %>%
-        gsub("(y\\[\\d+)\\]", "\\1+1\\]", .) %>%
-        parse(text = .) %>% 
+      formula |>
+        (\(.) gsub("(x\\[\\d+)\\]", "\\1+1\\]", .))() |>
+        (\(.) gsub("(y\\[\\d+)\\]", "\\1+1\\]", .))() |>
+        (\(.) parse(text = .))() |> 
         eval()
     })
 }

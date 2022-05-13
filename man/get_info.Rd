@@ -20,7 +20,7 @@ a data frame or vector of the info
 Get Information
 }
 \examples{
-stimuli <- demo_stim() \%>\%
+stimuli <- demo_stim() |>
   add_info(project = "test", gender = c("F", "M"))
 
 get_info(stimuli)

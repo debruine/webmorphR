@@ -56,7 +56,7 @@ test_that("order", {
 })
 
 test_that("partial/no info", {
-  stimuli <- demo_stim() %>%
+  stimuli <- demo_stim() |>
     add_info(project = "test", x = 1)
 
   stimuli$f_multi$info$x <- NULL
@@ -69,7 +69,7 @@ test_that("partial/no info", {
 })
 
 test_that("duplicate stim names", {
-  stimuli <- demo_stim() %>% c(. , .)
+  stimuli <- demo_stim() |> rep(2)
   s2 <- add_info(stimuli, x = 1:4)
   expect_equal(get_info(s2, "x"),
                c(f_multi = 1, m_multi = 2, f_multi = 3, m_multi = 4))

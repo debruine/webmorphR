@@ -99,7 +99,7 @@ test_that("basic", {
 })
 
 test_that("no tem", {
-  notem <- demo_stim() %>% remove_tem()
+  notem <- demo_stim() |> remove_tem()
   x <- resize(notem, .5)
   expect_equal(width(x), width(notem)/2)
   expect_equal(height(x), height(notem)/2)

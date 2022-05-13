@@ -20,19 +20,19 @@ stimlist with altered templates
 Change the points in a line
 }
 \examples{
-s <- demo_stim()[1] \%>\%
+s <- demo_stim()[1] |>
   subset_tem(features("face"))
 s[[1]]$lines
 
 # remove all lines
-s2 <- s \%>\%
+s2 <- s |>
   change_lines(line_id = 1:8, pts = NULL)
 s2[[1]]$lines
 
 draw_tem(s2, pt.shape = "index", pt.size = 10)
 
 # add new line
-s3 <- s2 \%>\%
+s3 <- s2 |>
   change_lines(line_id = 1, pts = c(0, 26, 1, 27, 2, 6:14, 5, 29, 4, 28, 3, 25:15, 0))
 s3[[1]]$lines
 draw_tem(s3, line.color = "hotpink", line.alpha = 1)

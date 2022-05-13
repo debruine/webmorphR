@@ -26,6 +26,6 @@ list of class stimlist
 Convenience function to calcuate offsets for crop
 }
 \examples{
-padded <- demo_stim() \%>\% pad(10, fill = "red")
+padded <- demo_stim() |> pad(10, fill = "red")
 plot(padded)
 }

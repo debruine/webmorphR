@@ -13,10 +13,10 @@
 #' o <- demo_stim("test", 1)
 #' m <- mirror(o, "frl")
 #'
-#' c(o, m) %>%
-#'   subset_tem(features("face")) %>%
-#'   draw_tem(pt.shape = "index", pt.color = "white", pt.size = 10) %>%
-#'   label(c("original", "mirrored")) %>%
+#' c(o, m) |>
+#'   subset_tem(features("face")) |>
+#'   draw_tem(pt.shape = "index", pt.color = "white", pt.size = 10) |>
+#'   label(c("original", "mirrored")) |>
 #'   plot()
 #'
 mirror <- function(stimuli, tem_id = NULL, axis = "vertical") {

@@ -1,36 +1,40 @@
-reticulate::source_python("stuff/facetrain.py")
-#reticulate::source_python("inst/python/facedetect.py")
+library(webmorphR)
+library(reticulate)
 
-london <- demo_stim("london")
-f_3dsk <- read_stim("~/Desktop/facetrain/3dsk_female")
-m_3dsk <- read_stim("~/Desktop/facetrain/3dsk_male")
-ea <- read_stim("~/Desktop/facetrain/ea")
+source_python("stuff/facetrain.py")
 
-# bind and resize
-stim <- c(london, f_3dsk, m_3dsk, ea) %>% resize(0.5)
+stimuli <- demo_stim("composite") |>
+  resize(0.5) |>
+  subset_tem(features("gmm"))
 
-# make rotations
-rot <- stim %>% rotate(-45:45) %>% setnames(prefix = "rot_")
+stimuli[1] |> draw_tem() |> plot()
 
-# mirror reverse
-mirror <- c(stim, rot) %>% mirror("frl") %>% setnames(prefix = "mirror_")
+dir <- "~/rproj/facetrain/demo"
+tem_to_xml(stimuli, dir)
+xml <- file.path(dir, "images.xml") |> normalizePath()
 
+# check xml
+readLines(xml, n = 10) |> paste(collapse = "\n") |> cat()
 
-stimuli <- c(stim, mirror, rot)
-tem_to_xml(stimuli, "~/Desktop/img")
-
-# xml <- readLines("~/Desktop/img/images.xml")
-# xml[1:10]
-
-facetrain("/Users/lisad/Desktop/img/images.xml", 
-          "inst/python/frl.dat", 
+newdat <- normalizePath("~/Desktop/new.dat")
+facetrain(training = xml, 
+          output = newdat, 
+          tree_depth = 5, 
+          nu = 0.5, 
+          cascade_depth = 15, 
+          feature_pool_size = 400, 
+          num_test_splits = 50, 
+          oversampling_amount = 5, 
+          oversampling_translation_jitter = 0.1, 
+          be_verbose = True, 
+          num_threads = 0
           tree_depth = 5L, 
           nu = 0.5, 
           cascade_depth = 15L)
 
-file.size("inst/python/frl.dat")/1024/1024
+file.size(newdat)/1024/1024
 
 devtools::load_all(".")
-stimuli <- c(demo_stim("lisa"), demo_stim("zoom"))
-s2 <- auto_delin(stimuli, "frl", TRUE)
-draw_tem(s2) %>% to_size(400, 600) %>% plot(nrow = 2)
+teststim <- c(demo_stim("lisa"), demo_stim("zoom"))
+s2 <- auto_delin(teststim, replace = TRUE, dlib_path = newdat)
+draw_tem(s2) |> to_size(400, 600) |> plot(nrow = 2)

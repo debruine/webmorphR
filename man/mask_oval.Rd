@@ -25,15 +25,15 @@ Superimpose an oval mask on a set of images. If the images have templates and bo
 If bounds are set to a list of top, right, bottom and left boundaries, these will be used instead of the boundaries derived from templates.
 }
 \examples{
-omask1 <- demo_stim() \%>\% mask_oval(fill = "hotpink")
+omask1 <- demo_stim() |> mask_oval(fill = "hotpink")
 
 # remove external points
-omask2 <- demo_stim() \%>\%
-  subset_tem(features("face")) \%>\%
-  crop_tem(25) \%>\%
+omask2 <- demo_stim() |>
+  subset_tem(features("face")) |>
+  crop_tem(25) |>
   mask_oval()
 
 # set bounds manually
-omask3 <- demo_stim() \%>\%
+omask3 <- demo_stim() |>
   mask_oval(bounds = list(t= 70, r = 120, b = 70, l = 120))
 }

@@ -36,6 +36,6 @@ list of class stimlist
 Calculate the max and min x and y coordinates across the stimuli and crop all image to this plus padding
 }
 \examples{
-ctem <- demo_stim() \%>\% crop_tem(20) \%>\% draw_tem()
+ctem <- demo_stim() |> crop_tem(20) |> draw_tem()
 plot(ctem)
 }

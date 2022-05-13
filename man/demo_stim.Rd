@@ -25,6 +25,6 @@ stimlist
 A convenience function to get demo stimuli
 }
 \examples{
-demo_stim() \%>\% plot()
+demo_stim() |> plot()
 
 }

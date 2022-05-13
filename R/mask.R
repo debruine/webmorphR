@@ -26,9 +26,9 @@
 #' stimuli <- demo_stim()
 #' masked <- mask(stimuli, c("face", "neck", "ears"), "red")
 #'
-#' revmasked <- mask(stimuli, "eyes", "#FFFF00", TRUE) %>%
-#'   mask("brows", "purple", TRUE) %>%
-#'   mask("nose", "#FF000066", TRUE) %>%
+#' revmasked <- mask(stimuli, "eyes", "#FFFF00", TRUE) |>
+#'   mask("brows", "purple", TRUE) |>
+#'   mask("nose", "#FF000066", TRUE) |>
 #'   mask("mouth", "blue", TRUE)
 #'
 mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
@@ -48,10 +48,10 @@ mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
   } else if (length(mask) == 1 && grepl("^([0-9]|,|;|:|\\s)+$", mask)) {
     # parse mask
     default_masks <- tryCatch({
-      strsplit(mask, "\\s*:\\s*")[[1]] %>%
-        as.list() %>%
-        lapply(strsplit, "\\s*;\\s*") %>%
-        lapply(sapply, strsplit, "\\s*,\\s*") %>%
+      strsplit(mask, "\\s*:\\s*")[[1]] |>
+        as.list() |>
+        lapply(strsplit, "\\s*;\\s*") |>
+        lapply(sapply, strsplit, "\\s*,\\s*") |>
         lapply(sapply, as.integer, simplify = FALSE)
     }, error = function(e) {
       stop("There was a problem parsing the custom mask")
@@ -84,24 +84,24 @@ mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
   n <- length(stimuli)
   fill <- rep_len(fill, n)
   expand <- rep_len(expand, n)
-  w <- width(stimuli) %>% round()
-  h <- height(stimuli) %>% round()
+  w <- width(stimuli) |> round()
+  h <- height(stimuli) |> round()
 
   for (i in seq_along(stimuli)) {
     temPoints <- stimuli[[i]]$points
 
     # construct sets of Bezier curves
-    curves <- default_masks[mask] %>%
+    curves <- default_masks[mask] |>
       lapply(function(mm) {
         mapply(function(m, idx) {
           v <- temPoints[, m+1]
           svgBezier(v, idx)
         }, mm, seq_along(mm))
-      }) %>%
+      }) |>
       lapply(function(d) {
         sprintf("<path d = \"%s\" />",
                 paste(d, collapse = "\n"))
-      }) %>%
+      }) |>
       paste(collapse = "\n\n")
 
     # make SVG
@@ -153,7 +153,7 @@ mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
 #' @examples
 #' svgMoveTo(20.123, 30.456)
 svgMoveTo <- function(x, y, digits = 2) {
-  paste0("M %.", digits, "f %.", digits, "f") %>%
+  paste0("M %.", digits, "f %.", digits, "f") |>
     sprintf(round(x, digits), round(y, digits))
 }
 
@@ -168,7 +168,7 @@ svgMoveTo <- function(x, y, digits = 2) {
 #' @examples
 #' svgLineTo(20.123, 30.456)
 svgLineTo <- function(x, y, digits = 2) {
-  paste0("L %.", digits, "f %.", digits, "f") %>%
+  paste0("L %.", digits, "f %.", digits, "f") |>
     sprintf(round(x, digits), round(y, digits))
 }
 
@@ -185,7 +185,7 @@ svgLineTo <- function(x, y, digits = 2) {
 #' svgQuadraticTo(20.123, 30.456, 40.123, 50.456)
 svgQuadraticTo <- function(x1, y1, x, y, digits = 2) {
   paste0("Q %.", digits, "f %.", digits, "f, %.",
-                 digits, "f %.", digits, "f") %>%
+                 digits, "f %.", digits, "f") |>
   sprintf(round(x1, digits), round(y1, digits),
           round(x, digits), round(y, digits))
 }
@@ -204,7 +204,7 @@ svgQuadraticTo <- function(x1, y1, x, y, digits = 2) {
 svgCubicTo <- function(x1, y1, x2, y2, x, y, digits = 2) {
   paste0("C %.", digits, "f %.", digits, "f, %.",
                  digits, "f %.", digits, "f, %.",
-                 digits, "f %.", digits, "f") %>%
+                 digits, "f %.", digits, "f") |>
   sprintf(round(x1, digits), round(y1, digits),
           round(x2, digits), round(y2, digits),
           round(x , digits), round(y , digits))

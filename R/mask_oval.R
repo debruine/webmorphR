@@ -13,16 +13,16 @@
 #' @export
 #'
 #' @examples
-#' omask1 <- demo_stim() %>% mask_oval(fill = "hotpink")
+#' omask1 <- demo_stim() |> mask_oval(fill = "hotpink")
 #'
 #' # remove external points
-#' omask2 <- demo_stim() %>%
-#'   subset_tem(features("face")) %>%
-#'   crop_tem(25) %>%
+#' omask2 <- demo_stim() |>
+#'   subset_tem(features("face")) |>
+#'   crop_tem(25) |>
 #'   mask_oval()
 #'
 #' # set bounds manually
-#' omask3 <- demo_stim() %>%
+#' omask3 <- demo_stim() |>
 #'   mask_oval(bounds = list(t= 70, r = 120, b = 70, l = 120))
 mask_oval <- function(stimuli, bounds = NULL, fill = wm_opts("fill"), each = TRUE) {
   stimuli <- validate_stimlist(stimuli, is.null(bounds))
@@ -31,27 +31,28 @@ mask_oval <- function(stimuli, bounds = NULL, fill = wm_opts("fill"), each = TRU
   w <- width(stimuli)
   h <- height(stimuli)
 
+  b <- list()
   if (is.null(bounds)) {
     bounds <- bounds(stimuli, each)
-    bounds$top <- bounds$min_y
-    bounds$right <- w - bounds$max_x
-    bounds$bottom <- h - bounds$max_y
-    bounds$left <-  bounds$min_x
+    b$top <- bounds$min_y
+    b$right <- w - bounds$max_x
+    b$bottom <- h - bounds$max_y
+    b$left <-  bounds$min_x
   } else {
     bounds <- as.list(bounds)
   }
 
   borders <- list(
-    t = bounds$top %||% bounds$t %||% bounds[1],
-    r = bounds$right %||% bounds$r %||% bounds[2],
-    b = bounds$bottom %||% bounds$b %||% bounds[3],
-    l = bounds$left %||% bounds$l %||% bounds[4]
+    t = b$top %||% bounds$t %||% bounds[1],
+    r = b$right %||% bounds$r %||% bounds[2],
+    b = b$bottom %||% bounds$b %||% bounds[3],
+    l = b$left %||% bounds$l %||% bounds[4]
   )
 
-  rx <- ((w - borders$r - borders$l)/2) %>% rep_len(n)
-  ry <- ((h - borders$t - borders$b)/2) %>% rep_len(n)
-  cx <- (borders$l + rx) %>% rep_len(n)
-  cy <- (borders$t + ry) %>% rep_len(n)
+  rx <- ((w - borders$r - borders$l)/2) |> rep_len(n)
+  ry <- ((h - borders$t - borders$b)/2) |> rep_len(n)
+  cx <- (borders$l + rx) |> rep_len(n)
+  cy <- (borders$t + ry) |> rep_len(n)
   fill <- rep_len(fill, n)
 
   svg_text <- "<svg

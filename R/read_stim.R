@@ -15,7 +15,7 @@
 read_stim <- function (path, pattern = NULL, ...) {
   imgext <- "\\.(jpg|jpeg|gif|png|bmp)$"
   # get paths to temfiles ----
-  if (dir.exists(path) %>% all()) {
+  if (dir.exists(path) |> all()) {
     if (is.numeric(pattern)) {
       # get images by index and matching tems
       imgpaths <- list.files(path, imgext, full.names = TRUE, ignore.case = TRUE)[pattern]
@@ -25,9 +25,9 @@ read_stim <- function (path, pattern = NULL, ...) {
     } else if (is.null(pattern)) {
       files <- list.files(path, full.names = TRUE)
     } else {
-      files <- lapply(pattern, list.files, path = path, full.names = TRUE) %>% unlist()
+      files <- lapply(pattern, list.files, path = path, full.names = TRUE) |> unlist()
     }
-  } else if (sapply(path, file.exists) %>% all()) {
+  } else if (sapply(path, file.exists) |> all()) {
     files <- path
   } else {
     stop(path, " is neither a directory nor a file")
@@ -42,15 +42,14 @@ read_stim <- function (path, pattern = NULL, ...) {
   # process tems ----
   temlist <- lapply(temfiles, function(temfile) {
     # read and clean  ----
-    tem_txt <- readLines(temfile, skipNul = TRUE) %>%
-      trimws() %>%
-      `[`(. != "") %>% # get rid of blank lines
-      `[`(substr(., 1, 1) != "#") # get rid of comments
+    tem_txt <- readLines(temfile, skipNul = TRUE) |> trimws()
+    tem_txt <- tem_txt[tem_txt != ""] # get rid of blank lines
+    tem_txt <- tem_txt[substr(tem_txt, 1, 1) != "#"] # get rid of comments
 
     # process points ----
     npoints <- as.integer(tem_txt[[1]])
-    points <- tem_txt[2:(npoints+1)] %>%
-      strsplit("\\s+") %>%
+    points <- tem_txt[2:(npoints+1)] |>
+      strsplit("\\s+") |>
       sapply(as.numeric)
     dimnames(points) <- list(c("x", "y"), NULL)
 
@@ -58,16 +57,16 @@ read_stim <- function (path, pattern = NULL, ...) {
     nlines <- as.integer(tem_txt[[npoints+2]])
     if (nlines > 0) {
       x <- (npoints+3):(npoints+2+(nlines*3))
-      line_rows <- tem_txt[x] %>%
+      line_rows <- tem_txt[x] |>
         matrix(nrow = 3)
 
-      lines <- line_rows[3, ] %>%
-        strsplit("\\s+") %>%
+      lines <- line_rows[3, ] |>
+        strsplit("\\s+") |>
         sapply(as.integer)
 
       # TODO: apply webmorph rules for open/closed lines
-      closed <- line_rows[1, ] %>%
-        as.integer() %>%
+      closed <- line_rows[1, ] |>
+        as.integer() |>
         as.logical()
     } else {
       lines <- c()

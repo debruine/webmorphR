@@ -13,22 +13,26 @@
 #' stimuli <- demo_stim()
 #'
 #' # use magick::image_* functions
-#' image_func(stimuli, "fill", color = "black", fuzz = 10, point = "+0+10") %>%
+#' image_func(stimuli, "fill", 
+#'            color = "black", 
+#'            fuzz = 10, 
+#'            point = "+0+10") |>
 #'   plot()
 #'
 #' blur <- image_func(stimuli, "blur", 5, 3)
 #' oilpaint <- image_func(stimuli, "oilpaint", radius = 5)
 #' negate <- image_func(stimuli, "negate")
-#' greenscreen <- image_func(stimuli, "transparent", color = "green", fuzz = 5)
+#' greenscreen <- image_func(stimuli, "transparent", 
+#'                           color = "green", fuzz = 5)
 #' colorize <- image_func(stimuli, "colorize", opacity = 50,
 #'                        color = c("hotpink", "dodgerblue"))
 #' sharpen <- image_func(stimuli, "contrast", sharpen = 1)
 #'
 #' # load a logo image and superimpose it on each image
-#' logo <- system.file("extdata/logo.png", package = "webmorphR") %>%
-#'   magick::image_read() %>%
+#' logo <- system.file("extdata/logo.png", package = "webmorphR") |>
+#'   magick::image_read() |>
 #'   magick::image_resize(100)
-#' image_func(stimuli, "composite", logo, offset = "+10+10") %>% plot()
+#' image_func(stimuli, "composite", logo, offset = "+10+10") |> plot()
 #'
 #' # use a self-defined function
 #' testfunc <- function(image) {
@@ -45,8 +49,7 @@ image_func <- function(stimuli, func, ...) {
       stop("That named function is not possible. See image_func_type() for a full list")
     }
 
-    func <- paste0("magick::image_", func) %>%
-      parse(text = .) %>%
+    func <- parse(text = paste0("magick::image_", func)) |>
       eval()
   }
 
@@ -104,7 +107,7 @@ image_func_types <- function() {
 #' @return stimlist with new images
 #' @export
 #'
-#' @examples demo_stim() %>% greyscale() %>% plot()
+#' @examples demo_stim() |> greyscale() |> plot()
 greyscale <- function(stimuli) {
   image_func(stimuli, "modulate", saturation = 0)
 }
@@ -113,6 +116,6 @@ greyscale <- function(stimuli) {
 #' @export
 #'
 #' @examples
-#' demo_stim() %>% grayscale()
+#' demo_stim() |> grayscale()
 grayscale <- greyscale
 

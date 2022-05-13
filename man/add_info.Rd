@@ -23,9 +23,9 @@ Add info with a data table that contains the info in either the same order as th
 You can also add data as named vectors.
 }
 \examples{
-stimuli <- demo_stim() \%>\%
+stimuli <- demo_stim() |>
   add_info(project = "XXX", gender = c("F", "M"))
 
-stimuli$f_multi$info \%>\% str()
+stimuli$f_multi$info |> str()
 
 }

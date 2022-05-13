@@ -19,5 +19,5 @@ Image widths
 }
 \examples{
 
-demo_stim() \%>\% width()
+demo_stim() |> width()
 }

@@ -47,9 +47,9 @@ If you set expand = 0, there is sometimes a thin visible line where multiple com
 stimuli <- demo_stim()
 masked <- mask(stimuli, c("face", "neck", "ears"), "red")
 
-revmasked <- mask(stimuli, "eyes", "#FFFF00", TRUE) \%>\%
-  mask("brows", "purple", TRUE) \%>\%
-  mask("nose", "#FF000066", TRUE) \%>\%
+revmasked <- mask(stimuli, "eyes", "#FFFF00", TRUE) |>
+  mask("brows", "purple", TRUE) |>
+  mask("nose", "#FF000066", TRUE) |>
   mask("mouth", "blue", TRUE)
 
 }

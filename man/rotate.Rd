@@ -30,11 +30,11 @@ stimlist with rotated tems and/or images
 Rotate templates and images
 }
 \examples{
-rotated <- demo_stim() \%>\%
-  rotate(45, fill = "dodgerblue") \%>\%
+rotated <- demo_stim() |>
+  rotate(45, fill = "dodgerblue") |>
   draw_tem()
 
-rotate_patch <- demo_stim() \%>\%
+rotate_patch <- demo_stim() |>
   rotate(45, patch = TRUE, keep_size = FALSE)
 
 }

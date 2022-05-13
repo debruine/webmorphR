@@ -23,10 +23,10 @@ Use tem_id to get the symmetry map for your template. If tem_id is omitted, imag
 o <- demo_stim("test", 1)
 m <- mirror(o, "frl")
 
-c(o, m) \%>\%
-  subset_tem(features("face")) \%>\%
-  draw_tem(pt.shape = "index", pt.color = "white", pt.size = 10) \%>\%
-  label(c("original", "mirrored")) \%>\%
+c(o, m) |>
+  subset_tem(features("face")) |>
+  draw_tem(pt.shape = "index", pt.color = "white", pt.size = 10) |>
+  label(c("original", "mirrored")) |>
   plot()
 
 }

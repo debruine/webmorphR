@@ -16,5 +16,5 @@ list of magick images
 Get Images into List
 }
 \examples{
-demo_stim() \%>\% get_imgs
+demo_stim() |> get_imgs
 }

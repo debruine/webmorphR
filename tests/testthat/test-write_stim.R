@@ -62,7 +62,7 @@ test_that("overwrite", {
   
   # don't overwrite
   ofiles <- write_stim(stim, dir, ask = FALSE, overwrite = FALSE)
-  expect_equal(unlist(ofiles), rep(F,4))
+  expect_null(unlist(ofiles))
   otime <- unlist(files) |> sapply(file.mtime)
   expect_equal(unname(ftime == otime), rep(TRUE, 4))
   
@@ -102,7 +102,7 @@ test_that("interactive", {
   expect_equal(length(ol), 5*4)
   atime <- unlist(files) |> sapply(file.mtime)
   expect_equal(atime, ftime)
-  expect_equal(unlist(afiles), rep(F, 4))
+  expect_null(unlist(afiles))
   
   # ask for all 4 files (and write over tems)
   lines <- c("1", "2", "1", "2")
@@ -114,7 +114,7 @@ test_that("interactive", {
   atime <- unlist(files) |> sapply(file.mtime)
   expect_equal(unname(atime == ftime), c(F, T, F, T))
   expect_equal(afiles[1, ], files[1, ])
-  expect_equal(afiles[2, ], list(A = FALSE, B = FALSE))
+  expect_equal(afiles[2, ], list(A = NULL, B = NULL))
   
   # ask for 1st file (and skip rest)
   lines <- c("3")
@@ -125,7 +125,7 @@ test_that("interactive", {
   expect_equal(length(ol), 5)
   btime <- unlist(files) |> sapply(file.mtime)
   expect_equal(atime, btime)
-  expect_equal(unlist(bfiles), rep(F, 4))
+  expect_null(unlist(bfiles))
   
   # ask for 1st file (and overwite rest)
   lines <- c("4")

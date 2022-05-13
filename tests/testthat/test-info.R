@@ -24,7 +24,7 @@ test_that("same_tems", {
 
   expect_equal(same_tems(t1), TRUE)
   expect_equal(same_tems(stimuli = t2), TRUE)
-  expect_equal(c(t1, t2) %>% same_tems(), FALSE)
+  expect_equal(c(t1, t2) |> same_tems(), FALSE)
 })
 
 test_that("remove_tem", {

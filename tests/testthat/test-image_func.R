@@ -24,8 +24,8 @@ test_that("more", {
   expect_silent(sharpen <- image_func(stimuli, "contrast", sharpen = 1))
 
   # load a logo image and superimpose it on each image
-  logo <- system.file("extdata/logo.png", package = "webmorphR") %>%
-    magick::image_read() %>%
+  logo <- system.file("extdata/logo.png", package = "webmorphR") |>
+    magick::image_read() |>
     magick::image_resize(100)
   expect_silent(badged <- image_func(stimuli, "composite", logo, offset = "+10+10"))
 })

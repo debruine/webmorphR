@@ -24,8 +24,7 @@ unique_names <- function(full_names,
   if (!is.list(full_names) &&
       !is.atomic(full_names)) {
     stop("full_names must be a list or vector")
-  } else if (sapply(full_names, is.character) %>%
-             all() %>% `!`) {
+  } else if (!(sapply(full_names, is.character) |> all())) {
     stop("full_names must contain only character strings")
   }
 
@@ -47,25 +46,26 @@ unique_names <- function(full_names,
       unames <- fnames[[1]]
     } else {
       # break and take last section
-      unames <- fnames[[1]] %>%
-        strsplit(breaks) %>% # break
-        `[[`(1) %>% `[`(length(.)) # get last item
+      unames <- fnames[[1]] |>
+        strsplit(breaks) |> # break
+        .bb(1)
+      unames <- unames[length(unames)] # get last item
     }
     names(unames) <- full_names[[1]]
     return(unames)
   }
 
   # compare multiple items ----
-  split_names <- fnames %>% strsplit(breaks)
-  m <- sapply(split_names, length) %>% min()
+  split_names <- fnames |> strsplit(breaks)
+  m <- sapply(split_names, length) |> min()
 
   # check first m sections for overlap ----
   drop_start <- sapply(1:m, function(i) {
-    sapply(split_names, `[[`, i) %>%
-      unique() %>%
+    sapply(split_names, `[[`, i) |>
+      unique() |>
       length() == 1
-  }) %>%
-    dplyr::cumall() %>% # set TRUE until first FALSE
+  }) |>
+    dplyr::cumall() |> # set TRUE until first FALSE
     sum()
 
   # reverse & check last m sections for overlap ----
@@ -73,11 +73,11 @@ unique_names <- function(full_names,
     sapply(split_names, function(x) {
       j <- length(x) + 1 - i
       x[[j]]
-    }) %>%
-      unique() %>%
+    }) |>
+      unique() |>
       length() == 1
-  }) %>%
-    dplyr::cumall() %>%
+  }) |>
+    dplyr::cumall() |>
     sum()
 
   # trim unvarying characters from each name ----
@@ -86,7 +86,7 @@ unique_names <- function(full_names,
   unames <- sapply(split_names, function(x) {
     start <- drop_start+1
     stop  <- length(x)-drop_end
-    x[start:stop] %>% paste(collapse = glue)
+    x[start:stop] |> paste(collapse = glue)
   })
 
   names(unames) <- full_names

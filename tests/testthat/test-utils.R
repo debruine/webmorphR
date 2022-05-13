@@ -17,14 +17,6 @@ test_that("c", {
   expect_equal(names(x), c("m_multi", "f_multi"))
 })
 
-# print ----
-test_that("print", {
-  skip("needs visual check")
-  a <- demo_stim()
-  print(a)
-  a
-})
-
 test_that("rep", {
   a <- demo_stim()
 
@@ -87,8 +79,8 @@ test_that("xget", {
 
 # subset ----
 test_that("subset", {
-  stimuli <- demo_stim() %>%
-    c(., .) %>%
+  stimuli <- demo_stim() |>
+    rep(2) |>
     add_info(x = 1:4)
 
   f <- subset(stimuli, "f_")

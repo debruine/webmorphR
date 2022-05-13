@@ -5,17 +5,17 @@ import multiprocessing
 import argparse
 import dlib
 
-def facetrain(training, 
-              output, 
-              tree_depth = 5, 
-              nu = 0.5, 
-              cascade_depth = 15, 
-              feature_pool_size = 400, 
-              num_test_splits = 50, 
-              oversampling_amount = 5, 
-              oversampling_translation_jitter = 0.1, 
-              be_verbose = True, 
-              num_threads = 0):
+def py_facetrain(training, 
+                 output, 
+                 tree_depth = 5, 
+                 nu = 0.5, 
+                 cascade_depth = 15, 
+                 feature_pool_size = 400, 
+                 num_test_splits = 50, 
+                 oversampling_amount = 5, 
+                 oversampling_translation_jitter = 0.1, 
+                 be_verbose = True, 
+                 num_threads = 0):
 
   # grab the default options for dlib's shape predictor
   print("[INFO] setting shape predictor options...")

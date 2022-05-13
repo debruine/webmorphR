@@ -106,7 +106,16 @@ test_that("label", {
   m_explicit <- mlabel(stimuli, text = c("A", "B"))
   gg_explicit <- gglabel(stimuli, label = c("A", "B"))
   
-  c(m_guess, m_explicit, gg_guess, gg_explicit) %>% plot()
+  same_m <- image_comp(m_guess[1], m_explicit[1])
+  same_gg <- image_comp(gg_guess[1], gg_explicit[1])
+  diff <- image_comp(gg_guess[1], m_explicit[1])
+  
+  expect_equal(same_m[[1]], 0)
+  expect_equal(same_gg[[1]], 0)
+  expect_true(diff[[1]] > 0)
+  
+  # c(m_guess, m_explicit, gg_guess, gg_explicit) |>
+  #   plot(maxwidth = 500)
 })
   
 

@@ -16,5 +16,5 @@ list of class stimlist
 Remove templates
 }
 \examples{
-demo_stim() \%>\% remove_tem()
+demo_stim() |> remove_tem()
 }

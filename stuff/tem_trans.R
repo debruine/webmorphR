@@ -12,7 +12,7 @@ new_pt <- dplyr::arrange(new_pt, n)
 View(new_pt)
 tmp <- tempfile()
 readr::write_csv(new_pt, tmp)
-readLines(tmp) %>% paste(collapse = "\n") %>% cat()
+readLines(tmp) |> paste(collapse = "\n") |> cat()
 
 
 new_ln <- lapply(fpp$lines, sapply, sapply, function(x) which(x == reorder) - 1L)
@@ -25,7 +25,7 @@ ln <- data.frame(
 )
 tmp <- tempfile()
 readr::write_csv(ln, tmp)
-readLines(tmp) %>% paste(collapse = "\n") %>% cat()
+readLines(tmp) |> paste(collapse = "\n") |> cat()
 
 
 
@@ -33,10 +33,10 @@ new_mk <- lapply(fpp$mask, lapply, sapply, function(x) which(x == reorder) - 1L)
 
 mk <- data.frame(
   mask = names(fpp$mask),
-  points = sapply(new_mk, sapply, paste, collapse = ",") %>% sapply(paste, collapse = ";")
+  points = sapply(new_mk, sapply, paste, collapse = ",") |> sapply(paste, collapse = ";")
 )
 tmp <- tempfile()
 readr::write_csv(mk, tmp)
-readLines(tmp) %>% paste(collapse = "\n") %>% cat()
+readLines(tmp) |> paste(collapse = "\n") |> cat()
 
 
