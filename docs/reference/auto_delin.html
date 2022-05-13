@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -79,7 +79,8 @@
   <span class="va">stimuli</span>,
   style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dlib7"</span>, <span class="st">"dlib70"</span>, <span class="st">"fpp106"</span>, <span class="st">"fpp83"</span><span class="op">)</span>,
   replace <span class="op">=</span> <span class="cn">FALSE</span>,
-  face <span class="op">=</span> <span class="fl">1</span>
+  face <span class="op">=</span> <span class="fl">1</span>,
+  dlib_path <span class="op">=</span> <span class="cn">NULL</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -88,11 +89,13 @@
     <dl><dt>stimuli</dt>
 <dd><p>list of class stimlist</p></dd>
 <dt>style</dt>
-<dd><p>Which service and number of landmarks (dlib7, fpp106, fpp83)</p></dd>
+<dd><p>Which service and number of landmarks (dlib7, dlib70, fpp106, fpp83)</p></dd>
 <dt>replace</dt>
 <dd><p>if FALSE, only gets templates for images with no template</p></dd>
 <dt>face</dt>
 <dd><p>which face to delineate in each image if there is more than 1</p></dd>
+<dt>dlib_path</dt>
+<dd><p>path to a custom dlib.dat landmark file to use (style is ignored if set)</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -109,14 +112,14 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="co"># requires python</span></span>
-<span class="r-in">  <span class="va">auto_high</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="va">auto_high</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> |&gt;</span>
 <span class="r-in">    <span class="fu">auto_delin</span><span class="op">(</span>replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># replace existing templates</span></span>
 <span class="r-in"></span>
 <span class="r-in">  <span class="co"># requires an API key in .Renviron</span></span>
-<span class="r-in">  <span class="va">auto_low</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in">  <span class="va">auto_low</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> |&gt;</span>
 <span class="r-in">    <span class="fu">auto_delin</span><span class="op">(</span>style <span class="op">=</span> <span class="st">"fpp106"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">auto_high</span>, <span class="va">auto_low</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">auto_high</span>, <span class="va">auto_low</span><span class="op">)</span> |&gt; <span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
@@ -132,8 +135,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

@@ -90,7 +90,7 @@ ind <- plot(face_set,
 tem <- draw_tem(avg, pt.alpha = 0.5, line.alpha = 0.25)
 
 # combine the ind and tem stimuli and plot
-c(ind, tem) %>% plot(nrow = 1)
+c(ind, tem) |> plot(nrow = 1)
 ```
 
 <img src="man/figures/ind-avg-1.png" title="plot of chunk ind-avg" alt="plot of chunk ind-avg" width="100%" />
@@ -128,8 +128,8 @@ Next, mask the images with rainbow colours and crop them.
 rainbow <- c("#983E82", "#E2A458", "#F5DC70", 
              "#59935B", "#467AAC", "#61589C")
 
-stimuli <- dist_avg %>%
-  mask(c("face", "neck", "ears"), fill = rainbow) %>%
+stimuli <- dist_avg |>
+  mask(c("face", "neck", "ears"), fill = rainbow) |>
   crop(0.6, 0.8)
 
 plot(stimuli, nrow = 2)
@@ -153,13 +153,13 @@ Easily create figures to illustrate your research. The code below subsets the `s
 
 ```r
 c(subset(stimuli, "average"),
-  subset(stimuli, "distinctive")) %>%
-  setnames(pattern = "_03_", replacement = " ") %>%
-  pad(120, 0, 0, 0, fill = "black") %>%
+  subset(stimuli, "distinctive")) |>
+  setnames(pattern = "_03_", replacement = " ") |>
+  pad(120, 0, 0, 0, fill = "black") |>
   label(size = 90, 
         color = rainbow, 
         gravity = "north",
-        location = "+0+10") %>%
+        location = "+0+10") |>
   plot(nrow = 2)
 ```
 
@@ -179,11 +179,11 @@ Auto-delineation takes a few seconds per face, so you will see a progress bar in
 
 
 ```r
-stimuli <- demo_stim("zoom") %>% 
-  resize(1/2) %>%
+stimuli <- demo_stim("zoom") |> 
+  resize(1/2) |>
   auto_delin(replace = TRUE)
 
-draw_tem(stimuli, pt.size = 10) %>% plot()
+draw_tem(stimuli, pt.size = 10) |> plot()
 ```
 
 <img src="man/figures/delin-dlib7-1.png" title="plot of chunk delin-dlib7" alt="plot of chunk delin-dlib7" width="100%" />
@@ -192,11 +192,11 @@ Alternatively, you can use the Face++ auto-delineator by setting `style = "fpp10
 
 
 ```r
-stimuli <- demo_stim("zoom") %>% 
-  resize(1/2) %>%
+stimuli <- demo_stim("zoom") |> 
+  resize(1/2) |>
   auto_delin(style = "fpp106", replace = TRUE)
 
-draw_tem(stimuli, pt.size = 8) %>% plot()
+draw_tem(stimuli, pt.size = 8) |> plot()
 ```
 
 <img src="man/figures/delin-fpp-1.png" title="plot of chunk delin-fpp" alt="plot of chunk delin-fpp" width="100%" />
@@ -207,8 +207,8 @@ Now you can procrustes align the images and crop them all to the same dimensions
 
 
 ```r
-aligned <- stimuli %>%
-  align(procrustes = TRUE, patch = TRUE) %>%
+aligned <- stimuli |>
+  align(procrustes = TRUE, patch = TRUE) |>
   crop_tem(120, 20, 20, 20)
 
 plot(aligned)
@@ -222,8 +222,8 @@ Add 50 pixels of image labels.
 
 
 ```r
-labelled <- aligned %>%
-  pad(50, 0, 0, 0, fill = "black") %>%
+labelled <- aligned |>
+  pad(50, 0, 0, 0, fill = "black") |>
   label(c("15cm", "30cm", "45cm", "60cm"), color = "white")
   
 plot(labelled)

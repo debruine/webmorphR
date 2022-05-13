@@ -1,3 +1,10 @@
+# webmorph 0.0.1.9008
+
+* Reduced package dependencies, but now requires R>=4.2.0
+* All code and examples use |> pipe 
+* `facetrain()` function for training a dlib shape predictor model (still really experimental)
+* Various bug fixes
+
 # webmorph 0.0.1.9007
 
 * Custom masks take lists for the `mask` argument now.

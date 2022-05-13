@@ -271,7 +271,7 @@ format_size <- function (x) {
 #' @export
 #'
 #' @examples
-#' demo_stim() |> get_imgs
+#' demo_stim() |> get_imgs()
 get_imgs <- function(stimuli) {
   args <- validate_stimlist(stimuli) |>
     lapply(`[[`, "img")

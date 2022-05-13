@@ -16,8 +16,7 @@
 #' image_func(stimuli, "fill", 
 #'            color = "black", 
 #'            fuzz = 10, 
-#'            point = "+0+10") |>
-#'   plot()
+#'            point = "+0+10")
 #'
 #' blur <- image_func(stimuli, "blur", 5, 3)
 #' oilpaint <- image_func(stimuli, "oilpaint", radius = 5)
@@ -32,7 +31,7 @@
 #' logo <- system.file("extdata/logo.png", package = "webmorphR") |>
 #'   magick::image_read() |>
 #'   magick::image_resize(100)
-#' image_func(stimuli, "composite", logo, offset = "+10+10") |> plot()
+#' image_func(stimuli, "composite", logo, offset = "+10+10")
 #'
 #' # use a self-defined function
 #' testfunc <- function(image) {
@@ -107,7 +106,8 @@ image_func_types <- function() {
 #' @return stimlist with new images
 #' @export
 #'
-#' @examples demo_stim() |> greyscale() |> plot()
+#' @examples 
+#' demo_stim() |> greyscale()
 greyscale <- function(stimuli) {
   image_func(stimuli, "modulate", saturation = 0)
 }

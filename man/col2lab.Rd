@@ -13,7 +13,7 @@ col2lab(col)
 list of L, a and b values
 }
 \description{
-R color to LAB colourspace conversion.
+R color to LAB colourspace conversion. Calculated with Observer. = 2°, Illuminant = D65.
 }
 \examples{
 col2lab(c("red", "green", "blue"))

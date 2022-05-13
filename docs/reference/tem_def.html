@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -107,7 +107,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 9    top-right of left iris 175.040 270.366  11       NA       NA</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">fpp106</span> <span class="op">&lt;-</span> <span class="fu">tem_def</span><span class="op">(</span><span class="st">"fpp106"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fpp106</span><span class="op">$</span><span class="va">lines</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">fpp106</span><span class="op">$</span><span class="va">lines</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 15</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : int [1:33] 2 3 4 5 6 7 8 9 10 11 ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : int [1:7] 86 87 88 89 90 91 92</span>
@@ -126,7 +126,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ : int [1:5] 71 72 73 74 80</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">fpp83</span> <span class="op">&lt;-</span> <span class="fu">tem_def</span><span class="op">(</span><span class="st">"fpp83"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">fpp83</span><span class="op">$</span><span class="va">mask</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">fpp83</span><span class="op">$</span><span class="va">mask</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ left_eye  :List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : int [1:5] 44 4 56 51 79</span>
@@ -165,8 +165,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

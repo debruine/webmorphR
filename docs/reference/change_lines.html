@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -94,7 +94,7 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> |&gt;</span>
 <span class="r-in">  <span class="fu"><a href="subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="fu"><a href="features.html">features</a></span><span class="op">(</span><span class="st">"face"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">s</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">lines</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
@@ -123,15 +123,18 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># remove all lines</span></span>
-<span class="r-in"><span class="va">s2</span> <span class="op">&lt;-</span> <span class="va">s</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in"><span class="va">s2</span> <span class="op">&lt;-</span> <span class="va">s</span> |&gt;</span>
 <span class="r-in">  <span class="fu">change_lines</span><span class="op">(</span>line_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, pts <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">s2</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">lines</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> list()</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="va">s2</span>, pt.shape <span class="op">=</span> <span class="st">"index"</span>, pt.size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/6w/y3tyzgs1403cz7tgw8k4lk600000gq/T//RtmpecyzxZ/fileba182a87cd16.png"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "knit_image_paths" "knit_asis"       </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># add new line</span></span>
-<span class="r-in"><span class="va">s3</span> <span class="op">&lt;-</span> <span class="va">s2</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in"><span class="va">s3</span> <span class="op">&lt;-</span> <span class="va">s2</span> |&gt;</span>
 <span class="r-in">  <span class="fu">change_lines</span><span class="op">(</span>line_id <span class="op">=</span> <span class="fl">1</span>, pts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">26</span>, <span class="fl">1</span>, <span class="fl">27</span>, <span class="fl">2</span>, <span class="fl">6</span><span class="op">:</span><span class="fl">14</span>, <span class="fl">5</span>, <span class="fl">29</span>, <span class="fl">4</span>, <span class="fl">28</span>, <span class="fl">3</span>, <span class="fl">25</span><span class="op">:</span><span class="fl">15</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">s3</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">lines</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [[1]]</span>
@@ -139,6 +142,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [26] 19 18 17 16 15  0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="va">s3</span>, line.color <span class="op">=</span> <span class="st">"hotpink"</span>, line.alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/6w/y3tyzgs1403cz7tgw8k4lk600000gq/T//RtmpecyzxZ/fileba1839a9752a.png"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "knit_image_paths" "knit_asis"       </span>
 </code></pre></div>
     </div>
   </div>
@@ -153,8 +159,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

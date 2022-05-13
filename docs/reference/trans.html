@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -66,7 +66,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Transform Images</h1>
-    <small class="dont-index">Source: <a href="https://github.com/debruine/webmorphR/blob/HEAD/R/web.R" class="external-link"><code>R/web.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/debruine/webmorphR/blob/HEAD/R/trans.R" class="external-link"><code>R/trans.R</code></a></small>
     <div class="hidden name"><code>trans.Rd</code></div>
     </div>
 
@@ -122,7 +122,7 @@
 <span class="r-in">  <span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in">  <span class="va">sexdim</span> <span class="op">&lt;-</span> <span class="fu">trans</span><span class="op">(</span><span class="va">stimuli</span>, <span class="va">stimuli</span><span class="op">$</span><span class="va">f_multi</span>, <span class="va">stimuli</span><span class="op">$</span><span class="va">m_multi</span>,</span>
 <span class="r-in">                  shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>fem <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>, masc <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">  <span class="va">sexdim</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="label.html">label</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in">  <span class="va">sexdim</span> |&gt; <span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="label.html">label</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
@@ -139,8 +139,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

@@ -150,7 +150,6 @@ crop <- function(stimuli,
 #'
 #' @examples
 #' padded <- demo_stim() |> pad(10, fill = "red")
-#' plot(padded)
 pad <- function(stimuli, top = 10, right = top, bottom = top, left = right, ...) {
   stimuli <- validate_stimlist(stimuli)
 

@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -97,22 +97,25 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># use magick::image_* functions</span></span>
-<span class="r-in"><span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"fill"</span>, color <span class="op">=</span> <span class="st">"black"</span>, fuzz <span class="op">=</span> <span class="fl">10</span>, point <span class="op">=</span> <span class="st">"+0+10"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"fill"</span>, </span>
+<span class="r-in">           color <span class="op">=</span> <span class="st">"black"</span>, </span>
+<span class="r-in">           fuzz <span class="op">=</span> <span class="fl">10</span>, </span>
+<span class="r-in">           point <span class="op">=</span> <span class="st">"+0+10"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="va">blur</span> <span class="op">&lt;-</span> <span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"blur"</span>, <span class="fl">5</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">oilpaint</span> <span class="op">&lt;-</span> <span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"oilpaint"</span>, radius <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">negate</span> <span class="op">&lt;-</span> <span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"negate"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">greenscreen</span> <span class="op">&lt;-</span> <span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"transparent"</span>, color <span class="op">=</span> <span class="st">"green"</span>, fuzz <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">greenscreen</span> <span class="op">&lt;-</span> <span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"transparent"</span>, </span>
+<span class="r-in">                          color <span class="op">=</span> <span class="st">"green"</span>, fuzz <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">colorize</span> <span class="op">&lt;-</span> <span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"colorize"</span>, opacity <span class="op">=</span> <span class="fl">50</span>,</span>
 <span class="r-in">                       color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hotpink"</span>, <span class="st">"dodgerblue"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">sharpen</span> <span class="op">&lt;-</span> <span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"contrast"</span>, sharpen <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># load a logo image and superimpose it on each image</span></span>
-<span class="r-in"><span class="va">logo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/logo.png"</span>, package <span class="op">=</span> <span class="st">"webmorphR"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu">magick</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html" class="external-link">image_read</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span>
+<span class="r-in"><span class="va">logo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata/logo.png"</span>, package <span class="op">=</span> <span class="st">"webmorphR"</span><span class="op">)</span> |&gt;</span>
+<span class="r-in">  <span class="fu">magick</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html" class="external-link">image_read</a></span><span class="op">(</span><span class="op">)</span> |&gt;</span>
 <span class="r-in">  <span class="fu">magick</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/transform.html" class="external-link">image_resize</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"composite"</span>, <span class="va">logo</span>, offset <span class="op">=</span> <span class="st">"+10+10"</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">image_func</span><span class="op">(</span><span class="va">stimuli</span>, <span class="st">"composite"</span>, <span class="va">logo</span>, offset <span class="op">=</span> <span class="st">"+10+10"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># use a self-defined function</span></span>
 <span class="r-in"><span class="va">testfunc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">image</span><span class="op">)</span> <span class="op">{</span></span>
@@ -134,8 +137,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>
