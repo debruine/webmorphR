@@ -1,6 +1,6 @@
 #' Color to Lab Conversion
 #'
-#' R color to LAB colourspace conversion.
+#' R color to LAB colourspace conversion. Calculated with Observer. = 2°, Illuminant = D65.
 #'
 #' @param col vector of hex or color names
 #'

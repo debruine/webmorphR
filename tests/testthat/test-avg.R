@@ -9,11 +9,17 @@ test_that("avg", {
   expect_error(avg(stim120))
 
   # normalisation
-  stimuli <- demo_stim()
+  stimuli <- demo_stim("lisa", 1:2)
   avg <- avg(stimuli)
   twopoint <- avg(stimuli, norm = "twopoint")
   rigid <- avg(stimuli, norm = "rigid")
   notex <- avg(stimuli, texture = FALSE)
+  
+  tem <- average_tem(stimuli)
+  expect_equal(tem[[1]]$points, avg[[1]]$points)
+  expect_true(image_comp(avg, twopoint) > 0)
+  expect_true(image_comp(avg, rigid) > 0)
+  expect_true(image_comp(avg, notex) > 0)
 
   # format (fix tomcat files for this)
   # png <- avg(stimuli, format = "png")
@@ -33,6 +39,5 @@ test_that("avg", {
   skip("long process")
   expect_silent(avg100 <- avg(stim120[1:100]))
 })
-
 
 wm_opts(server = "https://webmorph.org")

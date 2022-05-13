@@ -39,3 +39,20 @@ test_that("defaults", {
     }
   }
 })
+
+# col2lab ----
+test_that("col2lab", {
+  # http://www.brucelindbloom.com/index.html?ColorCheckerCalcHelp.html
+  # values checked with ref white = D65, 
+  # RGB Model = sRGB, dom lambda = 611.4 nm (default)
+  
+  # color name
+  red <- col2lab("red") |> unlist()
+  lindbloom_red = c(L = 53.24, a = 80.09, b = 67.20)
+  expect_equal(lindbloom_red, red, tolerance = 0.05)
+  
+  # hex color
+  green <- col2lab("#00FF00") |> unlist()
+  lindbloom_green = c(L = 87.73, a = -86.18, b = 83.18)
+  expect_equal(lindbloom_green, green, tolerance = 0.05)
+})
