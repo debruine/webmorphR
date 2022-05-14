@@ -12,7 +12,7 @@
 #' @param style Which service and number of landmarks (dlib7, dlib70, fpp106, fpp83)
 #' @param replace if FALSE, only gets templates for images with no template
 #' @param face which face to delineate in each image if there is more than 1
-#' @param dlib_path path to a custom dlib.dat landmark file to use (style is ignored if set)
+#' @param dlib_path path to a custom dlib .dat landmark file to use (style is ignored if set)
 #'
 #' @return stimlist with templates
 #' @export
@@ -20,14 +20,16 @@
 #' @examples
 #' \dontrun{
 #'   # requires python
-#'   auto_high <- demo_stim()[1] |>
+#'   auto_dlib7 <- demo_stim()[1] |>
 #'     auto_delin(replace = TRUE) # replace existing templates
-#'
+#'   
+#'   # requires dlib files from debruine/webmorphR.dlibs
+#'   auto_dlib70 <- demo_stim()[1] |>
+#'     auto_delin(stle = "dlib70", replace = TRUE)
+#'   
 #'   # requires an API key in .Renviron
-#'   auto_low <- demo_stim()[1] |>
+#'   auto_fpp106 <- demo_stim()[1] |>
 #'     auto_delin(style = "fpp106", replace = TRUE)
-#'
-#'   c(auto_high, auto_low) |> draw_tem() |> plot()
 #' }
 auto_delin <- function(stimuli, 
                        style = c("dlib7", "dlib70", "fpp106", "fpp83"), 
