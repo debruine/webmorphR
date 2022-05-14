@@ -62,10 +62,15 @@ test_that("python", {
   s7 <- auto_delin(stimuli, "dlib7", TRUE)
   expect_equal(s7[[1]]$points |> dim(), c(2, 7))
   
-  #s70 <- auto_delin(stimuli, "dlib70", TRUE)
-  #expect_equal(s70[[1]]$points |> dim(), c(2, 70))
-
-  # draw_tem(s2)
-  # draw_tem(s3)
+  custom <- system.file("python/dlib7.dat", package = "webmorphR")
+  s5 <- auto_delin(stimuli, replace = TRUE, dlib_path = custom)
+  expect_equivalent(s7[[1]]$points[, 3:7], s5[[1]]$points)
+  
+  s70 <- auto_delin(stimuli, "dlib70", TRUE)
+  expect_equal(s70[[1]]$points |> dim(), c(2, 70))
+  
+  # draw_tem(s7)
+  # draw_tem(s5)
+  # draw_tem(s70)
 })
 
