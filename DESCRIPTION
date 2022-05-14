@@ -1,7 +1,7 @@
 Package: webmorphR
 Title: Reproducible Stimuli
 Date: 2022-05-14
-Version: 0.0.1.9008
+Version: 0.0.2.9000
 Authors@R: 
     c(person(
         given = "Lisa", 
@@ -16,13 +16,7 @@ Authors@R:
         role = c("pfr", "ctb"), 
         email = "ekc00004@students.stir.ac.uk"
     ))
-Description: Create reproducible image stimuli using images with webmorph.org templates.
-Config/reticulate:
-  list(
-    packages = list(
-      list(package = "face_recognition")
-    )
-  )
+Description: Create reproducible image stimuli, specialised for images with webmorph.org templates.
 License: CC BY 4.0
 Encoding: UTF-8
 LazyData: true
@@ -36,26 +30,23 @@ Imports:
     dplyr,
     jsonlite,
     magick,
-    gifski,
     geomorph,
     httr,
     progress,
-    rsvg,
-    shiny,
-    reticulate
+    shiny
 Suggests: 
     ggplot2,
+    gifski,
     testthat,
     usethis,
     rmarkdown,
     covr,
-    stimsets,
-    webmorphR.dlibs
+    webmorphR.stim,
+    webmorphR.dlib
 Remotes:
-    debruine/stimsets
-    debruine/webmorphR.dlibs
-VignetteBuilder: knitr
-URL: https://github.com/debruine/webmorphR
+    debruine/webmorphR.stim
+    debruine/webmorphR.dlib
+URL: https://debruine.github.io/webmorphR, https://github.com/debruine/webmorphR
 BugReports: https://github.com/debruine/webmorphR/issues
 Depends: 
     R (>= 4.2.0)

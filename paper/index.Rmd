@@ -521,7 +521,7 @@ We will use the open-source, CC-BY licensed image set, the Face Research Lab Lon
 
 london <- demo_stim("london") |>
   resize(0.5) |> # makes the demo run faster, change for final
-  add_info(stimsets::london_info)
+  add_info(webmorphR.stim::london_info)
 
 london |> plot(nrow=6, maxwidth = 2000)
 ```
@@ -529,7 +529,7 @@ london |> plot(nrow=6, maxwidth = 2000)
 ```{r}
 smiling <- demo_stim("smiling") |>
   resize(0.5) |> # makes the demo run faster, change for final
-  add_info(stimsets::london_info)
+  add_info(webmorphR.stim::london_info)
 ```
 
 Each subject has one smiling and one neutral pose. For each pose, 5 full colour images were simultaneously taken from different angles: left profile, left three-quarter, front, right three-quarter, and right profile, but we will only use the front-facing images in the examples below. These images were cropped to 1350x1350 pixels and the faces were manually centered (Lisa did this many years ago before we made the tools in this paper). The neutral front images have template files that mark out 189 coordinates delineating face shape for use with Psychomorph or WebMorph.

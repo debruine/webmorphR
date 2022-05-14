@@ -23,20 +23,32 @@ test_that("auto_delin", {
   Sys.setenv(FACEPLUSPLUS_SECRET = secret)
 })
 
-test_that("face++", {
+test_that("auto_delin", {
+  # Requires FACEPLUSPLUS_KEY and FACEPLUSPLUS_SECRET
+  skip_on_cran()
+  skip_if_offline()
+  
+  stimuli <- demo_stim("test", "m")
+  ad <- auto_delin(stimuli, "fpp106", replace = TRUE)
+  fpp <- fpp_auto_delin(stimuli, "fpp106", replace = TRUE)
+  expect_equal(fpp[[1]]$points, ad[[1]]$points)
+  expect_equal(fpp[[1]]$lines, ad[[1]]$lines)
+})
+
+test_that("fpp_auto_delin", {
   # Requires FACEPLUSPLUS_KEY and FACEPLUSPLUS_SECRET
   skip_on_cran()
   skip_if_offline()
   
   stimuli <- demo_stim("test", "f")
   fpp106 <- tem_def("fpp106")
-  x106 <- auto_delin(stimuli, "fpp106", replace = TRUE)
+  x106 <- fpp_auto_delin(stimuli, "fpp106", replace = TRUE)
   pnames <- (x106$f_multi$points |> dimnames())[[2]]
   expect_equal(pnames, fpp106$points$name)
   expect_equal(x106$f_multi$lines, fpp106$lines)
 
   fpp83 <- tem_def("fpp83")
-  x83 <- auto_delin(stimuli, "fpp83", replace = TRUE)
+  x83 <- fpp_auto_delin(stimuli, "fpp83", replace = TRUE)
   pnames <- (x83$f_multi$points |> dimnames())[[2]]
   expect_equal(pnames, fpp83$points$name)
   expect_equal(x83$f_multi$lines, fpp83$lines)
@@ -48,29 +60,21 @@ test_that("paste 2 together", {
   skip_if_offline()
   
   s <- demo_stim() |> plot()
-  f <- auto_delin(s, "fpp106", TRUE, 1)
-  m <- auto_delin(s, "fpp106", TRUE, 2)
+  f <- fpp_auto_delin(s, "fpp106", TRUE, 1)
+  m <- fpp_auto_delin(s, "fpp106", TRUE, 2)
   
   expect_true(all((f[[1]]$points == m[[1]]$points) == FALSE))
+  # draw_tem(c(f, m)) |> plot(nrow = 2)
 })
 
-test_that("python", {
+test_that("dlib_auto_delin", {
   skip_on_cran()
+  skip_if_offline()
   
-  stimuli <- demo_stim("test", "f_")
-  
-  s7 <- auto_delin(stimuli, "dlib7", TRUE)
-  expect_equal(s7[[1]]$points |> dim(), c(2, 7))
-  
-  custom <- system.file("python/dlib7.dat", package = "webmorphR")
-  s5 <- auto_delin(stimuli, replace = TRUE, dlib_path = custom)
-  expect_equivalent(s7[[1]]$points[, 3:7], s5[[1]]$points)
-  
-  s70 <- auto_delin(stimuli, "dlib70", TRUE)
-  expect_equal(s70[[1]]$points |> dim(), c(2, 70))
-  
-  # draw_tem(s7)
-  # draw_tem(s5)
-  # draw_tem(s70)
+  stimuli <- demo_stim()[1]
+  s_dlib <- webmorphR.dlib::dlib_auto_delin(stimuli, "dlib7", TRUE)
+  s_ad <- auto_delin(stimuli, "dlib7", TRUE)
+  expect_equal(s_dlib[[1]]$points, s_ad[[1]]$points)
+  expect_equal(s_dlib[[1]]$lines, s_ad[[1]]$lines)
 })
 

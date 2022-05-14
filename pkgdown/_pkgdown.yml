@@ -1,14 +1,18 @@
 url: https://facelab.github.io/webmorph/
 
 development:
-  mode: release
+  mode: unreleased
 home:
   title: Reproducible Stimuli
-  description: Create reproducible image stimuli using images with webmorph.org templates.
+  description: Create reproducible image stimuli, specialised for images with webmorph.org templates.
 
 template:
-  params:
-    bootswatch: flatly
+  bootstrap: 5
+  bootswatch: yeti
+  bslib:
+    primary: "#204969"
+    base_font: {google: "Roboto Flex"}
+    heading_font: {google: "Roboto"}
   opengraph:
     image:
       src: man/figures/card.png
@@ -45,19 +49,28 @@ reference:
   - '`demo_stim`'
   - '`read_stim`'
   - '`write_stim`'
-- title: Web functions
-  desc: Functions that link to webmorph.org or Face++
+- title: Webmorph.org functions
+  desc: Functions that link to webmorph.org
   contents:
-  - '`auto_delin`'
   - '`avg`'
   - '`continuum`'
   - '`loop`'
   - '`symmetrize`'
   - '`trans`'
+- title: Delineation
+  desc: Functions that create or alter delineations
+  contents:
+  - '`auto_delin`'
+  - '`average_tem`'
+  - '`change_lines`'
+  - '`draw_tem`'
+  - '`fpp_auto_delin`'
+  - '`squash_tem`'
+  - '`subset_tem`'
+  - '`remove_tem`'
 - title: Plotting
   desc: ~
   contents:
-  - '`draw_tem`'
   - '`gglabel`'
   - '`label`'
   - '`mlabel`'
@@ -80,14 +93,6 @@ reference:
   - '`resize`'
   - '`rotate`'
   - '`to_size`'
-- title: Template Manipulation
-  desc: ~
-  contents:
-  - '`average_tem`'
-  - '`subset_tem`'
-  - '`remove_tem`'
-  - '`squash_tem`'
-  - '`change_lines`'
 - title: Metrics/Info
   desc: ~
   contents:
@@ -116,11 +121,6 @@ reference:
   contents:
   - '`tems_to_array`'
   - '`write_tps`'
-- title: Python/dlib functions
-  desc: ~
-  contents:
-  - '`facetrain`'
-  - '`tem_to_xml`'
 - title: Utilities
   desc: Mainly internally used functions, but might be of interest to some
   contents:

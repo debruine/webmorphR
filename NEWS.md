@@ -1,3 +1,9 @@
+# webmorph 0.0.2.9000
+
+* moved all python functions to webmorphR.dlib
+* `auto_delin()` is now a wrapper for `fpp_auto_delin()` (for Face++) and `webmorphR.dlib::dlib_auto_delin()` (for python/dlib/face_recognition delineations).
+* Manuals and vignettes updated (dark theme website!)
+
 # webmorph 0.0.1.9008
 
 * Reduced package dependencies, but now requires R>=4.2.0
@@ -34,7 +40,7 @@
 
 # webmorph 0.0.1.9003
 
-* demo imagesets removed so `demo_stim()` needs to load "london", "smiling", "composite", "lisa", "zoom", and "rainbow" from stimsets  using `remotes::install_github("debruine/stimsets")`
+* demo imagesets removed so `demo_stim()` needs to load "london", "smiling", "composite", "lisa", "zoom", and "rainbow" from webmorphR.stim  using `remotes::install_github("debruine/webmorphR.stim")`
 * `image_comp()` to calculate difference between images in a way that corresponds to morph continuua differences
 * crop_pad renamed to `crop_tem()`
 * frl_features renamed to `features()`

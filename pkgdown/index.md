@@ -48,7 +48,7 @@ Load 6 faces. If you haven't already downloaded the demo stimulus sets, this cod
 
 
 ```r
-# remotes::install_github("debruine/stimsets")
+# remotes::install_github("debruine/webmorphR.stim")
 face_set <- demo_stim("london", "002|006|007|025|030|066")
 
 plot(face_set, nrow = 1)
@@ -121,7 +121,7 @@ plot(dist_avg, nrow = 2)
 
 ### Mask and crop
 
-Next, mask the images with rainbow colours and crop them.
+Next, mask the images with rainbow colours and crop them. Making them more distinctive has exaggerated differences in position on the image, so align the eyes to the average position first.
 
 
 ```r
@@ -129,6 +129,7 @@ rainbow <- c("#983E82", "#E2A458", "#F5DC70",
              "#59935B", "#467AAC", "#61589C")
 
 stimuli <- dist_avg |>
+  align() |>
   mask(c("face", "neck", "ears"), fill = rainbow) |>
   crop(0.6, 0.8)
 
@@ -158,6 +159,7 @@ c(subset(stimuli, "average"),
   pad(120, 0, 0, 0, fill = "black") |>
   label(size = 90, 
         color = rainbow, 
+        weight = 700,
         gravity = "north",
         location = "+0+10") |>
   plot(nrow = 2)
@@ -168,33 +170,34 @@ c(subset(stimuli, "average"),
 
 ## Automatic Delineation
 
-Read in images with webmorph templates, or automatically delineate images with the python module [face_recognition](https://github.com/ageitgey/face_recognition) or the web-based software [Face++](https://www.faceplusplus.com/). Auto-delineation with Face++ is better, but requires a free API key from Face++. You may be prompted to install a Python module using `reticulate::py_install("face_recognition")`.
+Read in images with webmorph templates, or automatically delineate images with the python module [face_recognition](https://github.com/ageitgey/face_recognition) or the web-based software [Face++](https://www.faceplusplus.com/). Auto-delineation with Face++ is more detailed, but requires a free API key from Face++. Auto-delineation with python doesn't transfer your images to a third party, but requires the [webmorphR.dlib](https://github.com/debruine/webmorphR.dlib) package and some python setup using reticulate.
 
 
 
 
 ### Resize and auto-delineate
 
-Auto-delineation takes a few seconds per face, so you will see a progress bar in the console. You may also see some startup output from reticulate the first time you use this function. For now, only the 7-point auto-delineation is available built in. See the [Making Stimuli vignette](articles/stimuli.html) for instructions on adding the 70-point auto-delineation (it's ~100MB, which is too big to include in an R package).
+Auto-delineation takes a few seconds per face, so you will see a progress bar in the console. You may also see some startup output from reticulate the first time you use this function in a session.
 
 
 ```r
 stimuli <- demo_stim("zoom") |> 
   resize(1/2) |>
   auto_delin(replace = TRUE)
+#> Error in py_run_file_impl(file, local, convert): Unable to open file '' (does it exist?)
 
 draw_tem(stimuli, pt.size = 10) |> plot()
 ```
 
 <img src="man/figures/delin-dlib7-1.png" title="plot of chunk delin-dlib7" alt="plot of chunk delin-dlib7" width="100%" />
 
-Alternatively, you can use the Face++ auto-delineator by setting `style = "fpp106"`. This requires you to set up a Face++ account and set some environment variables (see the [Making Stimuli vignette](articles/stimuli.html)). It transfers your images to Face++, so make sure you read their privacy information.
+Alternatively, you can use the Face++ auto-delineator by setting `model = "fpp106"`. This requires you to set up a Face++ account and set some environment variables (see the [Making Stimuli vignette](articles/stimuli.html)). It transfers your images to Face++, so make sure you read their privacy information.
 
 
 ```r
 stimuli <- demo_stim("zoom") |> 
   resize(1/2) |>
-  auto_delin(style = "fpp106", replace = TRUE)
+  auto_delin(model = "fpp106", replace = TRUE)
 
 draw_tem(stimuli, pt.size = 8) |> plot()
 ```
@@ -203,7 +206,7 @@ draw_tem(stimuli, pt.size = 8) |> plot()
 
 ### Align and crop
 
-Now you can procrustes align the images and crop them all to the same dimensions.
+Now you can [procrustes](https://en.wikipedia.org/wiki/Procrustes_analysis)* align the images and crop them all to the same dimensions.
 
 
 ```r
@@ -216,6 +219,8 @@ plot(aligned)
 
 <img src="man/figures/align-crop-1.png" title="plot of chunk align-crop" alt="plot of chunk align-crop" width="100%" />
 
+**Note**: If you get an error message about rgl or dynlib when using `align()` with `procrustes = TRUE`, and are using a Mac, you may need to install [XQuartz](https://www.xquartz.org/). You can omit the procrustes argument to default to 2-point alignment, which rotates and resizes all images so the pupils are in the same position (the average of the set, unless you manually specify positions).
+
 ### Pad and Label
 
 Add 50 pixels of image labels.
@@ -224,7 +229,11 @@ Add 50 pixels of image labels.
 ```r
 labelled <- aligned |>
   pad(50, 0, 0, 0, fill = "black") |>
-  label(c("15cm", "30cm", "45cm", "60cm"), color = "white")
+  label(c("15cm", "30cm", "45cm", "60cm"), 
+        color = "white",
+        size = 40,
+        weight = 700,
+        location = "+0+5")
   
 plot(labelled)
 ```
@@ -242,7 +251,6 @@ animate(labelled, fps = 2)
 
 <img src="man/figures/animate-1.gif" title="plot of chunk animate" alt="plot of chunk animate" width="25%" />
 
-**Note**: If you get an error message about rgl or dynlib when using `align()` with `procrustes = TRUE`, and are using a Mac, you may need to install [XQuartz](https://www.xquartz.org/). You can omit the procrustes argument to default to 2-point alignment, which rotates and resizes all images so the pupils are in the same position (the average of the set, unless you manually specify positions).
 
 
 

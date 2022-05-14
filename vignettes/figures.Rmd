@@ -1,13 +1,16 @@
 ---
 title: "Making Figures"
 output: rmarkdown::html_document
+resource_files:
+  - vignettes/images/figures/*
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  out.width = "100%"
+  out.width = "100%",
+  fig.path = "images/figures/"
 )
 
 starttime <- Sys.time()
@@ -181,15 +184,14 @@ stimuli |>
   plot()
 ```
 
-Set `label` to a vector of labels to use. The default font size used by ggplot is pretty small, so increase `size`. I can't help you with how to set that argument; I just use trial-and-error. Labels can be positioned with the `x` and `y` arguments. Unlike ggplot, x and y values less than or equal to 1 are interpreted as percentages.
-Adjust label alignment with `hjust` and `vjust`. 
+Set `label` to a vector of labels to use. The default font size used by ggplot is pretty small, so increase `size`. I can't help you with how to set that argument; I just use trial-and-error. Labels can be positioned with the `x` and `y` arguments. Unlike `mlabel()`, the origin is the lower left corner, so setting the label 5 pixel below the top requires you to calculate the image height and subtract 5. However, unlike ggplot, x and y values less than or equal to 1 are interpreted as percentages. Adjust label alignment with `hjust` and `vjust`. 
 
 ```{r custom-labels-gglabel}
 stimuli |>
   label(
     label = c("Female", "Male"),
-    size = 10,
-    x = 0.01,  y = 0.99,
+    size = 15,
+    x = 10,  y = height(stimuli) - 5,
     hjust = 0, vjust = 1,
     color = c("darkgreen", "darkmagenta"),
     fontface = c("plain", "italic")

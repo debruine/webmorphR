@@ -18,10 +18,10 @@ demo_stim <- function(dir = c("test", "tem_examples", "composite", "london", "sm
   
   if (dir %in% c("test", "tem_examples")) { # included in webmorphR
     path <- system.file(file.path("extdata", dir), package = "webmorphR")
-  } else if (requireNamespace("stimsets", quietly = TRUE)) {
-    path <- system.file(file.path(dir), package = "stimsets")
+  } else if (requireNamespace("webmorphR.stim", quietly = TRUE)) {
+    path <- system.file(file.path(dir), package = "webmorphR.stim")
   } else {
-    stop("You  need to install the package stimsets to access these demo images\nremotes::install_github(\"debruine/stimsets\")")
+    stop("You  need to install the package webmorphR.stim to access these demo images\nremotes::install_github(\"debruine/webmorphR.stim\")")
   }
 
   stimuli <- read_stim(path, pattern, ...)

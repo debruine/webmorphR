@@ -9,5 +9,3 @@
 ^codecov\.yml$
 ^vignettes$
 ^paper$
-^inst/python/frl.dat$
-^inst/python/dlib70.datz$

@@ -81,7 +81,7 @@ image_func <- function(stimuli, func, ...) {
 #'
 #' \code{\link{image_func}} can take a named function from the magick package, but only functions that return an image that is compatible with the current template (e.g., doesn't change size or shape).
 #'
-#' @return vector of combatible function names
+#' @return list of compatible function names
 #' @export
 #'
 #' @examples

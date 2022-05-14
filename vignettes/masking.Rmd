@@ -1,13 +1,16 @@
 ---
 title: "Templates and Masking"
 output: rmarkdown::html_document
+resource_files:
+  - vignettes/images/masking/*
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  out.width = "100%"
+  out.width = "100%",
+  fig.path = "images/masking/"
 )
 
 starttime <- Sys.time()
@@ -57,14 +60,15 @@ stimuli[[1]]$closed
 ### Templates
 
 Delineations need to follow the same template in order to work together. For example, you can't average faces that are delineated with different templates. 
-Read in images with webmorph templates, or automatically delineate images with the python module [face_recognition](https://github.com/ageitgey/face_recognition) or the web-based software [Face++](https://www.faceplusplus.com/). Auto-delineation with Face++ is better, but requires a free API key from Face++. Fr the internal dlib templates, you may be prompted to install a Python module using `reticulate::py_install("face_recognition")`.
+
+Read in images with webmorph templates, or automatically delineate images (details below).
 
 WebmorphR uses 5 main templates:
 
 * FRL: the 1889-point Face Research Lab template that is the default manual template at [webmorph.org](https://webmorph.org). This template is also used in the demo stimuli and the Chicago Face Database delineations.
-* dlib7: The 7-point internal automatic face detection. This algorithm requires a python installation, so is a little harder to set up, but doesn't send your images to an external company. This is actually a 5-point template (corners of the eyes and tip of the nose), but I added the centre points of the corners of the eyes as point 0 and 1 for consistency with all of the other templates. The "pupil" points don't always line up with the pupils, as they're jus calculated from the corners.
+* dlib7: The 7-point internal automatic face detection. This algorithm requires a python installation, so is a little harder to set up, but doesn't send your images to an external company. This is actually a 5-point template (corners of the eyes and tip of the nose), but I added the centre points of the corners of the eyes as point 0 and 1 for consistency with all of the other templates. The "pupil" points don't always line up with the pupils, as they're just calculated from the corners. 
 * dlib70: The 70-point internal automatic face detection. The files for this are quite large, so you will be prompted to download them the first time you try to use this delineation.
-* fpp106: The 106-point Face++ template. This is a high-qulaity and detailed template, but requires you to set up your own API key with [Face++](https://www.faceplusplus.com/) and will transfer your images to Face++, so make sure you understand the privacy consequences of this.
+* fpp106: The 106-point Face++ template. This is a high-quality and detailed template, but requires you to set up your own API key with [Face++](https://www.faceplusplus.com/) and will transfer your images to Face++, so make sure you understand the privacy consequences of this.
 * fpp83: The 83-point Face++ template. This is an old template, but I keep it for consistency with the old auto-delineation template on [webmorph.org](https://webmorph.org). 
 
 ```{r, cache = TRUE}
@@ -114,7 +118,13 @@ The auto-delineation has three options.
 
 #### dlib
 
-You can use the face recognition algorithms from [dlib](http://dlib.net/) to delineate faces on your computer without transferring them to a third-party service. This requires [reticulate](https://rstudio.github.io/reticulate/), python and the installation of a few packages, and can be tricky. 
+You can use the face recognition algorithms from [dlib](http://dlib.net/) to delineate faces on your computer without transferring them to a third-party service. These files are big (~100MB) and it's tricky to include on CRAN, so you can download them from github. I'll be training more templates to include in this package soon.
+
+```{r, eval = FALSE}
+remotes::install_github("debruine/webmorphR.dlib")
+```
+
+This also requires [reticulate](https://rstudio.github.io/reticulate/), python and the installation of a few packages, and can be tricky. 
 
 Many of my issues were solved by setting up a [virtual environment](https://rstudio.github.io/reticulate/) for webmorph, [installing dlib](https://stackoverflow.com/questions/54719496/how-to-install-dlib-for-python-on-mac), and then setting RETICULATE_PYTHON in my .Revniron using `usethis::edit_r_environ()`.
 
@@ -123,6 +133,10 @@ Many of my issues were solved by setting up a [virtual environment](https://rstu
 ``` 
 RETICULATE_PYTHON="~/.virtualenvs/webmorph/bin/python"
 ```
+
+The default is "dlib7", which is a 7-point template (tip of the nose, corners of the eyes, and their midpoints) and works without access to external services. It uses Davis King's [shape_predictor_5_face_landmarks.dat](https://github.com/davisking/dlib-models#shape_predictor_5_face_landmarksdatbz2).
+
+A better (but slower) option is "dlib70", a 70-point template (68 plus 2 added centre eye points) from Davis King's [shape_predictor_68_face_landmarks.dat](https://github.com/davisking/dlib-models#shape_predictor_68_face_landmarksdatbz2). 
 
 ```{r}
 frl <- demo_stim("test", "m_multi") |> crop(.8, .8)
@@ -139,21 +153,18 @@ c(dlib7, dlib70) |>
   plot_stim()
 ```
 
-The default is "dlib7", which is a 7-point template (tip of the nose, corners of the eyes, and their midpoints) and works without access to external services. It uses Davis King's [shape_predictor_5_face_landmarks.dat](https://github.com/davisking/dlib-models#shape_predictor_5_face_landmarksdatbz2).
-
-A better (but slower) option is "dlib70", a 70-point template (68 plus 2 added centre eye points) from Davis King's [shape_predictor_68_face_landmarks.dat](https://github.com/davisking/dlib-models#shape_predictor_68_face_landmarksdatbz2). This file is big (~100MB) and it's tricky to include on CRAN, so you can download it from github:
-
-```{r, eval = FALSE}
-remotes::install_github("debruine/webmorphR.dlibs")
-```
-
 You can also use your own landmark file by including it with the argument `dlib_path`. Learn more about [training landmark models](https://pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/) or search for pre-trained models, such as this [81-point model](https://github.com/codeniko/shape_predictor_81_face_landmarks). (I don't think it handles the hairline well, so am working on training my own model using stimuli more typical to face research.)
 
 ```{r}
-dlib_custom <- auto_delin(frl, replace = TRUE, 
-                          dlib_path = "../stuff/shape_predictor_81_face_landmarks.dat")
+# download.file("https://github.com/codeniko/shape_predictor_81_face_landmarks/raw/master/shape_predictor_81_face_landmarks.dat", "dlib81.dat")
 
-dlib_custom |> draw_tem(pt.shape = "index", pt.size = 18) |> plot()
+dlib_custom <- auto_delin(frl, replace = TRUE, 
+                          dlib_path = "dlib81.dat")
+
+dlib_custom |> 
+  draw_tem(pt.shape = "index", 
+           pt.size = 12) |> 
+  plot()
 ```
 
 I added the lines and pupil centres to the existing 5-point and 68-point shape landmark files for webmorphR; you can add your own lines with `change_lines()`. Yes, all of the available landmark files use a bonkers numbering system like this. The lines don't do much for image processing, but do help you to visually assess the accuracy of the delineation.
@@ -210,6 +221,23 @@ c(fpp83, fpp106) |>
 ```
 
 The 83-point template has a confusing structure and is the only template where the first two points aren't the left and right pupil, so I don't recommend using it, but it's available for consistency with the old method used on [webmorh.org](https://webmorph.org).
+
+The Face++ auto-delineations can handle images with more than one face. By default, they return the delineation for the first face (I'm not entirely ure how they decide which is first), but you can set the face argument to another  number if your images have multiple faces. 
+
+```{r}
+# combine two faces into one image with a border
+s <- demo_stim() |> 
+  plot(padding = 0) |> 
+  pad(20, fill = "dodgerblue")
+
+# get delineations for the first and second face
+face1 <- fpp_auto_delin(s, "fpp106", TRUE, 1)
+face2 <- fpp_auto_delin(s, "fpp106", TRUE, 2)
+
+# add template viz and plot
+c(face1, face2) |> draw_tem() |> plot(nrow = 2)
+```
+
 
 ### Visualise delineations
 
@@ -438,7 +466,7 @@ new_tems <- lapply(features, function(ft) {
              line.color = "#FFFF00",
              line.size = 5,
              line.alpha = 1)
-}) |> do.call(c, .)
+}) |> do.call(c, args = _)
 
 new_tems |> 
   pad(50, 0, 0, 0, fill = "white") |>

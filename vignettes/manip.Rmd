@@ -1,13 +1,16 @@
 ---
 title: "Image Manipulations"
 output: rmarkdown::html_document
+resource_files:
+  - vignettes/images/manip/*
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  out.width = "100%"
+  out.width = "100%",
+  fig.path = "images/manip/"
 )
 
 starttime <- Sys.time()
@@ -281,7 +284,7 @@ imglist |>
 
 ```
 
-The possible {magick} functions are listed by `image_func_types(). Check the magick package help for more info on each (e.g., `?magick::image_oilpaint`.
+The possible {magick} functions are listed by `image_func_types()`. Check the magick package help for more info on each (e.g., `?magick::image_oilpaint`.
 
 ```{r}
 image_func_types()

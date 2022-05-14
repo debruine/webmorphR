@@ -10,3 +10,5 @@ paper/images
 inst/python/dlib70.dat
 inst/python/frl.dat
 stuff/*.dat
+vignettes/*.dat
+vignettes/images/*

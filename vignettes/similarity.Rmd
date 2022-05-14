@@ -1,6 +1,8 @@
 ---
 title: "Image Similarity"
 output: rmarkdown::html_document
+resource_files:
+  - vignettes/images/similarity/*
 ---
 
 ```{r setup, include = FALSE}
@@ -9,7 +11,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   out.width = "100%",
   warning = FALSE,
-  message = FALSE
+  message = FALSE,
+  fig.path = "images/similarity/"
 )
 
 starttime <- Sys.time()

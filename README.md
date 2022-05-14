@@ -3,6 +3,8 @@
 
 # webmorphR
 
+<img src="man/figures/logo.png" style="float:right;" />
+
 <!-- badges: start -->
 
 [![Codecov test
@@ -26,4 +28,17 @@ You can install the development version from
 ``` r
 # install.packages("devtools")
 devtools::install_github("debruine/webmorphR")
+```
+
+![Individual images with their composite, illustrating delineation
+points and lines](man/figures/ind-avg-1.png)
+
+## Helper packages
+
+There are also two helper packages that contain large demo stimulus
+files or functions that require python and dlib.
+
+``` r
+devtools::install_github("debruine/webmorphR.stim")
+devtools::install_github("debruine/webmorphR.dlib")
 ```

@@ -24,11 +24,14 @@ patch <- function(img, x1 = 1, x2 = 10, y1 = 1, y2 = 10,
   
   color <- match.arg(color)
   
-  pixels <- magick::image_raster(img) |>
-    dplyr::filter(x >= x1,
-                  x <= x2,
-                  y >= y1,
-                  y <= y2)
+  all_pixels <- magick::image_raster(img)
+  selected_pixels <- (
+    all_pixels$x >= min(x1, x2) &
+    all_pixels$x <= max(x1, x2) &
+    all_pixels$y >= min(y1, y2) &
+    all_pixels$y <= max(y1, y2)
+  )
+  pixels <- all_pixels[selected_pixels, ]
   
   central_col <- grDevices::col2rgb(pixels$col, alpha = TRUE) |>
     apply(1, func)
