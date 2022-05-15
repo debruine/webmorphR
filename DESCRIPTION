@@ -44,7 +44,7 @@ Suggests:
     webmorphR.stim,
     webmorphR.dlib
 Remotes:
-    debruine/webmorphR.stim
+    debruine/webmorphR.stim,
     debruine/webmorphR.dlib
 URL: https://debruine.github.io/webmorphR, https://github.com/debruine/webmorphR
 BugReports: https://github.com/debruine/webmorphR/issues
