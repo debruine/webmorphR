@@ -237,7 +237,6 @@
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"zoom"</span><span class="op">)</span> |&gt; 
   <span class="fu"><a href="reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="reference/auto_delin.html">auto_delin</a></span><span class="op">(</span>replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; Error in py_run_file_impl(file, local, convert): Unable to open file '' (does it exist?)</span>
 
 <span class="fu"><a href="reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="va">stimuli</span>, pt.size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/delin-dlib7-1.png" title="plot of chunk delin-dlib7" alt="plot of chunk delin-dlib7" width="100%"></p>
@@ -325,6 +324,8 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://codecov.io/gh/debruine/webmorphR?branch=master" class="external-link"><img src="https://codecov.io/gh/debruine/webmorphR/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://github.com/debruine/webmorphR/actions" class="external-link"><img src="https://github.com/debruine/webmorphR/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 
