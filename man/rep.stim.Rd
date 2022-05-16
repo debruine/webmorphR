@@ -21,5 +21,3 @@ Repeat stim in a list
 a <- demo_stim()
 rep(a[[1]], 3)
 }
-\keyword{internal}
-\keyword{methods}

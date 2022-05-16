@@ -22,5 +22,3 @@ Returns a subset of the stimulus list meeting the condition.
 \examples{
 f <- demo_stim() |> subset("f_")
 }
-\keyword{internal}
-\keyword{methods}

@@ -18,4 +18,3 @@ Format file size
 \examples{
 format_size(1024*1024)
 }
-\keyword{internal}

@@ -62,7 +62,7 @@ read_stim <- function (path, pattern = NULL, ...) {
 
       lines <- line_rows[3, ] |>
         strsplit("\\s+") |>
-        sapply(as.integer)
+        sapply(as.integer, simplify = FALSE)
 
       # TODO: apply webmorph rules for open/closed lines
       closed <- line_rows[1, ] |>

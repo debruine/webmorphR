@@ -19,5 +19,3 @@ stimlist
 \description{
 Replace stimlist element
 }
-\keyword{internal}
-\keyword{methods}

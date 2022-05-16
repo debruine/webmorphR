@@ -4,7 +4,7 @@
 #' @param ... arguments passed to or from other methods
 #'
 #' @return prints summary info and returns x
-#' @keywords internal methods print
+#' @export
 #'
 print.stim <- function(x, ...) {
   # attr <- list()
@@ -40,7 +40,7 @@ print.stim <- function(x, ...) {
 #' @param ... arguments passed to or from other methods
 #'
 #' @return prints summary info and returns x
-#' @keywords internal methods print
+#' @export
 #'
 print.stimlist <- function(x, ...) {
   # mapply(function(xi, nm) {
@@ -83,7 +83,7 @@ print.stimlist <- function(x, ...) {
 #' @param ... further arguments to be passed to or from other methods.
 #'
 #' @return a list of class stimlist
-#' @keywords internal methods
+#' @export
 #'
 #' @examples
 #' f <- demo_stim() |> subset("f_")
@@ -109,7 +109,7 @@ subset.stimlist <- function (x, subset, ...) {
 #' @param ... Additional arguments to pass on to `base::rep()`
 #'
 #' @return A stimlist
-#' @keywords internal methods
+#' @export
 #'
 #' @examples
 #' a <- demo_stim()
@@ -126,7 +126,7 @@ rep.stim <- function (x, ...) {
 #' @param ... Additional arguments to pass on to `base::rep()`
 #'
 #' @return A stimlist
-#' @keywords internal methods
+#' @export
 #'
 #' @examples
 #' demo_stim() |>
@@ -146,12 +146,13 @@ rep.stimlist <- function(x, ...) {
 #' @param ... stim to be concatenated
 #'
 #' @return stimlist
-#' @keywords internal methods
+#' @export
 #'
 c.stim <- function(...) {
   # turn into a stimlist and handle below
-  dots <- lapply(list(...), validate_stimlist)
-  do.call(c, dots)
+  list(...) |>
+    lapply(validate_stimlist) |>
+    do.call(c.stimlist, args = _)
 }
 
 
@@ -160,7 +161,7 @@ c.stim <- function(...) {
 #' @param ... stimlists to be concatenated
 #'
 #' @return stimlist
-#' @keywords internal methods
+#' @export
 #'
 c.stimlist <- function(...) {
   dots <- lapply(list(...), validate_stimlist) |>
@@ -177,7 +178,7 @@ c.stimlist <- function(...) {
 #' @param i indices to be selected
 #'
 #' @return stimlist
-#' @keywords internal methods
+#' @export
 #'
 `[.stimlist` <- function(x, i) {
   x <- NextMethod()
@@ -192,7 +193,7 @@ c.stimlist <- function(...) {
 #' @param value stim element to replace with
 #'
 #' @return stimlist
-#' @keywords internal methods
+#' @export
 #'
 `[[<-.stimlist` <- function(x, i, value) {
   stopifnot("stim" %in% class(value))
@@ -249,7 +250,7 @@ xget <- function(x, ..., .default = NULL) {
 #' @param x the file size in bytes
 #'
 #' @return human-readable file size
-#' @keywords internal
+#' @export
 #'
 #' @examples
 #' format_size(1024*1024)
@@ -268,7 +269,7 @@ format_size <- function (x) {
 #' @param stimuli list of class stimlist
 #'
 #' @return list of magick images
-#' @keywords internal
+#' @export
 #'
 #' @examples
 #' demo_stim() |> get_imgs()

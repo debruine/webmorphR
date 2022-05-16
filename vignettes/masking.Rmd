@@ -33,8 +33,8 @@ stimuli <- demo_stim("test")
 A delineation is a description of the shape of the face using points connected by lines. The points are describe by their index and x and y coordinates. The upper left corner is the 0 origin, so the y-coordinates may go the opposite direction to what you expect.
 
 ```{r}
-# the first 10 points
-stimuli[[1]]$points[, 1:10]
+# the first 6 points
+stimuli[[1]]$points[, 1:6]
 ```
 
 There is a function so you can get selected point coordinates for a whole stimulus list.
@@ -47,8 +47,8 @@ get_point(stimuli, 0:2)
 The lines are a list of vectors. Each vector contains the line's point indices, but 0-based (yes, I know this is annoying, but psychomorph was developed in Java and all existing template files index the points starting with 0).
 
 ```{r}
-# the first 10 lines
-stimuli[[1]]$lines[1:10] |> str()
+# the first 6 lines
+stimuli[[1]]$lines[1:6] |> str()
 ```
 
 NB: Currently, I'm assuming any lines that start and end with the same point are closed shapes, so you can't make tear-drop shapes without doubling the end coordinate. I might change this someday, so there is also a vector for flagging whether shapes are closed; this is currently always FALSE.
@@ -71,7 +71,7 @@ WebmorphR uses 5 main templates:
 * fpp106: The 106-point Face++ template. This is a high-quality and detailed template, but requires you to set up your own API key with [Face++](https://www.faceplusplus.com/) and will transfer your images to Face++, so make sure you understand the privacy consequences of this.
 * fpp83: The 83-point Face++ template. This is an old template, but I keep it for consistency with the old auto-delineation template on [webmorph.org](https://webmorph.org). 
 
-```{r, cache = TRUE}
+```{r}
 s <- demo_stim("london", "030")
 dlib7 <- auto_delin(s, "dlib7", replace = TRUE)
 dlib70 <- auto_delin(s, "dlib70", replace = TRUE)
@@ -156,15 +156,14 @@ c(dlib7, dlib70) |>
 You can also use your own landmark file by including it with the argument `model_path`. Learn more about [training landmark models](https://pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/) or search for pre-trained models, such as this [81-point model](https://github.com/codeniko/shape_predictor_81_face_landmarks). (I don't think it handles the hairline well, so am working on training my own model using stimuli more typical to face research.)
 
 ```{r}
-# download.file("https://github.com/codeniko/shape_predictor_81_face_landmarks/raw/master/shape_predictor_81_face_landmarks.dat", "dlib81.dat")
+download.file("https://github.com/codeniko/shape_predictor_81_face_landmarks/raw/master/shape_predictor_81_face_landmarks.dat", "dlib81.dat")
 
 dlib_custom <- auto_delin(frl, replace = TRUE, 
                           model_path = "dlib81.dat")
 
 dlib_custom |> 
   draw_tem(pt.shape = "index", 
-           pt.size = 12) |> 
-  plot()
+           pt.size = 12)
 ```
 
 I added the lines and pupil centres to the existing 5-point and 68-point shape landmark files for webmorphR; you can add your own lines with `change_lines()`. Yes, all of the available landmark files use a bonkers numbering system like this. The lines don't do much for image processing, but do help you to visually assess the accuracy of the delineation.
