@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![Codecov test coverage](https://codecov.io/gh/debruine/webmorphR/branch/master/graph/badge.svg)](https://codecov.io/gh/debruine/webmorphR?branch=master)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/debruine/webmorphR/workflows/R-CMD-check/badge.svg)](https://github.com/debruine/webmorphR/actions)
 <!-- badges: end -->
 
 The goal of webmorphR is to make the construction of image stimuli more reproducible, with a focus on face stimuli.

@@ -9,3 +9,4 @@
 ^codecov\.yml$
 ^vignettes$
 ^paper$
+^\.github$
