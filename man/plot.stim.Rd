@@ -22,3 +22,4 @@ Plot stim
 \examples{
 demo_stim() |> plot()
 }
+\keyword{internal}

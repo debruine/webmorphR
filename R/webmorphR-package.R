@@ -8,6 +8,7 @@
 #' 
 #' @importFrom stats cor sd
 #' @importFrom dplyr .data
+#' @importFrom rsvg rsvg_raw
 #'
 NULL
 

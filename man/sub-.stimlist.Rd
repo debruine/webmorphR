@@ -17,3 +17,4 @@ stimlist
 \description{
 Extract stimlist elements
 }
+\keyword{internal}

@@ -17,3 +17,4 @@ prints summary info and returns x
 \description{
 Print stim
 }
+\keyword{internal}

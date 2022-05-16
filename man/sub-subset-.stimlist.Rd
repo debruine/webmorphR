@@ -19,3 +19,4 @@ stimlist
 \description{
 Replace stimlist element
 }
+\keyword{internal}

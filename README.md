@@ -3,12 +3,14 @@
 
 # webmorphR
 
-<img src="man/figures/logo.png" style="float:right;" />
+<img src="man/figures/logo.png" style="float:right; width:200px;" />
 
 <!-- badges: start -->
 
 [![Codecov test
 coverage](https://codecov.io/gh/debruine/webmorphR/branch/master/graph/badge.svg)](https://codecov.io/gh/debruine/webmorphR?branch=master)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 The goal of webmorphR is to make the construction of image stimuli more

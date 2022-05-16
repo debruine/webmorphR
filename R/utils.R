@@ -5,6 +5,7 @@
 #'
 #' @return prints summary info and returns x
 #' @export
+#' @keywords internal
 #'
 print.stim <- function(x, ...) {
   # uses magick:::print.magick-image
@@ -18,6 +19,7 @@ print.stim <- function(x, ...) {
 #'
 #' @return prints summary info and returns x
 #' @export
+#' @keywords internal
 #'
 print.stimlist <- function(x, ...) {
   img <- get_imgs(x)
@@ -56,6 +58,7 @@ print.stimlist <- function(x, ...) {
 #'
 #' @return a list of class stimlist
 #' @export
+#' @keywords internal
 #'
 #' @examples
 #' f <- demo_stim() |> subset("f_")
@@ -82,6 +85,7 @@ subset.stimlist <- function (x, subset, ...) {
 #'
 #' @return A stimlist
 #' @export
+#' @keywords internal
 #'
 #' @examples
 #' a <- demo_stim()
@@ -119,6 +123,7 @@ rep.stimlist <- function(x, ...) {
 #'
 #' @return stimlist
 #' @export
+#' @keywords internal
 #'
 c.stim <- function(...) {
   # turn into a stimlist and handle below
@@ -134,6 +139,7 @@ c.stim <- function(...) {
 #'
 #' @return stimlist
 #' @export
+#' @keywords internal
 #'
 c.stimlist <- function(...) {
   dots <- lapply(list(...), validate_stimlist) |>
@@ -151,6 +157,7 @@ c.stimlist <- function(...) {
 #'
 #' @return stimlist
 #' @export
+#' @keywords internal
 #'
 `[.stimlist` <- function(x, i) {
   x <- NextMethod()
@@ -166,6 +173,7 @@ c.stimlist <- function(...) {
 #'
 #' @return stimlist
 #' @export
+#' @keywords internal
 #'
 `[[<-.stimlist` <- function(x, i, value) {
   stopifnot("stim" %in% class(value))

@@ -8,6 +8,7 @@
 #'
 #' @return stimlist
 #' @export
+#' @keywords internal
 #'
 #' @examples
 #' demo_stim() |> plot()
@@ -24,6 +25,7 @@ plot.stimlist <- function(x, y, ...) {
 #'
 #' @return stimlist
 #' @export
+#' @keywords internal
 #'
 #' @examples
 #' demo_stim() |> plot()

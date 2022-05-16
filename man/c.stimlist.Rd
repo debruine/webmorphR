@@ -15,3 +15,4 @@ stimlist
 \description{
 Combine stimlists
 }
+\keyword{internal}
