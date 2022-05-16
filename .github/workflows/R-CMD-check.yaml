@@ -26,8 +26,8 @@ jobs:
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      FACEPLUSPLUS_KEY: %{{ secrets.FACEPLUSPLUS_KEY }}
-      FACEPLUSPLUS_SECRET: %{{ secrets.FACEPLUSPLUS_SECRET }}
+      FACEPLUSPLUS_KEY: ${{ secrets.FACEPLUSPLUS_KEY }}
+      FACEPLUSPLUS_SECRET: ${{ secrets.FACEPLUSPLUS_SECRET }}
       R_KEEP_PKG_SOURCE: yes
 
     steps:
