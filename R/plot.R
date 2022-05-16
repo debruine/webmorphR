@@ -10,7 +10,7 @@
 #' @keywords internal methods hplot
 #'
 #' @examples
-#' demo_stim("test") |> plot()
+#' demo_stim() |> plot()
 #'
 plot.stimlist <- function(x, y, ...) {
   plot_stim(x, ...)
@@ -26,7 +26,7 @@ plot.stimlist <- function(x, y, ...) {
 #' @keywords internal methods hplot
 #'
 #' @examples
-#' demo_stim("test")[[1]] |> plot()
+#' demo_stim() |> plot()
 
 plot.stim <- function(x, y, ...) {
   stimlist <- validate_stimlist(x)

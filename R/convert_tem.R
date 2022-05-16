@@ -5,7 +5,7 @@
 #' @param to id of template definition to convert to
 #'
 #' @return stimlist with converted templates
-#' @keywords internal
+#' @export
 #'
 #' @examples
 #' fpp106 <- demo_stim() |> convert_tem("guess", "fpp106")
