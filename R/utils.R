@@ -103,6 +103,7 @@ rep.stim <- function (x, ...) {
 #'
 #' @return A stimlist
 #' @export
+#' @keywords internal
 #'
 #' @examples
 #' demo_stim() |>

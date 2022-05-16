@@ -23,3 +23,4 @@ demo_stim() |>
   rotate(seq(10, 60, 10), fill = rainbow(6)) |>
   plot()
 }
+\keyword{internal}

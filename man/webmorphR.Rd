@@ -7,4 +7,5 @@
 \description{
 Create reproducible image stimuli, specialised for images with webmorph.org templates. See https://debruine.github.io/webmorphR/ for detailed tutorials.
 }
+\keyword{internal}
 \keyword{package}

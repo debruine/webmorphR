@@ -4,7 +4,7 @@
 #'
 #' @docType package
 #' @name webmorphR
-#' @keywords package
+#' @keywords package internal
 #' 
 #' @importFrom stats cor sd
 #' @importFrom dplyr .data

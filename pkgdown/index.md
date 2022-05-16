@@ -1,8 +1,14 @@
+---
+resource_files:
+  - man/figures/*
+---
 # webmorphR <img src="man/figures/logo.png" align="right" alt="" width="120" />
 <!-- rmarkdown v1 -->
 
 <!-- badges: start -->
 [![Codecov test coverage](https://codecov.io/gh/debruine/webmorphR/branch/master/graph/badge.svg)](https://codecov.io/gh/debruine/webmorphR?branch=master)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/debruine/webmorphR/workflows/R-CMD-check/badge.svg)](https://github.com/debruine/webmorphR/actions)
 <!-- badges: end -->
 
 
@@ -184,7 +190,6 @@ Auto-delineation takes a few seconds per face, so you will see a progress bar in
 stimuli <- demo_stim("zoom") |> 
   resize(1/2) |>
   auto_delin(replace = TRUE)
-#> Error in py_run_file_impl(file, local, convert): Unable to open file '' (does it exist?)
 
 draw_tem(stimuli, pt.size = 10) |> plot()
 ```
