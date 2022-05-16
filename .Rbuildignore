@@ -10,4 +10,4 @@
 ^vignettes$
 ^paper$
 ^\.github$
-^man/figures$
+^man/figures/home

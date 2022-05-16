@@ -1,3 +1,7 @@
+---
+resource_files:
+  - man/figures/home*
+---
 # webmorphR <img src="man/figures/logo.png" align="right" alt="" width="120" />
 <!-- rmarkdown v1 -->
 
@@ -56,7 +60,7 @@ face_set <- demo_stim("london", "002|006|007|025|030|066")
 plot(face_set, nrow = 1)
 ```
 
-<img src="man/figures/demo-stim-1.png" title="plot of chunk demo-stim" alt="plot of chunk demo-stim" width="100%" />
+<img src="man/figures/home/demo-stim-1.png" title="plot of chunk demo-stim" alt="plot of chunk demo-stim" width="100%" />
 
 ### Average faces
 
@@ -71,7 +75,7 @@ avg <- avg(face_set)
 plot(avg)
 ```
 
-<img src="man/figures/avg-1.png" title="plot of chunk avg" alt="plot of chunk avg" width="100%" />
+<img src="man/figures/home/avg-1.png" title="plot of chunk avg" alt="plot of chunk avg" width="100%" />
 
 
 ### Display figure
@@ -95,7 +99,7 @@ tem <- draw_tem(avg, pt.alpha = 0.5, line.alpha = 0.25)
 c(ind, tem) |> plot(nrow = 1)
 ```
 
-<img src="man/figures/ind-avg-1.png" title="plot of chunk ind-avg" alt="plot of chunk ind-avg" width="100%" />
+<img src="man/figures/home/ind-avg-1.png" title="plot of chunk ind-avg" alt="plot of chunk ind-avg" width="100%" />
 
 
 ## Transforming Faces
@@ -119,7 +123,7 @@ dist_avg <- trans(trans_img = face_set,
 plot(dist_avg, nrow = 2)
 ```
 
-<img src="man/figures/dist-avg-1.png" title="plot of chunk dist-avg" alt="plot of chunk dist-avg" width="100%" />
+<img src="man/figures/home/dist-avg-1.png" title="plot of chunk dist-avg" alt="plot of chunk dist-avg" width="100%" />
 
 ### Mask and crop
 
@@ -138,7 +142,7 @@ stimuli <- dist_avg |>
 plot(stimuli, nrow = 2)
 ```
 
-<img src="man/figures/rainbow-1.png" title="plot of chunk rainbow" alt="plot of chunk rainbow" width="100%" />
+<img src="man/figures/home/rainbow-1.png" title="plot of chunk rainbow" alt="plot of chunk rainbow" width="100%" />
 
 ### Save images
 
@@ -167,7 +171,7 @@ c(subset(stimuli, "average"),
   plot(nrow = 2)
 ```
 
-<img src="man/figures/repro-1.png" title="plot of chunk repro" alt="plot of chunk repro" width="100%" />
+<img src="man/figures/home/repro-1.png" title="plot of chunk repro" alt="plot of chunk repro" width="100%" />
 
 
 ## Automatic Delineation
@@ -190,7 +194,7 @@ stimuli <- demo_stim("zoom") |>
 draw_tem(stimuli, pt.size = 10) |> plot()
 ```
 
-<img src="man/figures/delin-dlib7-1.png" title="plot of chunk delin-dlib7" alt="plot of chunk delin-dlib7" width="100%" />
+<img src="man/figures/home/delin-dlib7-1.png" title="plot of chunk delin-dlib7" alt="plot of chunk delin-dlib7" width="100%" />
 
 Alternatively, you can use the Face++ auto-delineator by setting `model = "fpp106"`. This requires you to set up a Face++ account and set some environment variables (see the [Making Stimuli vignette](articles/stimuli.html)). It transfers your images to Face++, so make sure you read their privacy information.
 
@@ -203,7 +207,7 @@ stimuli <- demo_stim("zoom") |>
 draw_tem(stimuli, pt.size = 8) |> plot()
 ```
 
-<img src="man/figures/delin-fpp-1.png" title="plot of chunk delin-fpp" alt="plot of chunk delin-fpp" width="100%" />
+<img src="man/figures/home/delin-fpp-1.png" title="plot of chunk delin-fpp" alt="plot of chunk delin-fpp" width="100%" />
 
 ### Align and crop
 
@@ -218,7 +222,7 @@ aligned <- stimuli |>
 plot(aligned)
 ```
 
-<img src="man/figures/align-crop-1.png" title="plot of chunk align-crop" alt="plot of chunk align-crop" width="100%" />
+<img src="man/figures/home/align-crop-1.png" title="plot of chunk align-crop" alt="plot of chunk align-crop" width="100%" />
 
 **Note**: If you get an error message about rgl or dynlib when using `align()` with `procrustes = TRUE`, and are using a Mac, you may need to install [XQuartz](https://www.xquartz.org/). You can omit the procrustes argument to default to 2-point alignment, which rotates and resizes all images so the pupils are in the same position (the average of the set, unless you manually specify positions).
 
@@ -239,7 +243,7 @@ labelled <- aligned |>
 plot(labelled)
 ```
 
-<img src="man/figures/labelled-1.png" title="plot of chunk labelled" alt="plot of chunk labelled" width="100%" />
+<img src="man/figures/home/labelled-1.png" title="plot of chunk labelled" alt="plot of chunk labelled" width="100%" />
 
 ### Animate
 
@@ -250,7 +254,7 @@ Turn your images into an animated gif. Make sure you have the `gifski` package i
 animate(labelled, fps = 2)
 ```
 
-<img src="man/figures/animate-1.gif" title="plot of chunk animate" alt="plot of chunk animate" width="25%" />
+<img src="man/figures/home/animate-1.gif" title="plot of chunk animate" alt="plot of chunk animate" width="25%" />
 
 
 

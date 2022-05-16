@@ -12,5 +12,6 @@ inst/python/frl.dat
 stuff/*.dat
 vignettes/*.dat
 vignettes/images/*
-man/figures/*
+man/figures/home*
 pkgdown/index.html
+pkgdown/man/figures/home*
