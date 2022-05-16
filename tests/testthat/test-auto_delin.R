@@ -70,6 +70,7 @@ test_that("paste 2 together", {
 test_that("dlib_auto_delin", {
   skip_on_cran()
   skip_if_offline()
+  skip_on_ci()
   
   stimuli <- demo_stim()[1]
   s_dlib <- webmorphR.dlib::dlib_auto_delin(stimuli, "dlib7", TRUE)
