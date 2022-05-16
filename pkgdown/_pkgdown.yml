@@ -2,6 +2,7 @@ url: https://facelab.github.io/webmorph/
 
 development:
   mode: unreleased
+  
 home:
   title: Reproducible Stimuli
   description: Create reproducible image stimuli, specialised for images with webmorph.org templates.
@@ -21,6 +22,15 @@ template:
       creator: "@lisadebruine"
       site: "@webmorph_org"
       card: summary_large_image
+      
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [twitter, github]
+    twitter:
+    - icon: fa-twitter
+    - href: https://twitter.com/webmorph_org
+    - aria-label: Twitter
 
 figures:
   dev: grDevices::png
@@ -37,9 +47,6 @@ articles:
   - masking
   - figures
   - similarity
-  twitter:
-    icon: "fab fa-twitter fa-lg"
-    href: https://twitter.com/webmorph_org
 
 reference:
 - title: Stimuli
