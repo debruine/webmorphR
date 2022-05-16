@@ -20,7 +20,7 @@ WebmorphR has plotting functions to make it easier to create reproducible figure
 
 When working interactively in an R Markdown document, the figures plot in the Viewer window, but will be shown in the document when you knit.
 
-```{r, message=FALSE}
+```{r libs, message=FALSE}
 library(webmorphR)
 library(tidyverse)
 wm_opts(plot.maxwidth = 850)
@@ -28,7 +28,7 @@ wm_opts(plot.maxwidth = 850)
 
 ## Load stimuli
 
-```{r plot}
+```{r plot-stimuli}
 stimuli <- demo_stim()
 plot(stimuli)
 ```
