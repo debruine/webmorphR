@@ -1,7 +1,3 @@
----
-resource_files:
-  - man/figures/*
----
 # webmorphR <img src="man/figures/logo.png" align="right" alt="" width="120" />
 <!-- rmarkdown v1 -->
 
