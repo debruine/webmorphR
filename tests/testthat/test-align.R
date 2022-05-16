@@ -18,7 +18,7 @@ test_that("works", {
 test_that("procrustes", {
   data <- demo_stim() |> tems_to_array()
 
-  expect_silent(g <- procrustes_align(data))
+  #expect_silent(g <- procrustes_align(data))
   expect_silent(p1 <- procrustes_align(data, 1))
   expect_silent(p2 <- procrustes_align(data, 2))
 
