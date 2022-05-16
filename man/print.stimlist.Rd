@@ -17,3 +17,6 @@ prints summary info and returns x
 \description{
 Print stimlist
 }
+\keyword{internal}
+\keyword{methods}
+\keyword{print}

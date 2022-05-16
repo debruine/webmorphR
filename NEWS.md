@@ -1,8 +1,12 @@
+# webmorph 0.0.2.9001
+
+* Imports rsvg; needed for `draw_tem()` but called by magick
+
 # webmorph 0.0.2.9000
 
 * moved all python functions to webmorphR.dlib
 * `auto_delin()` is now a wrapper for `fpp_auto_delin()` (for Face++) and `webmorphR.dlib::dlib_auto_delin()` (for python/dlib/face_recognition delineations).
-* Manuals and vignettes updated (dark theme website!)
+* Manuals and vignettes updated
 
 # webmorph 0.0.1.9008
 

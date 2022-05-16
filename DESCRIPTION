@@ -28,14 +28,15 @@ Imports:
     grDevices,
     stats,
     dplyr,
+    ggplot2,
     jsonlite,
     magick,
     geomorph,
     httr,
     progress,
-    shiny
+    shiny,
+    rsvg
 Suggests: 
-    ggplot2,
     gifski,
     testthat,
     usethis,

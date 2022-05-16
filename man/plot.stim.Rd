@@ -22,3 +22,6 @@ Plot stim
 \examples{
 demo_stim("test")[[1]] |> plot()
 }
+\keyword{hplot}
+\keyword{internal}
+\keyword{methods}

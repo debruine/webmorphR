@@ -9,7 +9,7 @@ auto_delin(
   model = c("dlib7", "dlib70", "fpp106", "fpp83"),
   replace = FALSE,
   face = 1,
-  dlib_path = NULL
+  model_path = NULL
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ auto_delin(
 
 \item{face}{which face to delineate in each image if there is more than 1 (only for Face++)}
 
-\item{dlib_path}{path to a custom dlib .dat landmark file to use (model is ignored if set)}
+\item{model_path}{path to a custom dlib .dat landmark file to use (model is ignored if set)}
 }
 \value{
 stimlist with templates

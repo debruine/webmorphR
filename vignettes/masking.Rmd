@@ -153,13 +153,13 @@ c(dlib7, dlib70) |>
   plot_stim()
 ```
 
-You can also use your own landmark file by including it with the argument `dlib_path`. Learn more about [training landmark models](https://pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/) or search for pre-trained models, such as this [81-point model](https://github.com/codeniko/shape_predictor_81_face_landmarks). (I don't think it handles the hairline well, so am working on training my own model using stimuli more typical to face research.)
+You can also use your own landmark file by including it with the argument `model_path`. Learn more about [training landmark models](https://pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/) or search for pre-trained models, such as this [81-point model](https://github.com/codeniko/shape_predictor_81_face_landmarks). (I don't think it handles the hairline well, so am working on training my own model using stimuli more typical to face research.)
 
 ```{r}
 # download.file("https://github.com/codeniko/shape_predictor_81_face_landmarks/raw/master/shape_predictor_81_face_landmarks.dat", "dlib81.dat")
 
 dlib_custom <- auto_delin(frl, replace = TRUE, 
-                          dlib_path = "dlib81.dat")
+                          model_path = "dlib81.dat")
 
 dlib_custom |> 
   draw_tem(pt.shape = "index", 

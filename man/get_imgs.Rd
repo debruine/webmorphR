@@ -18,3 +18,4 @@ Get Images into List
 \examples{
 demo_stim() |> get_imgs()
 }
+\keyword{internal}

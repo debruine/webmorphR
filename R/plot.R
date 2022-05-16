@@ -7,7 +7,7 @@
 #' @param ... Arguments to be passed to \code{\link{plot_stim}}
 #'
 #' @return stimlist
-#' @keywords internal
+#' @keywords internal methods hplot
 #'
 #' @examples
 #' demo_stim("test") |> plot()
@@ -23,7 +23,7 @@ plot.stimlist <- function(x, y, ...) {
 #' @param ... Arguments to be passed to \code{\link{plot_stim}}
 #'
 #' @return stimlist
-#' @keywords internal
+#' @keywords internal methods hplot
 #'
 #' @examples
 #' demo_stim("test")[[1]] |> plot()

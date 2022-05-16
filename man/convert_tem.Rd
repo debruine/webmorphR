@@ -26,3 +26,4 @@ Convert templates
 \examples{
 fpp106 <- demo_stim() |> convert_tem("guess", "fpp106")
 }
+\keyword{internal}

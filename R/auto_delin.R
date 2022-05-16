@@ -8,7 +8,7 @@
 #' @param model Which shape predictor model to use (dlib7, dlib70, fpp106, fpp83)
 #' @param replace if FALSE, only gets templates for images with no template
 #' @param face which face to delineate in each image if there is more than 1 (only for Face++)
-#' @param dlib_path path to a custom dlib .dat landmark file to use (model is ignored if set)
+#' @param model_path path to a custom dlib .dat landmark file to use (model is ignored if set)
 #'
 #' @return stimlist with templates
 #' @export
@@ -30,16 +30,16 @@ auto_delin <- function(stimuli,
                        model = c("dlib7", "dlib70", "fpp106", "fpp83"), 
                        replace = FALSE, 
                        face = 1,
-                       dlib_path = NULL) {
+                       model_path = NULL) {
   stimuli <- validate_stimlist(stimuli)
   model <- match.arg(model)
   
   if (model %in% c("fpp106", "fpp83")) {
     fpp_auto_delin(stimuli, model, replace, face)
   } else if (model %in% c("dlib7", "dlib70") ||
-             !is.null(dlib_path)) {
+             !is.null(model_path)) {
     if (requireNamespace("webmorphR.dlib", quietly = TRUE)) {
-      webmorphR.dlib::dlib_auto_delin(stimuli, model, replace, dlib_path)
+      webmorphR.dlib::dlib_auto_delin(stimuli, model, replace, model_path)
     } else {
       stop("You need to install webmorphR.dlib to use the dlib models\n\nremotes::install_github(\"debruine/webmorphR.dlib\")")
     }

@@ -23,3 +23,6 @@ Plot stimuli in a stimlist.
 demo_stim("test") |> plot()
 
 }
+\keyword{hplot}
+\keyword{internal}
+\keyword{methods}

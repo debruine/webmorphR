@@ -42,14 +42,14 @@ articles:
     href: https://twitter.com/webmorph_org
 
 reference:
-- title: Loading
+- title: Stimuli
   desc: ~
   contents:
   - '`blank`'
   - '`demo_stim`'
   - '`read_stim`'
   - '`write_stim`'
-- title: Webmorph.org functions
+- title: Webmorph
   desc: Functions that link to webmorph.org
   contents:
   - '`avg`'
@@ -141,16 +141,4 @@ reference:
   - '`svgQuadraticTo`'
   - '`unique_names`'
   - '`validate_stimlist`'
-- title: S3 Functions
-  desc: webmorphR-specific versions of generic functions 
-  contents:
-  - '`[.stimlist`'
-  - '`[[<-.stimlist`'
-  - '`c.stim`'
-  - '`c.stimlist`'
-  - '`plot.stim`'
-  - '`plot.stimlist`'
-  - '`print.stim`'
-  - '`print.stimlist`'
-  - '`rep.stim`'
-  - '`rep.stimlist`'
+
