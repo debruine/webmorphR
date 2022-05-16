@@ -33,10 +33,11 @@ navbar:
     - aria-label: Twitter
 
 figures:
-  dev: grDevices::png
+  dev: ragg:agg_png
   dpi: 96
   dev.args: []
   fig.ext: png
+  bg: NA
 
 articles:
 - title: Demos
