@@ -7,30 +7,7 @@
 #' @export
 #'
 print.stim <- function(x, ...) {
-  # attr <- list()
-  # if ("points" %in% names(x)) {
-  #   attr$points <- sprintf("%i points", ncol(x$points))
-  # }
-  # if ("lines" %in% names(x)) {
-  #   attr$lines <- sprintf("%i lines", length(x$lines))
-  # }
-  #
-  # if ("img" %in% names(x)) {
-  #   info <- tryCatch({
-  #     magick::image_info(x$img)
-  #   }, error = function(e) {
-  #     x$img <- magick::image_read(x$imgpath)
-  #     magick::image_info(x$img)
-  #   })
-  #   attr$img <- sprintf("%i x %i %s",
-  #                       info$width,
-  #                       info$height,
-  #                       info$format)
-  # }
-  #
-  # paste(attr, collapse = ", ") |> cat()
-  #
-  # invisible(x)
+  # uses magick:::print.magick-image
   print(x$img, FALSE)
 }
 
@@ -43,12 +20,6 @@ print.stim <- function(x, ...) {
 #' @export
 #'
 print.stimlist <- function(x, ...) {
-  # mapply(function(xi, nm) {
-  #   sprintf("* %s: ", nm) |> cat()
-  #   print(xi, ...)
-  #   cat("\n")
-  # }, x, names(x) %||% seq_along(x)) # in case names are null
-
   img <- get_imgs(x)
 
   # print image inline if option set and not knitting
@@ -67,7 +38,8 @@ print.stimlist <- function(x, ...) {
     })
   }
   
-  # prints in the viewer if multiple images or not in an Rmd document
+  # prints in the viewer using magick:::print.magick-image
+  # if multiple images or not in an Rmd document
   suppressWarnings({
     # suppress warning about absolute paths
     print(img, FALSE)
