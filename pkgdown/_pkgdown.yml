@@ -16,12 +16,12 @@ template:
     heading_font: {google: "Roboto"}
   opengraph:
     image:
-      src: man/figures/card.png
-      alt: "Blue hexagon with a simplified white wireframe face"
+      src: man/figures/logo.png
+      alt: "webmorphR logo: a blue hexagon with a simplified white wireframe face"
     twitter:
       creator: "@lisadebruine"
       site: "@webmorph_org"
-      card: summary_large_image
+      card: summary
       
 navbar:
   structure:

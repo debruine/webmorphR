@@ -3,6 +3,13 @@ title: "Image Manipulations"
 output: rmarkdown::html_document
 resource_files:
   - vignettes/images/manip/*
+opengraph:
+  image: 
+    src: "https://debruine.github.io/webmorphR/articles/images/manip.png"
+  twitter:
+    card: summary
+    creator: "@lisadebruine"
+    site: "@webmorph_org"
 ---
 
 ```{r setup, include = FALSE}

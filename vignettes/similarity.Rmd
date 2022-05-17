@@ -3,6 +3,13 @@ title: "Image Similarity"
 output: rmarkdown::html_document
 resource_files:
   - vignettes/images/similarity/*
+opengraph:
+  image: 
+    src: "https://debruine.github.io/webmorphR/articles/images/similarity.png"
+  twitter:
+    card: summary
+    creator: "@lisadebruine"
+    site: "@webmorph_org"
 ---
 
 ```{r setup, include = FALSE}

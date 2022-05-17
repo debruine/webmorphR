@@ -3,6 +3,13 @@ title: "Making Figures"
 output: rmarkdown::html_document
 resource_files:
   - vignettes/images/figures/*
+opengraph:
+  image: 
+    src: "https://debruine.github.io/webmorphR/articles/images/figures.png"
+  twitter:
+    card: summary
+    creator: "@lisadebruine"
+    site: "@webmorph_org"
 ---
 
 ```{r setup, include = FALSE}
