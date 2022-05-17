@@ -99,7 +99,7 @@
 </div>
 <!-- badges: start -->
 
-<p>The goal of webmorphR is to make the construction of image stimuli more reproducible, with a focus on face stimuli.</p>
+<p>The goal of webmorphR is to make the construction of image stimuli more reproducible, with a focus on face stimuli. While face stimuli used in research can often not be shared for ethical reasons, webmorphR allows you to share recipes for creating stimuli with code, increasing reproducibility and encouraging generalisability to new faces.</p>
 <p>This development of this package was funded by ERC grant #647910 (KINSHIP).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -112,8 +112,8 @@
 <div class="section level2">
 <h2 id="use">Use<a class="anchor" aria-label="anchor" href="#use"></a>
 </h2>
-<p>The code below produces the following figure reproducibly, and can be applied to any set of starting images.</p>
-<p><img src="man/example.jpg"></p>
+<p>The code below produces the following figure reproducibly, and can be applied to any set of original images.</p>
+<p><img src="reference/figures/example.jpg"></p>
 <p>Load images with <a href="https://debruine.github.io/webmorph/getting-started.html#delineate" class="external-link">psychomorph/webmorph templates</a> or automatically delineate them. Use functions like <code><a href="reference/resize.html">resize()</a></code>, <code><a href="reference/align.html">align()</a></code> and <code><a href="reference/crop.html">crop()</a></code> to process the images reproducibly. Use webmorph functions to create composite or transformed faces. Use the plotting and labelling functions to create figures.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://debruine.github.io/webmorphR" class="external-link">webmorphR</a></span><span class="op">)</span>
@@ -121,6 +121,7 @@
 <span class="co"># load 6 images from the smiling demo set</span>
 <span class="va">original</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/demo_stim.html">demo_stim</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="st">"smiling"</span>,
                       pattern <span class="op">=</span> <span class="st">"002|013|030|064|094|099"</span><span class="op">)</span> 
+
 <span class="co"># resize and delineate the images (using Face++)</span>
 <span class="co"># procrustes align and crop them to 80% size</span>
 <span class="va">processed</span> <span class="op">&lt;-</span> <span class="va">original</span> |&gt;
