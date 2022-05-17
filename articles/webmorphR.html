@@ -113,10 +113,12 @@ stimuli.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install the development version from <a href="https://github.com/" class="external-link">GitHub</a>, as well as the additional
+stimuli.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"debruine/webmorphR"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"debruine/webmorphR"</span><span class="op">)</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"debruine/webmorphR.stim"</span><span class="op">)</span></code></pre></div>
 <p>Installation can take a few minutes, depending on how many dependency
 packages you need to install.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -126,6 +128,7 @@ packages you need to install.</p>
 <span class="co">#&gt; Welcome to webmorphR. For support and examples visit:</span>
 <span class="co">#&gt; https://debruine.github.io/webmorphR/</span>
 <span class="co">#&gt; ************</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">webmorphR.stim</span><span class="op">)</span> <span class="co"># for extra stimulus sets</span>
 
 <span class="fu"><a href="../reference/wm_opts.html">wm_opts</a></span><span class="op">(</span>plot.maxwidth <span class="op">=</span> <span class="fl">850</span><span class="op">)</span> <span class="co"># set maximum width for plot output</span></code></pre></div>
 </div>
@@ -135,14 +138,11 @@ packages you need to install.</p>
 <p>In this example, we’ll load a few faces from the CC-BY licensed <a href="https://doi.org/10.6084/m9.figshare.5047666.v3" class="external-link">Face Research Lab
 London Set</a>, average them together, and create a figure.</p>
 <div class="section level3">
-<h3 id="load-demo-stimuli">Load demo stimuli<a class="anchor" aria-label="anchor" href="#load-demo-stimuli"></a>
+<h3 id="load-stimuli">Load stimuli<a class="anchor" aria-label="anchor" href="#load-stimuli"></a>
 </h3>
-<p>Load 6 faces. If you haven’t already downloaded the demo stimulus
-sets, this code will prompt you to download them. The demo sets are
-large, so this can take a minute or so.</p>
+<p>Load 6 specific faces from the London image set.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># remotes::install_github("debruine/webmorphR.stim")</span>
-<span class="va">face_set</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"london"</span>, <span class="st">"002|006|007|025|030|066"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">face_set</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_london</a></span><span class="op">(</span><span class="st">"002|006|007|025|030|066"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">face_set</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="images/getting_started/demo-stim-1.png" width="100%"></p>
@@ -285,7 +285,7 @@ package and some python setup using reticulate.</p>
 progress bar in the console. You may also see some startup output from
 reticulate the first time you use this function in a session.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"zoom"</span><span class="op">)</span> |&gt; 
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_zoom</a></span><span class="op">(</span><span class="op">)</span> |&gt; 
   <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span>replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
@@ -297,7 +297,7 @@ account and set some environment variables (see the <a href="articles/stimuli.ht
 your images to Face++, so make sure you read their privacy
 information.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"zoom"</span><span class="op">)</span> |&gt; 
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_zoom</a></span><span class="op">(</span><span class="op">)</span> |&gt; 
   <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span>model <span class="op">=</span> <span class="st">"fpp106"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 

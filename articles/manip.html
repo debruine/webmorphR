@@ -111,12 +111,13 @@ rotate, crop, pad, and align images.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load packages and set maximum plot width</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://debruine.github.io/webmorphR">webmorphR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">webmorphR.stim</span><span class="op">)</span> <span class="co"># for extra stimulus sets</span>
 <span class="fu"><a href="../reference/wm_opts.html">wm_opts</a></span><span class="op">(</span>plot.maxwidth <span class="op">=</span> <span class="fl">850</span><span class="op">)</span></code></pre></div>
 <div class="section level2">
 <h2 id="load-your-images">Load your images<a class="anchor" aria-label="anchor" href="#load-your-images"></a>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"composite"</span>, <span class="st">"multi"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_composite</a></span><span class="op">(</span><span class="st">"multi"</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="resize">Resize<a class="anchor" aria-label="anchor" href="#resize"></a>
@@ -185,7 +186,7 @@ colour from a patch of the image. If you set <code>patch</code> to
 <code>TRUE</code>, this will default to the top left 10 pixel
 square.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"rainbow"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span>
+<code class="sourceCode R"><span class="va">rb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_rainbow</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>
 
 <span class="va">rb</span> |&gt;
   <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">50</span>, patch <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> |&gt;
@@ -227,7 +228,7 @@ set the cropping. In the example below, the images are cropped so there
 is 100 pixels of padding around the boundaries, calculated across all
 images.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lisa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"lisa"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">lisa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_lisa</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="va">lisa</span>, <span class="fl">100</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt;

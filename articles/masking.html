@@ -111,10 +111,11 @@ relative to their delineation.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load packages and set maximum plot width</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://debruine.github.io/webmorphR">webmorphR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">webmorphR.stim</span><span class="op">)</span> <span class="co"># for extra stimulus sets</span>
 <span class="fu"><a href="../reference/wm_opts.html">wm_opts</a></span><span class="op">(</span>plot.maxwidth <span class="op">=</span> <span class="fl">850</span><span class="op">)</span>
 
 <span class="co"># load the demo stimuli</span>
-<span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"test"</span><span class="op">)</span></code></pre></div>
+<span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="section level2">
 <h2 id="delineations">Delineations<a class="anchor" aria-label="anchor" href="#delineations"></a>
 </h2>
@@ -197,7 +198,7 @@ of this.</li>
 keep it for consistency with the old auto-delineation template on <a href="https://webmorph.org" class="external-link">webmorph.org</a>.</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"london"</span>, <span class="st">"030"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_london</a></span><span class="op">(</span><span class="st">"030"</span><span class="op">)</span>
 <span class="va">dlib7</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">s</span>, <span class="st">"dlib7"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">dlib70</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">s</span>, <span class="st">"dlib70"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">fpp106</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">s</span>, <span class="st">"fpp106"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -215,7 +216,7 @@ keep it for consistency with the old auto-delineation template on <a href="https
 soon), but can demonstrate how the automatic delineation algorithms deal
 with open mouths.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">smile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"smiling"</span>, <span class="st">"030"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">smile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_smiling</a></span><span class="op">(</span><span class="st">"030"</span><span class="op">)</span>
 <span class="va">dlib7s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">smile</span>, <span class="st">"dlib7"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">dlib70s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">smile</span>, <span class="st">"dlib70"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">fpp106s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">smile</span>, <span class="st">"fpp106"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -516,8 +517,8 @@ late to change.</p>
 example stimuli in webmorph), you can use the built-in masking
 features.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># load your stimuli with templates</span>
-<span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"composite"</span>, pattern <span class="op">=</span> <span class="st">"multi"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="co"># load stimuli with templates</span>
+<span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_composite</a></span><span class="op">(</span><span class="st">"multi"</span><span class="op">)</span></code></pre></div>
 <p>The default mask crops around the face with a white background.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -618,7 +619,7 @@ excludes points that don’t have clear anatomical definitions.</p>
 <p>Now it’s relatively straightforward to create a stimulus set that
 matches old papers.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"london"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span> |&gt;
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_london</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/greyscale.html">greyscale</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="co"># remove template points to make the oval tighter around the face</span>
@@ -629,7 +630,7 @@ matches old papers.</p>
 <p><img src="images/masking/mask-oval-all-1.png" width="100%"></p>
 <p>Although I still think the delineated masking is better :)</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"london"</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span> |&gt;
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_london</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span> |&gt; <span class="co"># resize to process faster</span>
   <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> |&gt;
   <span class="co"># remove external features before procrustes alignment</span>
@@ -648,7 +649,7 @@ the template points you want to outline. It crops around the points,
 makes the image darker, makes it larger (so the text is
 higher-resolution), and plots it with the point indices.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"smiling"</span>, pattern <span class="op">=</span> <span class="st">"030"</span><span class="op">)</span> |&gt;
+<code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_smiling</a></span><span class="op">(</span><span class="st">"030"</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="st">"dlib70"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="va">stimuli</span> |&gt; 
@@ -680,7 +681,7 @@ mask.</p>
   <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">.6</span>, <span class="fl">.6</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="images/masking/unnamed-chunk-26-1.png" width="100%"></p>
-<p>This script took 1.2 minutes to render all the included images from
+<p>This script took 1 minutes to render all the included images from
 scratch.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

@@ -113,6 +113,7 @@ plot in the Viewer window, but will be shown in the document when you
 knit.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://debruine.github.io/webmorphR">webmorphR</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">webmorphR.stim</span><span class="op">)</span> <span class="co"># for extra stimulus sets</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
 <span class="fu"><a href="../reference/wm_opts.html">wm_opts</a></span><span class="op">(</span>plot.maxwidth <span class="op">=</span> <span class="fl">850</span><span class="op">)</span></code></pre></div>
 <div class="section level2">
@@ -157,7 +158,7 @@ labels outside the image.</p>
 <p>Set <code>nrow</code> or <code>ncol</code> to control the number of
 rows and columns.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"composite"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_composite</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">comp</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="images/figures/unnamed-chunk-2-1.png" width="100%"></p>
@@ -210,7 +211,7 @@ magick or ggplot. The <code><a href="../reference/label.html">label()</a></code>
 <p><img src="images/figures/unnamed-chunk-5-1.png" width="100%"></p>
 <p>Use the <code><a href="../reference/setnames.html">setnames()</a></code> function to set new names.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"composite"</span><span class="op">)</span> |&gt;
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_composite</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"f_"</span>, replacement <span class="op">=</span> <span class="st">"Female "</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span>pattern <span class="op">=</span> <span class="st">"m_"</span>, replacement <span class="op">=</span> <span class="st">"Male "</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="op">)</span> |&gt;

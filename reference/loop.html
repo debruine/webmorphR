@@ -90,9 +90,7 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"zoom"</span><span class="op">)</span> |&gt;</span>
-<span class="r-in">    <span class="fu"><a href="align.html">align</a></span><span class="op">(</span>procrustes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> |&gt;</span>
-<span class="r-in">    <span class="fu"><a href="crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">250</span>, <span class="fl">50</span>, <span class="fl">50</span>, <span class="fl">50</span><span class="op">)</span> |&gt;</span>
+<span class="r-in">  <span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu">webmorphR.stim</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_composite</a></span><span class="op">(</span><span class="st">"f_"</span><span class="op">)</span> |&gt; </span>
 <span class="r-in">    <span class="fu"><a href="resize.html">resize</a></span><span class="op">(</span><span class="fl">300</span><span class="op">)</span></span>
 <span class="r-in">  <span class="va">loop</span> <span class="op">&lt;-</span> <span class="fu">loop</span><span class="op">(</span><span class="va">stimuli</span>, <span class="fl">5</span><span class="op">)</span></span>
 <span class="r-in">  <span class="fu"><a href="animate.html">animate</a></span><span class="op">(</span><span class="va">loop</span>, <span class="fl">10</span><span class="op">)</span></span>
