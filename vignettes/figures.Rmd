@@ -5,7 +5,7 @@ resource_files:
   - vignettes/images/figures/*
 opengraph:
   image: 
-    src: "https://debruine.github.io/webmorphR/articles/images/figures.png"
+    src: "https://debruine.github.io/webmorphR/articles/images/figures/figures.png"
   twitter:
     card: summary
     creator: "@lisadebruine"

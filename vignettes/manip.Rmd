@@ -5,7 +5,7 @@ resource_files:
   - vignettes/images/manip/*
 opengraph:
   image: 
-    src: "https://debruine.github.io/webmorphR/articles/images/manip.png"
+    src: "https://debruine.github.io/webmorphR/articles/images/manip/manip.png"
   twitter:
     card: summary
     creator: "@lisadebruine"

@@ -5,7 +5,7 @@ resource_files:
   - vignettes/images/masking/*
 opengraph:
   image: 
-    src: "https://debruine.github.io/webmorphR/articles/images/masking.png"
+    src: "https://debruine.github.io/webmorphR/articles/images/masking/masking.png"
   twitter:
     card: summary
     creator: "@lisadebruine"
