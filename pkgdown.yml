@@ -8,8 +8,8 @@ articles:
   similarity: similarity.html
   stimuli: stimuli.html
   webmorphR: webmorphR.html
-last_built: 2022-05-17T13:11Z
+last_built: 2022-05-17T13:31Z
 urls:
-  reference: https://facelab.github.io/webmorph/reference
-  article: https://facelab.github.io/webmorph/articles
+  reference: https://debruine.github.io/webmorphR/reference
+  article: https://debruine.github.io/webmorphR/articles
 
