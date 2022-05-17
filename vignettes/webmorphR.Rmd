@@ -1,29 +1,19 @@
 ---
+title: "Getting Started"
+output: rmarkdown::html_document
 resource_files:
-  - man/figures/home*
+  - vignettes/images/getting_started/*
 ---
-# webmorphR <img src="man/figures/logo.png" align="right" alt="" width="120" />
-<!-- rmarkdown v1 -->
-
-<!-- badges: start -->
-[![Codecov test coverage](https://codecov.io/gh/debruine/webmorphR/branch/master/graph/badge.svg)](https://codecov.io/gh/debruine/webmorphR?branch=master)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![R-CMD-check](https://github.com/debruine/webmorphR/workflows/R-CMD-check/badge.svg)](https://github.com/debruine/webmorphR/actions)
-<!-- badges: end -->
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   out.width = "100%",
-  fig.path = "man/figures/home/"
+  fig.path = "images/getting_started/"
 )
 ```
 
-
-The goal of webmorphR is to make the construction of image stimuli more reproducible, with a focus on face stimuli.
-
-This development of this package was funded by ERC grant #647910 (KINSHIP).
 
 The sections below provide brief examples of what webmorphR can be used for. See [articles](articles/) for more detailed instructions on image manipulations, making figures, and making stimuli.
 
