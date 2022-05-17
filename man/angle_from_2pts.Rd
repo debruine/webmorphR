@@ -2,7 +2,15 @@
 % Please edit documentation in R/align.R
 \name{angle_from_2pts}
 \alias{angle_from_2pts}
-\title{Get angle from 2 points}
+\title{#' @export
+#' @rdname align
+align_1point <- function(stimuli, pt = 0,
+x = NULL, y = NULL,
+width = NULL, height = NULL, ref_img = NULL,
+fill = wm_opts("fill"), patch = FALSE) {
+align(stimuli, pt, pt, x, y, x, y,
+width, height, ref_img, fill, patch, FALSE)
+}}
 \usage{
 angle_from_2pts(coords, pt1 = 1, pt2 = 2)
 }
@@ -17,6 +25,25 @@ angle_from_2pts(coords, pt1 = 1, pt2 = 2)
 double of angle in radians
 }
 \description{
+#' @export
+#' @rdname align
+align_2point <- function(stimuli, pt1 = 0, pt2 = 1,
+x1 = NULL, y1 = NULL, x2 = NULL, y2 = NULL,
+width = NULL, height = NULL, ref_img = NULL,
+fill = wm_opts("fill"), patch = FALSE) {
+align(stimuli, pt1, pt2, x1, y1, x2, y2,
+width, height, ref_img, fill, patch, FALSE)
+}
+}
+\details{
+#' @export
+#' @rdname align
+align_procrustes <- function(stimuli,
+width = NULL, height = NULL, ref_img = NULL,
+fill = wm_opts("fill"), patch = FALSE) {
+align(stimuli, 0, 1, NULL, NULL, NULL, NULL,
+width, height, ref_img, fill, patch, TRUE)
+}
 Get angle from 2 points
 }
 \keyword{internal}

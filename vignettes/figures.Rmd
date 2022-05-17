@@ -25,8 +25,6 @@ starttime <- Sys.time()
 
 WebmorphR has plotting functions to make it easier to create reproducible figures from your stimuli.
 
-When working interactively in an R Markdown document, the figures plot in the Viewer window, but will be shown in the document when you knit.
-
 ```{r libs, message=FALSE}
 library(webmorphR)
 library(webmorphR.stim) # for extra stimulus sets
@@ -44,12 +42,12 @@ plot(stimuli)
 
 ## Borders and Background
 
-You can add a border to each image using `pad`. Values less than 1 will set border width as a percentage of the image width, while values greater than 1 will set it as pixels. You can also change the border colour using `fill`.
+You can add a border to each image using `pad`. Values less than 1 will set border width as a proportion of the image width, while values greater than or equal to 1 will set it as pixels. You can also change the border colour using `fill`.
 
 
 ```{r pink}
 stimuli |>
-  pad(0.05, fill = "hotpink") |>
+  pad(1, fill = "hotpink") |>
   plot()
 ```
 
@@ -58,8 +56,8 @@ You can set different border sizes for the top, right, bottom and left sides (th
 
 ```{r border}
 stimuli |>
-  pad(80, 0, 0, 0, fill = "black") |>
-  label(color = "white") |>
+  pad(60, 0, 0, 0, fill = "black") |>
+  label(color = "white", size = 50) |>
   plot()
 ```
 
@@ -74,7 +72,7 @@ stimuli |>
 
 ## Rows and columns
 
-Set `nrow` or `ncol` to control the number of rows and columns.
+Set `nrow` or `ncol` in the `plot()` function to control the number of rows and columns.
 
 ```{r}
 comp <- load_stim_composite() |> resize(0.5)
@@ -87,7 +85,11 @@ Set `byrow = FALSE` to order the images by column instead of the default. You ca
 We'd set `maxwidth` globally at the top of the script using `wm_opts()`, but you can also set `maxwidth` or `maxheight` for a specific plot.
 
 ```{r, out.width = "20%"}
-plot(comp, ncol = 2, byrow = FALSE, padding = 0, maxheight = 850*2)
+plot(comp, 
+     ncol = 2, 
+     byrow = FALSE, 
+     padding = 0, 
+     maxheight = 850*2)
 ```
 
 ## Multipart figure
@@ -103,6 +105,27 @@ ind <- comp[c(1:2,4:7,9:10)] |>
 c(comp[3], ind, comp[8]) |>
   resize(height = 500) |> # make sure parts are the same height
   plot(nrow = 1)
+```
+
+## Visualising Templates
+
+Use the draw_tem() function to show the delineations. By default, points are translucent green circles and lines are translucent blue.
+
+```{r draw-tem}
+stimuli %>%
+  draw_tem() %>%
+  plot()
+```
+
+You can change the default colours and translucency with the `line.color`, `pt.color`, `line.alpha` and `pt.alpha` arguments. Remove the image and set the background colour with `bg`.
+
+```{r daw-tem-custom}
+stimuli %>%
+  resize(1000) %>%
+  draw_tem(line.color = "grey", line.size = 2, line.alpha = 0.2, 
+           pt.color = "red", pt.size = 4, bg = "grey") %>%
+  crop_tem(50) %>%
+  plot()
 ```
 
 

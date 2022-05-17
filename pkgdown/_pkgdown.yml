@@ -12,8 +12,8 @@ template:
   bootswatch: yeti
   bslib:
     primary: "#204969"
-    base_font: {google: "Roboto Flex"}
-    heading_font: {google: "Roboto"}
+    base_font: {google: "Nunito"}
+    heading_font: {google: "Nunito"}
   opengraph:
     image:
       src: man/figures/logo.png

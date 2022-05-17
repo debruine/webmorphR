@@ -1,4 +1,6 @@
 #' Align templates and images
+#' 
+#' Align images so that template points line up. [align1()] aligns 1 point, but does not resize or rotate images. [align2()] aligns 2 points, resizing and rotating faces. [procrustes()] uses procrustes alignment to resize and rotate images to be as close as possible to a mean shape. You can specify the x and y coordinates to align, or align to their position in a reference image. The reference image is the average of all images, or the image specified by ref_img. 
 #'
 #' @param stimuli list of class stimlist
 #' @param pt1 The first point to align (defaults to 0)
@@ -50,10 +52,10 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
     width <- width %||% stimuli[[ref_img]]$width
     height <- height %||% stimuli[[ref_img]]$height
   }
-  x1 <- x1 %||% ref_points[1, pt1+1]
-  y1 <- y1 %||% ref_points[2, pt1+1]
-  x2 <- x2 %||% ref_points[1, pt2+1]
-  y2 <- y2 %||% ref_points[2, pt2+1]
+  x1 <- x1 %||% ref_points["x", pt1+1]
+  y1 <- y1 %||% ref_points["y", pt1+1]
+  x2 <- x2 %||% ref_points["x", pt2+1]
+  y2 <- y2 %||% ref_points["y", pt2+1]
   
 
   if (pt1 == pt2) {
@@ -67,7 +69,7 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
   if (isTRUE(procrustes)) {
     # procrustes align coordinates
     data <- tems_to_array(stimuli)
-    coords <- procrustes_align(data, ref_img)
+    coords <- procrustes_coords(data, ref_img)
 
     # calculate size multiplier
     orig_avg <- apply(data, c(1, 2), mean)
@@ -106,8 +108,8 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
 
 
   # calculate rotation and resize parameters for each image
-  rotate <- c()
-  newsize <- c()
+  rotate <- rep_len(0, n)
+  newsize <- rep_len(1, n)
 
   for (i in seq_along(stimuli)) {
     # calculate aligned rotation and inter-point width
@@ -162,12 +164,12 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
 #' @return coordinates
 #' @keywords internal
 #'
-procrustes_align <- function(data, ref_img = NULL) {
+procrustes_coords <- function(data, ref_img = NULL) {
   suppressMessages(requireNamespace("geomorph"))
   
   n <- dim(data)[3]
   if (is.null(ref_img)) {
-    # calcuate average and add as img 1
+    # calculate average and add as img 1
     avg <- apply(data, c(1, 2), mean) |> 
       array(dim = dim(data) - c(0, 0, 1))
     newdata <- array(c(avg, data), dim = dim(data) + c(0, 0, 1))
@@ -260,6 +262,35 @@ procrustes_align <- function(data, ref_img = NULL) {
   dimnames(coords) <- dimnames(data)
   return(coords)
 }
+
+#' #' @export
+#' #' @rdname align
+#' align_1point <- function(stimuli, pt = 0, 
+#'                    x = NULL, y = NULL,
+#'                    width = NULL, height = NULL, ref_img = NULL,
+#'                    fill = wm_opts("fill"), patch = FALSE) {
+#'   align(stimuli, pt, pt, x, y, x, y,
+#'         width, height, ref_img, fill, patch, FALSE)
+#' }
+#' 
+#' #' @export
+#' #' @rdname align
+#' align_2point <- function(stimuli, pt1 = 0, pt2 = 1,
+#'                   x1 = NULL, y1 = NULL, x2 = NULL, y2 = NULL,
+#'                   width = NULL, height = NULL, ref_img = NULL,
+#'                   fill = wm_opts("fill"), patch = FALSE) {
+#'   align(stimuli, pt1, pt2, x1, y1, x2, y2,
+#'         width, height, ref_img, fill, patch, FALSE)
+#' }
+#' 
+#' #' @export
+#' #' @rdname align
+#' align_procrustes <- function(stimuli, 
+#'                        width = NULL, height = NULL, ref_img = NULL,
+#'                        fill = wm_opts("fill"), patch = FALSE) {
+#'   align(stimuli, 0, 1, NULL, NULL, NULL, NULL,
+#'         width, height, ref_img, fill, patch, TRUE)
+#' }
 
 
 

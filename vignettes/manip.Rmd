@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 starttime <- Sys.time()
 ```
 
-This vignette demonstrates the functions you can use to resize, rotate, crop, pad, and align images.
+This vignette demonstrates the functions you can use to resize, rotate, crop, pad, and align images. Templates are also changed with the images.
 
 ```{r, message=FALSE}
 # load packages and set maximum plot width
@@ -35,51 +35,102 @@ wm_opts(plot.maxwidth = 850)
 
 ## Load your images
 
+Load the demo stimuli, or read in your own images with `read_stim()`.
+
 ```{r}
-stimuli <- load_stim_composite("multi")
+stimuli <- demo_stim()
 ```
 
 
 ## Resize
 
-Resizing your images at the start of a chain can make everything go faster if you're working with very large images, but can make them blurry if you make them too small.
+Resizing your images at the start of a chain can make everything go faster if you're working with very large images, but can make the results blurry if you go too small.
 
 ```{r resize, fig.cap="Resized Images"}
 stimuli |>
-  resize(.05) |>
+  resize(.1) |>
+  plot()
+```
+You can set the resize dimensions by proportions or pixels. Numbers less than 10 are interpreted as proportions, so the code above resized the images to 0.1 of their original size. Numbers larger than 10 are interpreted as pixels.
+
+```{r resize-pixel, fig.cap="Resized Images by pixel"}
+stimuli |>
+  resize(200) |>
   plot()
 ```
 
+If you set just with or just height, the other dimension is calculated proportionally to keep the aspect ratio.
+
+```{r resize-height, fig.cap="Resized Images by height"}
+stimuli |>
+  resize(height = 100) |>
+  plot()
+```
+
+If you set both width and height, you may alter the aspect ratio.
+
+```{r resize-both, fig.cap="Resized Images by with and height"}
+stimuli |>
+  resize(width = 200, height = 100) |>
+  plot()
+```
 
 ## Rotate
 
+Rotate images by degrees. Set the `fill` argument to fill in the corners with a specific colour, or use `patch = TRUE` to sample the colour from 10x10 pixel square at the top left corner.
+
 ```{r rotate, fig.cap="Rotated Images and Templates"}
 stimuli |>
-  rotate(45, patch = TRUE) |>
-  draw_tem() |>
+  rotate(degrees = 45, patch = TRUE) |>
   plot()
+```
+
+## Horizontal Eyes
+
+If you want to rotate each image by the amount that makes the eyes horizontal, use `horiz_eyes()`.
+
+```{r horiz-eyes, fig.cap = "Make eyes horizontal with horiz_eyes()"}
+lisa <- load_stim_lisa()
+lisa_horiz <- horiz_eyes(lisa, patch = TRUE)
+
+c(lisa, lisa_horiz) |> plot(nrow = 2)
 ```
 
 
 ## Crop
 
-You can set the new width, height, x-offset and y-offset in pixels (must be > 2) or proportions.
+Crop images to a new width and height. You can specify sizes in proportions or pixels. Values < 2 will be interpreted as proportions. 
 
-```{r crop, fig.cap="Cropped Images and Templates"}
+```{r crop, fig.cap="Cropped images with default center cropping."}
 stimuli |>
-  crop(width = .6, height = .8, 
-       x_off = .2, y_off = .1) |>
-  draw_tem() |>
+  crop(width = .6, height = .8) |>
+  plot()
+```
+
+The x- and y-offsets default to NULL, which centres the cropping. You can set the offsets to a proportion or pixel value and the cropping will start there. The origin is the upper left corner, so setting `x_off = 0` starts the cropping from the left side, and setting `y_off = 0` starts the cropping from the top.
+
+```{r crop, fig.cap="Cropped images with offsets."}
+stimuli |>
+  crop(width = 250, height = 300, 
+       x_off = 0, y_off = 0) |>
   plot()
 ```
 
 ## Pad 
 
-Pad the top, right, bottom and left borders; set the colour with `fill`.
+Pad images with a border. Values less than 1 are interpreted as proportions. Set the colour with `fill`, otherwise its value defaults to the value of `wm_opts("fill")`, which is white unless you reset it.
 
-```{r pad, fig.cap="Padded Images and Templates"}
+```{r pad, fig.cap="Padded images with the same value for each side."}
 stimuli |>
-  pad(top = 100, right = 200, bottom = 300, left = 400,
+  pad(0.05, fill = "black") |>
+  plot()
+```
+
+Pad the top, right, bottom and left borders with different values, and set a different colour for each fill.
+
+```{r pad-multi, fig.cap="Padded images with different values for each side."}
+stimuli |>
+  pad(top = 10, right = 20, bottom = 30, left = 40,
        fill = c("dodgerblue", "hotpink")) |>
   plot()
 ```
@@ -114,11 +165,9 @@ rb |>
 
 ## Crop to Template
 
-You can use the `crop_tem()` function to get the minimum and maximum x- and y-values from a list of templates, then use that to set the cropping. In the example below, the images are cropped so there is 100 pixels of padding around the boundaries, calculated across all images. 
+You can use the `crop_tem()` function to get the minimum and maximum x- and y-values from all of the image templates, then use that to set the cropping. In the example below, the images are cropped so there is 100 pixels of padding around the boundaries, calculated across all images. 
 
 ```{r bounds}
-lisa <- load_stim_lisa()
-
 crop_tem(lisa, 100) |>
   draw_tem() |>
   plot()
@@ -129,6 +178,7 @@ Set `each` to TRUE to calculate the boundaries separately for each template in t
 ```{r bounds-each}
 lisa |>
   crop_tem(20, each = TRUE) |>
+  draw_tem() |>
   plot()
 ```
 
@@ -137,6 +187,7 @@ lisa |>
 The function`to_size()` combines crop and resize to get a batch of images to the same size.
 
 ```{r}
+# create a few different sizes
 s <- demo_stim()[1]
 multisize <- c(
     s,
@@ -148,7 +199,7 @@ multisize <- c(
 
 A 10-pixel pink border has been added to these original images so you can see what has been cropped in the subsequent images.
 
-```{r fig-to-size, echo = FALSE}
+```{r fig-to-size, echo = FALSE, fig.cap="The images created above, with their width and height."}
 lab <- paste0(width(multisize), "x", height(multisize))
 
 multisize |> 
@@ -157,22 +208,25 @@ multisize |>
   plot()
 ```
 
-The code below resizes each image to fit into a 300 x 400 pixel image and fills in any extra background with blue.
+The code below resizes each image to fit into a 300 x 400 pixel image and fills in any extra background with blue. You'll probably choose your background colour for a real stimulus set, but this makes the demo clearer.
 
-```{r fig-fit-pad}
+```{r fig-fit-pad, fig.cap="to_size()"}
 fit_pad <- to_size(multisize, 300, 400, fill = "dodgerblue")
 plot(fit_pad)
 ```
-Set `keep_rels = TRUE` to brings the largest image to fit in the new size, resize the others proportionally, and pad.
 
-```{r fig-rel-pad}
-rel_pad <- to_size(multisize, 300, 400, fill = "dodgerblue", keep_rels = TRUE)
+Set `keep_rels = TRUE` to bring the largest image to fit in the new size, resize the others proportionally, and pad.
+
+```{r fig-rel-pad, fig.cap="to_size() with keep_rels = TRUE"}
+rel_pad <- to_size(multisize, 300, 400, 
+                   fill = "dodgerblue", 
+                   keep_rels = TRUE)
 plot(rel_pad)
 ```
 
-Set `crop = TRUE` to bring all images to cover new size and crop the "overhang". There is no need to set the fill color for padding when crop is TRUE.
+Set `crop = TRUE` to resize all images until they cover the new size and crop the "overhang". There is no need to set the fill color for padding when crop is TRUE.
 
-```{r fig-fit-crop}
+```{r fig-fit-crop, fig.cap="to_size() with crop = TRUE"}
 fit_crop <- to_size(multisize, 300, 400, crop = TRUE)
 plot(fit_crop)
 ```
@@ -187,41 +241,57 @@ plot(rel_crop)
 
 ## Align
 
-You can align a set of images on two points. By default, these are the first two points in the template, which correspond to the left and right eye in the standard FRL template and the Face++ autodelineation template.
+You can align a set of images on two points. By default, these are the first two points in the template, which correspond to the left and right eye in the standard FRL template, the 106-point Face++ templates, and the dlib `auto_delin()` templates. For chaotic historical reasons, the 83-point Face++ template has the eye points as 63 and 81 (pupils) or 57 and 50 (eye centre).
 
-```{r align}
+If you don't set the x and y coordinates, the images will align to the average value across the set. The value of `fill` will fill in any borders from the rotation and cropping so the images stay the same size as the originals.
+
+```{r align, fig.cap="Two-point alignment with align()"}
+stimuli |>
+  align(fill = "red") |>
+  plot()
+```
+
+You can manually set the values for the x and y coordinates, as well as the resulting width and height of the images. These values must be in pixels.
+
+```{r align, fig.cap="Two-point alignment with align(); setting values manually"}
 stimuli |>
   align(x1 = 350, y1 = 350, x2 = 450, y2 = 450,
-        width = 800, height = 800, fill = "grey80") |>
-  draw_tem() |>
+        width = 800, height = 800, patch = TRUE) |>
   plot()
 ```
 
-If you have a set of misaligned images and don't fill in coordinates or dimensions, `align()` will align to the coordinates and dimensions for the first image. 
+Instead of aligning to the average of all the images, you may want to align to a reference image. Set `ref_img` to the index or name of the chosen image. 
 
+```{r realign2, fig.cap = "Align images to a reference image."}
+aligned3 <- align(lisa, ref_img = "lisa3", patch = TRUE) 
 
-```{r realign1}
-align(lisa, fill = "grey80") |> 
+plot_rows(
+  "Original images" = lisa,
+  "Aligned to image 3" = aligned3,
+  top_label = TRUE
+)
+```
+
+You can align images to a single point by setting pt1 and pt2 the same. For example, the tip of the nose is point 80 in this template, so the following code moves the tip of the nose of all images to the average position, but doesn't resize or rotate any of the images.
+
+```{r align-1pt, fig.cap = "One-point alignment."}
+align(lisa, pt1 = 80, pt2 = 80) |>
   plot()
 ```
 
-Or you can specify the reference image by index or name.
-
-```{r realign2}
-align(lisa, ref_img = "lisa3", patch = TRUE) |> 
-  plot()
-```
 
 ## Procrustes Align 
 
-You can set the `procrustes` argument to TRUE to procrustes-align the images and templates.
+You can set the `procrustes` argument to TRUE to use [Procrustes analysis](https://en.wikipedia.org/wiki/Procrustes_analysis) to align the images and templates to fit the average shape (or a reference image) as closely as possible.
 
-```{r procrustes}
+```{r procrustes, fig.cap = "Procrustes alignment."}
 align(lisa, procrustes = TRUE, patch = TRUE) |>
   plot()
 ```
 
 Currently, [webmorph](https://webmorph.org) does not have this capability, but you can download your images and tems, procrustes align them with the R package, save the images and templates, and upload them back to webmorph.
+
+
 
 ## Chaining
 
@@ -253,7 +323,7 @@ stimuli |>
   rep(each = 3) |>
   rotate(seq(10, 60, 10), fill = rainbow) |>
   crop(250, 250, fill = rainbow) |>
-  draw_tem(pt.color = rainbow, pt.alpha = 1, pt.size = 5) |>
+  draw_tem(pt.color = rainbow, pt.alpha = 1, pt.size = 3) |>
   plot(nrow = 2)
 ```
 
@@ -286,7 +356,7 @@ labs <- c("Blur", "Charcoal", "Oilpaint", "Implode",
           "20% Darker", "20% Brighter", "Greyscale", "Saturated")
 
 imglist |>
-  pad(80, 0, 0, 0, fill = "dodgerblue3") |>
+  pad(40, 0, 0, 0, fill = "dodgerblue3") |>
   label(labs, color = "white") |>
   plot(nrow = 3)
 

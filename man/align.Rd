@@ -51,7 +51,7 @@ align(
 stimlist with aligned tems and/or images
 }
 \description{
-Align templates and images
+Align images so that template points line up. \code{\link[=align1]{align1()}} aligns 1 point, but does not resize or rotate images. \code{\link[=align2]{align2()}} aligns 2 points, resizing and rotating faces. \code{\link[=procrustes]{procrustes()}} uses procrustes alignment to resize and rotate images to be as close as possible to a mean shape. You can specify the x and y coordinates to align, or align to their position in a reference image. The reference image is the average of all images, or the image specified by ref_img.
 }
 \examples{
 # load stimuli and crop/rotate differently

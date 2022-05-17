@@ -1,12 +1,15 @@
 #' Crop images and templates
 #'
-#' Remove or add margins to images and templates. Width, height, x_off and y_off can be set in pixels (> 2.0) or proportions (between 0.0 and 2.0). Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set.
+#' Remove or add margins to images and templates. 
+#' 
+#' @details 
+#' Width, height, x_off and y_off can be set in pixels or proportions). For width and height, values less than 2 will be interpreted as proportions, otherwise pixels. For x_off and y_off, values between -1 and 1 are interpreted as proportions, otherwise pixels. Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set.
 #'
 #' Fill can be set to R color names (see `colors()`) or valid hex or rgb values. Patch can be set to TRUE (defaults to median color of top left 10-pixel square) or a list of arguments to the function `patch()` to set background from a patch of the image.
 #'
 #' @param stimuli list of class stimlist
-#' @param width width of cropped image in pixels or % (<5)
-#' @param height height of cropped image in pixels or % (<5)
+#' @param width width of cropped image in pixels or % (<2)
+#' @param height height of cropped image in pixels or % (<2)
 #' @param x_off x-offset in pixels or % (<1) (NULL horizontally centers cropped image)
 #' @param y_off y-offset in pixels or % (<1) (NULL vertically centers cropped image)
 #' @param fill background color if cropping goes outside the original image
@@ -57,13 +60,13 @@ crop <- function(stimuli,
     h <- height[i] %||% origh
 
     # handle percentages
-    if (w <= 5) w <- w * origw
-    if (h <= 5) h <- h * origh
+    if (w < 2) w <- w * origw
+    if (h < 2) h <- h * origh
 
     # handle percentage offsets
-    if (!is.null(x_off[i]) && !is.na(x_off[i]) && abs(x_off[i]) <= 1)
+    if (!is.null(x_off[i]) && !is.na(x_off[i]) && abs(x_off[i]) < 1)
       x_off[i] <- x_off[i] * origw
-    if (!is.null(y_off[i]) && !is.na(y_off[i]) && abs(y_off[i]) <= 1)
+    if (!is.null(y_off[i]) && !is.na(y_off[i]) && abs(y_off[i]) < 1)
       y_off[i] <- y_off[i] * origh
 
     # null offsets split the remainder between orig and new dimensions

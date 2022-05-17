@@ -17,9 +17,9 @@ crop(
 \arguments{
 \item{stimuli}{list of class stimlist}
 
-\item{width}{width of cropped image in pixels or \% (<5)}
+\item{width}{width of cropped image in pixels or \% (<2)}
 
-\item{height}{height of cropped image in pixels or \% (<5)}
+\item{height}{height of cropped image in pixels or \% (<2)}
 
 \item{x_off}{x-offset in pixels or \% (<1) (NULL horizontally centers cropped image)}
 
@@ -33,9 +33,11 @@ crop(
 stimlist with cropped tems and/or images
 }
 \description{
-Remove or add margins to images and templates. Width, height, x_off and y_off can be set in pixels (> 2.0) or proportions (between 0.0 and 2.0). Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set.
+Remove or add margins to images and templates.
 }
 \details{
+Width, height, x_off and y_off can be set in pixels or proportions). For width and height, values less than 2 will be interpreted as proportions, otherwise pixels. For x_off and y_off, values between -1 and 1 are interpreted as proportions, otherwise pixels. Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set.
+
 Fill can be set to R color names (see \code{colors()}) or valid hex or rgb values. Patch can be set to TRUE (defaults to median color of top left 10-pixel square) or a list of arguments to the function \code{patch()} to set background from a patch of the image.
 }
 \examples{
