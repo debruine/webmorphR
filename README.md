@@ -13,7 +13,10 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 The goal of webmorphR is to make the construction of image stimuli more
-reproducible, with a focus on face stimuli.
+reproducible, with a focus on face stimuli. While face stimuli used in
+research can often not be shared for ethical reasons, webmorphR allows
+you to share recipes for creating stimuli with code, increasing
+reproducibility and encouraging generalisability to new faces.
 
 This development of this package was funded by ERC grant \#647910
 (KINSHIP).
@@ -31,9 +34,9 @@ devtools::install_github("debruine/webmorphR")
 ## Use
 
 The code below produces the following figure reproducibly, and can be
-applied to any set of starting images.
+applied to any set of original images.
 
-![](man/example.jpg)
+![](man/figures/example.jpg)
 
 Load images with [psychomorph/webmorph
 templates](https://debruine.github.io/webmorph/getting-started.html#delineate)
@@ -48,6 +51,7 @@ library(webmorphR)
 # load 6 images from the smiling demo set
 original <- demo_stim(dir = "smiling",
                       pattern = "002|013|030|064|094|099") 
+
 # resize and delineate the images (using Face++)
 # procrustes align and crop them to 80% size
 processed <- original |>
