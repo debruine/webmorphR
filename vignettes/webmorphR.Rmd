@@ -19,17 +19,19 @@ The sections below provide brief examples of what webmorphR can be used for. See
 
 ## Installation
 
-You can install the development version from [GitHub](https://github.com/) with:
+You can install the development version from [GitHub](https://github.com/), as well as the additional stimuli.
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("debruine/webmorphR")
+remotes::install_github("debruine/webmorphR.stim")
 ```
 
 Installation can take a few minutes, depending on how many dependency packages you need to install.
 
 ```{r}
 library(webmorphR)
+library(webmorphR.stim) # for extra stimulus sets
 
 wm_opts(plot.maxwidth = 850) # set maximum width for plot output
 ```
@@ -39,13 +41,12 @@ wm_opts(plot.maxwidth = 850) # set maximum width for plot output
 
 In this example, we'll load a few faces from the CC-BY licensed [Face Research Lab London Set](https://doi.org/10.6084/m9.figshare.5047666.v3), average them together, and create a figure.
 
-### Load demo stimuli
+### Load stimuli
 
-Load 6 faces. If you haven't already downloaded the demo stimulus sets, this code will prompt you to download them. The demo sets are large, so this can take a minute or so.
+Load 6 specific faces from the London image set.
 
 ```{r demo-stim}
-# remotes::install_github("debruine/webmorphR.stim")
-face_set <- demo_stim("london", "002|006|007|025|030|066")
+face_set <- load_stim_london("002|006|007|025|030|066")
 
 plot(face_set, nrow = 1)
 ```
@@ -168,7 +169,7 @@ py_install("face_recognition", envname = ".venv")
 Auto-delineation takes a few seconds per face, so you will see a progress bar in the console. You may also see some startup output from reticulate the first time you use this function in a session.
 
 ```{r delin-dlib7}
-stimuli <- demo_stim("zoom") |> 
+stimuli <- load_stim_zoom() |> 
   resize(1/2) |>
   auto_delin(replace = TRUE)
 
@@ -178,7 +179,7 @@ draw_tem(stimuli, pt.size = 10) |> plot()
 Alternatively, you can use the Face++ auto-delineator by setting `model = "fpp106"`. This requires you to set up a Face++ account and set some environment variables (see the [Making Stimuli vignette](articles/stimuli.html)). It transfers your images to Face++, so make sure you read their privacy information.
 
 ```{r delin-fpp}
-stimuli <- demo_stim("zoom") |> 
+stimuli <- load_stim_zoom() |> 
   resize(1/2) |>
   auto_delin(model = "fpp106", replace = TRUE)
 

@@ -13,7 +13,7 @@ test_that("loop", {
   expect_equal(names(revloop), nm)
   
   ## visual checks ----
-  # stimuli <- demo_stim("composite", c(1,6,7,2,4,9,10,5)) |>
+  # stimuli <- webmorphR.stim::load_stim_composite(c(1,6,7,2,4,9,10,5)) |>
   #   resize(300)
   # loop <- loop(stimuli, 5)
   # animate(loop, 10)

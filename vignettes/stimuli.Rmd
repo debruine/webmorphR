@@ -29,6 +29,7 @@ This vignette will show some recipes for common types of stimulus creation.
 ```{r, message=FALSE}
 # load packages and set maximum plot width
 library(webmorphR)
+library(webmorphR.stim) # for extra stimulus sets
 wm_opts(plot.maxwidth = 850)
 ```
 
@@ -48,14 +49,14 @@ remotes::install_github("debruine/webmorphR.stim")
 You can add data to an image set to use in subsetting the images. For demonstration, the "london" image set has a data table called `london_info`.
 
 ```{r}
-head(webmorphR.stim::london_info)
+head(london_info)
 ```
 
 Use `add_info()` to add the data. If the data table isn't in the same order as the stimuli, you can match the stimulus item names to a data column using `.by`.
 
 ```{r add-info}
-stimuli <- demo_stim("london") |>
-  add_info(webmorphR.stim::london_info)
+stimuli <- load_stim_london() |>
+  add_info(london_info)
 ```
 
 ### Subset
@@ -259,12 +260,10 @@ You can also process images without templates. For example, the following code t
 
 ```{r, message = FALSE}
 # load rainbow images
-stimuli <- demo_stim("rainbow")
+stimuli <- load_stim_rainbow()
 
 # get info on the images to put in order by type and colour
-info <- system.file("rainbow/_info.csv", package = "webmorphR.stim") |>
-  readr::read_csv() |>
-  dplyr::mutate(colour = factor(colour, c("red", "orange", "yellow", "green", "blue", "purple"))) |>
+info <- rainbow_info |>
   dplyr::arrange(type, colour)
 
 # crop to smallest size

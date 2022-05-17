@@ -21,9 +21,7 @@ Loop
 }
 \examples{
 \dontrun{
-  stimuli <- demo_stim("zoom") |>
-    align(procrustes = TRUE) |>
-    crop_tem(250, 50, 50, 50) |>
+  stimuli <- webmorphR.stim::load_stim_composite("f_") |> 
     resize(300)
   loop <- loop(stimuli, 5)
   animate(loop, 10)

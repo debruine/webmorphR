@@ -116,7 +116,7 @@ change_lines <- function(stimuli, line_id = 1, pts = NULL) {
 #'   draw_tem()
 #'
 subset_tem <- function(stimuli, ..., keep = TRUE) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- validate_stimlist(stimuli, tem = TRUE)
   points <- list(...) |> unlist() |> unique() |> sort()
   
   for (i in seq_along(stimuli)) {

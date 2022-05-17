@@ -29,10 +29,11 @@ This vignette explains templates and shows you how to mask images relative to th
 ```{r, message=FALSE}
 # load packages and set maximum plot width
 library(webmorphR)
+library(webmorphR.stim) # for extra stimulus sets
 wm_opts(plot.maxwidth = 850)
 
 # load the demo stimuli
-stimuli <- demo_stim("test")
+stimuli <- demo_stim()
 ```
 
 ## Delineations
@@ -79,7 +80,7 @@ WebmorphR uses 5 main templates:
 * fpp83: The 83-point Face++ template. This is an old template, but I keep it for consistency with the old auto-delineation template on [webmorph.org](https://webmorph.org). 
 
 ```{r}
-s <- demo_stim("london", "030")
+s <- load_stim_london("030")
 dlib7 <- auto_delin(s, "dlib7", replace = TRUE)
 dlib70 <- auto_delin(s, "dlib70", replace = TRUE)
 fpp106 <- auto_delin(s, "fpp106", replace = TRUE)
@@ -100,7 +101,7 @@ c(s, dlib7, dlib70, fpp106, fpp83) |>
 The "smiling" demo dataset doesn't have FRL templates yet (it will soon), but can demonstrate how the automatic delineation algorithms deal with open mouths.
 
 ```{r, cache = TRUE}
-smile <- demo_stim("smiling", "030")
+smile <- load_stim_smiling("030")
 dlib7s <- auto_delin(smile, "dlib7", replace = TRUE)
 dlib70s <- auto_delin(smile, "dlib70", replace = TRUE)
 fpp106s <- auto_delin(smile, "fpp106", replace = TRUE)
@@ -385,8 +386,8 @@ s3[[1]] |>
 If your images are delineated with the FRL template (the default for example stimuli in webmorph), you can use the built-in masking features.
 
 ```{r}
-# load your stimuli with templates
-stimuli <- demo_stim("composite", pattern = "multi")
+# load stimuli with templates
+stimuli <- load_stim_composite("multi")
 ```
 
 The default mask crops around the face with a white background.
@@ -487,7 +488,7 @@ new_tems |>
 Now it's relatively straightforward to create a stimulus set that matches old papers.
 
 ```{r mask-oval-all}
-demo_stim("london")[1:10] |>
+load_stim_london(1:10) |>
   greyscale() |>
   align() |>
   # remove template points to make the oval tighter around the face
@@ -500,7 +501,7 @@ demo_stim("london")[1:10] |>
 Although I still think the delineated masking is better :)
 
 ```{r mask-oval-better}
-demo_stim("london")[1:10] |>
+load_stim_london(1:10) |>
   resize(0.5) |> # resize to process faster
   mask(fill = "grey") |>
   # remove external features before procrustes alignment
@@ -516,7 +517,7 @@ demo_stim("london")[1:10] |>
 You can define a custom mask. The code below is useful for finding the template points you want to outline. It crops around the points, makes the image darker, makes it larger (so the text is higher-resolution), and plots it with the point indices.
 
 ```{r}
-stimuli <- demo_stim("smiling", pattern = "030") |>
+stimuli <- load_stim_smiling("030") |>
   auto_delin("dlib70", replace = TRUE)
 
 stimuli |> 

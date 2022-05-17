@@ -1,3 +1,8 @@
+# webmorphR 0.0.2.9002
+
+* Moved most `demo_stim()` (except "test" and "tem_examples") into new `webmorphR.stim::load_stim()` functions.
+* Minor bug fixes.
+
 # webmorphR 0.0.2.9001
 
 * Imports rsvg; needed for `draw_tem()` but called by magick

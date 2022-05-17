@@ -76,9 +76,11 @@ plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
     }
   } else if (is.null(nrow)) {
     nrow <- ceiling(n / ncol)
+    ncol <- ceiling(n / nrow) # reset in case nrow > n 
   } else {
     # row takes precedence even if ncol is set
     ncol <- ceiling(n / nrow)
+    nrow <- ceiling(n / ncol) # reset in case ncol > n 
   }
 
   # shrink images to fit maxwidth and maxheight ----

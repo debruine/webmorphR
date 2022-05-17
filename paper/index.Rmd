@@ -73,7 +73,11 @@ library("papaja")
 library("kableExtra")
 library("dplyr")
 # devtools::install_github("debruine/webmorphR")
+# devtools::install_github("debruine/webmorphR.stim")
+# devtools::install_github("debruine/webmorphR.dlib")
 library("webmorphR") 
+library("webmorphR.stim") # for additional stimuli
+library("webmorphR.dlib") # for face detection
 r_refs("r-references.bib")
 
 # Seed for random number generation
@@ -249,7 +253,7 @@ The image manipulations above work best if your raw images start the same size a
 WebMorph's default face template marks 189 points (Fig.\ \@ref(fig:delineate)). Some of these points have very clear anatomical locations, such as point 0 ("left pupil"), while others have only approximate placements and are used mainly for masking or preventing morphing artifacts from affecting the background of images, such as point 147 ("about 2cm to the left of the top of the left ear (creates oval around head)"). Template points numbering is 0-based because PsychoMorph was originally written in Java.
 
 ```{r delineate, fig.cap = "Default webmorph FRL template", fig.alt = "Average female face with the shape delineated using 189 white numeric labels and blue lines connecting the numbers."}
-demo_stim("composite", "f_multi") |>
+load_stim_composite("f_multi") |>
   crop_tem(20) |>
   resize(2) |>
   draw_tem(pt.shape = "index", pt.color = "#FFFFFFFF", pt.size = 25) |>
@@ -272,7 +276,7 @@ You can automatically delineate faces with a simpler template (Fig.\ \@ref(fig:a
 
 ```{r, echo = TRUE}
 # load 5 images with FRL templates
-f <- demo_stim("london", "006|038|064|066|135")
+f <- load_stim_london("006|038|064|066|135")
 
 # remove templates and auto-delineate with dlib
 dlib70_tem <- auto_delin(f[1], "dlib70", replace = TRUE)
@@ -419,8 +423,8 @@ Transforming alters the appearance of one face by some proportion of the differe
 
 ```{r}
 # load individual and composite images
-individual <- demo_stim("london", "019")
-averages <- demo_stim("composite", "white")
+individual <- load_stim_london("019")
+averages <- load_stim_composite("white")
 
 # mask the composites so they only transform colour in the face
 masked <- mask(averages, "face")
@@ -519,7 +523,7 @@ We will use the open-source, CC-BY licensed image set, the Face Research Lab Lon
 
 ```{r london-set, fig.cap = "The 102 neutral front faces in the London Face Set."}
 
-london <- demo_stim("london") |>
+london <- load_stim_london() |>
   resize(0.5) |> # makes the demo run faster, change for final
   add_info(webmorphR.stim::london_info)
 
@@ -527,7 +531,7 @@ london |> plot(nrow=6, maxwidth = 2000)
 ```
 
 ```{r}
-smiling <- demo_stim("smiling") |>
+smiling <- load_stim_smiling() |>
   resize(0.5) |> # makes the demo run faster, change for final
   add_info(webmorphR.stim::london_info)
 ```

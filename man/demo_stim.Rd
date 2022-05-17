@@ -4,19 +4,12 @@
 \alias{demo_stim}
 \title{Demo Stimuli}
 \usage{
-demo_stim(
-  dir = c("test", "tem_examples", "composite", "london", "smiling", "lisa", "zoom",
-    "rainbow"),
-  pattern = NULL,
-  ...
-)
+demo_stim(set = c("test", "tem_examples"), pattern = NULL)
 }
 \arguments{
-\item{dir}{the directory in extdata to get files from}
+\item{set}{the images set ("test" or "tem_examples")}
 
 \item{pattern}{defaults to all files}
-
-\item{...}{Other arguments to pass on to \code{read_tem()}}
 }
 \value{
 stimlist

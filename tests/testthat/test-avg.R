@@ -9,7 +9,7 @@ test_that("avg", {
   expect_error(avg(stim120))
 
   # normalisation
-  stimuli <- demo_stim("lisa", 1:2)
+  stimuli <- webmorphR.stim::load_stim_lisa(1:2)
   avg <- avg(stimuli)
   twopoint <- avg(stimuli, norm = "twopoint")
   rigid <- avg(stimuli, norm = "rigid")

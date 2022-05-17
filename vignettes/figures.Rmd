@@ -29,6 +29,7 @@ When working interactively in an R Markdown document, the figures plot in the Vi
 
 ```{r libs, message=FALSE}
 library(webmorphR)
+library(webmorphR.stim) # for extra stimulus sets
 library(tidyverse)
 wm_opts(plot.maxwidth = 850)
 ```
@@ -76,7 +77,7 @@ stimuli |>
 Set `nrow` or `ncol` to control the number of rows and columns.
 
 ```{r}
-comp <- demo_stim("composite") |> resize(0.5)
+comp <- load_stim_composite() |> resize(0.5)
 
 plot(comp, nrow = 2)
 ```
@@ -123,7 +124,7 @@ stimuli |>
 Use the `setnames()` function to set new names.
 
 ```{r}
-demo_stim("composite") |>
+load_stim_composite() |>
   setnames(pattern = "f_", replacement = "Female ") |>
   setnames(pattern = "m_", replacement = "Male ") |>
   label() |>

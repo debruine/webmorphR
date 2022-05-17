@@ -1,5 +1,5 @@
 test_that("mask_oval", {
-  stimuli <- demo_stim("lisa", 1:2)
+  stimuli <- webmorphR.stim::load_stim_lisa(1:2)
 
   expect_silent(x <- mask_oval(stimuli, each = TRUE))
   expect_silent(y <- mask_oval(stimuli, each = FALSE))

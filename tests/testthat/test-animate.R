@@ -10,7 +10,7 @@ test_that("animate", {
   expect_equal(info$format, rep("gif", 2))
   
   ## args
-  x <- demo_stim("zoom") |>
+  x <- webmorphR.stim::load_stim_zoom() |>
     animate(fps = 4, loop = 2, rev = TRUE)
   
   # rev = TRUE doubles the frames

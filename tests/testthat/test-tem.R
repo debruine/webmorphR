@@ -37,7 +37,6 @@ test_that("online", {
 })
 
 
-
 # subset_tem ----
 test_that("subset_tem", {
   stimuli <- demo_stim()
@@ -52,6 +51,11 @@ test_that("subset_tem", {
   # delete
   nt <- subset_tem(stimuli, 0:9, 20:188, keep = FALSE)
   expect_equal(stimuli[[1]]$points[, 11:20], nt[[1]]$points)
+  
+  # no tem
+  stimuli <- demo_stim() |> remove_tem()
+  expect_error(x <- subset_tem(stimuli),
+               "No images had templates")
 })
 
 # features ----
@@ -61,6 +65,7 @@ test_that("features", {
   expect_null(features())
 })
 
+## frl features ----
 test_that("frl", {
   stimuli <- demo_stim()[1]
   
@@ -88,6 +93,7 @@ test_that("frl", {
   # new |> setnames(features) |> label() |> plot()
 })
 
+## dlib70 features ----
 test_that("dlib70", {
   stimuli <- demo_stim("tem_examples", "dlib70")
   
