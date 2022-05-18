@@ -12,6 +12,11 @@ test_that("works", {
   expect_equal(list.files(dir), c("newname.png", "newname.tem"))
   unlink(dir, recursive = TRUE)
   
+  # too many names ----
+  write_stim(stimuli, dir, c("newname", "newname2"))
+  expect_equal(list.files(dir), c("newname.png", "newname.tem"))
+  unlink(dir, recursive = TRUE)
+  
   write_stim(demo_stim(), dir, "newname")
   expect_equal(list.files(dir), c("newname_1.png", "newname_1.tem", "newname_2.png", "newname_2.tem"))
   unlink(dir, recursive = TRUE)

@@ -2,6 +2,10 @@
 
 test_that("loop", {
   stimuli <- demo_stim()
+  expect_error(loop(stimuli[1]))
+  expect_error(lopp(stimuli, 1))
+  
+  
   loop <- loop(stimuli, 2)
   nm <- c("f_multi_m_multi_1", "f_multi_m_multi_2",
           "m_multi_f_multi_1", "m_multi_f_multi_2")
