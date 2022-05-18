@@ -199,7 +199,7 @@
     <loc>https://debruine.github.io/webmorphR/reference/print.stimlist.html</loc>
   </url>
   <url>
-    <loc>https://debruine.github.io/webmorphR/reference/procrustes_align.html</loc>
+    <loc>https://debruine.github.io/webmorphR/reference/procrustes_coords.html</loc>
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/quick_delin.html</loc>
@@ -299,6 +299,9 @@
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/wm_opts.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/webmorphR/reference/wm_opts_defaults.html</loc>
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/write_stim.html</loc>
