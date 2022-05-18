@@ -38,6 +38,21 @@ test_that("works", {
   unlink(dir, recursive = TRUE)
 })
 
+# no tems ----
+test_that("no tems", {
+  stimuli <- demo_stim() |> remove_tem()
+  dir <- tempfile()
+  
+  x <- write_stim(stimuli, dir)
+  expect_equal(list.files(dir), c("f_multi.png", "m_multi.png"))
+  expect_null(x[[1]])
+  expect_null(x[[3]])
+  expect_equal(x[[2]], file.path(dir, "f_multi.png"))
+  expect_equal(x[[4]], file.path(dir, "m_multi.png"))
+  
+  unlink(dir, recursive = TRUE)
+})
+
 # no-line tems ----
 test_that("no-line tems", {
   dlib7 <- demo_stim("tem_examples", "dlib7")

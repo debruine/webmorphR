@@ -118,7 +118,7 @@ reference:
   - '`subset.stimlist`'
   - '`tem_def`'
   - '`wm_opts`'
-  - '`wm_opts_defaults()`'
+  - '`wm_opts_defaults`'
 - title: Geomorph functions
   desc: ~
   contents:

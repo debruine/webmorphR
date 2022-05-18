@@ -55,6 +55,47 @@ test_that("no tem", {
   expect_equal(height(x), width(notem))
 })
 
+test_that("no img", {
+  # image and tem
+  img_nokeep <- rotate(stimuli, 45, keep_size = FALSE)
+  img_keep <- rotate(stimuli, 45, keep_size = TRUE)
+  
+  # no image, but has width and height
+  noimg <- stimuli
+  noimg[[1]]$img <- NULL
+  noimg[[2]]$img <- NULL
+  noimg_nokeep <- rotate(noimg, 45, keep_size = FALSE)
+  noimg_keep <- rotate(noimg, 45, keep_size = TRUE)
+  
+  # only tem, no width and height
+  tem <- demo_stim("test", ".tem")
+  tem_nokeep <- rotate(tem, 45, keep_size = FALSE)
+  tem_keep <- rotate(tem, 45, keep_size = TRUE)
+  
+  expect_equal(img_nokeep[[1]]$points, noimg_nokeep[[1]]$points)
+  expect_equal(img_keep[[1]]$points, noimg_keep[[1]]$points)
+  
+  # tem doesn't have w and h, so x and y will be consistently off
+  diff = tem_nokeep[[1]]$points - noimg_nokeep[[1]]$points
+  udiff <- apply(round(diff, 4), 1, unique)
+  expect_equal(length(udiff), 2)
+  
+  kdiff = tem_keep[[1]]$points - noimg_keep[[1]]$points
+  ukdiff <- apply(round(kdiff, 4), 1, unique)
+  expect_equal(length(ukdiff), 2)
+  
+})
+
+# patch ----
+test_that("patch", {
+  r <- rotate(stimuli, 30, patch = TRUE)
+  expect_true(patch(r[[1]]$img) != "#FFFFFFFF")
+  
+  patch_args <- list(x1 = 1, x2 = 1, y1 = 500, y2 = 500, func = mean)
+  p <- rotate(stimuli, 30, patch = patch_args)
+  expect_true(patch(r[[1]]$img) != patch(p[[1]]$img))
+})
+
 
 test_that("horiz_eyes", {
   z <- stimuli |> rotate(45) |> horiz_eyes()
@@ -63,3 +104,19 @@ test_that("horiz_eyes", {
 
   expect_equal(pt[1, ], pt[2, ], tolerance = .0001)
 })
+
+# rotated_size ----
+test_that("rotated_size", {
+  expected <- list(width = sqrt(2*100^2), 
+                   height = sqrt(2*100^2))
+  
+  size <- rotated_size(100, 100, 45)
+  expect_equal(size, expected)
+  
+  size <- rotated_size(100, 100, -45)
+  expect_equal(size, expected)
+  
+  size <- rotated_size(100, 100, 360+45)
+  expect_equal(size, expected)
+})
+

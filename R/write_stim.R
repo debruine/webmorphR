@@ -95,28 +95,7 @@ write_stim <- function(stimuli, dir = ".",
 
     # save templates
     if (!is.null(stim$points)) {
-      tem_txt <- list()
-
-      # add points
-      tem_txt <- c(tem_txt, dim(stim$points)[[2]])
-      pts <- apply(stim$points, 2, paste, collapse = "\t")
-      tem_txt <- c(tem_txt, pts)
-
-      # add lines
-      if (!is.null(stim$lines)) {
-        tem_txt <- c(tem_txt, length(stim$lines))
-        for (i in seq_along(stim$lines)) {
-          tem_txt <- c(tem_txt, list(
-            as.integer(stim$closed[[i]]),
-            length(stim$lines[[i]]),
-            paste(stim$lines[[i]], collapse = " ")
-          ))
-        }
-      } else {
-        tem_txt <- c(tem_txt, "0")
-      }
-
-      tem_txt <- paste(tem_txt, collapse = "\n")
+      tem_txt <- tem_text(stim)
       tempath <- file.path(dir, paste0(name, ".tem"))
       # check if file exists
       if (interactive() && overwrite == "ask" && file.exists(tempath)) {
@@ -144,4 +123,43 @@ write_stim <- function(stimuli, dir = ".",
   }, stimuli, names(stimuli) %||% seq_along(stimuli))
 
   invisible(paths)
+}
+
+
+#' Make text version of a template
+#'
+#' @param stim A list of class stim (one item in a stimlist)
+#'
+#' @return The text for a .tem file
+#' @export
+#' @keywords internal
+#'
+#' @examples
+#' stimuli <- demo_stim()
+#' tem_text(stimuli$f_multi)
+tem_text <- function(stim) {
+  txt <- list()
+  
+  # add points
+  txt <- c(txt, dim(stim$points)[[2]])
+  pts <- apply(stim$points, 2, paste, collapse = "\t")
+  txt <- c(txt, pts)
+  
+  # add lines
+  if (!is.null(stim$lines)) {
+    txt <- c(txt, length(stim$lines))
+    for (i in seq_along(stim$lines)) {
+      txt <- c(txt, list(
+        as.integer(stim$closed[[i]]),
+        length(stim$lines[[i]]),
+        paste(stim$lines[[i]], collapse = " ")
+      ))
+    }
+  } else {
+    txt <- c(txt, "0")
+  }
+  
+  txt <- paste(txt, collapse = "\n")
+  
+  txt
 }

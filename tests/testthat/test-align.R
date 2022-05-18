@@ -14,8 +14,31 @@ test_that("works", {
   expect_equal(f2[[2]]$height, 400)
 })
 
+# 1point ----
+test_that("1point", {
+  f1 <- align(stimuli, pt1 = 55, pt2 = 55, x1 = 250, y1 = 250)
+  expect_equal(f1$f_multi$points[, 56], c(x = 250, y = 250))
+})
 
-test_that("procrustes", {
+# ref_img ----
+test_that("ref_img", {
+  ref0 <- align(stimuli)
+  ref1 <- align(stimuli, ref_img = 1)
+  ref2 <- align(stimuli, ref_img = 2)
+  
+  pt_f <- stimuli$f_multi$points[, 1:2]
+  pt_m <- stimuli$m_multi$points[, 1:2]
+  pt0 <- ref0$f_multi$points[, 1:2]
+  pt1 <- ref1$f_multi$points[, 1:2]
+  pt2 <- ref2$f_multi$points[, 1:2]
+  
+  expect_equal(pt_f, pt1)
+  expect_equal(pt_m, pt2)
+  expect_equal((pt_f + pt_m)/2, pt0)
+})
+
+# procrustes_coords ----
+test_that("procrustes_coords", {
   data <- demo_stim() |> tems_to_array()
 
   expect_silent(suppressWarnings(g <- procrustes_coords(data)))
@@ -27,7 +50,8 @@ test_that("procrustes", {
   expect_true(all(p1 != p2))
 })
 
-test_that("procrustes align", {
+# procrustes ----
+test_that("procrustes", {
   stimuli <- demo_stim() |> crop(0.9, x_off = c(0.1, 0))
   pr <- align(stimuli, procrustes = TRUE)
 
@@ -44,6 +68,7 @@ test_that("procrustes align", {
   expect_true(p[[4]] < 5)
 })
 
+# no tem ----
 test_that("no tem", {
   notem <- remove_tem(stimuli)
   expect_error(align(notem))

@@ -294,20 +294,20 @@ procrustes_coords <- function(data, ref_img = NULL) {
 
 
 
-#' Get angle from 2 points
-#'
-#' @param coords The coordinate array
-#' @param pt1 The first point
-#' @param pt2 The second point
-#'
-#' @return double of angle in radians
-#' @keywords internal
-#'
-angle_from_2pts <- function(coords, pt1 = 1, pt2 = 2) {
-  x1 <- coords[[pt1,1]]
-  x2 <- coords[[pt2,1]]
-  y1 <- coords[[pt1,2]]
-  y2 <- coords[[pt2,2]]
-
-  atan2(y1 - y2, x1 - x2) %% (2*pi)
-}
+#' #' Get angle from 2 points
+#' #'
+#' #' @param coords The coordinate array
+#' #' @param pt1 The first point
+#' #' @param pt2 The second point
+#' #'
+#' #' @return double of angle in radians
+#' #' @keywords internal
+#' #'
+#' angle_from_2pts <- function(coords, pt1 = 1, pt2 = 2) {
+#'   x1 <- coords[[pt1,1]]
+#'   x2 <- coords[[pt2,1]]
+#'   y1 <- coords[[pt1,2]]
+#'   y2 <- coords[[pt2,2]]
+#' 
+#'   atan2(y1 - y2, x1 - x2) %% (2*pi)
+#' }

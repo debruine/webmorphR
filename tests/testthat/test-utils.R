@@ -88,12 +88,14 @@ test_that("subset", {
   x2 <- subset(stimuli, x < 3)
   x3 <- subset(stimuli, x %in% c(1,3))
   odd <- subset(stimuli, x%%2 == 1)
+  n <- subset(stimuli, 2)
 
   expect_equal(names(f), names(stimuli)[c(1,3)])
   expect_equal(names(m), names(stimuli)[c(2, 4)])
   expect_equal(names(x2), names(stimuli)[1:2])
   expect_equal(names(x3), names(stimuli)[c(1,3)])
   expect_equal(names(odd), names(stimuli)[c(1,3)])
+  expect_equal(names(n), names(stimuli)[2])
 })
 
 
@@ -104,4 +106,42 @@ test_that("get_imgs", {
 
   expect_equal(class(imgs), "magick-image")
   expect_equal(length(imgs), 2L)
+})
+
+# format_size ----
+test_that("format_size", {
+  expect_equal(format_size(0), "0 bytes")
+  expect_equal(format_size(1), "1 bytes")
+  expect_equal(format_size(1024), "1 Kb")
+  expect_equal(format_size(1024^2), "1 Mb")
+  expect_equal(format_size(1024^3), "1 Gb")
+  expect_equal(format_size(1024^4), "1 Tb")
+  expect_equal(format_size(1024^5), "1 Pb")
+  expect_equal(format_size(1024^6), "1024 Pb")
+  
+  # rounding
+  mult <- 1.12345432123454321
+  expect_equal(format_size(1*mult), "1.1 bytes")
+  expect_equal(format_size(1024^2 * mult), "1.1 Mb")
+})
+
+# message ----
+test_that("message", {
+  expect_message( message("hi"), "hi" )
+  
+  wm_opts("verbose" = FALSE)
+  expect_silent( message("hi") )
+  
+  wm_opts("verbose" = TRUE)
+  expect_message( message("hi"), "hi" )
+  
+})
+
+# print.stim ----
+test_that("print.stim", {
+  stimuli <- demo_stim()
+  
+  expect_silent(print(stimuli$f_multi))
+  expect_silent(print(stimuli))
+  expect_silent(print(stimuli[[1]]))
 })
