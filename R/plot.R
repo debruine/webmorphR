@@ -120,7 +120,7 @@ plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
   # add or remove external padding ----
   epad <- ifelse(isTRUE(external_pad), padding/2, -padding/2)
   grid <- magick::image_append(rows, stack = TRUE) |>
-    new_stim("grid") |>
+    new_stim("plot") |>
     pad(epad, fill = fill)
 
   grid
