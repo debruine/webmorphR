@@ -109,7 +109,7 @@ stimuli |>
 
 The x- and y-offsets default to NULL, which centres the cropping. You can set the offsets to a proportion or pixel value and the cropping will start there. The origin is the upper left corner, so setting `x_off = 0` starts the cropping from the left side, and setting `y_off = 0` starts the cropping from the top.
 
-```{r crop, fig.cap="Cropped images with offsets."}
+```{r crop-offset, fig.cap="Cropped images with offsets."}
 stimuli |>
   crop(width = 250, height = 300, 
        x_off = 0, y_off = 0) |>
@@ -253,7 +253,7 @@ stimuli |>
 
 You can manually set the values for the x and y coordinates, as well as the resulting width and height of the images. These values must be in pixels.
 
-```{r align, fig.cap="Two-point alignment with align(); setting values manually"}
+```{r align-manual, fig.cap="Two-point alignment with align(); setting values manually"}
 stimuli |>
   align(x1 = 350, y1 = 350, x2 = 450, y2 = 450,
         width = 800, height = 800, patch = TRUE) |>
