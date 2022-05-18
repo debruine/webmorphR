@@ -1,21 +1,25 @@
-
 #' Label images
 #' 
-#' Defaults to [mlabel] unless you use arguments specific to [gglabel].
+#' Defaults to [mlabel] unless you use arguments specific to [gglabel]. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli. 
 #'
 #' @param stimuli list of class stimlist
 #' @param ... arguments to pass on to \code{mlabel} or \code{gglabel}
 #'
 #' @return stimlist with labelled images
 #' @export
+#' 
+#' @seealso [mlabel()], [gglabel()]
 #'
 #' @examples
-#' stimuli <- demo_stim("test")
+#' stimuli <- demo_stim()
+#' 
+#' # label with magick::image_annotate
 #' m_stimuli <- stimuli |>
 #'   label(text = c("CHINWE", "GEORGE"), 
 #'         gravity = c("north", "south"),
 #'         color = "red")
-#'         
+#' 
+#' # label with ggplot2::annotate
 #' gg_stimuli <- stimuli |>
 #'   label(label = c("CHINWE", "GEORGE"), 
 #'         x = 0.5, 
@@ -23,8 +27,12 @@
 #'         vjust = c(1, 0), 
 #'         size = 10,
 #'         color = "red")
-#'         
-#' # c(stimuli, gg_stimuli, m_stimuli) |> plot(nrow = 3)
+#' 
+#' 
+#' p <- c(stimuli, gg_stimuli, m_stimuli) |> 
+#'   plot(nrow = 3)
+#'   
+#' p[[1]]$img
 label <- function(stimuli, ...) {
   args <- list(...) |> names()
   
@@ -55,7 +63,7 @@ label <- function(stimuli, ...) {
 
 #' Label with magick annotations
 #'
-#' This is just a wrapper function for \code{magick::\link[magick]{image_annotate}} that allows more flexibility in color input. Setting a font, weight, style only works if your imagemagick is compiled with fontconfig support.
+#' Label image using [magick::image_annotate]. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli. Setting a font, weight, style only works if your imagemagick is compiled with fontconfig support. 
 #'
 #' @param stimuli list of class stimlist
 #' @param text a vector of the label text(s) or TRUE to use stimlist names
@@ -65,14 +73,14 @@ label <- function(stimuli, ...) {
 #' @param degrees rotates text around center point
 #' @param size font size in pixels or proportion of image width (if < 1.0)
 #' @param font string with font family such as "sans", "mono", "serif", "Times", "Helvetica", "Trebuchet", "Georgia", "Palatino" or "Comic Sans".
-#' @param style value of style_types for example "italic"
-#' @param weight thickness of the font, 400 is normal and 700 is bold.
+#' @param style value of [magick::style_types()]: "Undefined", "Any", "Italic", "Normal", "Oblique" 
+#' @param weight thickness of th e font, 400 is normal and 700 is bold.
 #' @param kerning increases or decreases whitespace between letters
-#' @param decoration value of decoration_types: "LineThrough" "None", "Overline", "Underline" 
+#' @param decoration value of [magick::decoration_types()]: "LineThrough" "None", "Overline", "Underline" 
 #' @param strokecolor adds a stroke (border around the text)
 #' @param boxcolor adds a background color
 #' 
-#' @seealso [gglabel()] for a labeller using syntax like \code{ggplot2::\link[ggplot2]{annotate}}
+#' @seealso [gglabel()] for a labeller using syntax like [ggplot2::annotate()]
 #' @return stimlist with labelled images
 #' @export
 #'
@@ -80,8 +88,8 @@ label <- function(stimuli, ...) {
 #' stimuli <- demo_stim("test")
 #' labelled_stimuli <- stimuli |>
 #'   mlabel(text = c("CHINWE", "GEORGE"), 
-#'         gravity = c("north", "south"),
-#'         color = "red")
+#'          gravity = c("north", "south"),
+#'          color = "red")
 mlabel <- function(stimuli,
                   text = TRUE,
                   gravity = "north",
@@ -162,17 +170,17 @@ mlabel <- function(stimuli,
 
 #' Label with ggplot annotations
 #' 
-#' Pass arguments to \code{ggplot2::\link[ggplot2]{annotate}} to label each image in a stimulus list.
+#' Label image using [ggplot2::annotate]. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli. 
 #' 
 #' @param stimuli list of class stimlist
 #' @param label a vector of the label text(s) or TRUE to use stimlist names
 #' @param x x-coordinate for label anchor (left is 0); values <= 1 are interpreted as proportions of width
 #' @param y y-coordinate for label anchor (bottom is 0); values <= 1 are interpreted as proportions of height
 #' @param geom the geom to use
-#' @param ... further arguments to pass to \code{ggplot2::\link[ggplot2]{annotate}}
+#' @param ... further arguments to pass to [ggplot2::annotate()]
 #'
 #' @return stimlist with labelled images
-#' @seealso [label()] for a labeller using syntax like \code{magick::\link[magick]{image_annotate}}
+#' @seealso [label()] for a labeller using syntax like [magick::image_annotate]
 #' @export
 #'
 #' @examples

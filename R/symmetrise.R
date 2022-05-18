@@ -1,12 +1,15 @@
-#' Symmetrise Images
+#' Symmetrize Images
+#' 
+#' Use webmorph.org to make faces symmetric in shape and/or colour.
 #'
-#' @param stimuli images to symmatrise (list of class stimlist)
+#' @param stimuli images to symmetrize (list of class stimlist)
 #' @param shape,color amount of symmetry (0 for none, 1.0 for perfect)
-#' @param tem_id template ID to be passed to \code{\link{tem_def}} (usually "frl" or "fpp106")
-#' @param ... Additional arguments to pass to \code{\link{trans}}
+#' @param tem_id template ID to be passed to [tem_def()] (usually "frl" or "fpp106")
+#' @param ... Additional arguments to pass to [trans()]
 #'
 #' @return stimlist with symmetrised images and templates
 #' @export
+#' @aliases symmetrise
 #'
 #' @examples
 #' \dontrun{
@@ -29,3 +32,8 @@ symmetrize <- function(stimuli, shape = 1.0, color = 1.0, tem_id = "frl", ...) {
   
   sym
 }
+
+
+#' @rdname symmetrize
+#' @export
+symmetrise <- symmetrize

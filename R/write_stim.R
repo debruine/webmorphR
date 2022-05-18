@@ -2,11 +2,10 @@
 #'
 #' @param stimuli list of class stimlist
 #' @param dir Directory to save to
-#' @param names A vector of stimulus names or NULL to use names fro the stimuli list
-#' @param format output format such as "png", "jpeg", "gif"
-#' @param ... other arguments to pass to magick::image_write
-#' @param ask ask if you want to overwrite existing files
-#' @param overwrite whether to overwrite existing files
+#' @param names A vector of stimulus names or NULL to use names from the stimuli list
+#' @param format output format such as "png", "jpeg", "gif"; is overridden if names end in .png, .jpg, or .gif
+#' @param ... other arguments to pass to [magick::image_write], such as quality (for jpegs)
+#' @param overwrite whether to overwrite existing files (TRUE/FALSE) or "ask" (only in interactive mode)
 #'
 #' @return list of saved paths
 #' @export
@@ -15,7 +14,9 @@
 #' \dontrun{
 #'   demo_stim() |> write_stim("test_faces", format = "jpg")
 #' }
-write_stim <- function(stimuli, dir = ".", names = NULL, format = "png", ..., ask = interactive(), overwrite = !ask) {
+write_stim <- function(stimuli, dir = ".", 
+                       names = NULL, format = "png", ..., 
+                       overwrite = wm_opts("overwrite")) {
   stimuli <- validate_stimlist(stimuli)
   
   if (!is.null(names)) {
@@ -33,22 +34,39 @@ write_stim <- function(stimuli, dir = ".", names = NULL, format = "png", ..., as
   if (!dir.exists(dir)) {
     dir.create(dir, recursive = TRUE)
   }
-
+  
+  # set image format and extension
+  format <- gsub("\\.", "", format) |> 
+    tolower() |>
+    switch(png = "png",
+           jpg = "jpeg",
+           jpeg = "jpeg",
+           gif = "gif",
+           "png") # default to png
+  
+  # iterate over stimuli and names to save 
+  # TODO: make this less clunky
   paths <- mapply(function(stim, name) {
     imgsaved <- NULL
     temsaved <- NULL
     
     # save images
     if (!is.null(stim$img)) {
-      format <- gsub("\\.", "", format) |> 
-        tolower() |>
-        switch(png = "png",
-               jpg = "jpeg",
-               jpeg = "jpeg",
-               gif = "gif",
-               "png") # default to png
+      # get image format from name, if available
+      img_format <- format
+      has_ext <- grepl("\\.(png|gif|jpg|jpeg)$", tolower(name))
+      if (has_ext) {
+        img_format <- gsub("^.+\\.", "", tolower(name)) |>
+          switch(png = "png",
+                 jpg = "jpeg",
+                 jpeg = "jpeg",
+                 gif = "gif")
+        # remove ext from name for tem
+        name <- gsub("\\.(png|gif|jpg|jpeg)$", "", 
+                     name, ignore.case = TRUE)
+      }
       
-      ext <- switch(format,
+      ext <- switch(img_format,
                     png = ".png",
                     jpeg = ".jpg",
                     gif = ".gif")
@@ -56,22 +74,22 @@ write_stim <- function(stimuli, dir = ".", names = NULL, format = "png", ..., as
       imgpath <- file.path(dir, paste0(name, ext))
       
       # check if file exists
-      if (ask && !overwrite && file.exists(imgpath)) {
+      if (interactive() && overwrite == "ask" && file.exists(imgpath)) {
         txt <- paste0("The file ", imgpath, " already exists; do you want to: \n1: Skip\n2: Save over\n3: Skip all\n4: Save over all")
         ow <- readline_check(txt, 
                              type = "numeric", 
                              min = 1, max = 4)
         
-        if (ow == 3) { ask <<- FALSE; overwrite <<- FALSE }
-        if (ow == 4) { ask <<- FALSE; overwrite <<- TRUE }
+        if (ow == 3) { overwrite <<- FALSE }
+        if (ow == 4) { overwrite <<- TRUE }
         
         if (ow == 2 || ow == 4) {
           imgsaved <- magick::image_write(
-            stim$img, path = imgpath, format = format, ...)
+            stim$img, path = imgpath, format = img_format, ...)
         }
-      } else if (overwrite || !file.exists(imgpath)) {
+      } else if (isTRUE(overwrite) || !file.exists(imgpath)) {
         imgsaved <- magick::image_write(
-          stim$img, path = imgpath, format = format, ...)
+          stim$img, path = imgpath, format = img_format, ...)
       }
     }
 
@@ -101,20 +119,20 @@ write_stim <- function(stimuli, dir = ".", names = NULL, format = "png", ..., as
       tem_txt <- paste(tem_txt, collapse = "\n")
       tempath <- file.path(dir, paste0(name, ".tem"))
       # check if file exists
-      if (ask && !overwrite && file.exists(tempath)) {
+      if (interactive() && overwrite == "ask" && file.exists(tempath)) {
         txt <- paste0("The file ", tempath, " already exists; do you want to: \n1: Skip\n2: Save over\n3: Skip all\n4: Save over all")
         ow <- readline_check(txt, 
                              type = "numeric", 
                              min = 1, max = 4)
         
-        if (ow == 3) { ask <<- FALSE; overwrite <<- FALSE }
-        if (ow == 4) { ask <<- FALSE; overwrite <<- TRUE }
+        if (ow == 3) { overwrite <<- FALSE }
+        if (ow == 4) { overwrite <<- TRUE }
         
         if (ow == 2 || ow == 4) {
           write(tem_txt, tempath)
           temsaved <- tempath
         }
-      } else if (overwrite || !file.exists(tempath)) {
+      } else if (isTRUE(overwrite) || !file.exists(tempath)) {
         write(tem_txt, tempath)
         temsaved <- tempath
       }

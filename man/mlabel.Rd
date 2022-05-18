@@ -36,13 +36,13 @@ mlabel(
 
 \item{font}{string with font family such as "sans", "mono", "serif", "Times", "Helvetica", "Trebuchet", "Georgia", "Palatino" or "Comic Sans".}
 
-\item{style}{value of style_types for example "italic"}
+\item{style}{value of \code{\link[magick:options]{magick::style_types()}}: "Undefined", "Any", "Italic", "Normal", "Oblique"}
 
-\item{weight}{thickness of the font, 400 is normal and 700 is bold.}
+\item{weight}{thickness of th e font, 400 is normal and 700 is bold.}
 
 \item{kerning}{increases or decreases whitespace between letters}
 
-\item{decoration}{value of decoration_types: "LineThrough" "None", "Overline", "Underline"}
+\item{decoration}{value of \code{\link[magick:options]{magick::decoration_types()}}: "LineThrough" "None", "Overline", "Underline"}
 
 \item{color}{a vector of the label colour(s)}
 
@@ -54,15 +54,15 @@ mlabel(
 stimlist with labelled images
 }
 \description{
-This is just a wrapper function for \code{magick::\link[magick]{image_annotate}} that allows more flexibility in color input. Setting a font, weight, style only works if your imagemagick is compiled with fontconfig support.
+Label image using \link[magick:painting]{magick::image_annotate}. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli. Setting a font, weight, style only works if your imagemagick is compiled with fontconfig support.
 }
 \examples{
 stimuli <- demo_stim("test")
 labelled_stimuli <- stimuli |>
   mlabel(text = c("CHINWE", "GEORGE"), 
-        gravity = c("north", "south"),
-        color = "red")
+         gravity = c("north", "south"),
+         color = "red")
 }
 \seealso{
-\code{\link[=gglabel]{gglabel()}} for a labeller using syntax like \code{ggplot2::\link[ggplot2]{annotate}}
+\code{\link[=gglabel]{gglabel()}} for a labeller using syntax like \code{\link[ggplot2:annotate]{ggplot2::annotate()}}
 }

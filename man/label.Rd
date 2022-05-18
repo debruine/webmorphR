@@ -15,15 +15,18 @@ label(stimuli, ...)
 stimlist with labelled images
 }
 \description{
-Defaults to \link{mlabel} unless you use arguments specific to \link{gglabel}.
+Defaults to \link{mlabel} unless you use arguments specific to \link{gglabel}. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli.
 }
 \examples{
-stimuli <- demo_stim("test")
+stimuli <- demo_stim()
+
+# label with magick::image_annotate
 m_stimuli <- stimuli |>
   label(text = c("CHINWE", "GEORGE"), 
         gravity = c("north", "south"),
         color = "red")
-        
+
+# label with ggplot2::annotate
 gg_stimuli <- stimuli |>
   label(label = c("CHINWE", "GEORGE"), 
         x = 0.5, 
@@ -31,6 +34,13 @@ gg_stimuli <- stimuli |>
         vjust = c(1, 0), 
         size = 10,
         color = "red")
-        
-# c(stimuli, gg_stimuli, m_stimuli) |> plot(nrow = 3)
+
+
+p <- c(stimuli, gg_stimuli, m_stimuli) |> 
+  plot(nrow = 3)
+  
+p[[1]]$img
+}
+\seealso{
+\code{\link[=mlabel]{mlabel()}}, \code{\link[=gglabel]{gglabel()}}
 }

@@ -17,13 +17,13 @@ gglabel(stimuli, label = TRUE, x = 0.5, y = 0.95, geom = "text", ...)
 
 \item{geom}{the geom to use}
 
-\item{...}{further arguments to pass to \code{ggplot2::\link[ggplot2]{annotate}}}
+\item{...}{further arguments to pass to \code{\link[ggplot2:annotate]{ggplot2::annotate()}}}
 }
 \value{
 stimlist with labelled images
 }
 \description{
-Pass arguments to \code{ggplot2::\link[ggplot2]{annotate}} to label each image in a stimulus list.
+Label image using \link[ggplot2:annotate]{ggplot2::annotate}. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli.
 }
 \examples{
 stimuli <- demo_stim()
@@ -45,5 +45,5 @@ watermark <- gglabel(
 )
 }
 \seealso{
-\code{\link[=label]{label()}} for a labeller using syntax like \code{magick::\link[magick]{image_annotate}}
+\code{\link[=label]{label()}} for a labeller using syntax like \link[magick:painting]{magick::image_annotate}
 }

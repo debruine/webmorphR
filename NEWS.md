@@ -1,5 +1,8 @@
 # webmorphR 0.0.2.9002
 
+* Removed `ask` argument from `write_stim()` and added "overwrite" to `wm_opts()` for a global overwrite setting.
+* Added `wm_opts_defaults()` function to get all default option values.
+* `write_stim()` now can get the image format from the `name` argument, if it ends in .jpg, .jpeg, .png, or .gif (case insensitive). This overrides the `format` argument.
 * Moved most `demo_stim()` (except "test" and "tem_examples") into new `webmorphR.stim::load_stim()` functions.
 * Minor bug fixes.
 

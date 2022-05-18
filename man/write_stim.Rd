@@ -10,8 +10,7 @@ write_stim(
   names = NULL,
   format = "png",
   ...,
-  ask = interactive(),
-  overwrite = !ask
+  overwrite = wm_opts("overwrite")
 )
 }
 \arguments{
@@ -19,15 +18,13 @@ write_stim(
 
 \item{dir}{Directory to save to}
 
-\item{names}{A vector of stimulus names or NULL to use names fro the stimuli list}
+\item{names}{A vector of stimulus names or NULL to use names from the stimuli list}
 
-\item{format}{output format such as "png", "jpeg", "gif"}
+\item{format}{output format such as "png", "jpeg", "gif"; is overridden if names end in .png, .jpg, or .gif}
 
-\item{...}{other arguments to pass to magick::image_write}
+\item{...}{other arguments to pass to \link[magick:editing]{magick::image_write}, such as quality (for jpegs)}
 
-\item{ask}{ask if you want to overwrite existing files}
-
-\item{overwrite}{whether to overwrite existing files}
+\item{overwrite}{whether to overwrite existing files (TRUE/FALSE) or "ask" (only in interactive mode)}
 }
 \value{
 list of saved paths

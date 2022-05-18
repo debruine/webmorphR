@@ -1,5 +1,5 @@
 test_that("quick_delin", {
-  skip("requires shiny interaction")
+  skip_if_not(interactive())
 
   stimuli <- demo_stim() |> remove_tem()
   x <- quick_delin(stimuli, 2)

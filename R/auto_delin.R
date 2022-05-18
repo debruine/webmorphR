@@ -109,7 +109,7 @@ fpp_auto_delin <- function(stimuli,
   tempdir <- tempfile()
   paths <- stimuli |>
     remove_tem() |>
-    write_stim(tempdir, format = "jpg", ask = FALSE, overwrite = TRUE) |>
+    write_stim(tempdir, format = "jpg", overwrite = TRUE) |>
     unlist()
   
   face <- rep(face, length.out = length(stimuli))

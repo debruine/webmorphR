@@ -1,6 +1,6 @@
 #' Align templates and images
 #' 
-#' Align images so that template points line up. [align1()] aligns 1 point, but does not resize or rotate images. [align2()] aligns 2 points, resizing and rotating faces. [procrustes()] uses procrustes alignment to resize and rotate images to be as close as possible to a mean shape. You can specify the x and y coordinates to align, or align to their position in a reference image. The reference image is the average of all images, or the image specified by ref_img. 
+#' Align images so that template points line up. Setting pt1 = pt2 aligns 1 point, but does not resize or rotate images. Setting pt1 and pt2 aligns 2 points, resizing and rotating faces. Setting procrustes = TRUE uses Procrustes analysis to resize and rotate images to be as close as possible to a mean shape. You can specify the x and y coordinates to align, or align to their position in a reference image. The reference image is the average of all images, or the image specified by ref_img. 
 #'
 #' @param stimuli list of class stimlist
 #' @param pt1 The first point to align (defaults to 0)

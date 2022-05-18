@@ -1,7 +1,7 @@
 Package: webmorphR
 Title: Reproducible Stimuli
-Date: 2022-05-16
-Version: 0.0.2.9001
+Date: 2022-05-18
+Version: 0.0.2.9002
 Authors@R: 
     c(person(
         given = "Lisa", 
@@ -28,7 +28,6 @@ Imports:
     grDevices,
     stats,
     dplyr,
-    ggplot2,
     jsonlite,
     magick,
     geomorph,
@@ -38,6 +37,7 @@ Imports:
     rsvg
 Suggests: 
     gifski,
+    ggplot2,
     testthat,
     usethis,
     rmarkdown,

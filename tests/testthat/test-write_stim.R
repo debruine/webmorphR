@@ -61,7 +61,7 @@ test_that("overwrite", {
   expect_equal(length(files), 4)
   
   # don't overwrite
-  ofiles <- write_stim(stim, dir, ask = FALSE, overwrite = FALSE)
+  ofiles <- write_stim(stim, dir, overwrite = FALSE)
   expect_null(unlist(ofiles))
   otime <- unlist(files) |> sapply(file.mtime)
   expect_equal(unname(ftime == otime), rep(TRUE, 4))
@@ -78,10 +78,12 @@ test_that("overwrite", {
 
 # interactive ----
 test_that("interactive", {
+  skip_if_not(interactive())
+  
   dir <- file.path(tempdir(), "interactivetest")
   
   stim <- demo_stim() |> setnames(c("A", "B"))
-  files <- write_stim(stim, dir, ask = TRUE)
+  files <- write_stim(stim, dir)
   ftime <- unlist(files) |> sapply(file.mtime)
   expect_equal(length(files), 4)
   
@@ -132,7 +134,7 @@ test_that("interactive", {
   ans <- paste(lines, collapse = "\n")
   write(ans, f)
   
-  ol <- capture_output_lines({ bfiles <- write_stim(stim, dir, ask = TRUE) })
+  ol <- capture_output_lines({ bfiles <- write_stim(stim, dir) })
   expect_equal(length(ol), 5)
   btime <- unlist(files) |> sapply(file.mtime)
   expect_equal(unname(atime == btime), rep(F, 4))
@@ -140,4 +142,55 @@ test_that("interactive", {
   
   # clean up
   unlink(dir, recursive = TRUE)
+})
+
+
+# format from name ----
+test_that("format from name", {
+  s <- demo_stim() |> 
+    setnames(suffix = c(".gif", ".jpg"))
+  
+  imgnames <- names(s)
+  dir <- tempfile()
+  
+  write_stim(s, dir)
+  f <- list.files(dir)
+  expect_true(all(imgnames %in% f))
+  
+  x <- read_stim(dir)
+  expect_equal(magick::image_info(x$f_multi$img)$format, "GIF")
+  expect_equal(magick::image_info(x$m_multi$img)$format, "JPEG")
+  
+  ## works with different case or JPEG
+  s <- demo_stim() |> 
+    setnames(suffix = c(".JPG", ".JPEG"))
+  
+  imgnames <- names(s)
+  dir <- tempfile()
+  
+  write_stim(s, dir)
+  f <- list.files(dir)
+  expect_true("f_multi.jpg" %in% f)
+  expect_true("m_multi.jpg" %in% f)
+  
+  x <- read_stim(dir)
+  expect_equal(magick::image_info(x$f_multi$img)$format, "JPEG")
+  expect_equal(magick::image_info(x$m_multi$img)$format, "JPEG")
+  
+  ## defaults to PNG if not jpg/jpeg/gif/png
+  ## works with different case or JPEG
+  s <- demo_stim() |> 
+    setnames(suffix = c(".bmp", ".webp"))
+  
+  imgnames <- names(s)
+  dir <- tempfile()
+  
+  write_stim(s, dir)
+  f <- list.files(dir)
+  expect_true("f_multi.bmp.png" %in% f)
+  expect_true("m_multi.webp.png" %in% f)
+  
+  x <- read_stim(dir)
+  expect_equal(magick::image_info(x[[1]]$img)$format, "PNG")
+  expect_equal(magick::image_info(x[[2]]$img)$format, "PNG")
 })

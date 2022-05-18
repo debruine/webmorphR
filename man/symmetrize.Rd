@@ -2,24 +2,27 @@
 % Please edit documentation in R/symmetrise.R
 \name{symmetrize}
 \alias{symmetrize}
-\title{Symmetrise Images}
+\alias{symmetrise}
+\title{Symmetrize Images}
 \usage{
 symmetrize(stimuli, shape = 1, color = 1, tem_id = "frl", ...)
+
+symmetrise(stimuli, shape = 1, color = 1, tem_id = "frl", ...)
 }
 \arguments{
-\item{stimuli}{images to symmatrise (list of class stimlist)}
+\item{stimuli}{images to symmetrize (list of class stimlist)}
 
 \item{shape, color}{amount of symmetry (0 for none, 1.0 for perfect)}
 
-\item{tem_id}{template ID to be passed to \code{\link{tem_def}} (usually "frl" or "fpp106")}
+\item{tem_id}{template ID to be passed to \code{\link[=tem_def]{tem_def()}} (usually "frl" or "fpp106")}
 
-\item{...}{Additional arguments to pass to \code{\link{trans}}}
+\item{...}{Additional arguments to pass to \code{\link[=trans]{trans()}}}
 }
 \value{
 stimlist with symmetrised images and templates
 }
 \description{
-Symmetrise Images
+Use webmorph.org to make faces symmetric in shape and/or colour.
 }
 \examples{
 \dontrun{
