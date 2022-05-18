@@ -1,11 +1,17 @@
 test_that("auto_delin", {
   stimuli <- demo_stim("test", "f")
   expect_error(auto_delin())
-  # all images have templates
-  expect_warning(x <- auto_delin(stimuli))
-  expect_equal(x, stimuli)
+  expect_error( auto_delin(stimuli, "dd") )
   
-  expect_error( auto_delin(x, "dd") )
+  expect_warning( x <- auto_delin(stimuli, "fpp106", 
+                                  face = 3, replace = TRUE),
+                  "f_multi did not have 3 faces")
+  
+  # all images have templates
+  expect_warning(x <- auto_delin(stimuli, "dlib7"))
+  expect_equal(x, stimuli)
+  expect_warning(x <- auto_delin(stimuli, "fpp106"))
+  expect_equal(x, stimuli)
   
   # remove key and secret to test error message
   key <- Sys.getenv("FACEPLUSPLUS_KEY")

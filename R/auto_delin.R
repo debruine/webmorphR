@@ -139,13 +139,13 @@ fpp_auto_delin <- function(stimuli,
     if (!is.null(resp$error_message)) {
       e <- resp$error_message |>
         paste(collapse = "\n")
-      ce <- paste0(imgname, ": ", e)
+      e <- paste0(imgname, ": ", e)
       warning(e, call. = FALSE)
     } else {
       # put in order from fpp
       which_face <- face[i]
       if (length(resp$faces) < which_face) {
-        warning(imgname, "  did not have ", which_face, " faces", call. = FALSE)
+        warning(imgname, " did not have ", which_face, " faces", call. = FALSE)
         which_face <- 1
       }
       alpha_order <- resp$faces[[which_face]]$landmark
