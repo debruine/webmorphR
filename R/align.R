@@ -52,10 +52,10 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
     width <- width %||% stimuli[[ref_img]]$width
     height <- height %||% stimuli[[ref_img]]$height
   }
-  x1 <- x1 %||% ref_points["x", pt1+1]
-  y1 <- y1 %||% ref_points["y", pt1+1]
-  x2 <- x2 %||% ref_points["x", pt2+1]
-  y2 <- y2 %||% ref_points["y", pt2+1]
+  x1 <- x1 %||% ref_points[1, pt1+1]
+  y1 <- y1 %||% ref_points[2, pt1+1]
+  x2 <- x2 %||% ref_points[1, pt2+1]
+  y2 <- y2 %||% ref_points[2, pt2+1]
   
 
   if (pt1 == pt2) {
