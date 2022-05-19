@@ -5,20 +5,20 @@ fill (&quot;white&quot;): the colour to use to fill image backgrounds
 pt.color (&quot;green&quot;) : the colour to use for points in draw_tem()
 line.color (&quot;blue&quot;): the colour to use for lines in draw_tem()
 plot (&quot;inline&quot;): whether to plot images inline in R markdown documents (set to any other value to just view them in the viewer)
-plot.maxwidth (10000): The maximum width of images created by plot()
-plot.maxheight (10000): The maximum height of images created by plot()
+plot.maxwidth (2400): The maximum width of images created by plot()
+plot.maxheight (2400): The maximum height of images created by plot()
 verbose (TRUE): Whether to produce verbose output and progress bars for long functions like auto_delin(), avg() or trans()
 server (&quot;https://webmorph.org&quot;): The server to use for webmorph functions like avg() and trans(); do not change unless you've set up a local server
 connection (stdin()): use internally for testing interactive functions; do not change
 
-"><title>WebmorphR default options — wm_opts_defaults • webmorphR</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Nunito-0.4.1/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="WebmorphR default options — wm_opts_defaults"><meta property="og:description" content="Options set on load (unless they were already set by .Renviron)
+"><title>WebmorphR default options — wm_opts_defaults • webmorphR</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Nunito-0.4.1/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="WebmorphR default options — wm_opts_defaults"><meta property="og:description" content="Options set on load (unless they were already set by .Renviron)
 overwrite (&quot;ask&quot;): Whether to overwrite images saved with write_stim() when in interactive mode; possible values are &quot;ask&quot; (ask if filenames exist), TRUE (always overwrite), and FALSE (never overwrite)
 fill (&quot;white&quot;): the colour to use to fill image backgrounds
 pt.color (&quot;green&quot;) : the colour to use for points in draw_tem()
 line.color (&quot;blue&quot;): the colour to use for lines in draw_tem()
 plot (&quot;inline&quot;): whether to plot images inline in R markdown documents (set to any other value to just view them in the viewer)
-plot.maxwidth (10000): The maximum width of images created by plot()
-plot.maxheight (10000): The maximum height of images created by plot()
+plot.maxwidth (2400): The maximum width of images created by plot()
+plot.maxheight (2400): The maximum height of images created by plot()
 verbose (TRUE): Whether to produce verbose output and progress bars for long functions like auto_delin(), avg() or trans()
 server (&quot;https://webmorph.org&quot;): The server to use for webmorph functions like avg() and trans(); do not change unless you've set up a local server
 connection (stdin()): use internally for testing interactive functions; do not change
@@ -34,7 +34,7 @@ connection (stdin()): use internally for testing interactive functions; do not c
     
     <a class="navbar-brand me-2" href="../index.html">webmorphR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.2.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.2.9003</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,8 +94,8 @@ connection (stdin()): use internally for testing interactive functions; do not c
 <li><p>pt.color ("green") : the colour to use for points in <code><a href="draw_tem.html">draw_tem()</a></code></p></li>
 <li><p>line.color ("blue"): the colour to use for lines in <code><a href="draw_tem.html">draw_tem()</a></code></p></li>
 <li><p>plot ("inline"): whether to plot images inline in R markdown documents (set to any other value to just view them in the viewer)</p></li>
-<li><p>plot.maxwidth (10000): The maximum width of images created by <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code></p></li>
-<li><p>plot.maxheight (10000): The maximum height of images created by <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code></p></li>
+<li><p>plot.maxwidth (2400): The maximum width of images created by <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code></p></li>
+<li><p>plot.maxheight (2400): The maximum height of images created by <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code></p></li>
 <li><p>verbose (TRUE): Whether to produce verbose output and progress bars for long functions like <code><a href="auto_delin.html">auto_delin()</a></code>, <code><a href="avg.html">avg()</a></code> or <code><a href="trans.html">trans()</a></code></p></li>
 <li><p>server ("https://webmorph.org"): The server to use for webmorph functions like <code><a href="avg.html">avg()</a></code> and <code><a href="trans.html">trans()</a></code>; do not change unless you've set up a local server</p></li>
 <li><p>connection (stdin()): use internally for testing interactive functions; do not change</p></li>
@@ -110,47 +110,25 @@ connection (stdin()): use internally for testing interactive functions; do not c
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>a list of default options</p>
     </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code><a href="wm_opts.html">wm_opts()</a></code></p></div>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">wm_opts_defaults</span><span class="op">(</span><span class="op">)</span> <span class="co"># view defaults</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $connection</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A connection with                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> description "stdin"   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> class       "terminal"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> mode        "r"       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> text        "text"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> opened      "opened"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> can read    "yes"     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> can write   "no"      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $fill</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "white"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $line.color</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "blue"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $overwrite</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ask"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $plot</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "inline"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $plot.maxheight</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $plot.maxwidth</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $pt.color</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "green"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $server</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "https://webmorph.org"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $verbose</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">wm_opts_defaults</span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># view defaults</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ connection    : 'terminal' int 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ fill          : chr "white"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ line.color    : chr "blue"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ overwrite     : chr "ask"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ plot          : chr "inline"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ plot.maxheight: num 2400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ plot.maxwidth : num 2400</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ pt.color      : chr "green"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ server        : chr "https://webmorph.org"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ verbose       : logi TRUE</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="co"># reset all options to default</span></span>

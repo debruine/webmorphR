@@ -46,9 +46,6 @@
     <loc>https://debruine.github.io/webmorphR/reference/align.html</loc>
   </url>
   <url>
-    <loc>https://debruine.github.io/webmorphR/reference/angle_from_2pts.html</loc>
-  </url>
-  <url>
     <loc>https://debruine.github.io/webmorphR/reference/animate.html</loc>
   </url>
   <url>
@@ -275,6 +272,9 @@
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/tem_def.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/webmorphR/reference/tem_text.html</loc>
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/tems_to_array.html</loc>
