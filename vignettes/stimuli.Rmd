@@ -320,7 +320,7 @@ plot(stroop, ncol = n, fill = "grey")
 ```
 
 
-
+----------------------
 
 ```{r, echo = FALSE}
 elapsed <- (Sys.time() - starttime) |>

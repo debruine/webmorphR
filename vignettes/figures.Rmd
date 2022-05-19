@@ -316,6 +316,9 @@ stimuli |>
 ```
 
 
+
+----------------------
+
 ```{r, echo = FALSE}
 elapsed <- (Sys.time() - starttime) |>
   as.numeric(units="mins") |>

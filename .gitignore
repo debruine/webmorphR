@@ -16,3 +16,4 @@ man/figures/home*
 pkgdown/index.html
 pkgdown/man/figures/home*
 docs
+.rprofile

@@ -100,7 +100,7 @@ c(s, dlib7, dlib70, fpp106, fpp83) |>
 
 The "smiling" demo dataset doesn't have FRL templates yet (it will soon), but can demonstrate how the automatic delineation algorithms deal with open mouths.
 
-```{r, cache = TRUE}
+```{r}
 smile <- load_stim_smiling("030")
 dlib7s <- auto_delin(smile, "dlib7", replace = TRUE)
 dlib70s <- auto_delin(smile, "dlib70", replace = TRUE)
@@ -551,6 +551,8 @@ mask(stimuli, mask, fill = "hotpink", reverse = TRUE) |>
 ```
 
 
+
+----------------------
 
 ```{r, echo = FALSE}
 elapsed <- (Sys.time() - starttime) |>

@@ -51,23 +51,16 @@ stimuli |>
   resize(.1) |>
   plot()
 ```
-You can set the resize dimensions by proportions or pixels. Numbers less than 10 are interpreted as proportions, so the code above resized the images to 0.1 of their original size. Numbers larger than 10 are interpreted as pixels.
+You can set the resize dimensions by proportions or pixels. Numbers less than 10 are interpreted as proportions, so the code above resized the images to 0.1 of their original size. Numbers larger than 10 are interpreted as pixels. If you set just width or just height, the other dimension is calculated proportionally to keep the aspect ratio.
 
 ```{r resize-pixel, fig.cap="Resized Images by pixel"}
 stimuli |>
-  resize(200) |>
+  resize(height = 200) |>
   plot()
 ```
 
-If you set just with or just height, the other dimension is calculated proportionally to keep the aspect ratio.
 
-```{r resize-height, fig.cap="Resized Images by height"}
-stimuli |>
-  resize(height = 100) |>
-  plot()
-```
-
-If you set both width and height, you may alter the aspect ratio.
+If you set both width and height, you may alter the aspect ratio. Make sure you really want to do this! Use `to_size()` instead if you want to resize and crop/pad all of your images to the same size without changing the image contents' aspect ratio.
 
 ```{r resize-both, fig.cap="Resized Images by with and height"}
 stimuli |>
@@ -195,7 +188,8 @@ multisize <- c(
     s |> resize(.5),
     s |> crop(0.6),
     s |> crop(1, 0.8)
-  ) |> pad(10, fill = "hotpink")
+  ) |> 
+  pad(10, fill = "hotpink")
 ```
 
 A 10-pixel pink border has been added to these original images so you can see what has been cropped in the subsequent images.
@@ -211,14 +205,14 @@ multisize |>
 
 The code below resizes each image to fit into a 300 x 400 pixel image and fills in any extra background with blue. You'll probably choose your background colour for a real stimulus set, but this makes the demo clearer.
 
-```{r fig-fit-pad, fig.cap="to_size()"}
+```{r fig-fit-pad, fig.cap="By default, to_size() will change relative sizes and cover the background without cropping any original image content."}
 fit_pad <- to_size(multisize, 300, 400, fill = "dodgerblue")
 plot(fit_pad)
 ```
 
 Set `keep_rels = TRUE` to bring the largest image to fit in the new size, resize the others proportionally, and pad.
 
-```{r fig-rel-pad, fig.cap="to_size() with keep_rels = TRUE"}
+```{r fig-rel-pad, fig.cap="Set keep_rels = TRUE to keep relative size differences between original images."}
 rel_pad <- to_size(multisize, 300, 400, 
                    fill = "dodgerblue", 
                    keep_rels = TRUE)
@@ -227,7 +221,7 @@ plot(rel_pad)
 
 Set `crop = TRUE` to resize all images until they cover the new size and crop the "overhang". There is no need to set the fill color for padding when crop is TRUE.
 
-```{r fig-fit-crop, fig.cap="to_size() with crop = TRUE"}
+```{r fig-fit-crop, fig.cap="Set crop = TRUE to cover the new image size and crop off overhang."}
 fit_crop <- to_size(multisize, 300, 400, crop = TRUE)
 plot(fit_crop)
 ```
@@ -311,7 +305,6 @@ stimuli |>
 You can use `rep()` to repeat images in a stimuli. Here, we repeat the faces 3 times each, apply 6 different rotations with different background colours, crop them to the same size, and plot them with 6 different template point colours.
 
 ```{r rep}
-
 rainbow <- c(pink = "#983E82",
              orange = "#E2A458",
              yellow = "#F5DC70",
@@ -382,6 +375,8 @@ demo_stim()[1] |>
 ```
 
 
+
+----------------------
 
 ```{r, echo = FALSE}
 elapsed <- (Sys.time() - starttime) |>
