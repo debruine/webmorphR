@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      FACEPLUSPLUS_KEY: ${{ secrets.FACEPLUSPLUS_KEY }}
+      FACEPLUSPLUS_SECRET: ${{ secrets.FACEPLUSPLUS_SECRET }}
 
     steps:
       - uses: actions/checkout@v2
