@@ -13,7 +13,6 @@
 #' @param height The height of the aligned image
 #' @param ref_img The reference image (by index or name) to get coordinates and dimensions from if they are NULL (defaults to average of all images if NULL)
 #' @param fill background color if cropping goes outside the original image
-#' @param patch whether to use the patch function to set the background color
 #' @param procrustes Whether to do a procrustes alignment
 #'
 #' @return stimlist with aligned tems and/or images
@@ -37,7 +36,7 @@
 align <- function(stimuli, pt1 = 0, pt2 = 1,
                   x1 = NULL, y1 = NULL, x2 = NULL, y2 = NULL,
                   width = NULL, height = NULL, ref_img = NULL,
-                  fill = wm_opts("fill"), patch = FALSE,
+                  fill = wm_opts("fill"),
                   procrustes = FALSE) {
   stimuli <- validate_stimlist(stimuli, TRUE)
 
@@ -103,7 +102,6 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
     x2 <- rep_len(x2, n)
     y2 <- rep_len(y2, n)
     fill <- rep_len(fill, n)
-    #patch <- rep_len(patch, n)
   })
 
 
@@ -136,7 +134,7 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
   }
 
   newstimuli <- stimuli |>
-    rotate(degrees = rotate, fill = fill, patch = patch) |>
+    rotate(degrees = rotate, fill = fill) |>
     resize(newsize)
 
   # recalculate eye position for cropping
@@ -153,7 +151,7 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
   crop(newstimuli, width = width, height = height,
        x_off = x_off/width(newstimuli), # in case some values < 1
        y_off = y_off/height(newstimuli),
-       fill = fill, patch = patch)
+       fill = fill)
 }
 
 #' Procrustes align templates
@@ -268,9 +266,9 @@ procrustes_coords <- function(data, ref_img = NULL) {
 #' align_1point <- function(stimuli, pt = 0, 
 #'                    x = NULL, y = NULL,
 #'                    width = NULL, height = NULL, ref_img = NULL,
-#'                    fill = wm_opts("fill"), patch = FALSE) {
+#'                    fill = wm_opts("fill")) {
 #'   align(stimuli, pt, pt, x, y, x, y,
-#'         width, height, ref_img, fill, patch, FALSE)
+#'         width, height, ref_img, fill, FALSE)
 #' }
 #' 
 #' #' @export
@@ -278,36 +276,36 @@ procrustes_coords <- function(data, ref_img = NULL) {
 #' align_2point <- function(stimuli, pt1 = 0, pt2 = 1,
 #'                   x1 = NULL, y1 = NULL, x2 = NULL, y2 = NULL,
 #'                   width = NULL, height = NULL, ref_img = NULL,
-#'                   fill = wm_opts("fill"), patch = FALSE) {
+#'                   fill = wm_opts("fill")) {
 #'   align(stimuli, pt1, pt2, x1, y1, x2, y2,
-#'         width, height, ref_img, fill, patch, FALSE)
+#'         width, height, ref_img, fill, FALSE)
 #' }
 #' 
 #' #' @export
 #' #' @rdname align
 #' align_procrustes <- function(stimuli, 
 #'                        width = NULL, height = NULL, ref_img = NULL,
-#'                        fill = wm_opts("fill"), patch = FALSE) {
+#'                        fill = wm_opts("fill")) {
 #'   align(stimuli, 0, 1, NULL, NULL, NULL, NULL,
-#'         width, height, ref_img, fill, patch, TRUE)
+#'         width, height, ref_img, fill, TRUE)
 #' }
 
 
 
-#' #' Get angle from 2 points
-#' #'
-#' #' @param coords The coordinate array
-#' #' @param pt1 The first point
-#' #' @param pt2 The second point
-#' #'
-#' #' @return double of angle in radians
-#' #' @keywords internal
-#' #'
-#' angle_from_2pts <- function(coords, pt1 = 1, pt2 = 2) {
-#'   x1 <- coords[[pt1,1]]
-#'   x2 <- coords[[pt2,1]]
-#'   y1 <- coords[[pt1,2]]
-#'   y2 <- coords[[pt2,2]]
-#' 
-#'   atan2(y1 - y2, x1 - x2) %% (2*pi)
-#' }
+# #' Get angle from 2 points
+# #'
+# #' @param coords The coordinate array
+# #' @param pt1 The first point
+# #' @param pt2 The second point
+# #'
+# #' @return double of angle in radians
+# #' @keywords internal
+# #'
+# angle_from_2pts <- function(coords, pt1 = 1, pt2 = 2) {
+#   x1 <- coords[[pt1,1]]
+#   x2 <- coords[[pt2,1]]
+#   y1 <- coords[[pt1,2]]
+#   y2 <- coords[[pt2,2]]
+# 
+#   atan2(y1 - y2, x1 - x2) %% (2*pi)
+# }

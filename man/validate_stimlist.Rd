@@ -17,3 +17,4 @@ A stimlist
 \description{
 Check if an object is a list of class stimlist. If class stim, wrap in stimlist. If a properly structured list without the right class, add the right class. If the img is not a magick_image or the pointer is dead, reloads from the imgpath.
 }
+\keyword{internal}

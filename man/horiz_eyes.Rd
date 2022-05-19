@@ -4,13 +4,7 @@
 \alias{horiz_eyes}
 \title{Make eyes horizontal}
 \usage{
-horiz_eyes(
-  stimuli,
-  left_eye = 0,
-  right_eye = 1,
-  fill = wm_opts("fill"),
-  patch = FALSE
-)
+horiz_eyes(stimuli, left_eye = 0, right_eye = 1, fill = wm_opts("fill"))
 }
 \arguments{
 \item{stimuli}{list of class stimlist}
@@ -20,8 +14,6 @@ horiz_eyes(
 \item{right_eye}{The second point to align (defaults to 1)}
 
 \item{fill}{background color to pass to rotate}
-
-\item{patch}{whether to use the patch function to set the background color}
 }
 \value{
 stimlist with rotated tems and/or images

@@ -109,39 +109,27 @@ reference:
 - title: Helper functions
   desc: ~
   contents:
-  - '`bounds`'
   - '`features`'
-  - '`patch`'
+  - '`image_func_types`'
   - '`quick_delin`'
-  - '`same_tems`'
   - '`social_media_size`'
   - '`subset.stimlist`'
-  - '`tem_def`'
   - '`wm_opts`'
   - '`wm_opts_defaults`'
 - title: Geomorph functions
-  desc: ~
+  desc: Functions to translate between formats used by webmorphR and geomorph
   contents:
   - '`tems_to_array`'
   - '`write_tps`'
 - title: Utilities
   desc: Mainly internally used functions, but might be of interest to some
   contents:
+  - '`bounds`'
   - '`col2lab`'
   - '`color_conv`'
-  - '`format_size`'
-  - '`get_imgs`'
-  - '`image_func_types`'
-  - '`list_to_tbl`'
   - '`new_stim`'
   - '`new_stimlist`'
-  - '`rotated_size`'
-  - '`svgBezier`'
-  - '`svgControlPoints`'
-  - '`svgCubicTo`'
-  - '`svgLineTo`'
-  - '`svgMoveTo`'
-  - '`svgQuadraticTo`'
-  - '`unique_names`'
-  - '`validate_stimlist`'
+  - '`patch`'
+  - '`same_tems`'
+  - '`tem_def`'
 

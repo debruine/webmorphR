@@ -13,7 +13,7 @@ wm_opts(...)
 a list of options, values of an option, or nothing
 }
 \description{
-See \code{\link[=wm_opts_defaults]{wm_opts_defaults()}} for explanatins of the default options.
+See \code{\link[=wm_opts_defaults]{wm_opts_defaults()}} for explanations of the default options.
 }
 \examples{
 

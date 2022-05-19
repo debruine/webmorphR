@@ -1,7 +1,7 @@
 Package: webmorphR
 Title: Reproducible Stimuli
-Date: 2022-05-18
-Version: 0.0.2.9002
+Date: 2022-05-20
+Version: 0.0.2.9003
 Authors@R: 
     c(person(
         given = "Lisa", 
@@ -16,12 +16,13 @@ Authors@R:
         role = c("pfr", "ctb"), 
         email = "ekc00004@students.stir.ac.uk"
     ))
-Description: Create reproducible image stimuli, specialised for images with webmorph.org templates.
+Description: Create reproducible image stimuli, 
+    specialised for face images with webmorph.org templates.
 License: CC BY 4.0
-Encoding: UTF-8
-LazyData: true
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+URL: https://debruine.github.io/webmorphR, https://github.com/debruine/webmorphR
+BugReports: https://github.com/debruine/webmorphR/issues
+Depends: 
+    R (>= 4.2.0)
 Imports: 
     knitr,
     tools,
@@ -47,7 +48,7 @@ Suggests:
 Remotes:
     debruine/webmorphR.stim,
     debruine/webmorphR.dlib
-URL: https://debruine.github.io/webmorphR, https://github.com/debruine/webmorphR
-BugReports: https://github.com/debruine/webmorphR/issues
-Depends: 
-    R (>= 4.2.0)
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0

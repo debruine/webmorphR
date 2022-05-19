@@ -1,6 +1,6 @@
 #' Set/get global webmorph options
 #' 
-#' See [wm_opts_defaults()] for explanatins of the default options.
+#' See [wm_opts_defaults()] for explanations of the default options.
 #'
 #' @param ... One of four: (1) nothing, then returns all options as a list; (2) a name of an option element, then returns its value; (3) a name-value pair which sets the corresponding option to the new value (and returns nothing), (4) a list with option-value pairs which sets all the corresponding arguments.
 #'
@@ -73,17 +73,19 @@ wm_opts <- function (...) {
 #' * pt.color ("green") : the colour to use for points in [draw_tem()]
 #' * line.color ("blue"): the colour to use for lines in [draw_tem()]
 #' * plot ("inline"): whether to plot images inline in R markdown documents (set to any other value to just view them in the viewer)
-#' * plot.maxwidth (10000): The maximum width of images created by [plot()]
-#' * plot.maxheight (10000): The maximum height of images created by [plot()]
+#' * plot.maxwidth (2400): The maximum width of images created by [plot()]
+#' * plot.maxheight (2400): The maximum height of images created by [plot()]
 #' * verbose (TRUE): Whether to produce verbose output and progress bars for long functions like [auto_delin()], [avg()] or [trans()]
 #' * server ("https://webmorph.org"): The server to use for webmorph functions like [avg()] and [trans()]; do not change unless you've set up a local server
 #' * connection (stdin()): use internally for testing interactive functions; do not change
 #'
 #' @return a list of default options 
 #' @export
+#' 
+#' @seealso [wm_opts()]
 #'
 #' @examples
-#' wm_opts_defaults() # view defaults
+#' wm_opts_defaults() |> str() # view defaults
 #' 
 #' \dontrun{
 #' # reset all options to default
@@ -96,8 +98,8 @@ wm_opts_defaults <- function() {
     line.color = "blue",
     overwrite = "ask",
     plot = "inline",
-    plot.maxheight = 10000,
-    plot.maxwidth = 10000,
+    plot.maxheight = 2400,
+    plot.maxwidth = 2400,
     pt.color = "green",
     server = "https://webmorph.org",
     verbose = TRUE

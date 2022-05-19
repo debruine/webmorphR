@@ -61,7 +61,9 @@ print.stimlist <- function(x, ...) {
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' f <- demo_stim() |> subset("f_")
+#' }
 subset.stimlist <- function (x, subset, ...) {
   e <- substitute(subset)
   info <- get_info(x)
@@ -88,8 +90,10 @@ subset.stimlist <- function (x, subset, ...) {
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' a <- demo_stim()
 #' rep(a[[1]], 3)
+#' }
 rep.stim <- function (x, ...) {
   # turn into a list and handle below
   x <- validate_stimlist(x)
@@ -106,10 +110,12 @@ rep.stim <- function (x, ...) {
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' demo_stim() |>
 #'   rep(3) |>
 #'   rotate(seq(10, 60, 10), fill = rainbow(6)) |>
 #'   plot()
+#' }
 rep.stimlist <- function(x, ...) {
   nm <- names(x)
   newnm <- rep(nm, ...)
@@ -231,10 +237,12 @@ xget <- function(x, ..., .default = NULL) {
 #' @param x the file size in bytes
 #'
 #' @return human-readable file size
-#' @export
+#' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' format_size(1024*1024)
+#' }
 format_size <- function (x) {
   digits = 1L
   base <- 1024
@@ -250,10 +258,12 @@ format_size <- function (x) {
 #' @param stimuli list of class stimlist
 #'
 #' @return list of magick images
-#' @export
+#' @keywords internal
 #'
 #' @examples
-#' demo_stim() |> get_imgs()
+#' \dontrun{
+#' imgs <- demo_stim() |> get_imgs()
+#' }
 get_imgs <- function(stimuli) {
   args <- validate_stimlist(stimuli) |>
     lapply(`[[`, "img")

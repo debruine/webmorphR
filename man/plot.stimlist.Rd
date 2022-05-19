@@ -20,7 +20,8 @@ stimlist
 Plot stimuli in a stimlist.
 }
 \examples{
+\dontrun{
 demo_stim() |> plot()
-
+}
 }
 \keyword{internal}

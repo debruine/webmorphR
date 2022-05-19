@@ -6,8 +6,8 @@ test_that("opts", {
     line.color = "blue",
     overwrite = "ask",
     plot = "inline",
-    plot.maxheight = 10000,
-    plot.maxwidth = 10000,
+    plot.maxheight = 2400,
+    plot.maxwidth = 2400,
     pt.color = "green",
     server = "https://webmorph.org",
     verbose = TRUE

@@ -1,0 +1,47 @@
+---
+title: "Benchmarking"
+author: "Lisa DeBruine"
+date: '2022-05-19'
+output: 
+    html_document:
+      df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(rbenchmark)
+library(webmorphR)
+library(webmorphR.stim)
+```
+
+## Test set
+
+Test on a set of 100 large images.
+
+```{r}
+stimuli <- load_stim_london()[1:100]
+
+list(
+  n = length(stimuli),
+  w = width(stimuli) |> unique(),
+  h = height(stimuli) |> unique()
+) |> str()
+```
+
+
+## Basic image/tem manip functions
+
+```{r}
+manip <- benchmark(
+  crop = { stim_crop <- crop(stimuli, 0.6, 0.8) },
+  pad = { stim_pad <- pad(stimuli, 0.01) },
+  #rotate = { stim_pad <- rotate(stimuli, 45) },
+  replications = 1,
+  columns = c("test", "replications", "elapsed",
+              "relative", "user.self", "sys.self")
+)
+
+manip
+```
+

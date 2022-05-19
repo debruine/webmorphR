@@ -17,18 +17,21 @@ Options set on load (unless they were already set by .Renviron)
 \item pt.color ("green") : the colour to use for points in \code{\link[=draw_tem]{draw_tem()}}
 \item line.color ("blue"): the colour to use for lines in \code{\link[=draw_tem]{draw_tem()}}
 \item plot ("inline"): whether to plot images inline in R markdown documents (set to any other value to just view them in the viewer)
-\item plot.maxwidth (10000): The maximum width of images created by \code{\link[=plot]{plot()}}
-\item plot.maxheight (10000): The maximum height of images created by \code{\link[=plot]{plot()}}
+\item plot.maxwidth (2400): The maximum width of images created by \code{\link[=plot]{plot()}}
+\item plot.maxheight (2400): The maximum height of images created by \code{\link[=plot]{plot()}}
 \item verbose (TRUE): Whether to produce verbose output and progress bars for long functions like \code{\link[=auto_delin]{auto_delin()}}, \code{\link[=avg]{avg()}} or \code{\link[=trans]{trans()}}
 \item server ("https://webmorph.org"): The server to use for webmorph functions like \code{\link[=avg]{avg()}} and \code{\link[=trans]{trans()}}; do not change unless you've set up a local server
 \item connection (stdin()): use internally for testing interactive functions; do not change
 }
 }
 \examples{
-wm_opts_defaults() # view defaults
+wm_opts_defaults() |> str() # view defaults
 
 \dontrun{
 # reset all options to default
 wm_opts_defaults() |> wm_opts()
 }
+}
+\seealso{
+\code{\link[=wm_opts]{wm_opts()}}
 }

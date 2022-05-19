@@ -6,7 +6,7 @@ test_that("blank", {
   expect_equal(info$format, "png")
   expect_equal(info$width, 100)
   expect_equal(info$height, 100)
-  expect_equal(patch(img), "#FFFFFFFF")
+  expect_equal(patch(x)[[1]], "#FFFFFFFF")
 })
 
 test_that("blank-args", {
@@ -20,6 +20,7 @@ test_that("blank-args", {
   expect_equal(width(x), c(r = 50, g = 50, b = 50))
   expect_equal(height(x), c(r = 150, g = 150, b = 150))
   
-  patches <- get_imgs(x) |> sapply(patch)
-  expect_equal(patches, c("#FF0000FF", "#00FF00FF", "#0000FFFF"))
+  expect_equal(patch(x), c(r = "#FF0000FF", 
+                           g = "#00FF00FF", 
+                           b = "#0000FFFF"))
 })

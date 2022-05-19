@@ -16,7 +16,6 @@ align(
   height = NULL,
   ref_img = NULL,
   fill = wm_opts("fill"),
-  patch = FALSE,
   procrustes = FALSE
 )
 }
@@ -42,8 +41,6 @@ align(
 \item{ref_img}{The reference image (by index or name) to get coordinates and dimensions from if they are NULL (defaults to average of all images if NULL)}
 
 \item{fill}{background color if cropping goes outside the original image}
-
-\item{patch}{whether to use the patch function to set the background color}
 
 \item{procrustes}{Whether to do a procrustes alignment}
 }

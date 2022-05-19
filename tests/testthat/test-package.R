@@ -6,8 +6,8 @@ test_that("loading", {
     webmorph.fill = "white",
     webmorph.server = "https://webmorph.org",
     webmorph.plot = "inline",
-    webmorph.plot.maxwidth = 10000,
-    webmorph.plot.maxheight = 10000
+    webmorph.plot.maxwidth = 2400,
+    webmorph.plot.maxheight = 2400
   )
   
   for (i in seq_along(default_opts)) {

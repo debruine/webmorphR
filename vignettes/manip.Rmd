@@ -77,11 +77,11 @@ stimuli |>
 
 ## Rotate
 
-Rotate images by degrees. Set the `fill` argument to fill in the corners with a specific colour, or use `patch = TRUE` to sample the colour from 10x10 pixel square at the top left corner.
+Rotate images by degrees. Set the `fill` argument to fill in the corners with a specific colour, or use `patch(stimuli)` to sample the colour from 10x10 pixel square at the top left corner.
 
 ```{r rotate, fig.cap="Rotated Images and Templates"}
 stimuli |>
-  rotate(degrees = 45, patch = TRUE) |>
+  rotate(degrees = 45, fill = patch(stimuli)) |>
   plot()
 ```
 
@@ -91,7 +91,7 @@ If you want to rotate each image by the amount that makes the eyes horizontal, u
 
 ```{r horiz-eyes, fig.cap = "Make eyes horizontal with horiz_eyes()"}
 lisa <- load_stim_lisa()
-lisa_horiz <- horiz_eyes(lisa, patch = TRUE)
+lisa_horiz <- horiz_eyes(lisa, fill = patch(lisa))
 
 c(lisa, lisa_horiz) |> plot(nrow = 2)
 ```
@@ -141,25 +141,26 @@ Or you can use the `patch` function to get the median colour from a patch of the
 rb <- load_stim_rainbow(1:8)
 
 rb |>
-  pad(50, patch = TRUE) |>
+  pad(50, fill = patch(rb)) |>
   plot(nrow = 2)
 ```
 
 Or you can set the boundaries of the patch manually. The code below sets the patch colour to the average colour from a 100x100-pixel square in the center of each image.
 
 ```{r crop-match, fig.cap="Cropped Images with background matched to centre."}
-# get stimuli
-
 # get center x and y coordinates of each image
 cx <- width(rb)/2
 cy <- height(rb)/2
 r <- 50 # half-height of patch 
 
+patch_fills <- patch(rb, 
+                     x1 = cx - r, 
+                     x2 = cx + r, 
+                     y1 = cy - r, 
+                     y2 = cy + r)
+
 rb |>
-  pad(50, patch = list(x1 = cx - r, 
-                       x2 = cx + r, 
-                       y1 = cy - r, 
-                       y2 = cy + r)) |>
+  pad(50, fill = patch_fills) |>
   plot(nrow = 2)
 ```
 
@@ -256,14 +257,14 @@ You can manually set the values for the x and y coordinates, as well as the resu
 ```{r align-manual, fig.cap="Two-point alignment with align(); setting values manually"}
 stimuli |>
   align(x1 = 350, y1 = 350, x2 = 450, y2 = 450,
-        width = 800, height = 800, patch = TRUE) |>
+        width = 800, height = 800, fill = patch(stimuli)) |>
   plot()
 ```
 
 Instead of aligning to the average of all the images, you may want to align to a reference image. Set `ref_img` to the index or name of the chosen image. 
 
 ```{r realign2, fig.cap = "Align images to a reference image."}
-aligned3 <- align(lisa, ref_img = "lisa3", patch = TRUE) 
+aligned3 <- align(lisa, ref_img = "lisa3", fill = patch(lisa)) 
 
 plot_rows(
   "Original images" = lisa,
@@ -285,7 +286,7 @@ align(lisa, pt1 = 80, pt2 = 80) |>
 You can set the `procrustes` argument to TRUE to use [Procrustes analysis](https://en.wikipedia.org/wiki/Procrustes_analysis) to align the images and templates to fit the average shape (or a reference image) as closely as possible.
 
 ```{r procrustes, fig.cap = "Procrustes alignment."}
-align(lisa, procrustes = TRUE, patch = TRUE) |>
+align(lisa, procrustes = TRUE, fill = patch(lisa)) |>
   plot()
 ```
 
@@ -366,6 +367,18 @@ The possible {magick} functions are listed by `image_func_types()`. Check the ma
 
 ```{r}
 image_func_types()
+```
+
+
+A potentially useful one is "fill" if your backgrounds are clean enough (the `mask()` functions are better for this, though). You need to experiment with the fuzz a bit. These functions are vectorised, so you can set a different point to start the flood fill or a different fuzz for each image.
+
+```{r image-fill}
+demo_stim()[1] |>
+  rep(5)  |>
+  image_func("fill", "white", point="+10+10", 
+             fuzz = seq(5, 25, 5)) |> 
+  label(text = paste("fuzz =", seq(5, 25, 5))) |>
+  plot()
 ```
 
 

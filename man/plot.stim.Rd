@@ -20,6 +20,8 @@ stimlist
 Plot stim
 }
 \examples{
+\dontrun{
 demo_stim() |> plot()
+}
 }
 \keyword{internal}

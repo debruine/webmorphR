@@ -4,10 +4,10 @@
 #' @param rownames whether to return a table with no rownames (NULL), rownames from the list item names (NA), or as a new column (the column name as a string)
 #'
 #' @return a data table
-#' @export
+#' @keywords internal
 #'
 #' @examples
-#'
+#' \dontrun{
 #' list_format <- list(
 #'   item1 = list(x = 1, y = "A"),
 #'   item2 = list(x = 2),
@@ -18,7 +18,7 @@
 #' )
 #'
 #' list_to_tbl(list_format, rownames = "item")
-#'
+#' }
 list_to_tbl <- function(list, rownames = NULL) {
   tbl_format <- list |>
     # handle list() and NULL

@@ -25,8 +25,8 @@
     webmorph.fill = "white",
     webmorph.server = "https://webmorph.org",
     webmorph.plot = "inline",
-    webmorph.plot.maxwidth = 10000,
-    webmorph.plot.maxheight = 10000
+    webmorph.plot.maxwidth = 2400,
+    webmorph.plot.maxheight = 2400
   )
   toset <- !(names(op.webmorph) %in% names(op))
   if(any(toset)) options(op.webmorph[toset])

@@ -5,9 +5,10 @@
 #' @param remove_ext whether to remove the extension before comparing
 #'
 #' @return a list or vector of names with the common beginnings removed
-#' @export
+#' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' # breaks at /
 #' unique_names(c("common/face_A.tem",
 #'                "common/face_B.tem"))
@@ -16,7 +17,7 @@
 #' unique_names(c("common/face_A.tem",
 #'                "common/face_B.tem"),
 #'                breaks = "")
-#'
+#' }
 unique_names <- function(full_names,
                          breaks = "/",
                          remove_ext = TRUE) {

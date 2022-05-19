@@ -4,13 +4,7 @@
 \alias{rotate}
 \title{Rotate templates and images}
 \usage{
-rotate(
-  stimuli,
-  degrees = 0,
-  fill = wm_opts("fill"),
-  patch = FALSE,
-  keep_size = TRUE
-)
+rotate(stimuli, degrees = 0, fill = wm_opts("fill"), keep_size = TRUE)
 }
 \arguments{
 \item{stimuli}{list of class stimlist}
@@ -18,8 +12,6 @@ rotate(
 \item{degrees}{degrees to rotate}
 
 \item{fill}{background color}
-
-\item{patch}{whether to use the patch function to set the background color}
 
 \item{keep_size}{whether to keep the original size or expand images to the new rotated size}
 }
@@ -34,7 +26,7 @@ rotated <- demo_stim() |>
   rotate(45, fill = "dodgerblue") |>
   draw_tem()
 
-rotate_patch <- demo_stim() |>
-  rotate(45, patch = TRUE, keep_size = FALSE)
+rotate_corners <- demo_stim() |>
+  rotate(45, keep_size = FALSE)
 
 }

@@ -553,8 +553,9 @@ smi_orig <- subset(smiling, face_gender == "female") |>
   auto_delin(replace = TRUE)
 
 # align the images
-aligned <- c(neu_orig, smi_orig) |>
-  align(procrustes = TRUE, patch = TRUE) |>
+all <- c(neu_orig, smi_orig) 
+aligned <- all |>
+  align(procrustes = TRUE, fill = patch(all)) |>
   crop(.6, .8, y_off = 0.05)
 
 neu <- subset(aligned, 1:5)
@@ -603,8 +604,9 @@ m_orig <- subset(london, face_gender == "male") |>
   subset(face_eth == "black") |> subset(1:5)
 
 # align the images
-aligned <- c(f_orig, m_orig) |>
-  align(procrustes = TRUE, patch = TRUE) |>
+all <- c(f_orig, m_orig) 
+aligned <- all |>
+  align(procrustes = TRUE, fill = patch(all)) |>
   crop(.6, .8, y_off = 0.05)
 
 f <- subset(aligned, 1:5)
@@ -696,13 +698,13 @@ flags <- read_stim("images/flags")
 
 ingroup <- f |>
   # pad 10% at the top with matching color
-  pad(0.1, 0, 0, 0, patch = TRUE) |> 
+  pad(0.1, 0, 0, 0, fill = patch(f)) |> 
   label("Scottish", "north", "+0+10") |>
   image_func("composite", flags$saltire$img, 
               gravity = "northeast", offset = "+10+10")
 
 outgroup <- f |>
-  pad(0.1, 0, 0, 0, patch = TRUE) |> 
+  pad(0.1, 0, 0, 0, fill = patch(f)) |> 
   label("Welsh", "north", "+0+10") |>
   image_func("composite", flags$ddraig$img, 
              gravity = "northeast", offset = "+10+10")

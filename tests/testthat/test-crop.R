@@ -75,14 +75,14 @@ test_that("limits", {
   
   # 99% offset
   x <- crop(s, x_off = .99, y_off = .99)
-  expect_equal(patch(x$f_multi$img, 
+  expect_equal(patch(x$f_multi, 
                      x1 = 10, y1 = 10,
-                     x2 = 500, y2 = 500),
+                     x2 = 500, y2 = 500)[[1]],
                "#FFFFFFFF")
   
   # 1-pixel offset 
   x <- crop(s, x_off = 1, y_off = 1)
-  expect_true(patch(x$f_multi$img, x2 = 500, y2 = 500) !=
+  expect_true(patch(x$f_multi, x2 = 500, y2 = 500)[[1]] !=
                "#FFFFFFFF")
   
 })

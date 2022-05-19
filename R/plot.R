@@ -11,8 +11,9 @@
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' demo_stim() |> plot()
-#'
+#' }
 plot.stimlist <- function(x, y, ...) {
   plot_stim(x, ...)
 }
@@ -28,7 +29,9 @@ plot.stimlist <- function(x, y, ...) {
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' demo_stim() |> plot()
+#' }
 
 plot.stim <- function(x, y, ...) {
   stimlist <- validate_stimlist(x)

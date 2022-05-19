@@ -74,14 +74,17 @@ plot(subset, nrow = 2)
 
 ### Align
 
-Next, align the images using Procrustes normalisation to the position of the first image. They need to have templates fitted to do this. The argument `patch = TRUE` tries to match the background colour as closely as possible. 
+Next, align the images using Procrustes normalisation to the position of the first image. They need to have templates fitted to do this. The function `patch()` is used to match the background colour as closely as possible. 
 
 The `horiz_eyes` function just makes sure that the first image has good alignment, since his head is slightly tilted.
 
 ```{r align, message=FALSE}
+# get patch color for each image from top 10 pixels
+patch_fill <- patch(subset, x1 = 0, x2 = 1, y1 = 0, y2 = 10)
+
 aligned <- subset |>
-  horiz_eyes(patch = TRUE) |>
-  align(procrustes = TRUE, patch = TRUE)
+  horiz_eyes(fill = patch_fill) |>
+  align(procrustes = TRUE, fill = patch_fill)
 
 plot(aligned, nrow = 2)
 ```
@@ -160,13 +163,16 @@ transf |>
 Now you can pipe all of the commands together and apply them to a new set of images, such as all the black women in the set.
 
 ```{r}
+# get patch color for each image
+patch_fill <- patch(stimuli, x1 = 0, x2 = 1, y1 = 0, y2 = 10)
+
 # subset, resize, align, and crop
 cropped <- stimuli |>
   subset(face_gender == "female") |>
   subset(face_eth == "black") |>
   resize(.5) |>
-  horiz_eyes(patch = TRUE) |>
-  align(procrustes = TRUE, patch = TRUE) |>
+  horiz_eyes(fill = patch_fill) |>
+  align(procrustes = TRUE, fill = patch_fill) |>
   crop(width = 0.6, height = 0.8, y_off = 0.05)
 
 # average

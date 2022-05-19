@@ -16,5 +16,8 @@ human-readable file size
 Format file size
 }
 \examples{
+\dontrun{
 format_size(1024*1024)
 }
+}
+\keyword{internal}

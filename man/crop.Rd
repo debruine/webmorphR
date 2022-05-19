@@ -10,8 +10,7 @@ crop(
   height = 1,
   x_off = NULL,
   y_off = NULL,
-  fill = wm_opts("fill"),
-  patch = FALSE
+  fill = wm_opts("fill")
 )
 }
 \arguments{
@@ -26,8 +25,6 @@ crop(
 \item{y_off}{y-offset in pixels or \% (<1) (NULL vertically centers cropped image)}
 
 \item{fill}{background color if cropping goes outside the original image}
-
-\item{patch}{whether to use the patch function to set the background color}
 }
 \value{
 stimlist with cropped tems and/or images
@@ -38,7 +35,7 @@ Remove or add margins to images and templates.
 \details{
 Width, height, x_off and y_off can be set in pixels or proportions). For width and height, values less than 2 will be interpreted as proportions, otherwise pixels. For x_off and y_off, values between -1 and 1 are interpreted as proportions, otherwise pixels. Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set.
 
-Fill can be set to R color names (see \code{colors()}) or valid hex or rgb values. Patch can be set to TRUE (defaults to median color of top left 10-pixel square) or a list of arguments to the function \code{patch()} to set background from a patch of the image.
+Fill can be set to R color names (see \code{colors()}) or valid hex or rgb values
 }
 \examples{
 stimuli <- demo_stim()
@@ -48,8 +45,5 @@ stim_centered <- crop(stimuli, width = .60, height = .80)
 
 # crop to upper right quadrant
 urq <- crop(stimuli, .5, .5, x_off = .5, y_off = 0)
-
-# take median color from a patch
-bigger <- crop(stimuli, 1.2, 1.2, patch = c(100, 200, 1, 10))
 
 }

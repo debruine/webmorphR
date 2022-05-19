@@ -10,12 +10,13 @@ test_that("draw_tem", {
   
   alpha1 <- draw_tem(stimuli, "red", pt.size = 10, pt.alpha = 1)
   pt <- get_point(alpha1, 0)
-  ptcol <- patch(alpha1[[1]]$img, 
+  ptcol <- patch(alpha1, 
         x1 = floor(pt$x), 
         x2 = floor(pt$x),
         y1 = floor(pt$y), 
-        y2 = floor(pt$y)) |> color_conv(to = "rgb")
-  expect_equal(ptcol, c(255, 0, 0))
+        y2 = floor(pt$y),
+        color = "rgb")
+  expect_equal(ptcol$f_multi, c(red=255, green=0, blue=0, alpha=255))
 
   # plot(default)
   # plot(red)

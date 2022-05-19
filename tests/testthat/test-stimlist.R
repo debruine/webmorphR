@@ -40,9 +40,10 @@ test_that("errors", {
   expect_error(validate_stimlist(list("a")))
 })
 
-test_that("reload img", {
-  stim$img <- NULL
-  stim2 <- validate_stimlist(stim)
-  expect_equal(class(stim2[[1]]$img), "magick-image")
-})
+# reload code currently commented out
+# test_that("reload img", {
+#   stim$img <- NULL
+#   stim2 <- validate_stimlist(stim)
+#   expect_equal(class(stim2[[1]]$img), "magick-image")
+# })
 

@@ -3,7 +3,6 @@
 #' @param stimuli list of class stimlist
 #' @param degrees degrees to rotate
 #' @param fill background color
-#' @param patch whether to use the patch function to set the background color
 #' @param keep_size whether to keep the original size or expand images to the new rotated size
 #'
 #' @return stimlist with rotated tems and/or images
@@ -15,11 +14,11 @@
 #'   rotate(45, fill = "dodgerblue") |>
 #'   draw_tem()
 #'
-#' rotate_patch <- demo_stim() |>
-#'   rotate(45, patch = TRUE, keep_size = FALSE)
+#' rotate_corners <- demo_stim() |>
+#'   rotate(45, keep_size = FALSE)
 #'
 rotate <- function(stimuli, degrees = 0,
-                   fill = wm_opts("fill"), patch = FALSE,
+                   fill = wm_opts("fill"),
                    keep_size = TRUE) {
   stimuli <- validate_stimlist(stimuli)
   n <- length(stimuli)
@@ -31,7 +30,6 @@ rotate <- function(stimuli, degrees = 0,
 
   suppressWarnings({
     fill <- rep_len(fill, n)
-    #patch <- rep_len(patch, n)
   })
 
   for (i in seq_along(stimuli)) {
@@ -42,14 +40,6 @@ rotate <- function(stimuli, degrees = 0,
     if ("magick-image" %in% class(stimuli[[i]]$img)) {
       xm1 <- w/2
       ym1 <- h/2
-
-      # set fill from patch
-      if (isTRUE(patch)) {
-        fill[i] <- patch(stimuli[[i]]$img)
-      } else if (!isFALSE(patch)) {
-        plist <- c(list(img = stimuli[[i]]$img), patch)
-        fill[i] <- do.call("patch", plist)
-      }
 
       rotimg <- stimuli[[i]]$img |>
         magick::image_background(color = fill[i]) |>
@@ -94,18 +84,15 @@ rotate <- function(stimuli, degrees = 0,
 
     # rotate points ----
     if (!is.null(stimuli[[i]]$points)) {
-      # Subtract original midpoints, rotate,
-      # and add the new midpoints in the end again
-      stimuli[[i]]$points <- apply(stimuli[[i]]$points, 2, function(pt) {
-        crad <- cos(radians[i])
-        srad <- sin(radians[i])
-        x_offset <- pt[[1]] - xm1
-        y_offset <- pt[[2]] - ym1
-        xr = x_offset * crad - y_offset * srad + xm2
-        yr = x_offset * srad + y_offset * crad + ym2
-
-        c(x = xr, y = yr)
-      })
+      pt <- stimuli[[i]]$points
+      offset <- pt - c(xm1, ym1)
+      crad <- cos(radians[i]) * offset
+      srad <- sin(radians[i]) * offset
+      xr <- crad[1,] - srad[2,] + xm2
+      yr <- srad[1,] + crad[2,] + ym2
+      stimuli[[i]]$points <- matrix(c(xr, yr), 2, 
+                                    byrow = TRUE, 
+                                    dimnames = dimnames(pt))
     }
   }
 
@@ -119,10 +106,12 @@ rotate <- function(stimuli, degrees = 0,
 #' @param degrees Rotation in degreed
 #'
 #' @return list of rotated width and height
-#' @export
+#' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' rotated_size(100, 100, 45)
+#' }
 rotated_size <- function(width, height, degrees) {
   degrees <- degrees %% 180
 
@@ -153,7 +142,6 @@ rotated_size <- function(width, height, degrees) {
 #' @param left_eye The first point to align (defaults to 0)
 #' @param right_eye The second point to align (defaults to 1)
 #' @param fill background color to pass to rotate
-#' @param patch whether to use the patch function to set the background color
 #'
 #' @return stimlist with rotated tems and/or images
 #' @export
@@ -161,7 +149,7 @@ rotated_size <- function(width, height, degrees) {
 #' @examples
 #' demo_stim() |> horiz_eyes()
 #'
-horiz_eyes <- function(stimuli, left_eye = 0, right_eye = 1, fill = wm_opts("fill"), patch = FALSE) {
+horiz_eyes <- function(stimuli, left_eye = 0, right_eye = 1, fill = wm_opts("fill")) {
   stimuli <- validate_stimlist(stimuli, TRUE)
 
   degrees <- lapply(stimuli, `[[`, "points") |>
@@ -175,6 +163,5 @@ horiz_eyes <- function(stimuli, left_eye = 0, right_eye = 1, fill = wm_opts("fil
   })
 
   stimuli |>
-    rotate(degrees = degrees, fill = fill,
-           patch = patch, keep_size = TRUE)
+    rotate(degrees = degrees, fill = fill, keep_size = TRUE)
 }

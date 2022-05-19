@@ -5,7 +5,7 @@
 #' @details 
 #' Width, height, x_off and y_off can be set in pixels or proportions). For width and height, values less than 2 will be interpreted as proportions, otherwise pixels. For x_off and y_off, values between -1 and 1 are interpreted as proportions, otherwise pixels. Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set.
 #'
-#' Fill can be set to R color names (see `colors()`) or valid hex or rgb values. Patch can be set to TRUE (defaults to median color of top left 10-pixel square) or a list of arguments to the function `patch()` to set background from a patch of the image.
+#' Fill can be set to R color names (see `colors()`) or valid hex or rgb values
 #'
 #' @param stimuli list of class stimlist
 #' @param width width of cropped image in pixels or % (<2)
@@ -13,7 +13,6 @@
 #' @param x_off x-offset in pixels or % (<1) (NULL horizontally centers cropped image)
 #' @param y_off y-offset in pixels or % (<1) (NULL vertically centers cropped image)
 #' @param fill background color if cropping goes outside the original image
-#' @param patch whether to use the patch function to set the background color
 #'
 #' @return stimlist with cropped tems and/or images
 #' @export
@@ -27,13 +26,10 @@
 #' # crop to upper right quadrant
 #' urq <- crop(stimuli, .5, .5, x_off = .5, y_off = 0)
 #'
-#' # take median color from a patch
-#' bigger <- crop(stimuli, 1.2, 1.2, patch = c(100, 200, 1, 10))
-#'
 crop <- function(stimuli,
                  width = 1.0, height = 1.0,
                  x_off = NULL, y_off = NULL,
-                 fill = wm_opts("fill"), patch = FALSE) {
+                 fill = wm_opts("fill")) {
   stimuli <- validate_stimlist(stimuli)
 
   suppressWarnings({
@@ -43,15 +39,25 @@ crop <- function(stimuli,
     x_off <- rep(x_off, length.out = l)
     y_off <- rep(y_off, length.out = l)
     fill <- rep(fill, length.out = l)
-    if (is.list(patch)) {
-      x1 <- rep(patch[["x1"]] %||% 1, length.out = l) |> unname()
-      x2 <- rep(patch[["x2"]] %||% 10, length.out = l) |> unname()
-      y1 <- rep(patch[["y1"]] %||% 1, length.out = l) |> unname()
-      y2 <- rep(patch[["y2"]] %||% 10, length.out = l) |> unname()
-      color <- rep(patch[["color"]] %||% "hex", length.out = l) |> unname()
-      patch <- list(x1 = x1, x2 = x2, y1 = y1, y2 = y2, color = color)
-    }
   })
+  
+  # origw <- width(stimuli)
+  # w <- width %||% origw
+  # w <- ifelse(w < 2, w * origw, w)
+  # 
+  # origh <- height(stimuli)
+  # h <- height %||% origh
+  # h <- ifelse(h < 2, h * origh, h)
+  # 
+  # # handle null or missing offsets by centering
+  # x_off <- x_off %||% (origw - w)/2
+  # y_off <- y_off %||% (origh - h)/2
+  # x_off <- ifelse(is.na(x_off), (origw - w)/2, x_off)
+  # y_off <- ifelse(is.na(y_off), (origh - h)/2, y_off)
+  # 
+  # # handle offsets < 1
+  # x_off <- ifelse(x_off < 1, x_off * origw, x_off)
+  # y_off <- ifelse(y_off < 1, y_off * origh, y_off)
 
   for (i in seq_along(stimuli)) {
     origw <- stimuli[[i]]$width
@@ -73,6 +79,8 @@ crop <- function(stimuli,
     if (is.null(x_off[i]) || is.na(x_off[i])) x_off[i] <- (origw - w)/2
     if (is.null(y_off[i]) || is.na(y_off[i])) y_off[i] <- (origh - h)/2
 
+    # update width and height in case no image
+    # (gets updates from img below)
     stimuli[[i]]$width <- w
     stimuli[[i]]$height <- h
 
@@ -92,24 +100,6 @@ crop <- function(stimuli,
         gravity = "NorthWest"
       )
 
-      # set fill from patch
-      if (isTRUE(patch)) {
-        fill[i] <- patch(stimuli[[i]]$img)
-      } else if (is.list(patch)) {
-        # patch is a list
-        fill[i] <- patch(img = stimuli[[i]]$img,
-                         x1 = patch$x1[i],
-                         x2 = patch$x2[i],
-                         y1 = patch$y1[i],
-                         y2 = patch$y2[i],
-                         color = patch$color[i],
-                         func = patch$func %||% stats::median)
-      } else if (!isFALSE(patch)) {
-        # single patch value
-        plist <- c(list(img = stimuli[[i]]$img), patch)
-        fill[i] <- do.call("patch", plist)
-      }
-
       # make background image with fill
       bg <- magick::image_blank(w, h, color = fill[i])
       offset <- magick::geometry_point(
@@ -122,15 +112,18 @@ crop <- function(stimuli,
         composite_image = newimg,
         offset = offset
       )
+      
+      # get dim from magick in case of rounding differences
       info <- magick::image_info(stimuli[[i]]$img)
       stimuli[[i]]$width <- info$width[[1]]
       stimuli[[i]]$height <- info$height[[1]]
     }
 
-    if (!is.null(stimuli[[i]]$points)) {
-      stimuli[[i]]$points <- apply(stimuli[[i]]$points, 2, function(pt) {
-        pt - c(x_off[i], y_off[i])
-      })
+    # crop template if present
+    pts <- stimuli[[i]]$points
+    if (!is.null(pts)) {
+      # benchmarked 50x faster than apply (still trivial)
+      stimuli[[i]]$points <- pts - c(x_off[i], y_off[i])
     }
   }
 

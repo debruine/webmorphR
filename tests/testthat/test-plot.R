@@ -55,6 +55,7 @@ test_that("nrow/ncol", {
   expect_equivalent(height(p), 4*w + 5*10)
   
   
+  wm_opts(wm_opts_defaults())
 })
 
 # padding ----
@@ -78,37 +79,37 @@ test_that("padding", {
   
   # fill changed padding color
   p12d <- plot(x, fill = "red")
-  expect_equal(patch(p12d$plot$img), "#FF0000FF")
+  expect_equal(patch(p12d$plot)[[1]], "#FF0000FF")
 })
 
 # byrow ----
 test_that("byrow", {
   rb <- blank(6, color = rainbow(6))
-  colors <- get_imgs(rb) |> sapply(patch)
+  colors <- patch(rb) |> unname()
   
   p <- plot(rb, padding = 0)
-  expect_equal(patch(p$plot$img, 1, 10, 1, 10), colors[1])
-  expect_equal(patch(p$plot$img, 101, 110, 1, 10), colors[2])
-  expect_equal(patch(p$plot$img, 201, 210, 1, 10), colors[3])
-  expect_equal(patch(p$plot$img, 1, 10, 101, 110), colors[4])
-  expect_equal(patch(p$plot$img, 101, 110, 101, 110), colors[5])
-  expect_equal(patch(p$plot$img, 201, 210, 101, 110), colors[6])
+  expect_equal(patch(p, 0, 10, 0, 10)[[1]], colors[1])
+  expect_equal(patch(p, 101, 110, 0, 10)[[1]], colors[2])
+  expect_equal(patch(p, 201, 210, 0, 10)[[1]], colors[3])
+  expect_equal(patch(p, 0, 10, 101, 110)[[1]], colors[4])
+  expect_equal(patch(p, 101, 110, 101, 110)[[1]], colors[5])
+  expect_equal(patch(p, 201, 210, 101, 110)[[1]], colors[6])
   
   p <- plot_stim(rb, byrow = TRUE, padding = 0)
-  expect_equal(patch(p$plot$img, 1, 10, 1, 10), colors[1])
-  expect_equal(patch(p$plot$img, 101, 110, 1, 10), colors[2])
-  expect_equal(patch(p$plot$img, 201, 210, 1, 10), colors[3])
-  expect_equal(patch(p$plot$img, 1, 10, 101, 110), colors[4])
-  expect_equal(patch(p$plot$img, 101, 110, 101, 110), colors[5])
-  expect_equal(patch(p$plot$img, 201, 210, 101, 110), colors[6])
+  expect_equal(patch(p, 0, 10, 0, 10)[[1]], colors[1])
+  expect_equal(patch(p, 101, 110, 0, 10)[[1]], colors[2])
+  expect_equal(patch(p, 201, 210, 0, 10)[[1]], colors[3])
+  expect_equal(patch(p, 0, 10, 101, 110)[[1]], colors[4])
+  expect_equal(patch(p, 101, 110, 101, 110)[[1]], colors[5])
+  expect_equal(patch(p, 201, 210, 101, 110)[[1]], colors[6])
   
   p <- plot_stim(rb, byrow = FALSE, padding = 0)
-  expect_equal(patch(p$plot$img, 1, 10, 1, 10), colors[1])
-  expect_equal(patch(p$plot$img, 101, 110, 1, 10), colors[3])
-  expect_equal(patch(p$plot$img, 201, 210, 1, 10), colors[5])
-  expect_equal(patch(p$plot$img, 1, 10, 101, 110), colors[2])
-  expect_equal(patch(p$plot$img, 101, 110, 101, 110), colors[4])
-  expect_equal(patch(p$plot$img, 201, 210, 101, 110), colors[6])
+  expect_equal(patch(p, 0, 10, 0, 10)[[1]], colors[1])
+  expect_equal(patch(p, 101, 110, 0, 10)[[1]], colors[3])
+  expect_equal(patch(p, 201, 210, 0, 10)[[1]], colors[5])
+  expect_equal(patch(p, 0, 10, 101, 110)[[1]], colors[2])
+  expect_equal(patch(p, 101, 110, 101, 110)[[1]], colors[4])
+  expect_equal(patch(p, 201, 210, 101, 110)[[1]], colors[6])
 })
 
 # maxwidth/maxheight ----

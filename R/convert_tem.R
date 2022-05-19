@@ -9,7 +9,9 @@
 #' @keywords internal
 #'
 #' @examples
+#' \dontrun{
 #' fpp106 <- demo_stim() |> convert_tem("guess", "fpp106")
+#' }
 convert_tem <- function(stimuli, 
                         from = c("guess", "frl", "fpp106", "fpp83", "dlib70", "dlib7"), 
                         to = c("frl", "fpp106", "fpp83", "dlib70", "dlib7")) {

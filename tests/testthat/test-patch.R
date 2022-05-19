@@ -1,91 +1,83 @@
-library(magick)
-
-input <- c(
-  image_blank(10, 10, rgb(0, 0, 0)),
-  image_blank(10, 10, rgb(1, 0, 0)),
-  image_blank(10, 10, rgb(0, 1, 0)),
-  image_blank(10, 10, rgb(1, 1, 0)),
-  image_blank(10, 10, rgb(0, 0, 1)),
-  image_blank(10, 10, rgb(1, 0, 1)),
-  image_blank(10, 10, rgb(0, 1, 1)),
-  image_blank(10, 10, rgb(1, 1, 1))
-)
+input <- blank(8, 10, 10, list(rgb(0, 0, 0),
+                                rgb(1, 0, 0),
+                                rgb(0, 1, 0),
+                                rgb(1, 1, 0),
+                                rgb(0, 0, 1),
+                                rgb(1, 0, 1),
+                                rgb(0, 1, 1),
+                                rgb(1, 1, 1)))
 
 # black, red,     green, yellow
 # blue,  magenta, cyan,  white
-img <- image_montage(input, geometry = '10x10+0+0', tile = '4x2')
+img <- plot(input, nrow = 2, padding = 0)
 
 test_that("basic", {
-  expect_equal(patch(img), "#000000FF")
-  expect_equal(patch(img, 1, 10, 1, 10), "#000000FF")
-  expect_equal(patch(img, 1, 10, 11, 20), "#0000FFFF")
-  expect_equal(patch(img, 11, 20, 1, 10), "#FF0000FF")
-  expect_equal(patch(img, 11, 20, 11, 20), "#FF00FFFF")
-  expect_equal(patch(img, 21, 30, 1, 10), "#00FF00FF")
-  expect_equal(patch(img, 21, 30, 11, 20), "#00FFFFFF")
-  expect_equal(patch(img, 31, 40, 1, 10), "#FFFF00FF")
-  expect_equal(patch(img, 31, 40, 11, 20), "#FFFFFFFF")
+  expect_equal(patch(img)[[1]], "#000000FF")
+  expect_equal(patch(img, 0, 10, 0, 10)[[1]], "#000000FF")
+  expect_equal(patch(img, 0, 10, 11, 20)[[1]], "#0000FFFF")
+  expect_equal(patch(img, 11, 20, 0, 10)[[1]], "#FF0000FF")
+  expect_equal(patch(img, 11, 20, 11, 20)[[1]], "#FF00FFFF")
+  expect_equal(patch(img, 21, 30, 0, 10)[[1]], "#00FF00FF")
+  expect_equal(patch(img, 21, 30, 11, 20)[[1]], "#00FFFFFF")
+  expect_equal(patch(img, 31, 40, 0, 10)[[1]], "#FFFF00FF")
+  expect_equal(patch(img, 31, 40, 11, 20)[[1]], "#FFFFFFFF")
 
-  expect_equal(patch(img, 1, 10, 1, 10, "rgb"),
+  expect_equal(patch(img, 0, 10, 0, 10, "rgb")[[1]],
                c(red = 0, green = 0, blue = 0, alpha = 255))
-  expect_equal(patch(img, 1, 10, 11, 20, "rgb"),
+  expect_equal(patch(img, 0, 10, 11, 20, "rgb")[[1]],
                c(red = 0, green = 0, blue = 255, alpha = 255))
-  expect_equal(patch(img, 11, 20, 1, 10, "rgb"),
+  expect_equal(patch(img, 11, 20, 0, 10, "rgb")[[1]],
                c(red = 255, green = 0, blue = 0, alpha = 255))
-  expect_equal(patch(img, 11, 20, 11, 20, "rgb"),
+  expect_equal(patch(img, 11, 20, 11, 20, "rgb")[[1]],
                c(red = 255, green = 0, blue = 255, alpha = 255))
-  expect_equal(patch(img, 21, 30, 1, 10, "rgb"),
+  expect_equal(patch(img, 21, 30, 0, 10, "rgb")[[1]],
                c(red = 0, green = 255, blue = 0, alpha = 255))
-  expect_equal(patch(img, 21, 30, 11, 20, "rgb"),
+  expect_equal(patch(img, 21, 30, 11, 20, "rgb")[[1]],
                c(red = 0, green = 255, blue = 255, alpha = 255))
-  expect_equal(patch(img, 31, 40, 1, 10, "rgb"),
+  expect_equal(patch(img, 31, 40, 0, 10, "rgb")[[1]],
                c(red = 255, green = 255, blue = 0, alpha = 255))
-  expect_equal(patch(img, 31, 40, 11, 20, "rgb"),
+  expect_equal(patch(img, 31, 40, 11, 20, "rgb")[[1]],
                c(red = 255, green = 255, blue = 255, alpha = 255))
 })
 
 test_that("multi-color patches", {
   # hex values get rounded
-  expect_equal(patch(img, 1, 20, 1, 10), "#7F0000FF")
+  expect_equal(patch(img, 0, 20, 0, 10)[[1]], "#7F0000FF")
 
   # median gives average with *exact* balance
-  expect_equal(patch(img, 1, 20, 1, 10, "rgb"),
+  expect_equal(patch(img, 0, 20, 0, 10, "rgb")[[1]],
                c(red = 127.5, green = 0, blue = 0, alpha = 255))
   # but not with any imbalance
-  expect_equal(patch(img, 1, 19, 1, 10, "rgb"),
+  expect_equal(patch(img, 0, 19, 0, 10, "rgb")[[1]],
                c(red = 0, green = 0, blue = 0, alpha = 255))
 
   # mean gives average no matter the balance
-  expect_equal(patch(img, 1, 20, 1, 10, "rgb", mean),
+  expect_equal(patch(img, 0, 20, 0, 10, "rgb", mean)[[1]],
                c(red = 127.5, green = 0, blue = 0, alpha = 255))
-  expect_equal(patch(img, 1, 19, 1, 10, "rgb", mean),
+  expect_equal(patch(img, 0, 19, 0, 10, "rgb", mean)[[1]],
                c(red = 120.7895, green = 0, blue = 0, alpha = 255),
                tolerance = 0.001)
 })
 
 test_that("list", {
-  f <- tempfile(fileext = ".png")
-  image_write(img, f, "png")
-  
-  # read in 8 times
-  stim <- read_stim(rep(f, 8))
-  
   # set patch to each square
-  patch <- list(x1 = rep(c(1, 11, 21, 31), 2),
-                x2 = rep(c(10, 20, 30, 40), 2),
-                y1 = rep(c(1, 11), each = 4),
-                y2 = rep(c(10, 20), each = 4)
-                )
+  args <- list(
+    stimuli = rep(img, 8),
+    x1 = rep(c(0, 11, 21, 31), each = 2),
+    x2 = rep(c(10, 20, 30, 40), each = 2),
+    y1 = rep(c(0, 11), times = 4),
+    y2 = rep(c(10, 20), times = 4)
+ )
   
-  # pad each with a different color
-  padded <- pad(stim, patch = patch)
-  #plot(padded)
+  p <- do.call(patch, args)
   
-  # extract pad colours
-  pad_colors <- get_imgs(padded) |>
-    sapply(patch, x1=1, x2=1, y1=1, y2=1, color = "rgb")
-  
-  expect_equal(pad_colors["red",], rep(c(0, 255), 4))
-  expect_equal(pad_colors["green",], rep(c(0, 255), times = 2, each = 2))
-  expect_equal(pad_colors["blue",], rep(c(0, 255), each = 4))
+  expect_equal(p[[1]], "#000000FF")
+  expect_equal(p[[2]], "#0000FFFF")
+  expect_equal(p[[3]], "#FF0000FF")
+  expect_equal(p[[4]], "#FF00FFFF")
+  expect_equal(p[[5]], "#00FF00FF")
+  expect_equal(p[[6]], "#00FFFFFF")
+  expect_equal(p[[7]], "#FFFF00FF")
+  expect_equal(p[[8]], "#FFFFFFFF")
 })
+

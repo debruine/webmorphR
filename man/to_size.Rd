@@ -9,7 +9,6 @@ to_size(
   width,
   height = NULL,
   fill = wm_opts("fill"),
-  patch = FALSE,
   crop = FALSE,
   keep_rels = FALSE
 )
@@ -22,8 +21,6 @@ to_size(
 \item{height}{the target height (or null if width is dimensions)}
 
 \item{fill}{background color if cropping goes outside the original image}
-
-\item{patch}{whether to use the patch function to set the background color}
 
 \item{crop}{whether to crop or pad images to make them the specified size}
 

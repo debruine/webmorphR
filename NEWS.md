@@ -1,3 +1,10 @@
+# webmorphR 0.0.2.9003
+
+* Changed `patch()` function to return a vector of hex colours for a stimlist
+* Removed `patch` argument from `crop()`, `rotate()`, `to_size()` and `pad()`; use `patch()` to generate values for the `fill` argument instead.
+* Various code optimisations and bug fixes.
+* Made most of the helper functions internal; I don't think anyone else uses these.
+
 # webmorphR 0.0.2.9002
 
 * Removed `ask` argument from `write_stim()` and added "overwrite" to `wm_opts()` for a global overwrite setting.

@@ -15,12 +15,12 @@ test_that("mask_oval", {
   
   # check mask presence and absence
   for (i in 1:2) {
-    in_border <- patch(z[[i]]$img, 
+    in_border <- patch(z[[i]], 
           x1 = width(z)/2, x2 = width(z)/2, 
-          y1 = 35, y2 = 35)
-    out_border <- patch(z[[i]]$img, 
+          y1 = 35, y2 = 35)[[1]]
+    out_border <- patch(z[[i]], 
                         x1 = width(z)/2, x2 = width(z)/2, 
-                        y1 = 45, y2 = 45)
+                        y1 = 45, y2 = 45)[[1]]
     expect_equal("#FF0000FF", in_border)
     expect_true(in_border != out_border)
   }

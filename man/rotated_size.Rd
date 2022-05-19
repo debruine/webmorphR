@@ -20,5 +20,8 @@ list of rotated width and height
 Image size after rotation
 }
 \examples{
+\dontrun{
 rotated_size(100, 100, 45)
 }
+}
+\keyword{internal}

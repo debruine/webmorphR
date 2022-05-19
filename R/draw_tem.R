@@ -107,7 +107,12 @@ draw_tem <- function(stimuli, pt.color = wm_opts("pt.color"), pt.alpha = 0.75, p
     temimg <- magick::image_read_svg(svg)
 
     if (bg[i] == "image") {
-      stimuli[[i]]$img <- magick::image_composite(stimuli[[i]]$img, temimg)
+      img <- stimuli[[i]]$img
+      if (inherits(img, "magick-image")) {
+        stimuli[[i]]$img <- magick::image_composite(img, temimg)
+      } else {
+        stimuli[[i]]$img <- magick::image_background(temimg, wm_opts("fill"))
+      }
     } else if (bg[i] == "none") {
       stimuli[[i]]$img <- temimg
     } else {

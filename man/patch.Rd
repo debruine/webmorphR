@@ -5,37 +5,38 @@
 \title{Patch colour}
 \usage{
 patch(
-  img,
-  x1 = 1,
+  stimuli,
+  x1 = 0,
   x2 = 10,
-  y1 = 1,
+  y1 = 0,
   y2 = 10,
   color = c("hex", "rgb"),
   func = stats::median
 )
 }
 \arguments{
-\item{img}{The image}
+\item{stimuli}{A stim or list of class stimlist}
 
-\item{x1}{starting x pixel of patch}
-
-\item{x2}{ending x pixel of patch}
-
-\item{y1}{starting y pixel of patch}
-
-\item{y2}{ending y pixel of patch}
+\item{x1, x2, y1, y2}{start and end pixels of the patch, if <=1, interpreted as proportions of width or height}
 
 \item{color}{The type of color to return (hex, rgb)}
 
-\item{func}{The function to apply to an array of rgba values to determine the central colour (defaults to median)}
+\item{func}{The function to apply to an array of rgba values to determine the central colour (defaults to median, but mean, min, or max are also useful)}
 }
 \value{
-hex or rgba color value
+a vector of hex or rgba color values
 }
 \description{
 Get the median (or mean or user-defined function) colour value of a specified patch of pixels on an image. This is useful for matching background colours.
 }
 \examples{
-patch(demo_stim()[[1]]$img)
+# get colour from the upper left corder
+demo_stim() |> patch()
+
+# get median colour from centre .1 width pixels
+demo_stim() |> patch(x1 = .45, x2 = .55, y1 = .45, y2 = .55)
+
+# get mean rgb colour from a 10-pixel strip across the top of the image
+demo_stim() |> patch(0, 1, 0, 10, color = "rgb", func = mean)
 
 }

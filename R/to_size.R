@@ -4,7 +4,6 @@
 #' @param width the target width (or a vector of width and height)
 #' @param height the target height (or null if width is dimensions)
 #' @param fill background color if cropping goes outside the original image
-#' @param patch whether to use the patch function to set the background color
 #' @param crop whether to crop or pad images to make them the specified size
 #' @param keep_rels whether to keep the size relationships between images in the set, or make all the maximum size
 #'
@@ -19,7 +18,7 @@
 #' to_size(stimuli, 300, 400, fill = "dodgerblue") |> plot()
 #'
 to_size <- function(stimuli, width, height = NULL,
-                    fill = wm_opts("fill"), patch = FALSE,
+                    fill = wm_opts("fill"),
                     crop = FALSE, keep_rels = FALSE) {
   # process width and height
   if (length(width) == 2 && is.null(height)) {
@@ -61,5 +60,5 @@ to_size <- function(stimuli, width, height = NULL,
 
   resized <- resize(stimuli, pcnt)
 
-  crop(resized, width, height, fill = fill, patch = patch)
+  crop(resized, width, height, fill = fill)
 }

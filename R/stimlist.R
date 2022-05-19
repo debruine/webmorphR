@@ -55,6 +55,7 @@ new_stim <- function(img, path = "", ...) {
 #' @param tem require templates
 #'
 #' @return A stimlist
+#' @keywords internal
 #' @export
 #'
 validate_stimlist <- function(x, tem = FALSE) {
@@ -98,23 +99,17 @@ validate_stimlist <- function(x, tem = FALSE) {
     names(stimuli) <- unique_names(nm)
   }
 
-  # check images are available and reload if not
-  for (i in seq_along(stimuli)) {
-    img <- stimuli[[i]]$img
-    if (!is.null(img)) {
-      stimuli[[i]]$img <- tryCatch({
-        magick::image_info(img) # throws an error if img not valid
-        # rather use magick:::assert_image, but ::: warning
-        img
-      }, error = function(e) {
-        magick::image_read(stimuli[[i]]$imgpath)
-      })
-    }
-  }
+  # check if images are available and reload if not
+  # TODO: add _magick_magick_image_dead via RCpp
+  # for (i in seq_along(stimuli)) {
+  #   # TODO: decide if this should warn the user
+  #   is_dead <- .Call('_magick_magick_image_dead', PACKAGE = 'magick', stimuli[[i]]$img)
+  #   if (is_dead) stimuli[[i]]$img <- magick::image_read(stimuli[[i]]$imgpath)
+  # }
 
   # check if templates are available
   if (tem) {
-    no_tems <- sapply(stimuli, `[[`, "points") |> sapply(is.null)
+    no_tems <- lapply(stimuli, `[[`, "points") |> sapply(is.null)
     if (all(no_tems)) {
       stop("No images had templates", call. = FALSE)
     } else if (any(no_tems)) {
