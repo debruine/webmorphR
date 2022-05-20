@@ -80,6 +80,12 @@
   </a>
 </li>
 <li class="nav-item">
+  <a class="external-link nav-link" href="https://figshare.com/search?q=webmorph%20psychomorph" aria-label="Figshare">
+    <span class="ai ai-figshare"></span>
+     
+  </a>
+</li>
+<li class="nav-item">
   <a class="external-link nav-link" href="https://github.com/debruine/webmorphR/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
@@ -205,7 +211,7 @@ keep it for consistency with the old auto-delineation template on <a href="https
 <span class="va">fpp83</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">s</span>, <span class="st">"fpp83"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">s</span>, <span class="va">dlib7</span>, <span class="va">dlib70</span>, <span class="va">fpp106</span>, <span class="va">fpp83</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"frl"</span>, <span class="st">"dlib7"</span>, <span class="st">"dlib70"</span>, <span class="st">"fpp106"</span>, <span class="st">"fpp83"</span><span class="op">)</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="../reference/rename_stim.html">rename_stim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"frl"</span>, <span class="st">"dlib7"</span>, <span class="st">"dlib70"</span>, <span class="st">"fpp106"</span>, <span class="st">"fpp83"</span><span class="op">)</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">.15</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span> |&gt;
@@ -223,7 +229,7 @@ with open mouths.</p>
 <span class="va">fpp83s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">smile</span>, <span class="st">"fpp83"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dlib7s</span>, <span class="va">dlib70s</span>, <span class="va">fpp106s</span>, <span class="va">fpp83s</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dlib7"</span>, <span class="st">"dlib70"</span>, <span class="st">"fpp106"</span>, <span class="st">"fpp83"</span><span class="op">)</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="../reference/rename_stim.html">rename_stim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dlib7"</span>, <span class="st">"dlib70"</span>, <span class="st">"fpp106"</span>, <span class="st">"fpp83"</span><span class="op">)</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">.15</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span> |&gt;
@@ -607,7 +613,7 @@ excludes points that don’t have clear anatomical definitions.</p>
 
 <span class="va">new_tems</span> |&gt; 
   <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="../reference/setnames.html">setnames</a></span><span class="op">(</span><span class="va">features</span><span class="op">)</span> |&gt; 
+  <span class="fu"><a href="../reference/rename_stim.html">rename_stim</a></span><span class="op">(</span><span class="va">features</span><span class="op">)</span> |&gt; 
   <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="op">)</span> |&gt; 
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="images/masking/features-all-1.png" width="100%"></p>
@@ -682,7 +688,7 @@ mask.</p>
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="images/masking/unnamed-chunk-26-1.png" width="100%"></p>
 <hr>
-<p>This script took 1.1 minutes to render all the included images from
+<p>This script took 1.2 minutes to render all the included images from
 scratch.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

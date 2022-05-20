@@ -70,6 +70,9 @@
     <loc>https://debruine.github.io/webmorphR/reference/c.stimlist.html</loc>
   </url>
   <url>
+    <loc>https://debruine.github.io/webmorphR/reference/centroid.html</loc>
+  </url>
+  <url>
     <loc>https://debruine.github.io/webmorphR/reference/change_lines.html</loc>
   </url>
   <url>
@@ -77,6 +80,9 @@
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/color_conv.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/webmorphR/reference/compare.html</loc>
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/continuum.html</loc>
@@ -125,9 +131,6 @@
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/horiz_eyes.html</loc>
-  </url>
-  <url>
-    <loc>https://debruine.github.io/webmorphR/reference/image_comp.html</loc>
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/image_func.html</loc>
@@ -211,6 +214,9 @@
     <loc>https://debruine.github.io/webmorphR/reference/remove_tem.html</loc>
   </url>
   <url>
+    <loc>https://debruine.github.io/webmorphR/reference/rename_stim.html</loc>
+  </url>
+  <url>
     <loc>https://debruine.github.io/webmorphR/reference/rep.stim.html</loc>
   </url>
   <url>
@@ -227,9 +233,6 @@
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/same_tems.html</loc>
-  </url>
-  <url>
-    <loc>https://debruine.github.io/webmorphR/reference/setnames.html</loc>
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/social_media_size.html</loc>
