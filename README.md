@@ -62,7 +62,7 @@ processed <- original |>
 
 # rename and save individual images
 processed |>
-  setnames(prefix = "aligned_") |>
+  rename_stim(prefix = "aligned_") |>
   write_stim(dir = "stimuli/smiling")
 
 # average faces (using webmorph.org)

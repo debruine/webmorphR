@@ -27,7 +27,7 @@ write_stim <- function(stimuli, dir = ".",
       names <- rep_len(names, n) |> paste0("_", 1:n)
     }
     
-    stimuli <- setnames(stimuli, names)
+    stimuli <- rename_stim(stimuli, names)
   }
 
   # make dir if it doesn't exist

@@ -35,6 +35,34 @@ test_that("ref_img", {
   expect_equal(pt_f, pt1)
   expect_equal(pt_m, pt2)
   expect_equal((pt_f + pt_m)/2, pt0)
+  
+  # by name
+  ref1 <- align(stimuli, ref_img = "f_multi")
+  ref2 <- align(stimuli, ref_img = "m_multi")
+  
+  pt_f <- stimuli$f_multi$points[, 1:2]
+  pt_m <- stimuli$m_multi$points[, 1:2]
+  pt0 <- ref0$f_multi$points[, 1:2]
+  pt1 <- ref1$f_multi$points[, 1:2]
+  pt2 <- ref2$f_multi$points[, 1:2]
+  
+  expect_equal(pt_f, pt1)
+  expect_equal(pt_m, pt2)
+  expect_equal((pt_f + pt_m)/2, pt0)
+  
+  # by stim
+  ref1 <- align(stimuli, ref_img = stimuli[[1]])
+  ref2 <- align(stimuli, ref_img = stimuli[[2]])
+  
+  pt_f <- stimuli$f_multi$points[, 1:2]
+  pt_m <- stimuli$m_multi$points[, 1:2]
+  pt0 <- ref0$f_multi$points[, 1:2]
+  pt1 <- ref1$f_multi$points[, 1:2]
+  pt2 <- ref2$f_multi$points[, 1:2]
+  
+  expect_equal(pt_f, pt1)
+  expect_equal(pt_m, pt2)
+  expect_equal((pt_f + pt_m)/2, pt0)
 })
 
 # procrustes_coords ----

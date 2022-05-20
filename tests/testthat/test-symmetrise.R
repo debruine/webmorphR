@@ -25,7 +25,7 @@ test_that("frl", {
   # alias
   sym_shape2 <- symmetrise(stimuli, color = 0)
   expect_equal(sym_shape2[[1]]$points, s_pts)
-  expect_equivalent(image_comp(sym_shape, sym_shape2), 0)
+  expect_equivalent(compare(sym_shape, sym_shape2), 0)
 })
 
 # fpp106 ----

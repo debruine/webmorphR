@@ -4,6 +4,10 @@
 * Removed `patch` argument from `crop()`, `rotate()`, `to_size()` and `pad()`; use `patch()` to generate values for the `fill` argument instead.
 * Various code optimisations and bug fixes.
 * Made most of the helper functions internal; I don't think anyone else uses these.
+* Changed name of `image_comp()` to `compare()`
+* Changed name of `setnames()` to `rename_stim()`
+* `align()` now takes a stim or stimlist as `ref_img`, in addition to the index or name of an item in stimuli.
+* New `centroid()` function for finding the mean x and y coordinates of each template in a stimlist.
 
 # webmorphR 0.0.2.9002
 

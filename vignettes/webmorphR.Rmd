@@ -136,7 +136,7 @@ Easily create figures to illustrate your research. The code below subsets the `s
 ```{r repro}
 c(subset(stimuli, "average"),
   subset(stimuli, "distinctive")) |>
-  setnames(pattern = "_03_", replacement = " ") |>
+  rename_stim(pattern = "_03_", replacement = " ") |>
   pad(120, 0, 0, 0, fill = "black") |>
   label(size = 90, 
         color = rainbow, 

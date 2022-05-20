@@ -17,8 +17,8 @@ test_that("trans", {
   faces <- demo_stim() |> resize(0.5)
   cont <- trans(faces$f_multi, faces$f_multi, faces$m_multi, steps, steps, steps)
   
-  # comapre image metrics
-  comp <- image_comp(cont, ref_stim = cont[[1]], scale = TRUE)
+  # compare image metrics
+  comp <- compare(cont, ref_stim = 1, scale = TRUE)
   expect_equal(comp[[1]], 0)
   expect_true(comp[[1]] < comp[[2]])
   expect_true(comp[[2]] < comp[[3]])

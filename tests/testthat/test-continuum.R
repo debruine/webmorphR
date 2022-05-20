@@ -8,7 +8,7 @@ test_that("continuum", {
   cont <- continuum(stimuli[1], stimuli[2], by = 0.2)
   
   # compare image metrics
-  comp <- image_comp(cont, ref_stim = cont[[1]], scale = TRUE)
+  comp <- compare(cont, ref_stim = cont[[1]], scale = TRUE)
   expect_equal(comp[[1]], 0)
   expect_true(comp[[1]] < comp[[2]])
   expect_true(comp[[2]] < comp[[3]])

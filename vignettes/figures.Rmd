@@ -144,12 +144,12 @@ stimuli |>
   plot()
 ```
 
-Use the `setnames()` function to set new names.
+Use the `rename_stim()` function to set new names.
 
 ```{r}
 load_stim_composite() |>
-  setnames(pattern = "f_", replacement = "Female ") |>
-  setnames(pattern = "m_", replacement = "Male ") |>
+  rename_stim(pattern = "f_", replacement = "Female ") |>
+  rename_stim(pattern = "m_", replacement = "Male ") |>
   label() |>
   plot(nrow = 2)
 ```

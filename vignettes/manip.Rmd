@@ -62,7 +62,7 @@ stimuli |>
 
 If you set both width and height, you may alter the aspect ratio. Make sure you really want to do this! Use `to_size()` instead if you want to resize and crop/pad all of your images to the same size without changing the image contents' aspect ratio.
 
-```{r resize-both, fig.cap="Resized Images by with and height"}
+```{r resize-both, fig.cap="Resized Images by width and height"}
 stimuli |>
   resize(width = 200, height = 100) |>
   plot()
@@ -350,7 +350,7 @@ labs <- c("Blur", "Charcoal", "Oilpaint", "Implode",
           "20% Darker", "20% Brighter", "Greyscale", "Saturated")
 
 imglist |>
-  pad(40, 0, 0, 0, fill = "dodgerblue3") |>
+  pad(70, 0, 0, 0, fill = "dodgerblue3") |>
   label(labs, color = "white") |>
   plot(nrow = 3)
 

@@ -90,7 +90,7 @@ fpp83 <- auto_delin(s, "fpp83", replace = TRUE)
 
 ```{r, warning = FALSE}
 c(s, dlib7, dlib70, fpp106, fpp83) |>
-  setnames(c("frl", "dlib7", "dlib70", "fpp106", "fpp83")) |>
+  rename_stim(c("frl", "dlib7", "dlib70", "fpp106", "fpp83")) |>
   draw_tem() |>
   crop_tem(50) |>
   pad(.15, 0, 0, 0) |>
@@ -110,7 +110,7 @@ fpp83s <- auto_delin(smile, "fpp83", replace = TRUE)
 
 ```{r, warning = FALSE}
 c(dlib7s, dlib70s, fpp106s, fpp83s) |>
-  setnames(c("dlib7", "dlib70", "fpp106", "fpp83")) |>
+  rename_stim(c("dlib7", "dlib70", "fpp106", "fpp83")) |>
   draw_tem() |>
   crop_tem(50) |>
   pad(.15, 0, 0, 0) |>
@@ -477,7 +477,7 @@ new_tems <- lapply(features, function(ft) {
 
 new_tems |> 
   pad(50, 0, 0, 0, fill = "white") |>
-  setnames(features) |> 
+  rename_stim(features) |> 
   label() |> 
   plot()
 ```

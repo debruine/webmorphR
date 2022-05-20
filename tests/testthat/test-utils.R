@@ -145,3 +145,4 @@ test_that("print.stim", {
   expect_silent(print(stimuli))
   expect_silent(print(stimuli[[1]]))
 })
+

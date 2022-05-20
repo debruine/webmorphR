@@ -60,5 +60,5 @@ test_that("custom mask from vectors", {
   l <- mask(stimuli[1], list_mask)
   
   expect_equal(c(f_multi = 0), 
-               image_comp(t, l, scale = TRUE))
+               compare(t, l, scale = TRUE))
 })

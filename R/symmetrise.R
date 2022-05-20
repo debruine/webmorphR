@@ -24,7 +24,7 @@ symmetrize <- function(stimuli, shape = 1.0, color = 1.0, tem_id = "frl", ...) {
   stimuli <- validate_stimlist(stimuli, TRUE)
   
   mirror <- mirror(stimuli, tem_id) |>
-    setnames(prefix = "mirror_")
+    rename_stim(prefix = "mirror_")
   
   sym <- trans(trans_img = stimuli, from_img = stimuli, to_img = mirror,
                shape = shape[[1]]/2, color = color[[1]]/2, texture = color[[1]]/2,

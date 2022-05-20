@@ -30,7 +30,7 @@ library(ggplot2)
 library(tidyr)
 ```
 
-This article explores the use of {magick}'s image_compare function in the context of morphed images, since I couldn't find any clear guides to what it was doing. I've implemented this for webmorph stimuli with the `image_comp()` function.
+This article explores the use of {magick}'s image_compare function in the context of morphed images, since I couldn't find any clear guides to what it was doing. I've implemented this for webmorph stimuli with the `compare()` function.
 
 While this metric does capture something about similarity between morphed images, it is unlikely to be of any use as a metric for similarity between non-morphed images (e.g., it won't be able to tell you if two face images are of the same person or not).
 
@@ -53,9 +53,9 @@ Using all the available metrics, calculate similarity of each image to the first
 ```{r}
 mtypes <- magick::metric_types()
 names(mtypes) <- mtypes
-m <- lapply(mtypes, image_comp, 
-            stim = s, 
-            ref_stim = s[[1]], 
+m <- lapply(mtypes, compare, 
+            stimuli = s, 
+            ref_stim = 1, 
             fuzz = 0, 
             scale = TRUE) # results scaled from 0 to 1
 ```
@@ -79,9 +79,9 @@ PSNR is `Inf` when the test and reference image are identical, so the highest no
 ### Check fuzz settings
 
 ```{r}
-m2 <- lapply(mtypes, image_comp, 
-             stim = s, 
-             ref_stim = s[[1]], 
+m2 <- lapply(mtypes, compare, 
+             stimuli = s, 
+             ref_stim = 1, 
              fuzz = 50,
              scale = TRUE)
 ```
@@ -110,9 +110,9 @@ dplyr::bind_rows(df, df2) |>
 ```{r}
 fuzzes <- seq(0, 20, 1)
 names(fuzzes) <- fuzzes
-m3 <- lapply(fuzzes, image_comp, 
-             stim = s, 
-             ref_stim = s[[1]], 
+m3 <- lapply(fuzzes, compare, 
+             stimuli = s, 
+             ref_stim = 1, 
              metric = "AE",
              scale = FALSE) # don't scale for this comparison
 ```

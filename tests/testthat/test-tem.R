@@ -90,7 +90,7 @@ test_that("frl", {
   )
   
   # skip("needs visual check")
-  # new |> setnames(features) |> label() |> plot()
+  # new |> rename_stim(features) |> label() |> plot()
 })
 
 ## dlib70 features ----
@@ -118,5 +118,38 @@ test_that("dlib70", {
   })
   
   # skip("needs visual check")
-  # new |> setnames(features) |> label() |> plot()
+  # new |> rename_stim(features) |> label() |> plot()
+})
+
+
+
+# centroid ----
+test_that("centroid", {
+  stimuli <- demo_stim() |> rep(2)
+  ctr <- centroid(stimuli)
+  
+  expect_equal(dim(ctr), c(4, 2))
+  expect_equal(dimnames(ctr)[[1]], names(stimuli))
+  expect_equal(dimnames(ctr)[[2]], c("x", "y"))
+  expect_equal(ctr["f_multi", ], 
+               c(x = 250.0617, y = 252.1963), 
+               tolerance = .0001)
+  expect_equal(ctr[2, ], 
+               c(x = 248.7498, y = 242.3854), 
+               tolerance = .0001)
+  
+  # subset of points
+  ctr_eyes <- centroid(stimuli, 0:1)
+  expect_equal(ctr_eyes["f_multi", ], 
+               c(x = 249.4445, y = 226.4352), 
+               tolerance = .0001)
+  expect_equal(ctr_eyes[2, ], 
+               c(x = 248.7963, y = 215.0000), 
+               tolerance = .0001)
+  
+  # stim
+  ctr1 <- centroid(stimuli[[1]])
+  expect_equal(dim(ctr1), c(1, 2))
+  expect_equal(dimnames(ctr1)[[1]], "f_multi")
+  expect_equal(ctr1[1,], ctr[1,])
 })

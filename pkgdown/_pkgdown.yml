@@ -26,12 +26,16 @@ template:
 navbar:
   structure:
     left: [intro, reference, articles, news]
-    right: [twitter, github]
+    right: [twitter, figshare, github]
   components:
     twitter:
       icon: fa-twitter
       href: https://twitter.com/webmorph_org
       aria-label: Twitter
+    figshare:
+      icon: "ai-figshare"
+      href: "https://figshare.com/search?q=webmorph%20psychomorph"
+      aria-label: Figshare
 
 articles:
 - title: Demos
@@ -99,12 +103,13 @@ reference:
   desc: ~
   contents:
   - '`add_info`'
+  - '`centroid`'
+  - '`compare`'
   - '`get_info`'
   - '`get_point`'
   - '`height`'
-  - '`image_comp`'
   - '`metrics`'
-  - '`setnames`'
+  - '`rename_stim`'
   - '`width`'
 - title: Helper functions
   desc: ~

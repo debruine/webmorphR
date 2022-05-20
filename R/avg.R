@@ -51,7 +51,7 @@ avg <- function(stimuli,
   
   avg <- paste0(tdir, "/avg") |>
     read_stim() |>
-    setnames("avg")
+    rename_stim("avg")
   unlink(tdir, recursive = TRUE) # clean up temp directory
   # avg |> draw_tem() |> plot()
   

@@ -75,7 +75,7 @@ test_that("no-line tems", {
 test_that("overwrite", {
   dir <- file.path(tempdir(), "overwritetest")
   
-  stim <- demo_stim() |> setnames(c("A", "B"))
+  stim <- demo_stim() |> rename_stim(c("A", "B"))
   files <- write_stim(stim, dir)
   ftime <- unlist(files) |> sapply(file.mtime)
   expect_equal(length(files), 4)
@@ -102,7 +102,7 @@ test_that("interactive", {
   
   dir <- file.path(tempdir(), "interactivetest")
   
-  stim <- demo_stim() |> setnames(c("A", "B"))
+  stim <- demo_stim() |> rename_stim(c("A", "B"))
   files <- write_stim(stim, dir)
   ftime <- unlist(files) |> sapply(file.mtime)
   expect_equal(length(files), 4)
@@ -168,7 +168,7 @@ test_that("interactive", {
 # format from name ----
 test_that("format from name", {
   s <- demo_stim() |> 
-    setnames(suffix = c(".gif", ".jpg"))
+    rename_stim(suffix = c(".gif", ".jpg"))
   
   imgnames <- names(s)
   dir <- tempfile()
@@ -183,7 +183,7 @@ test_that("format from name", {
   
   ## works with different case or JPEG
   s <- demo_stim() |> 
-    setnames(suffix = c(".JPG", ".JPEG"))
+    rename_stim(suffix = c(".JPG", ".JPEG"))
   
   imgnames <- names(s)
   dir <- tempfile()
@@ -200,7 +200,7 @@ test_that("format from name", {
   ## defaults to PNG if not jpg/jpeg/gif/png
   ## works with different case or JPEG
   s <- demo_stim() |> 
-    setnames(suffix = c(".bmp", ".webp"))
+    rename_stim(suffix = c(".bmp", ".webp"))
   
   imgnames <- names(s)
   dir <- tempfile()

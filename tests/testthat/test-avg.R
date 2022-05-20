@@ -17,9 +17,9 @@ test_that("avg", {
   
   tem <- average_tem(stimuli)
   expect_equal(tem[[1]]$points, avg[[1]]$points)
-  expect_true(image_comp(avg, twopoint) > 0)
-  expect_true(image_comp(avg, rigid) > 0)
-  expect_true(image_comp(avg, notex) > 0)
+  expect_true(compare(avg, twopoint) > 0)
+  expect_true(compare(avg, rigid) > 0)
+  expect_true(compare(avg, notex) > 0)
 
   # format (fix tomcat files for this)
   # png <- avg(stimuli, format = "png")
