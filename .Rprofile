@@ -1,2 +1,0 @@
-library(usethis)
-library(testthat)
