@@ -327,3 +327,28 @@ get_point <- function(stimuli, pt = 0) {
     y = all_pts[pt+1, "Y", ] |> matrix(ncol = 1) * -1
   )
 }
+
+#' Get center coordinates
+#'
+#' @param stimuli list of class stimlist
+#' @param points which points to include (0-based); if NULL, all points will be used
+#'
+#' @return named matrix of centroid x and y coordinates
+#' @export
+#'
+#' @examples
+#' demo_stim() |> centroid()
+#' 
+#' # get the centre of the eye points
+#' demo_stim() |> centroid(0:1)
+centroid <- function(stimuli, points = NULL) {
+  s <- validate_stimlist(stimuli, TRUE)
+  
+  pts <- lapply(s, `[[`, "points")
+  if (!is.null(points)) {
+    pts <- lapply(pts, `[`, , points+1)
+  }
+  
+  sapply(pts, apply, 1, mean) |> t()
+}
+
