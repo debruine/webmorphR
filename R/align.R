@@ -11,7 +11,7 @@
 #' @param y2 The y-coordinate to align the second point to
 #' @param width The width of the aligned image
 #' @param height The height of the aligned image
-#' @param ref_img The reference image (by index or name) to get coordinates and dimensions from if they are NULL (defaults to average of all images if NULL)
+#' @param ref_img The reference image to get coordinates and dimensions from if they are NULL; can be a stim/stimlist or the index or name of a stim in stimuli; defaults to average of all stimuli if NULL
 #' @param fill background color if cropping goes outside the original image
 #' @param procrustes Whether to do a procrustes alignment
 #'
@@ -46,6 +46,11 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
     ref_points <- avg[[1]]$points
     width <- width %||% width(avg)[[1]]
     height <- height %||% height(avg)[[1]]
+  } else if (is.list(ref_img)) {
+    ref_img <- validate_stimlist(ref_img, TRUE)
+    ref_points <- ref_img[[1]]$points
+    width <- width %||% ref_img[[1]]$width
+    height <- height %||% ref_img[[1]]$height
   } else {
     ref_points <- stimuli[[ref_img]]$points
     width <- width %||% stimuli[[ref_img]]$width

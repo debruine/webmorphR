@@ -38,7 +38,7 @@ align(
 
 \item{height}{The height of the aligned image}
 
-\item{ref_img}{The reference image (by index or name) to get coordinates and dimensions from if they are NULL (defaults to average of all images if NULL)}
+\item{ref_img}{The reference image to get coordinates and dimensions from if they are NULL; can be a stim/stimlist or the index or name of a stim in stimuli; defaults to average of all stimuli if NULL}
 
 \item{fill}{background color if cropping goes outside the original image}
 
