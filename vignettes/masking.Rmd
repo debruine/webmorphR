@@ -473,7 +473,7 @@ new_tems <- lapply(features, function(ft) {
              line.color = "#FFFF00",
              line.size = 5,
              line.alpha = 1)
-}) |> do.call(c, args = _)
+}) |> do.call(what = c)
 
 new_tems |> 
   pad(50, 0, 0, 0, fill = "white") |>

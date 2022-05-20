@@ -14,27 +14,22 @@
 #' stimuli <- demo_stim()
 #' 
 #' # label with magick::image_annotate
-#' m_stimuli <- stimuli |>
-#'   label(text = c("CHINWE", "GEORGE"), 
-#'         gravity = c("north", "south"),
-#'         color = "red")
+#' m_stimuli <- label(stimuli, 
+#'                    text = c("CHINWE", "GEORGE"), 
+#'                    gravity = c("north", "south"),
+#'                    color = "red")
 #' 
 #' # label with ggplot2::annotate
-#' gg_stimuli <- stimuli |>
-#'   label(label = c("CHINWE", "GEORGE"), 
-#'         x = 0.5, 
-#'         y = c(1, 0.02),
-#'         vjust = c(1, 0), 
-#'         size = 10,
-#'         color = "red")
-#' 
-#' 
-#' p <- c(stimuli, gg_stimuli, m_stimuli) |> 
-#'   plot(nrow = 3)
-#'   
-#' p[[1]]$img
+#' gg_stimuli <- label(stimuli,
+#'                     label = c("CHINWE", "GEORGE"), 
+#'                     x = 0.5, 
+#'                     y = c(1, 0.02),
+#'                     vjust = c(1, 0), 
+#'                     size = 10,
+#'                     color = "red")
+#'
 label <- function(stimuli, ...) {
-  args <- list(...) |> names()
+  args <- names(list(...))
   
   # list unique args
   magick_args <- c("text", "gravity", "location", "degrees", 
@@ -86,10 +81,10 @@ label <- function(stimuli, ...) {
 #'
 #' @examples
 #' stimuli <- demo_stim("test")
-#' labelled_stimuli <- stimuli |>
-#'   mlabel(text = c("CHINWE", "GEORGE"), 
-#'          gravity = c("north", "south"),
-#'          color = "red")
+#' labelled_stimuli <- mlabel(stimuli,
+#'                            text = c("CHINWE", "GEORGE"), 
+#'                            gravity = c("north", "south"),
+#'                            color = "red")
 mlabel <- function(stimuli,
                   text = TRUE,
                   gravity = "north",
@@ -237,12 +232,12 @@ gglabel <- function(stimuli, label = TRUE, x = 0.5, y = 0.95, geom = "text", ...
   for (i in seq_along(stimuli)) {
     args <- lapply(dots, .bb, i)
     info <- magick::image_info(stimuli[[i]]$img)
-    res <- gsub("x.*$", "", info$density) |> as.integer()
+    res <- gsub("x.*$", "", info$density)
+    res <- as.integer(res)
     
     # TODO: only suppress warnings that start with "Ignoring unknown"
     suppressWarnings({
-      gg <- stimuli[[i]]$img |> 
-        magick::image_ggplot() +
+      gg <- magick::image_ggplot(stimuli[[i]]$img) +
         do.call(ggplot2::annotate, args)
     })
     

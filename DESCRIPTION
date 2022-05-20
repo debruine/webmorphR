@@ -22,7 +22,7 @@ License: CC BY 4.0
 URL: https://debruine.github.io/webmorphR, https://github.com/debruine/webmorphR
 BugReports: https://github.com/debruine/webmorphR/issues
 Depends: 
-    R (>= 4.2.0)
+    R (>= 4.1.0)
 Imports: 
     knitr,
     tools,

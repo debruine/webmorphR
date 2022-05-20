@@ -21,8 +21,8 @@ test_that("mlabel", {
   expect_silent(default <- mlabel(stimuli))
   
   # don't change size
-  stim_info <- stimuli[[1]]$img |> magick::image_info()
-  label_info <- default[[1]]$img |> magick::image_info()
+  stim_info <- magick::image_info(stimuli[[1]]$img)
+  label_info <- magick::image_info(default[[1]]$img)
   expect_equal(stim_info$height, label_info$height)
   expect_equal(stim_info$width, label_info$width)
   expect_equal(stim_info$density, label_info$density)
@@ -54,8 +54,8 @@ test_that("gglabel", {
   default <- gglabel(stimuli)
   
   # don't change size
-  stim_info <- stimuli[[1]]$img |> magick::image_info()
-  label_info <- default[[1]]$img |> magick::image_info()
+  stim_info <- magick::image_info(stimuli[[1]]$img)
+  label_info <- magick::image_info(default[[1]]$img)
   expect_equal(stim_info$height, label_info$height)
   expect_equal(stim_info$width, label_info$width)
   expect_equal(stim_info$density, label_info$density)

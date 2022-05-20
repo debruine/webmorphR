@@ -171,10 +171,8 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
         is.null(names(shape)) &&
         is.null(names(color)) &&
         is.null(names(texture))) {
-      paramnames$shape <- nrow(paramnames) |>
-        as.character() |>
-        nchar() |>
-        paste0("%0", . = _, "d") |>
+      char_n <- nrow(paramnames) |> as.character() |> nchar()
+      paramnames$shape <- paste0("%0", char_n, "d") |>
         sprintf(1:nrow(paramnames))
     }
 
@@ -195,14 +193,6 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
       paramnames$texture <- ""
     if (all(paramnames$color == paramnames$texture))
       paramnames$texture <- ""
-
-    # o <- tidyr::crossing(paramnames, imgnames)
-    # batch$outname <- paste(o$trans, o$from, o$to,
-    #                        o$shape, o$color, o$texture,
-    #                        sep = "_") |>
-    #   gsub("_{2,}", "_", x = _) |>
-    #   gsub("^_", "", x = _) |>
-    #   gsub("_$", "", x = _)
     
     pn <- nrow(paramnames)
     imgn <- nrow(imgnames)
@@ -214,9 +204,9 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
       rep(paramnames$color, each = imgn),
       rep(paramnames$texture, each = imgn)
     ) |>
-      gsub("_{2,}", "_", x = _) |>
-      gsub("^_", "", x = _) |>
-      gsub("_$", "", x = _)
+      gsub(pattern = "_{2,}", replacement = "_") |>
+      gsub(pattern = "^_", replacement = "") |>
+      gsub(pattern = "_$", replacement = "")
   }
 
   # fix missing or duplicate outnames

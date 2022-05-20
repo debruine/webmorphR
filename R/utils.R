@@ -136,7 +136,7 @@ c.stim <- function(...) {
   # turn into a stimlist and handle below
   list(...) |>
     lapply(validate_stimlist) |>
-    do.call(c.stimlist, args = _)
+    do.call(what = c.stimlist)
 }
 
 

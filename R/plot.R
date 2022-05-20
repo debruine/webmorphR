@@ -12,7 +12,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' demo_stim() |> plot()
+#' stimuli <- demo_stim()
+#' plot(stimuli)
 #' }
 plot.stimlist <- function(x, y, ...) {
   plot_stim(x, ...)
@@ -30,7 +31,8 @@ plot.stimlist <- function(x, y, ...) {
 #'
 #' @examples
 #' \dontrun{
-#' demo_stim() |> plot()
+#' stimuli <- demo_stim()
+#' plot(stimuli)
 #' }
 
 plot.stim <- function(x, y, ...) {
@@ -56,8 +58,10 @@ plot.stim <- function(x, y, ...) {
 #' @export
 #'
 #' @examples
-#' demo_stim() |> plot_stim()
-#'
+#' \dontrun{
+#' stimuli <- demo_stim()
+#' plot_stim(stimuli)
+#' }
 plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
                       padding = 10, external_pad = TRUE,
                       fill = wm_opts("fill"),
@@ -107,9 +111,8 @@ plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
   for (r in 1:nrow) {
     idx <- img_i[r, ] # get row indices
     idx <- idx[idx <= length(img)] # for short rows
-
-    row_imgs[[r]] <- magick::image_append(img[idx]) |>
-      magick::image_flatten()
+    append_img <- magick::image_append(img[idx])
+    row_imgs[[r]] <- magick::image_flatten(append_img)
   }
 
   # make columns ----
@@ -122,11 +125,11 @@ plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
   }
   # add or remove external padding ----
   epad <- ifelse(isTRUE(external_pad), padding/2, -padding/2)
-  grid <- magick::image_append(rows, stack = TRUE) |>
-    new_stim("plot") |>
-    pad(epad, fill = fill)
+  plot_img <- magick::image_append(rows, stack = TRUE)
+  plot_stim <- new_stim(plot_img, "plot")
+  padded_plot <- pad(plot_stim, epad, fill = fill)
 
-  grid
+  padded_plot
 }
 
 
@@ -145,9 +148,7 @@ plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
 #' plot_rows(upright = up, inverted = inv, color = "dodgerblue", top_label = TRUE)
 plot_rows <- function(..., top_label = FALSE) {
   dots <- list(...)
-  is_stimlist <- lapply(dots, class) |>
-    lapply(`==`, "stimlist") |> sapply(any)
-
+  is_stimlist <- sapply(dots, inherits, "stimlist")
   rowlist <- dots[is_stimlist]
 
   args <- lapply(rowlist, plot_stim, nrow = 1, external_pad = 0)
@@ -155,7 +156,7 @@ plot_rows <- function(..., top_label = FALSE) {
   rows <- resize(rows, width = min(width(rows)))
 
   # add top padding
-  size <- dots$size %||% ((height(rows) |> sum()) / 25)
+  size <- dots$size %||% (sum(height(rows)) / 25)
   if (isTRUE(top_label)) {
     rows <- pad(rows, (size + 20), 0, 0, 0)
   }
@@ -168,8 +169,8 @@ plot_rows <- function(..., top_label = FALSE) {
       size = size,
       gravity = "northwest",
       location = ifelse(top_label, "+0+10", "+10+10")
-    ) |>
-      utils::modifyList(dots[!is_stimlist])
+    )
+    label_args <- utils::modifyList(label_args, dots[!is_stimlist])
 
     rows <- do.call(label, label_args)
   }

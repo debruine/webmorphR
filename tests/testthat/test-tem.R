@@ -86,7 +86,7 @@ test_that("frl", {
   expect_silent(
     new <- lapply(features, function(ft) {
       stimuli |> subset_tem(features(ft)) |> draw_tem()
-    }) |> do.call(c, args = _)
+    }) |> do.call(what = c)
   )
   
   # skip("needs visual check")
@@ -114,7 +114,7 @@ test_that("dlib70", {
         subset_tem(features(ft, tem_id = "dlib70")) |> 
         draw_tem()
     }) |>
-      do.call(c, args = _)
+      do.call(what = c)
   })
   
   # skip("needs visual check")

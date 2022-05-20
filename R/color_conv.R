@@ -95,14 +95,16 @@ color_conv <- function(color, alpha = 1,
   } else if (to == "hsv") {
     (grDevices::rgb2hsv(rgba[1:3]) |> t())[1,]
   } else if (to == "hex") {
-    rgba[1:3] |>
+    hex <- rgba[1:3] |>
       format.hexmode(width = 2) |>
-      paste(collapse = "") |>
-      paste0("#", . = _)
+      paste(collapse = "")
+    
+    paste0("#", hex)
   } else if (to == "hexa") {
-    rgba[1:4] |> 
+    hex <- rgba[1:4] |> 
       format.hexmode(width = 2) |> 
-      paste(collapse = "") |>
-      paste0("#", . = _)
+      paste(collapse = "")
+    
+    paste0("#", hex)
   }
 }

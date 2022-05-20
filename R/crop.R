@@ -214,7 +214,7 @@ bounds <- function(stimuli, each = FALSE) {
   if (isTRUE(each)) {
     # get separate bounds for each stimulus
     b <- lapply(stimuli, bounds) |> 
-      do.call(rbind, args = _)
+      do.call(what = rbind)
     return(b)
   }
   
