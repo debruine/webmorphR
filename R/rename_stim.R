@@ -13,9 +13,9 @@
 #'
 #' @examples
 #' demo_stim() |>
-#'   setnames(prefix = "new_") |>
+#'   rename_stim(prefix = "new_") |>
 #'   names()
-setnames <- function(stimuli, new_names = NULL, prefix = "", suffix = "",
+rename_stim <- function(stimuli, new_names = NULL, prefix = "", suffix = "",
                    pattern = NULL, replacement = NULL, ...) {
   stimuli <- validate_stimlist(stimuli)
 
