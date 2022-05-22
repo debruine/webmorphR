@@ -25,6 +25,7 @@ You can install the development version from [GitHub](https://github.com/), as w
 # install.packages("remotes")
 remotes::install_github("debruine/webmorphR")
 remotes::install_github("debruine/webmorphR.stim")
+remotes::install_github("debruine/webmorphR.dlib")
 ```
 
 Installation can take a few minutes, depending on how many dependency packages you need to install.
@@ -32,6 +33,7 @@ Installation can take a few minutes, depending on how many dependency packages y
 ```{r}
 library(webmorphR)
 library(webmorphR.stim) # for extra stimulus sets
+library(webmorphR.dlib) # for dlib auto-delineation
 
 wm_opts(plot.maxwidth = 850) # set maximum width for plot output
 ```

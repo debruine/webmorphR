@@ -51,6 +51,7 @@ stimlist with aligned tems and/or images
 Align images so that template points line up. Setting pt1 = pt2 aligns 1 point, but does not resize or rotate images. Setting pt1 and pt2 aligns 2 points, resizing and rotating faces. Setting procrustes = TRUE uses Procrustes analysis to resize and rotate images to be as close as possible to a mean shape. You can specify the x and y coordinates to align, or align to their position in a reference image. The reference image is the average of all images, or the image specified by ref_img.
 }
 \examples{
+\dontrun{
 # load stimuli and crop/rotate differently
 stimuli <- demo_stim() |> 
   crop(c(0.8, 0.9), c(1.0, 0.9), x_off = c(0, 0.2)) |>
@@ -64,4 +65,5 @@ two_pt <- align(stimuli, ref_img = 2)
 
 # procrustes align to average position
 proc <- align(stimuli, procrustes = TRUE)
+}
 }

@@ -6,19 +6,19 @@
 \alias{webmorphR-package}
 \title{webmorphR: Reproducible Face Stimuli}
 \description{
-Create reproducible image stimuli, specialised for images with webmorph.org templates. See https://debruine.github.io/webmorphR/ for detailed tutorials.
+Create reproducible image stimuli, specialised for images with webmorph.org templates.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://debruine.github.io/webmorphR}
+  \item \url{https://debruine.github.io/webmorphR/}
   \item \url{https://github.com/debruine/webmorphR}
   \item Report bugs at \url{https://github.com/debruine/webmorphR/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Lisa DeBruine \email{debruine@gmail.com} (\href{https://orcid.org/0000-0002-7523-5539}{ORCID})
+\strong{Maintainer}: Lisa DeBruine \email{debruine@gmail.com} (\href{https://orcid.org/0000-0002-7523-5539}{ORCID}) [copyright holder]
 
 Other contributors:
 \itemize{

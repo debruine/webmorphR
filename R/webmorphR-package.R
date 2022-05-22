@@ -1,6 +1,6 @@
 #' webmorphR: Reproducible Face Stimuli
 #'
-#' Create reproducible image stimuli, specialised for images with webmorph.org templates. See https://debruine.github.io/webmorphR/ for detailed tutorials. 
+#' Create reproducible image stimuli, specialised for images with webmorph.org templates.
 #'
 #' @docType package
 #' @name webmorphR

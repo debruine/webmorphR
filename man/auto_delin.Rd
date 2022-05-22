@@ -2,47 +2,36 @@
 % Please edit documentation in R/auto_delin.R
 \name{auto_delin}
 \alias{auto_delin}
-\title{Auto-Delineation}
+\title{Face++ Auto-Delineation}
 \usage{
-auto_delin(
-  stimuli,
-  model = c("dlib7", "dlib70", "fpp106", "fpp83"),
-  replace = FALSE,
-  face = 1,
-  model_path = NULL
-)
+auto_delin(stimuli, model = c("fpp106", "fpp83"), replace = FALSE, face = 1)
 }
 \arguments{
 \item{stimuli}{list of class stimlist}
 
-\item{model}{Which shape predictor model to use (dlib7, dlib70, fpp106, fpp83)}
+\item{model}{Which model (fpp106, fpp83)}
 
 \item{replace}{if FALSE, only gets templates for images with no template}
 
-\item{face}{which face to delineate in each image if there is more than 1 (only for Face++)}
-
-\item{model_path}{path to a custom dlib .dat landmark file to use (model is ignored if set)}
+\item{face}{which face to delineate in each image if there is more than 1}
 }
 \value{
 stimlist with templates
 }
 \description{
-Automatically delineate faces using dlib in python or Face++ (an external service). Wrapper function for \code{\link[=fpp_auto_delin]{fpp_auto_delin()}} and \code{\link[webmorphR.dlib:dlib_auto_delin]{webmorphR.dlib::dlib_auto_delin()}}.
+Automatically delineate faces using Face++ (an external service). Since each delineation counts against a daily limit, you need to set up your own Face++ account (see details below).
+}
+\details{
+To use Face++ auto-delineation, you need to get your own free API key from https://www.faceplusplus.com. After signing up for an account, go to https://console.faceplusplus.com/app/apikey/list and request a free API key. Add the key and secret to your .Renviron file as follows:
+
+FACEPLUSPLUS_KEY="1234567890abcdefghijk"
+
+FACEPLUSPLUS_SECRET="1234567890abcdefghijk"
 }
 \examples{
 \dontrun{
 # requires an API key in .Renviron
   auto_fpp106 <- demo_stim() |>
     auto_delin(model = "fpp106", replace = TRUE)
-    
-  # requires debruine/webmorphR.dlib
-  auto_dlib7 <- demo_stim() |>
-    auto_delin(replace = TRUE)
-  
-  auto_dlib70 <- demo_stim() |>
-    auto_delin(model = "dlib70", replace = TRUE)
 }
-}
-\seealso{
-\link{fpp_auto_delin}, \code{\link[webmorphR.dlib:dlib_auto_delin]{webmorphR.dlib::dlib_auto_delin()}}
 }

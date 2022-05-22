@@ -9,8 +9,10 @@
 #'
 #' @examples
 #' \dontrun{
-#'   stimuli <- webmorphR.stim::load_stim_composite("f_") |> 
-#'     resize(300)
+#'   stimuli <- demo_stim() |> 
+#'     resize(300) |>
+#'     rep(4) |>
+#'     rotate(seq(0, 360-45, 45))
 #'   loop <- loop(stimuli, 5)
 #'   animate(loop, 10)
 #' }
@@ -21,6 +23,11 @@ loop <- function(stimuli, steps = 10, ...) {
   }
   if (steps < 2) {
     stop("You need at least 2 steps")
+  }
+  
+  n_unique_names <- names(stimuli) |> unique() |> length()
+  if (n_unique_names < length(stimuli)) {
+    names(stimuli) <- paste0(seq_along(stimuli), "_", names(stimuli))
   }
   
   from_img <- stimuli

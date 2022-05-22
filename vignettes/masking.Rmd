@@ -30,6 +30,7 @@ This vignette explains templates and shows you how to mask images relative to th
 # load packages and set maximum plot width
 library(webmorphR)
 library(webmorphR.stim) # for extra stimulus sets
+library(webmorphR.dlib) # for dlib auto-delineation
 wm_opts(plot.maxwidth = 850)
 
 # load the demo stimuli
@@ -122,7 +123,7 @@ c(dlib7s, dlib70s, fpp106s, fpp83s) |>
 
 If your images aren't delineated, you can use the `auto_delin()` function or upload them to [webmorph](webmorph.org) to use the extensive manual delineation functions there and the 189-point FRL template.
 
-The auto-delineation has three options. 
+The auto-delineation has two options. 
 
 #### dlib
 
@@ -238,8 +239,8 @@ s <- demo_stim() |>
   pad(20, fill = "dodgerblue")
 
 # get delineations for the first and second face
-face1 <- fpp_auto_delin(s, "fpp106", TRUE, 1)
-face2 <- fpp_auto_delin(s, "fpp106", TRUE, 2)
+face1 <- auto_delin(s, "fpp106", TRUE, 1)
+face2 <- auto_delin(s, "fpp106", TRUE, 2)
 
 # add template viz and plot
 c(face1, face2) |> draw_tem() |> plot(nrow = 2)

@@ -7,6 +7,10 @@ home:
   title: Reproducible Stimuli
   description: Create reproducible image stimuli, specialised for images with webmorph.org templates.
 
+authors:
+  Lisa DeBruine:
+    href: https://debruine.github.io/
+    
 template:
   bootstrap: 5
   bootswatch: yeti
@@ -71,7 +75,6 @@ reference:
   - '`change_lines`'
   - '`delin`'
   - '`draw_tem`'
-  - '`fpp_auto_delin`'
   - '`squash_tem`'
   - '`subset_tem`'
   - '`remove_tem`'

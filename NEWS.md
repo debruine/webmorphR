@@ -1,8 +1,9 @@
-# webmorphR 0.0.2.9004
+# webmorphR 0.1.0.0
 
 * R version requirements decreased from 4.2.0 to 4.1.0
 * `quick_delin()` function changed to `delin()` and upgraded to be able to update full templates
 * `delin()` lets you adjust full templates now, but is still *very* experimental.
+* prepared for CRAN
 
 # webmorphR 0.0.2.9003
 

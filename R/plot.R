@@ -142,10 +142,12 @@ plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' up <- demo_stim()
 #' inv <- rotate(up, 180)
 #' plot_rows(upright = up, inverted = inv)
 #' plot_rows(upright = up, inverted = inv, color = "dodgerblue", top_label = TRUE)
+#' }
 plot_rows <- function(..., top_label = FALSE) {
   dots <- list(...)
   is_stimlist <- sapply(dots, inherits, "stimlist")

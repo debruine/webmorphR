@@ -21,8 +21,10 @@ Loop
 }
 \examples{
 \dontrun{
-  stimuli <- webmorphR.stim::load_stim_composite("f_") |> 
-    resize(300)
+  stimuli <- demo_stim() |> 
+    resize(300) |>
+    rep(4) |>
+    rotate(seq(0, 360-45, 45))
   loop <- loop(stimuli, 5)
   animate(loop, 10)
 }

@@ -2,6 +2,8 @@
 
 # frl ----
 test_that("frl", {
+  skip_on_cran()
+  
   stimuli <- demo_stim("tem_examples", "frl")
   sym_both <- symmetrize(stimuli)
   sym_shape <- symmetrize(stimuli, color = 0)
@@ -30,6 +32,8 @@ test_that("frl", {
 
 # fpp106 ----
 test_that("fpp106", {
+  skip_on_cran()
+  
   tem_id <- "fpp106"
   
   stimuli <- demo_stim("tem_examples", tem_id)
@@ -56,6 +60,8 @@ test_that("fpp106", {
 
 # fpp83 ----
 test_that("fpp83", {
+  skip_on_cran()
+  
   tem_id <- "fpp83"
   
   stimuli <- demo_stim("tem_examples", tem_id)
@@ -83,6 +89,9 @@ test_that("fpp83", {
 
 # dlib70 ----
 test_that("dlib70", {
+  skip_on_cran()
+  skip_if_offline()
+  
   tem_id <- "dlib70"
   
   stimuli <- demo_stim("tem_examples", tem_id)
@@ -109,6 +118,8 @@ test_that("dlib70", {
 
 # dlib7 ----
 test_that("dlib7", {
+  skip_on_cran()
+  
   tem_id <- "dlib7"
   
   stimuli <- demo_stim("tem_examples", tem_id)[1]

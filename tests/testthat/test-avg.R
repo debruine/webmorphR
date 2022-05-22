@@ -3,20 +3,23 @@
 # avg ----
 test_that("avg", {
   skip_on_cran()
+  skip_if_offline()
 
   # can't average more than 100 images
-  stim120 <- rep(demo_stim(), 60)
+  stim120 <- demo_stim() |> rep(60)
   expect_error(avg(stim120))
 
   # normalisation
-  stimuli <- webmorphR.stim::load_stim_lisa(1:2)
+  stimuli <- demo_stim()
   avg <- avg(stimuli)
   twopoint <- avg(stimuli, norm = "twopoint")
   rigid <- avg(stimuli, norm = "rigid")
   notex <- avg(stimuli, texture = FALSE)
   
   tem <- average_tem(stimuli)
-  expect_equal(tem[[1]]$points, avg[[1]]$points)
+  dif <- tem[[1]]$points -  avg[[1]]$points
+  expect_lt(max(dif), 1)
+  expect_gt(min(dif), -1)
   expect_true(compare(avg, twopoint) > 0)
   expect_true(compare(avg, rigid) > 0)
   expect_true(compare(avg, notex) > 0)

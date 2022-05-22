@@ -2,6 +2,7 @@
 
 test_that("continuum", {
   skip_on_cran()
+  skip_if_offline()
   
   stimuli <- demo_stim()
   

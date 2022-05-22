@@ -11,3 +11,4 @@
 ^paper$
 ^\.github$
 ^man/figures/home
+^cran-comments\.md$

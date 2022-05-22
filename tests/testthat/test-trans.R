@@ -2,6 +2,7 @@
 
 test_that("trans", {
   skip_on_cran()
+  skip_if_offline()
   
   s <- demo_stim()
   

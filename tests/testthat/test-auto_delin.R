@@ -2,16 +2,7 @@ test_that("auto_delin", {
   stimuli <- demo_stim("test", "f")
   expect_error(auto_delin())
   expect_error( auto_delin(stimuli, "dd") )
-  
-  expect_warning( x <- auto_delin(stimuli, "fpp106", 
-                                  face = 3, replace = TRUE),
-                  "f_multi did not have 3 faces")
-  
-  # all images have templates
-  expect_warning(x <- auto_delin(stimuli, "dlib7"))
-  expect_equal(x, stimuli)
-  expect_warning(x <- auto_delin(stimuli, "fpp106"))
-  expect_equal(x, stimuli)
+  expect_error(x <- auto_delin(stimuli, "dlib7"))
   
   # remove key and secret to test error message
   key <- Sys.getenv("FACEPLUSPLUS_KEY")
@@ -21,9 +12,9 @@ test_that("auto_delin", {
   Sys.setenv(FACEPLUSPLUS_KEY = "")
   Sys.setenv(FACEPLUSPLUS_SECRET = "")
   fpp_error <- "You need to set FACEPLUSPLUS_KEY and FACEPLUSPLUS_SECRET in your .Renviron (see ?auto_delin)"
-  expect_error( auto_delin(x, "fpp106", replace = TRUE),
+  expect_error( auto_delin(stimuli, "fpp106", replace = TRUE),
                 fpp_error, fixed = TRUE)
-  expect_error( auto_delin(x, "fpp83", replace = TRUE),
+  expect_error( auto_delin(stimuli, "fpp83", replace = TRUE),
                 fpp_error, fixed = TRUE)
   Sys.setenv(FACEPLUSPLUS_KEY = key)
   Sys.setenv(FACEPLUSPLUS_SECRET = secret)
@@ -34,54 +25,32 @@ test_that("auto_delin", {
   skip_on_cran()
   skip_if_offline()
   
+  # all images have templates
+  stimuli <- demo_stim("test", "f")
+  expect_warning(x <- auto_delin(stimuli, "fpp106"))
+  expect_equal(x, stimuli)
+  
+  expect_warning( x <- auto_delin(stimuli, "fpp106", 
+                                  face = 3, replace = TRUE),
+                  "f_multi did not have 3 faces")
+  
   stimuli <- demo_stim("test", "m")
   ad <- auto_delin(stimuli, "fpp106", replace = TRUE)
-  fpp <- fpp_auto_delin(stimuli, "fpp106", replace = TRUE)
+  fpp <- auto_delin(stimuli, "fpp106", replace = TRUE)
   expect_equal(fpp[[1]]$points, ad[[1]]$points)
   expect_equal(fpp[[1]]$lines, ad[[1]]$lines)
 })
-
-test_that("fpp_auto_delin", {
-  # Requires FACEPLUSPLUS_KEY and FACEPLUSPLUS_SECRET
-  skip_on_cran()
-  skip_if_offline()
-  
-  stimuli <- demo_stim("test", "f")
-  fpp106 <- tem_def("fpp106")
-  x106 <- fpp_auto_delin(stimuli, "fpp106", replace = TRUE)
-  pnames <- (x106$f_multi$points |> dimnames())[[2]]
-  expect_equal(pnames, fpp106$points$name)
-  expect_equal(x106$f_multi$lines, fpp106$lines)
-
-  fpp83 <- tem_def("fpp83")
-  x83 <- fpp_auto_delin(stimuli, "fpp83", replace = TRUE)
-  pnames <- (x83$f_multi$points |> dimnames())[[2]]
-  expect_equal(pnames, fpp83$points$name)
-  expect_equal(x83$f_multi$lines, fpp83$lines)
-})
-
 
 test_that("paste 2 together", {
   skip_on_cran()
   skip_if_offline()
   
   s <- demo_stim() |> plot()
-  f <- fpp_auto_delin(s, "fpp106", TRUE, 1)
-  m <- fpp_auto_delin(s, "fpp106", TRUE, 2)
+  f <- auto_delin(s, "fpp106", TRUE, 1)
+  m <- auto_delin(s, "fpp106", TRUE, 2)
   
   expect_true(all((f[[1]]$points == m[[1]]$points) == FALSE))
   # draw_tem(c(f, m)) |> plot(nrow = 2)
 })
 
-test_that("dlib_auto_delin", {
-  skip_on_cran()
-  skip_if_offline()
-  skip_on_ci()
-  
-  stimuli <- demo_stim()[1]
-  s_dlib <- webmorphR.dlib::dlib_auto_delin(stimuli, "dlib7", TRUE)
-  s_ad <- auto_delin(stimuli, "dlib7", TRUE)
-  expect_equal(s_dlib[[1]]$points, s_ad[[1]]$points)
-  expect_equal(s_dlib[[1]]$lines, s_ad[[1]]$lines)
-})
 

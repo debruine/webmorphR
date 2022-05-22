@@ -19,6 +19,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' # load stimuli and crop/rotate differently
 #' stimuli <- demo_stim() |> 
 #'   crop(c(0.8, 0.9), c(1.0, 0.9), x_off = c(0, 0.2)) |>
@@ -29,9 +30,10 @@
 #'
 #' # align to pupils of second image
 #' two_pt <- align(stimuli, ref_img = 2)
-#'
+#' 
 #' # procrustes align to average position
 #' proc <- align(stimuli, procrustes = TRUE)
+#' }
 
 align <- function(stimuli, pt1 = 0, pt2 = 1,
                   x1 = NULL, y1 = NULL, x2 = NULL, y2 = NULL,

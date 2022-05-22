@@ -1,12 +1,12 @@
 Package: webmorphR
 Title: Reproducible Stimuli
 Date: 2022-05-22
-Version: 0.0.2.9004
+Version: 0.1.0
 Authors@R: 
     c(person(
         given = "Lisa", 
         family = "DeBruine", 
-        role = c("aut", "cre"), 
+        role = c("aut", "cre", "cph"), 
         email = "debruine@gmail.com", 
         comment = c(ORCID = "0000-0002-7523-5539")
     ),
@@ -17,9 +17,9 @@ Authors@R:
         email = "ekc00004@students.stir.ac.uk"
     ))
 Description: Create reproducible image stimuli, 
-    specialised for face images with webmorph.org templates.
+    specialised for face images with 'psychomorph' or 'webmorph' templates.
 License: CC BY 4.0
-URL: https://debruine.github.io/webmorphR, https://github.com/debruine/webmorphR
+URL: https://debruine.github.io/webmorphR/, https://github.com/debruine/webmorphR
 BugReports: https://github.com/debruine/webmorphR/issues
 Depends: 
     R (>= 4.1.0)
@@ -45,12 +45,7 @@ Suggests:
     testthat,
     usethis,
     rmarkdown,
-    covr,
-    webmorphR.stim,
-    webmorphR.dlib
-Remotes:
-    debruine/webmorphR.stim,
-    debruine/webmorphR.dlib
+    covr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

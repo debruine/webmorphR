@@ -18,8 +18,10 @@ stimlist with plot
 Plot in rows
 }
 \examples{
+\dontrun{
 up <- demo_stim()
 inv <- rotate(up, 180)
 plot_rows(upright = up, inverted = inv)
 plot_rows(upright = up, inverted = inv, color = "dodgerblue", top_label = TRUE)
+}
 }
