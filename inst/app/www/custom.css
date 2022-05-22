@@ -1,5 +1,39 @@
-#delin_img {
-  cursor: crosshair;
+.skin-blue .main-header .navbar {
+  background-color: #204969;
+}
+
+#next_img + div.shiny-input-container {
+  float:: left; 
+  display: inline-block;
+  margin: 0 1em;
+  position: relative;
+  top: -1em;
+}
+
+#quickhelp {
+  font-size: 120%;
+  height: 50px;
+  line-height: 50px;
+  color: white !important;
+}
+
+#delin_box_box {
+  overflow: scroll;
+  height: 1000px;
+}
+
+#delin_box {
+  cursor: default;
+  position: relative;
+}
+
+#delin_img img {
+  z-index:0;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
 }
 
 .pt {
@@ -20,13 +54,12 @@
     margin-top:-4px;
     background-size:contain;
     border: 1px solid black;
-    background-color: white;
+    background-color: #00FF0066;
+    cursor: pointer;
 }
 
-.pt:nth-of-type(1), .pt:nth-of-type(7) { background-color: red; }
-.pt:nth-of-type(2), .pt:nth-of-type(8) { background-color: orange; }
-.pt:nth-of-type(3), .pt:nth-of-type(9) { background-color: yellow; }
-.pt:nth-of-type(4), .pt:nth-of-type(10) { background-color: green; }
-.pt:nth-of-type(5), .pt:nth-of-type(11) { background-color: blue; }
-.pt:nth-of-type(6), .pt:nth-of-type(12) { background-color: purple; }
+.pt:hover { background-color: #FFFF00066; }
+
+.pt:nth-of-type(2) { background-color: #FF000099; }
+.pt:nth-of-type(3) { background-color: #FF000099; }
 

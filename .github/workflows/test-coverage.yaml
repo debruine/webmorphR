@@ -28,5 +28,5 @@ jobs:
           extra-packages: covr
 
       - name: Test coverage
-        run: covr::codecov(function_exclusions = "quick_delin")
+        run: covr::codecov(function_exclusions = c("delin", ".onLoad", ".onAttach"))
         shell: Rscript {0}

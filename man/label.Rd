@@ -21,25 +21,20 @@ Defaults to \link{mlabel} unless you use arguments specific to \link{gglabel}. A
 stimuli <- demo_stim()
 
 # label with magick::image_annotate
-m_stimuli <- stimuli |>
-  label(text = c("CHINWE", "GEORGE"), 
-        gravity = c("north", "south"),
-        color = "red")
+m_stimuli <- label(stimuli, 
+                   text = c("CHINWE", "GEORGE"), 
+                   gravity = c("north", "south"),
+                   color = "red")
 
 # label with ggplot2::annotate
-gg_stimuli <- stimuli |>
-  label(label = c("CHINWE", "GEORGE"), 
-        x = 0.5, 
-        y = c(1, 0.02),
-        vjust = c(1, 0), 
-        size = 10,
-        color = "red")
+gg_stimuli <- label(stimuli,
+                    label = c("CHINWE", "GEORGE"), 
+                    x = 0.5, 
+                    y = c(1, 0.02),
+                    vjust = c(1, 0), 
+                    size = 10,
+                    color = "red")
 
-
-p <- c(stimuli, gg_stimuli, m_stimuli) |> 
-  plot(nrow = 3)
-  
-p[[1]]$img
 }
 \seealso{
 \code{\link[=mlabel]{mlabel()}}, \code{\link[=gglabel]{gglabel()}}

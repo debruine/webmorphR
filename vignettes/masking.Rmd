@@ -245,6 +245,21 @@ face2 <- fpp_auto_delin(s, "fpp106", TRUE, 2)
 c(face1, face2) |> draw_tem() |> plot(nrow = 2)
 ```
 
+### Manual delineations
+
+The best way to delineate faces from scratch is through [webmorph.org](https://webmorph.org), but webmorphR has a (very experimental) shiny app that lets you adjust delineations manually. If you notice that an auto-delineation isn't quite right, you can open up the stimuli using `delin()` and manually adjust it.
+
+```{r, eval = FALSE}
+stimuli <- demo_stim() |> auto_delin("dlib7", replace = TRUE)
+manual_delin <- delin(stimuli)
+```
+
+
+<video controls="controls" width="800" height="618" 
+       name="Manual Delineation Shiny App Demo">
+  <source src="images/masking/webmorphR_delin_demo.mov">
+</video>
+
 
 ### Visualise delineations
 

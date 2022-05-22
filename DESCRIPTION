@@ -1,7 +1,7 @@
 Package: webmorphR
 Title: Reproducible Stimuli
-Date: 2022-05-20
-Version: 0.0.2.9003
+Date: 2022-05-22
+Version: 0.0.2.9004
 Authors@R: 
     c(person(
         given = "Lisa", 
@@ -34,9 +34,12 @@ Imports:
     geomorph,
     httr,
     progress,
-    shiny,
     rsvg
 Suggests: 
+    shiny,
+    shinyjs,
+    shinydashboard,
+    DT,
     gifski,
     ggplot2,
     testthat,

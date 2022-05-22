@@ -21,7 +21,8 @@ Plot stim
 }
 \examples{
 \dontrun{
-demo_stim() |> plot()
+stimuli <- demo_stim()
+plot(stimuli)
 }
 }
 \keyword{internal}

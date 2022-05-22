@@ -69,6 +69,7 @@ reference:
   - '`auto_delin`'
   - '`average_tem`'
   - '`change_lines`'
+  - '`delin`'
   - '`draw_tem`'
   - '`fpp_auto_delin`'
   - '`squash_tem`'
@@ -116,7 +117,6 @@ reference:
   contents:
   - '`features`'
   - '`image_func_types`'
-  - '`quick_delin`'
   - '`social_media_size`'
   - '`subset.stimlist`'
   - '`wm_opts`'

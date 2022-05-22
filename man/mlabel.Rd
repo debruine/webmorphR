@@ -58,10 +58,10 @@ Label image using \link[magick:painting]{magick::image_annotate}. All arguments 
 }
 \examples{
 stimuli <- demo_stim("test")
-labelled_stimuli <- stimuli |>
-  mlabel(text = c("CHINWE", "GEORGE"), 
-         gravity = c("north", "south"),
-         color = "red")
+labelled_stimuli <- mlabel(stimuli,
+                           text = c("CHINWE", "GEORGE"), 
+                           gravity = c("north", "south"),
+                           color = "red")
 }
 \seealso{
 \code{\link[=gglabel]{gglabel()}} for a labeller using syntax like \code{\link[ggplot2:annotate]{ggplot2::annotate()}}

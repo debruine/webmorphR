@@ -40,6 +40,8 @@ stimlist with grid image (no templates)
 Show all your stimuli in a grid.
 }
 \examples{
-demo_stim() |> plot_stim()
-
+\dontrun{
+stimuli <- demo_stim()
+plot_stim(stimuli)
+}
 }
