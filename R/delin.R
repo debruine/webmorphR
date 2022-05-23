@@ -16,6 +16,16 @@
 #' stimuli <- demo_stim() |> remove_tems() |> delin()
 #' }
 delin <- function(stimuli) {
+  # check for required packages in shiny app
+  req_packages <- c("shiny", "shinyjs", "shinydashboard", "shinyWidgets", "DT")
+  pkg_available <- sapply(req_packages, requireNamespace, quietly = TRUE)
+  
+  if (!all(pkg_available)) {
+    pkg_txt <- pkg_available[pkg_available == FALSE] |> paste(collapse = ", ")
+    stop("You need to install the following packages to use the shiny delineator: ",
+         pkg_text)
+  }
+  
   stimuli <- validate_stimlist(stimuli)
 
   # save images to temp dir

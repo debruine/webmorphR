@@ -39,6 +39,7 @@ Suggests:
     shiny,
     shinyjs,
     shinydashboard,
+    shinyWidgets,
     DT,
     gifski,
     ggplot2,
