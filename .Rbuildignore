@@ -12,3 +12,5 @@
 ^\.github$
 ^man/figures/home
 ^cran-comments\.md$
+.zenodo.json
+CITATION
