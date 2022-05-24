@@ -1,5 +1,5 @@
 test_that("basic", {
-  stimuli <- demo_stim("test")
+  stimuli <- demo_stim()
   expect_silent(default <- mask(stimuli))
 
   # frl masks ----
@@ -37,7 +37,7 @@ test_that("basic", {
 
 ## custom mask from vectors ----
 test_that("custom mask from vectors", {
-  stimuli <- demo_stim("test")
+  stimuli <- demo_stim()
   
   stimuli[1] |>
     crop_tem() |>

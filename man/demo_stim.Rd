@@ -2,13 +2,14 @@
 % Please edit documentation in R/demo_stim.R
 \name{demo_stim}
 \alias{demo_stim}
+\alias{demo_tems}
 \title{Demo Stimuli}
 \usage{
-demo_stim(set = c("test", "tem_examples"), pattern = NULL)
+demo_stim(pattern = NULL)
+
+demo_tems(pattern = NULL)
 }
 \arguments{
-\item{set}{the images set ("test" or "tem_examples")}
-
 \item{pattern}{defaults to all files}
 }
 \value{

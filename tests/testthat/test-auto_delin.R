@@ -1,5 +1,5 @@
 test_that("auto_delin", {
-  stimuli <- demo_stim("test", "f")
+  stimuli <- demo_stim("f")
   expect_error(auto_delin())
   expect_error( auto_delin(stimuli, "dd") )
   expect_error(x <- auto_delin(stimuli, "dlib7"))
@@ -26,7 +26,7 @@ test_that("auto_delin", {
   skip_if_offline()
   
   # all images have templates
-  stimuli <- demo_stim("test", "f")
+  stimuli <- demo_stim("f")
   expect_warning(x <- auto_delin(stimuli, "fpp106"))
   expect_equal(x, stimuli)
   
@@ -34,7 +34,7 @@ test_that("auto_delin", {
                                   face = 3, replace = TRUE),
                   "f_multi did not have 3 faces")
   
-  stimuli <- demo_stim("test", "m")
+  stimuli <- demo_stim("m")
   ad <- auto_delin(stimuli, "fpp106", replace = TRUE)
   fpp <- auto_delin(stimuli, "fpp106", replace = TRUE)
   expect_equal(fpp[[1]]$points, ad[[1]]$points)

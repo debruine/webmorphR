@@ -57,7 +57,7 @@ stimlist with labelled images
 Label image using \link[magick:painting]{magick::image_annotate}. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli. Setting a font, weight, style only works if your imagemagick is compiled with fontconfig support.
 }
 \examples{
-stimuli <- demo_stim("test")
+stimuli <- demo_stim()
 labelled_stimuli <- mlabel(stimuli,
                            text = c("CHINWE", "GEORGE"), 
                            gravity = c("north", "south"),

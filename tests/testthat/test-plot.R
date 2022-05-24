@@ -1,5 +1,5 @@
 test_that("one", {
-  x <- demo_stim("test", 1)
+  x <- demo_stim(1)
 
   p <- plot(x)
   expect_equal(width(p)[[1]], width(x)[[1]] + 20)

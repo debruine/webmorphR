@@ -56,7 +56,7 @@ reference:
   desc: ~
   contents:
   - '`blank`'
-  - '`demo_stim`'
+  - starts_with("demo_")
   - '`read_stim`'
   - '`write_stim`'
 - title: Webmorph

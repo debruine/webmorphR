@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' o <- demo_stim("test", 1)
+#' o <- demo_stim(1)
 #' m <- mirror(o, "frl")
 #'
 #' c(o, m) |>

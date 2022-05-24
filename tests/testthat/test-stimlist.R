@@ -1,4 +1,4 @@
-stimuli <- demo_stim("test")
+stimuli <- demo_stim()
 stim <- stimuli[[1]]
 stim2 <- stimuli[[2]]
 

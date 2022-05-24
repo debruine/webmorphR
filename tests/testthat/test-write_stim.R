@@ -60,7 +60,7 @@ test_that("no tems", {
 
 # no-line tems ----
 test_that("no-line tems", {
-  dlib7 <- demo_stim("tem_examples", "dlib7")
+  dlib7 <- demo_tems("dlib7")
   d <- tempdir()
   write_stim(dlib7, d)
   

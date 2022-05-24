@@ -328,7 +328,7 @@ You can do so many things with the {magick} package that is installed with {webm
 
 ```{r fun}
 
-stimuli <- demo_stim("test", "m_")
+stimuli <- demo_stim("m_")
 imglist <- c(
   image_func(stimuli, "blur", radius = 10, sigma = 5),
   image_func(stimuli, "charcoal", radius = 5, sigma = 2),

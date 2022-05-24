@@ -26,7 +26,7 @@ test_that("guess", {
 
 # convert_tem ----
 test_that("convert_tem", {
-  tem_examples <- demo_stim("tem_examples") |> resize(400)
+  tem_examples <- demo_tems() |> resize(400)
   
   # convert a stimlist with different tems
   dlib7 <- convert_tem(tem_examples, to = "dlib7")
@@ -56,7 +56,7 @@ test_that("convert_tem", {
 
 # convert_tem self----
 test_that("convert_tem self", {
-  tem_examples <- demo_stim("tem_examples")
+  tem_examples <- demo_tems()
   dlib7 <- convert_tem(tem_examples$dlib7, "guess", "dlib7")
   expect_equal(dlib7[[1]]$points, tem_examples$dlib7$points)
   
@@ -75,7 +75,7 @@ test_that("convert_tem self", {
 
 # convert_tem exact ----
 test_that("convert_tem exact", {
-  tem_examples <- demo_stim("tem_examples") |> resize(0.5)
+  tem_examples <- demo_tems() |> resize(0.5)
   
   td <- tem_def("dlib7")
   for (tem in c("frl", "fpp106", "fpp83", "dlib70")) {
@@ -90,7 +90,7 @@ test_that("convert_tem exact", {
 # convert_tem visual ----
 test_that("convert_tem visual", {
   skip("needs visual check")
-  tem_examples <- demo_stim("tem_examples") |> resize(0.5)
+  tem_examples <- demo_tems() |> resize(0.5)
   
   convert_tem(tem_examples$frl, "frl", "dlib7") |> draw_tem(pt.size = 20, pt.shape = "index")
   convert_tem(tem_examples$fpp106, "fpp106", "dlib7") |> draw_tem()

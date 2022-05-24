@@ -2,7 +2,6 @@
 #'
 #' A convenience function to get demo stimuli
 #'
-#' @param set the images set ("test" or "tem_examples")
 #' @param pattern defaults to all files
 #'
 #' @return stimlist
@@ -11,12 +10,20 @@
 #' @examples
 #' demo_stim() |> plot()
 #'
-demo_stim <- function(set = c("test", "tem_examples"),
-                     pattern = NULL) {
-  set <- match.arg(set)
-  path <- file.path("extdata", set) |>
+demo_stim <- function(pattern = NULL) {
+  path <- file.path("extdata", "test") |>
     system.file(package = "webmorphR")
   stimuli <- read_stim(path, pattern)
 
+  stimuli
+}
+
+#' @export
+#' @rdname demo_stim
+demo_tems <- function(pattern = NULL) {
+  path <- file.path("extdata", "tem_examples") |>
+    system.file(package = "webmorphR")
+  stimuli <- read_stim(path, pattern)
+  
   stimuli
 }

@@ -80,7 +80,7 @@ label <- function(stimuli, ...) {
 #' @export
 #'
 #' @examples
-#' stimuli <- demo_stim("test")
+#' stimuli <- demo_stim()
 #' labelled_stimuli <- mlabel(stimuli,
 #'                            text = c("CHINWE", "GEORGE"), 
 #'                            gravity = c("north", "south"),

@@ -54,7 +54,7 @@ test_that("no img", {
   noimg_keep <- rotate(noimg, 45, keep_size = TRUE)
   
   # only tem, no width and height
-  tem <- demo_stim("test", ".tem")
+  tem <- demo_stim(".tem")
   tem_nokeep <- rotate(tem, 45, keep_size = FALSE)
   tem_keep <- rotate(tem, 45, keep_size = TRUE)
   

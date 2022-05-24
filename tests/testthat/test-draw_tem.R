@@ -1,5 +1,5 @@
 test_that("draw_tem", {
-  stimuli <- demo_stim("test", "f_multi")
+  stimuli <- demo_stim("f_multi")
   default <- draw_tem(stimuli)
   red <- draw_tem(stimuli, "red")
   thick <- draw_tem(stimuli, "red", 5)

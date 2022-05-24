@@ -1,4 +1,4 @@
-stimuli <- demo_stim("test", "f_multi")
+stimuli <- demo_stim("f_multi")
 
 test_that("error", {
   expect_error(resize(),

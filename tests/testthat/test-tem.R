@@ -95,7 +95,7 @@ test_that("frl", {
 
 ## dlib70 features ----
 test_that("dlib70", {
-  stimuli <- demo_stim("tem_examples", "dlib70")
+  stimuli <- demo_tems("dlib70")
   
   mouth_pts <- features("mouth", tem_id = "dlib70")
   

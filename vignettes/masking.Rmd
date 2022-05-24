@@ -148,7 +148,7 @@ The default is "dlib7", which is a 7-point template (tip of the nose, corners of
 A better (but slower) option is "dlib70", a 70-point template (68 plus 2 added centre eye points) from Davis King's [shape_predictor_68_face_landmarks.dat](https://github.com/davisking/dlib-models#shape_predictor_68_face_landmarksdatbz2). 
 
 ```{r}
-frl <- demo_stim("test", "m_multi") |> crop(.8, .8)
+frl <- demo_stim("m_multi") |> crop(.8, .8)
 dlib7 <- auto_delin(frl, "dlib7", replace = TRUE)
 dlib70 <- auto_delin(frl, "dlib70", replace = TRUE)
 ```

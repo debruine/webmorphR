@@ -1,4 +1,4 @@
-stimuli <- demo_stim("test")
+stimuli <- demo_stim()
 
 test_that("errors", {
   expect_error(image_func(stimuli, "xxx"))
