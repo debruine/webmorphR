@@ -141,9 +141,7 @@ less than 1 will set border width as a proportion of the image width,
 while values greater than or equal to 1 will set it as pixels. You can
 also change the border colour using <code>fill</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">1</span>, fill <span class="op">=</span> <span class="st">"hotpink"</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="va">stimuli</span>, <span class="fl">1</span>, fill <span class="op">=</span> <span class="st">"hotpink"</span><span class="op">)</span></code></pre></div>
 <p><img src="images/figures/pink-1.png" width="100%"></p>
 <p>You can set different border sizes for the top, right, bottom and
 left sides (think “TRouBLe”). This can be useful for creating space for
@@ -151,14 +149,11 @@ labels outside the image.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> |&gt;
   <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">60</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, fill <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"white"</span>, size <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"white"</span>, size <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></code></pre></div>
 <p><img src="images/figures/border-1.png" width="100%"></p>
 <p>You can set the border colour separately for each image.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">10</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#F9DEC9"</span>, <span class="st">"#BAEDDD"</span><span class="op">)</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="va">stimuli</span>, <span class="fl">10</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#F9DEC9"</span>, <span class="st">"#BAEDDD"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="images/figures/unnamed-chunk-1-1.png" width="100%"></p>
 </div>
 <div class="section level2">
@@ -208,21 +203,19 @@ Set <code>byrow = FALSE</code> to distribute images by column.</p>
 <p>Use the draw_tem() function to show the delineations. By default,
 points are translucent green circles and lines are translucent blue.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
+  <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="images/figures/draw-tem-1.png" width="100%"></p>
 <p>You can change the default colours and translucency with the
 <code>line.color</code>, <code>pt.color</code>, <code>line.alpha</code>
 and <code>pt.alpha</code> arguments. Remove the image and set the
 background colour with <code>bg</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
+  <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>line.color <span class="op">=</span> <span class="st">"grey"</span>, line.size <span class="op">=</span> <span class="fl">2</span>, line.alpha <span class="op">=</span> <span class="fl">0.2</span>, 
-           pt.color <span class="op">=</span> <span class="st">"red"</span>, pt.size <span class="op">=</span> <span class="fl">4</span>, bg <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+           pt.color <span class="op">=</span> <span class="st">"red"</span>, pt.size <span class="op">=</span> <span class="fl">4</span>, bg <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></code></pre></div>
 <p><img src="images/figures/daw-tem-custom-1.png" width="100%"></p>
 </div>
 <div class="section level2">
@@ -241,9 +234,7 @@ magick or ggplot. The <code><a href="../reference/label.html">label()</a></code>
 </h3>
 <p>Label figure panels with the image name.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/mlabel.html">mlabel</a></span><span class="op">(</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/mlabel.html">mlabel</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span></code></pre></div>
 <p><img src="images/figures/unnamed-chunk-5-1.png" width="100%"></p>
 <p>Use the <code><a href="../reference/rename_stim.html">rename_stim()</a></code> function to set new names.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -259,16 +250,14 @@ Labels can be positioned with the <code>gravity</code> and
 example below, the text is positioned at the northwest (upper-left)
 corner, 10 pixels to the right and 5 pixels down.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span>
-    text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span>,
-    gravity <span class="op">=</span> <span class="st">"northwest"</span>,
-    location <span class="op">=</span> <span class="st">"+10+5"</span>,
-    color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkgreen"</span>, <span class="st">"darkmagenta"</span><span class="op">)</span>,
-    size <span class="op">=</span> <span class="fl">40</span>, 
-    style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"normal"</span>, <span class="st">"italic"</span><span class="op">)</span>
-  <span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="va">stimuli</span>,
+      text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span>,
+      gravity <span class="op">=</span> <span class="st">"northwest"</span>,
+      location <span class="op">=</span> <span class="st">"+10+5"</span>,
+      color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkgreen"</span>, <span class="st">"darkmagenta"</span><span class="op">)</span>,
+      size <span class="op">=</span> <span class="fl">40</span>, 
+      style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"normal"</span>, <span class="st">"italic"</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
 <p><img src="images/figures/custom-labels-label-1.png" width="100%"></p>
 <p>You can customise the labels further, including vectors with a
 different value for each image. Vectors that are too long will be
@@ -300,8 +289,7 @@ truncated and short vectors will be recycled.</p>
         gravity <span class="op">=</span> <span class="st">"southwest"</span>,
         location <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"+10+100"</span>, <span class="st">"+10+110"</span><span class="op">)</span>,
         degrees <span class="op">=</span> <span class="fl">45</span>
-  <span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="op">)</span></code></pre></div>
 <p><img src="images/figures/label-position-1.png" width="100%"></p>
 </div>
 <div class="section level3">
@@ -309,9 +297,7 @@ truncated and short vectors will be recycled.</p>
 </h3>
 <p>Label figure panels with the image name.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/gglabel.html">gglabel</a></span><span class="op">(</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/gglabel.html">gglabel</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span></code></pre></div>
 <p><img src="images/figures/unnamed-chunk-8-1.png" width="100%"></p>
 <p>Set <code>label</code> to a vector of labels to use. The default font
 size used by ggplot is pretty small, so increase <code>size</code>. I
@@ -324,16 +310,14 @@ unlike ggplot, x and y values less than or equal to 1 are interpreted as
 percentages. Adjust label alignment with <code>hjust</code> and
 <code>vjust</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span>
-    label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span>,
-    size <span class="op">=</span> <span class="fl">15</span>,
-    x <span class="op">=</span> <span class="fl">10</span>,  y <span class="op">=</span> <span class="fu"><a href="../reference/height.html">height</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span> <span class="op">-</span> <span class="fl">5</span>,
-    hjust <span class="op">=</span> <span class="fl">0</span>, vjust <span class="op">=</span> <span class="fl">1</span>,
-    color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkgreen"</span>, <span class="st">"darkmagenta"</span><span class="op">)</span>,
-    fontface <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plain"</span>, <span class="st">"italic"</span><span class="op">)</span>
-  <span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="va">stimuli</span>,
+      label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span>,
+      size <span class="op">=</span> <span class="fl">15</span>,
+      x <span class="op">=</span> <span class="fl">10</span>,  y <span class="op">=</span> <span class="fu"><a href="../reference/height.html">height</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span> <span class="op">-</span> <span class="fl">5</span>,
+      hjust <span class="op">=</span> <span class="fl">0</span>, vjust <span class="op">=</span> <span class="fl">1</span>,
+      color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkgreen"</span>, <span class="st">"darkmagenta"</span><span class="op">)</span>,
+      fontface <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"plain"</span>, <span class="st">"italic"</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
 <p><img src="images/figures/custom-labels-gglabel-1.png" width="100%"></p>
 <p>You can customise the labels further, including vectors with a
 different value for each image. Vectors that are too long will be
@@ -376,8 +360,7 @@ watermarked images.</p>
     fontface <span class="op">=</span> <span class="st">"bold"</span>,
     angle <span class="op">=</span> <span class="op">-</span><span class="fl">30</span>,
     alpha <span class="op">=</span> <span class="fl">0.25</span>
-  <span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="op">)</span></code></pre></div>
 <p><img src="images/figures/unnamed-chunk-10-1.png" width="100%"></p>
 </div>
 <div class="section level3">
@@ -413,8 +396,7 @@ and “label” geoms, you can use it for other ggplot geoms.</p>
     geom <span class="op">=</span> <span class="st">"hline"</span>,
     yintercept <span class="op">=</span> <span class="va">intercepts</span><span class="op">$</span><span class="va">y</span>,
     color <span class="op">=</span> <span class="st">"purple"</span>, size <span class="op">=</span> <span class="fl">2</span>
-  <span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="op">)</span></code></pre></div>
 <p><img src="images/figures/unnamed-chunk-12-1.png" width="100%"></p>
 <hr>
 <p>This script took 0.2 minutes to render all the included images from

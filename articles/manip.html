@@ -142,8 +142,7 @@ faster if you’re working with very large images, but can make the
 results blurry if you go too small.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">.1</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">.1</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/resize-1.png" alt="Resized Images" width="100%"><p class="caption">
 Resized Images
@@ -156,8 +155,7 @@ interpreted as pixels. If you set just width or just height, the other
 dimension is calculated proportionally to keep the aspect ratio.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fl">200</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/resize-pixel-1.png" alt="Resized Images by pixel" width="100%"><p class="caption">
 Resized Images by pixel
@@ -169,8 +167,7 @@ if you want to resize and crop/pad all of your images to the same size
 without changing the image contents’ aspect ratio.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">200</span>, height <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">200</span>, height <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/resize-both-1.png" alt="Resized Images by width and height" width="100%"><p class="caption">
 Resized Images by width and height
@@ -186,8 +183,7 @@ in the corners with a specific colour, or use
 at the top left corner.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span>degrees <span class="op">=</span> <span class="fl">45</span>, fill <span class="op">=</span> <span class="fu"><a href="../reference/patch.html">patch</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span>degrees <span class="op">=</span> <span class="fl">45</span>, fill <span class="op">=</span> <span class="fu"><a href="../reference/patch.html">patch</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/rotate-1.png" alt="Rotated Images and Templates" width="100%"><p class="caption">
 Rotated Images and Templates
@@ -212,27 +208,18 @@ usually set fill to the image background colour.</p>
 <p>By default, the rotate happens around the centre of the image. This
 can be undesirable if the face is off-centre.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">image_centered</span> <span class="op">&lt;-</span> <span class="va">offset</span>  |&gt; 
-  <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="va">degrees</span>, rotate_around <span class="op">=</span> <span class="st">"image"</span>, fill <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span>
-
-<span class="va">image_centered</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="va">offset</span>, <span class="va">degrees</span>, origin <span class="op">=</span> <span class="st">"image"</span>, fill <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span></code></pre></div>
 <p><img src="images/manip/unnamed-chunk-4-1.png" width="100%"></p>
-<p>Set <code>rotate_around = "tem"</code> to rotate around the centre of
-the template.</p>
+<p>Set <code>origin = "tem"</code> to rotate around the centre of the
+template.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tem_centered</span> <span class="op">&lt;-</span> <span class="va">offset</span> |&gt; 
-  <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="va">degrees</span>, rotate_around <span class="op">=</span> <span class="st">"tem"</span>, fill <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span>
-
-<span class="va">tem_centered</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="va">offset</span>, <span class="va">degrees</span>, origin <span class="op">=</span> <span class="st">"tem"</span>, fill <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span></code></pre></div>
 <p><img src="images/manip/unnamed-chunk-5-1.png" width="100%"></p>
 <p>If you set <code>keep_size = FALSE</code>, the image and template
 will be rotated and keep the maximum rotated size (so it doesn’t matter
-what you set <code>rotate_around</code> to).</p>
+what you set <code>origin</code> to).</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">no_keep</span> <span class="op">&lt;-</span> <span class="va">offset</span> |&gt; 
-  <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="va">degrees</span>, keep_size <span class="op">=</span> <span class="cn">FALSE</span>, fill <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span>
-
-<span class="va">no_keep</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="va">offset</span>, <span class="va">degrees</span>, keep_size <span class="op">=</span> <span class="cn">FALSE</span>, fill <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span></code></pre></div>
 <p><img src="images/manip/unnamed-chunk-7-1.png" width="100%"></p>
 </div>
 <div class="section level2">
@@ -258,9 +245,7 @@ Make eyes horizontal with horiz_eyes()
 proportions or pixels. Values &lt; 2 will be interpreted as
 proportions.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">.6</span>, height <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="va">stimuli</span>, width <span class="op">=</span> <span class="fl">.6</span>, height <span class="op">=</span> <span class="fl">.8</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/crop-1.png" alt="Cropped images with default center cropping." width="100%"><p class="caption">
 Cropped images with default center cropping.
@@ -272,10 +257,9 @@ start there. The origin is the upper left corner, so setting
 <code>x_off = 0</code> starts the cropping from the left side, and
 setting <code>y_off = 0</code> starts the cropping from the top.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">250</span>, height <span class="op">=</span> <span class="fl">300</span>, 
-       x_off <span class="op">=</span> <span class="fl">0</span>, y_off <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="va">stimuli</span>, 
+     width <span class="op">=</span> <span class="fl">250</span>, height <span class="op">=</span> <span class="fl">300</span>, 
+    x_off <span class="op">=</span> <span class="fl">0</span>, y_off <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/crop-offset-1.png" alt="Cropped images with offsets." width="100%"><p class="caption">
 Cropped images with offsets.
@@ -290,9 +274,7 @@ proportions. Set the colour with <code>fill</code>, otherwise its value
 defaults to the value of <code>wm_opts("fill")</code>, which is white
 unless you reset it.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">0.05</span>, fill <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="va">stimuli</span>, <span class="fl">0.05</span>, fill <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/pad-1.png" alt="Padded images with the same value for each side." width="100%"><p class="caption">
 Padded images with the same value for each side.
@@ -301,10 +283,9 @@ Padded images with the same value for each side.
 <p>Pad the top, right, bottom and left borders with different values,
 and set a different colour for each fill.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span>top <span class="op">=</span> <span class="fl">10</span>, right <span class="op">=</span> <span class="fl">20</span>, bottom <span class="op">=</span> <span class="fl">30</span>, left <span class="op">=</span> <span class="fl">40</span>,
-       fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dodgerblue"</span>, <span class="st">"hotpink"</span><span class="op">)</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="va">stimuli</span>,
+    top <span class="op">=</span> <span class="fl">10</span>, right <span class="op">=</span> <span class="fl">20</span>, bottom <span class="op">=</span> <span class="fl">30</span>, left <span class="op">=</span> <span class="fl">40</span>,
+    fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dodgerblue"</span>, <span class="st">"hotpink"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/pad-multi-1.png" alt="Padded images with different values for each side." width="100%"><p class="caption">
 Padded images with different values for each side.
@@ -360,16 +341,14 @@ across all images.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_lisa</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="images/manip/bounds-1.png" width="100%"></p>
 <p>Set <code>each</code> to TRUE to calculate the boundaries separately
 for each template in the list instead of the full set.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_lisa</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">20</span>, each <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="images/manip/bounds-each-1.png" width="100%"></p>
 </div>
 <div class="section level2">
@@ -391,8 +370,8 @@ and fills in any extra background with blue. You’ll probably choose your
 background colour for a real stimulus set, but this makes the demo
 clearer.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit_pad</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/to_size.html">to_size</a></span><span class="op">(</span><span class="va">multisize</span>, <span class="fl">300</span>, <span class="fl">400</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fit_pad</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/to_size.html">to_size</a></span><span class="op">(</span><span class="va">multisize</span>, <span class="fl">300</span>, <span class="fl">400</span>, 
+        fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/fig-fit-pad-1.png" alt="By default, to_size() will change relative sizes and cover the background without cropping any original image content." width="100%"><p class="caption">
 By default, to_size() will change relative sizes and cover the
@@ -402,10 +381,9 @@ background without cropping any original image content.
 <p>Set <code>keep_rels = TRUE</code> to bring the largest image to fit
 in the new size, resize the others proportionally, and pad.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rel_pad</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/to_size.html">to_size</a></span><span class="op">(</span><span class="va">multisize</span>, <span class="fl">300</span>, <span class="fl">400</span>, 
-                   fill <span class="op">=</span> <span class="st">"dodgerblue"</span>, 
-                   keep_rels <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rel_pad</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/to_size.html">to_size</a></span><span class="op">(</span><span class="va">multisize</span>, <span class="fl">300</span>, <span class="fl">400</span>, 
+        fill <span class="op">=</span> <span class="st">"dodgerblue"</span>, 
+        keep_rels <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/fig-rel-pad-1.png" alt="Set keep_rels = TRUE to keep relative size differences between original images." width="100%"><p class="caption">
 Set keep_rels = TRUE to keep relative size differences between original
@@ -416,8 +394,8 @@ images.
 the new size and crop the “overhang”. There is no need to set the fill
 color for padding when crop is TRUE.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit_crop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/to_size.html">to_size</a></span><span class="op">(</span><span class="va">multisize</span>, <span class="fl">400</span>, <span class="fl">400</span>, crop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fit_crop</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/to_size.html">to_size</a></span><span class="op">(</span><span class="va">multisize</span>, <span class="fl">400</span>, <span class="fl">400</span>, 
+        crop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/fig-fit-crop-1.png" alt="Set crop = TRUE to cover the new image size and crop off overhang." width="100%"><p class="caption">
 Set crop = TRUE to cover the new image size and crop off overhang.
@@ -427,8 +405,9 @@ Set crop = TRUE to cover the new image size and crop off overhang.
 cover the new size, resize the others proportionally, and crop any
 overhang.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rel_crop</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/to_size.html">to_size</a></span><span class="op">(</span><span class="va">multisize</span>, <span class="fl">400</span>, <span class="fl">400</span>, crop <span class="op">=</span> <span class="cn">TRUE</span>, keep_rels <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rel_crop</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/to_size.html">to_size</a></span><span class="op">(</span><span class="va">multisize</span>, <span class="fl">400</span>, <span class="fl">400</span>, 
+        crop <span class="op">=</span> <span class="cn">TRUE</span>, 
+        keep_rels <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="images/manip/fig-rel-crop-1.png" width="100%"></p>
 </div>
 <div class="section level2">
@@ -448,8 +427,7 @@ the same size as the originals.</p>
 <code class="sourceCode R"><span class="va">unstandard_men</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_unstandard</a></span><span class="op">(</span><span class="fl">6</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
 
 <span class="va">unstandard_men</span> |&gt;
-  <span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/align-1.png" alt="Two-point alignment with align()" width="100%"><p class="caption">
 Two-point alignment with align()
@@ -461,8 +439,7 @@ pixels.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">unstandard_men</span> |&gt;
   <span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span>x1 <span class="op">=</span> <span class="fl">350</span>, y1 <span class="op">=</span> <span class="fl">350</span>, x2 <span class="op">=</span> <span class="fl">450</span>, y2 <span class="op">=</span> <span class="fl">450</span>,
-        width <span class="op">=</span> <span class="fl">800</span>, height <span class="op">=</span> <span class="fl">800</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+        width <span class="op">=</span> <span class="fl">800</span>, height <span class="op">=</span> <span class="fl">800</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/align-manual-1.png" alt="Two-point alignment with align(); setting values manually" width="100%"><p class="caption">
 Two-point alignment with align(); setting values manually
@@ -492,8 +469,7 @@ average position, and alters the image dimensions to the average, but
 doesn’t resize or rotate any of the faces</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span><span class="va">unstandard_men</span>, pt1 <span class="op">=</span> <span class="fl">55</span>, pt2 <span class="op">=</span> <span class="fl">55</span>, 
-      fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+      fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/align-1pt-1.png" alt="One-point alignment." width="100%"><p class="caption">
 One-point alignment.
@@ -507,8 +483,7 @@ One-point alignment.
 analysis</a> to align the images and templates to fit the average shape
 (or a reference image) as closely as possible.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span><span class="va">unstandard_men</span>, procrustes <span class="op">=</span> <span class="cn">TRUE</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span><span class="va">unstandard_men</span>, procrustes <span class="op">=</span> <span class="cn">TRUE</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="images/manip/procrustes-1.png" alt="Procrustes alignment." width="100%"><p class="caption">
 Procrustes alignment.
@@ -527,8 +502,7 @@ them back to webmorph.</p>
 <code class="sourceCode R"><span class="va">stimuli</span> |&gt;
   <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">45</span>, <span class="op">-</span><span class="fl">45</span><span class="op">)</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="fl">.5</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">0.1</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">0.1</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></code></pre></div>
 <p><img src="images/manip/chain-1.png" width="100%"></p>
 </div>
 <div class="section level2">
@@ -618,8 +592,7 @@ a different fuzz for each image.</p>
   <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>  |&gt;
   <span class="fu"><a href="../reference/image_func.html">image_func</a></span><span class="op">(</span><span class="st">"fill"</span>, <span class="st">"white"</span>, point<span class="op">=</span><span class="st">"+10+10"</span>, 
              fuzz <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">25</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> |&gt; 
-  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"fuzz ="</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">25</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"fuzz ="</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">25</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="images/manip/image-fill-1.png" width="100%"></p>
 <hr>
 <p>This script took 0.4 minutes to render all the included images from

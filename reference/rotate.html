@@ -87,7 +87,7 @@
   degrees <span class="op">=</span> <span class="fl">0</span>,
   fill <span class="op">=</span> <span class="fu"><a href="wm_opts.html">wm_opts</a></span><span class="op">(</span><span class="st">"fill"</span><span class="op">)</span>,
   keep_size <span class="op">=</span> <span class="cn">TRUE</span>,
-  rotate_around <span class="op">=</span> <span class="st">"image"</span>
+  origin <span class="op">=</span> <span class="st">"image"</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -101,8 +101,11 @@
 <dd><p>background color, see <code><a href="color_conv.html">color_conv()</a></code></p></dd>
 <dt>keep_size</dt>
 <dd><p>whether to keep the original size or expand images to the new rotated size</p></dd>
-<dt>rotate_around</dt>
-<dd><p>Whether to centre the rotation on the "image", template ("tem"), or the center of 1 or more delineation points (0-based)</p></dd>
+<dt>origin</dt>
+<dd><p>The origin of the rotation. Options are:
+<code>"image"</code> will rotate around the image center.</p>
+<p><code>"tem"</code> will rotate around the average of all template coordinates.</p>
+<p>A vector of 1 or more point indices (0-based) will rotate around their average position.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -127,20 +130,32 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">rotated</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span> |&gt;</span>
-<span class="r-in">  <span class="fu">rotate</span><span class="op">(</span><span class="fl">45</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> |&gt;</span>
-<span class="r-in">  <span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rotated</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/6w/y3tyzgs1403cz7tgw8k4lk600000gq/T//Rtmptj0tUe/file16b06e975069.png"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "knit_image_paths" "knit_asis"       </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="resize.html">resize</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">rotate_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span> |&gt;</span>
-<span class="r-in">  <span class="fu">rotate</span><span class="op">(</span><span class="fl">45</span>, keep_size <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rotate_keep</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/6w/y3tyzgs1403cz7tgw8k4lk600000gq/T//Rtmptj0tUe/file16b010205638.png"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "knit_image_paths" "knit_asis"       </span>
+<span class="r-in"><span class="fu">rotate</span><span class="op">(</span><span class="va">stimuli</span>, <span class="fl">45</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="rotate-1.png" alt="" width="700" height="353"></span>
+<span class="r-in"><span class="fu">rotate</span><span class="op">(</span><span class="va">stimuli</span>, <span class="fl">45</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span>, keep_size <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="rotate-2.png" alt="" width="700" height="353"></span>
+<span class="r-in">  </span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="co"># if images are not in the centre of the image,</span></span>
+<span class="r-in"><span class="co"># try setting the origin to tem or specific point(s)</span></span>
+<span class="r-in"><span class="va">offset</span> <span class="op">&lt;-</span> <span class="va">stimuli</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> |&gt; </span>
+<span class="r-in">  <span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt; </span>
+<span class="r-in">  <span class="fu"><a href="pad.html">pad</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">250</span>, <span class="fl">0</span>, <span class="fl">0</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></span>
+<span class="r-in">  </span>
+<span class="r-in"><span class="fu">rotate</span><span class="op">(</span><span class="va">offset</span>, <span class="fl">45</span>, origin <span class="op">=</span> <span class="st">"image"</span>, fill <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="rotate-3.png" alt="" width="700" height="353"></span>
+<span class="r-in"><span class="fu">rotate</span><span class="op">(</span><span class="va">offset</span>, <span class="fl">45</span>, origin <span class="op">=</span> <span class="st">"tem"</span>, fill <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="rotate-4.png" alt="" width="700" height="353"></span>
+<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="co"># rotate around point 0 (left eye)</span></span>
+<span class="r-in"><span class="va">offset</span> |&gt; <span class="fu"><a href="crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span> |&gt;</span>
+<span class="r-in">  <span class="fu">rotate</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">325</span>, <span class="fl">45</span><span class="op">)</span>, origin <span class="op">=</span> <span class="fl">0</span>, fill <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span> |&gt;</span>
+<span class="r-in">  <span class="fu"><a href="animate.html">animate</a></span><span class="op">(</span>fps <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

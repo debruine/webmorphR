@@ -129,29 +129,20 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ctem</span> <span class="op">&lt;-</span> <span class="fu">crop_tem</span><span class="op">(</span><span class="va">stimuli</span>, each <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="va">ctem</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/6w/y3tyzgs1403cz7tgw8k4lk600000gq/T//Rtmptj0tUe/file16b0e8b8d69.png"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "knit_image_paths" "knit_asis"       </span>
+<span class="r-in"><span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="va">ctem</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="crop_tem-1.png" alt="" width="700" height="353"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="co"># demo with different templates</span></span>
 <span class="r-in"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_tems</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># default 10 pixels around maximum template</span></span>
-<span class="r-in"><span class="va">ctem_all</span> <span class="op">&lt;-</span> <span class="fu">crop_tem</span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span> </span>
+<span class="r-in"><span class="fu">crop_tem</span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span> </span>
+<span class="r-plt img"><img src="crop_tem-2.png" alt="" width="700" height="353"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># crop specific to each image</span></span>
-<span class="r-in"><span class="va">ctem_each</span> <span class="op">&lt;-</span> <span class="fu">crop_tem</span><span class="op">(</span><span class="va">stimuli</span>, each <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># visualise difference</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ctem_all</span>, <span class="va">ctem_each</span><span class="op">)</span> |&gt;</span>
-<span class="r-in">  <span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> |&gt; </span>
-<span class="r-in">  <span class="fu"><a href="to_size.html">to_size</a></span><span class="op">(</span><span class="op">)</span> |&gt;</span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span>, maxwidth <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/6w/y3tyzgs1403cz7tgw8k4lk600000gq/T//Rtmptj0tUe/file16b06bf0eff4.png"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "knit_image_paths" "knit_asis"       </span>
+<span class="r-in"><span class="fu">crop_tem</span><span class="op">(</span><span class="va">stimuli</span>, each <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="crop_tem-3.png" alt="" width="700" height="353"></span>
 <span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 </code></pre></div>

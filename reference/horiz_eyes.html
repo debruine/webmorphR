@@ -72,7 +72,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Make eyes horizontal</h1>
-      <small class="dont-index">Source: <a href="https://github.com/debruine/webmorphR/blob/HEAD/R/rotate.R" class="external-link"><code>R/rotate.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/debruine/webmorphR/blob/HEAD/R/horiz_eyes.R" class="external-link"><code>R/horiz_eyes.R</code></a></small>
       <div class="d-none name"><code>horiz_eyes.Rd</code></div>
     </div>
 
@@ -119,12 +119,9 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># the demo images already have nearly horizontal eyes</span></span>
-<span class="r-in"><span class="va">horiz</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu">horiz_eyes</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">horiz</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/6w/y3tyzgs1403cz7tgw8k4lk600000gq/T//Rtmptj0tUe/file16b0320d0d1.png"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "knit_image_paths" "knit_asis"       </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_unstandard</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">horiz_eyes</span><span class="op">(</span><span class="va">stimuli</span>, fill <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="horiz_eyes-1.png" alt="" width="700" height="353"></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

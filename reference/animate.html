@@ -103,7 +103,18 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">gif</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu">animate</span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="co"># slideshow of images (1/second)</span></span>
+<span class="r-in"><span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu">animate</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># rotate a face</span></span>
+<span class="r-in"><span class="va">degrees</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">350</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> |&gt;</span>
+<span class="r-in">  <span class="fu"><a href="mask.html">mask</a></span><span class="op">(</span><span class="op">)</span> |&gt;</span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">degrees</span><span class="op">)</span><span class="op">)</span> |&gt;</span>
+<span class="r-in">  <span class="fu"><a href="rotate.html">rotate</a></span><span class="op">(</span><span class="va">degrees</span><span class="op">)</span> |&gt;</span>
+<span class="r-in">  <span class="fu">animate</span><span class="op">(</span>fps <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
