@@ -19,7 +19,7 @@ trans(
 )
 }
 \arguments{
-\item{trans_img}{image(s) to transform (list of class stimlist)}
+\item{trans_img}{list of stimuli to transform}
 
 \item{from_img}{negative transform dimension endpoint (0\% image)}
 
@@ -38,7 +38,7 @@ trans(
 \item{warp}{warp type}
 }
 \value{
-stimlist with transformed images and templates
+list of stimuli with transformed images and templates
 }
 \description{
 Transform Images
@@ -52,3 +52,11 @@ Transform Images
 }
 
 }
+\seealso{
+WebMorph.org functions
+\code{\link{avg}()},
+\code{\link{continuum}()},
+\code{\link{loop}()},
+\code{\link{symmetrize}()}
+}
+\concept{webmorph}

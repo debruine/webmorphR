@@ -7,7 +7,7 @@
 animate(stimuli, fps = 1, loop = 0, rev = FALSE)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{fps}{frames per second}
 

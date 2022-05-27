@@ -1,6 +1,6 @@
 #' Create an animated gif from a list of stimuli
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param fps frames per second
 #' @param loop how many times to loop the animation (0 = infinite)
 #' @param rev whether to loop back and forth (TRUE) or in one direction (FALSE)

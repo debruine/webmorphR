@@ -1,38 +1,54 @@
 #' Align templates and images
 #' 
-#' Align images so that template points line up. Setting pt1 = pt2 aligns 1 point, but does not resize or rotate images. Setting pt1 and pt2 aligns 2 points, resizing and rotating faces. Setting procrustes = TRUE uses Procrustes analysis to resize and rotate images to be as close as possible to a mean shape. You can specify the x and y coordinates to align, or align to their position in a reference image. The reference image is the average of all images, or the image specified by ref_img. 
+#' Align images so that template points line up. Defaults to two-point alignment of the first two points in your template (usually the eyes) to their mean coordinate position across the stimuli.
+#' 
+#' @details
+#' Setting pt1 the same as pt2 aligns 1 point, but does not resize or rotate images. Setting pt1 and pt2 aligns 2 points, resizing and rotating faces. Setting `procrustes = TRUE` uses Procrustes analysis to resize and rotate images to be as close as possible to a mean shape. 
+#' 
+#' You can specify the x and y coordinates to align, and the width and height of the output images, or set them from a reference image. The reference image (`ref_img`) can be a stim, a 1-item stimlist, or the index or name of a stim in stimuli. It defaults to average of all stimuli if NULL.
+#' 
+#' Visualise the template points with [draw_tem()] to determine which to align, using pt.shape = "index".
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param pt1 The first point to align (defaults to 0)
 #' @param pt2 The second point to align (defaults to 1)
-#' @param x1 The x-coordinate to align the first point to
-#' @param y1 The y-coordinate to align the first point to
-#' @param x2 The x-coordinate to align the second point to
-#' @param y2 The y-coordinate to align the second point to
-#' @param width The width of the aligned image
-#' @param height The height of the aligned image
-#' @param ref_img The reference image to get coordinates and dimensions from if they are NULL; can be a stim/stimlist or the index or name of a stim in stimuli; defaults to average of all stimuli if NULL
-#' @param fill background color if cropping goes outside the original image
-#' @param procrustes Whether to do a procrustes alignment
+#' @param x1,y1,x2,y2 The coordinates to align the first and second point to
+#' @param width,height The dimensions of the aligned images
+#' @param ref_img The reference image to get coordinates and dimensions from if they are NULL
+#' @param fill background color if cropping goes outside the original image, see [color_conv()]
+#' @param procrustes logical; whether to use procrustes alignment
 #'
-#' @return stimlist with aligned tems and/or images
+#' @return list of stimuli with aligned images and/or templates
 #' @export
+#' @family manipulators
 #'
 #' @examples
-#' \dontrun{
-#' # load stimuli and crop/rotate differently
-#' stimuli <- demo_stim() |> 
-#'   crop(c(0.8, 0.9), c(1.0, 0.9), x_off = c(0, 0.2)) |>
-#'   rotate(c(-5, + 5))
+#' # align eye points to specific x and y coordinates
+#' # in a 300x300 pixel image
+#' aligned <- demo_unstandard(1:3) |>
+#'   align(pt1 = 0, pt2 = 1,
+#'         x1 = 100, x2 = 200, y1 = 100, y2 = 100, 
+#'         width = 300, height = 300)
+#' plot(aligned)
+#' 
+#' \donttest{
+#' orig <- demo_unstandard(1:5)
+#' bg <- patch(orig)
 #'
 #' # align to bottom-centre of nose (average position)
-#' one_pt <- align(stimuli, pt1 = 55, pt2 = 55)
+#' one_pt <- align(orig, pt1 = 55, pt2 = 55, fill = bg)
 #'
 #' # align to pupils of second image
-#' two_pt <- align(stimuli, ref_img = 2)
+#' two_pt <- align(orig, ref_img = 2, fill = bg)
 #' 
 #' # procrustes align to average position
-#' proc <- align(stimuli, procrustes = TRUE)
+#' proc <- align(orig, procrustes = TRUE, fill = bg)
+#' 
+#' # visualise all alignments
+#' c(orig, one_pt, two_pt, proc) |>
+#'   pad(1, fill = "black") |>
+#'   to_size() |>
+#'   plot(nrow = 4, maxwidth = 1000)
 #' }
 
 align <- function(stimuli, pt1 = 0, pt2 = 1,
@@ -40,7 +56,7 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
                   width = NULL, height = NULL, ref_img = NULL,
                   fill = wm_opts("fill"),
                   procrustes = FALSE) {
-  stimuli <- validate_stimlist(stimuli, TRUE)
+  stimuli <- require_tems(stimuli) 
 
   # if values NULL, default to ref_img points
   if (is.null(ref_img)) {
@@ -49,7 +65,7 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
     width <- width %||% width(avg)[[1]]
     height <- height %||% height(avg)[[1]]
   } else if (is.list(ref_img)) {
-    ref_img <- validate_stimlist(ref_img, TRUE)
+    ref_img <- as_stimlist(ref_img, TRUE)
     ref_points <- ref_img[[1]]$points
     width <- width %||% ref_img[[1]]$width
     height <- height %||% ref_img[[1]]$height
@@ -102,6 +118,7 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
     y2 <- coords[pt2+1, 2, ]
   }
 
+  fill <- sapply(fill, color_conv)
   suppressWarnings({
     n <- length(stimuli)
     x1 <- rep_len(x1, n)

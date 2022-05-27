@@ -7,7 +7,7 @@
 centroid(stimuli, points = NULL)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{points}{which points to include (0-based); if NULL, all points will be used}
 }
@@ -23,3 +23,29 @@ demo_stim() |> centroid()
 # get the centre of the eye points
 demo_stim() |> centroid(0:1)
 }
+\seealso{
+Template functions
+\code{\link{auto_delin}()},
+\code{\link{average_tem}()},
+\code{\link{change_lines}()},
+\code{\link{delin}()},
+\code{\link{draw_tem}()},
+\code{\link{features}()},
+\code{\link{get_point}()},
+\code{\link{remove_tem}()},
+\code{\link{same_tems}()},
+\code{\link{squash_tem}()},
+\code{\link{subset_tem}()},
+\code{\link{tem_def}()},
+\code{\link{viz_tem_def}()}
+
+Other info: 
+\code{\link{add_info}()},
+\code{\link{compare}()},
+\code{\link{get_info}()},
+\code{\link{get_point}()},
+\code{\link{height}()},
+\code{\link{width}()}
+}
+\concept{info}
+\concept{tem}

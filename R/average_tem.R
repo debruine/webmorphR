@@ -1,18 +1,24 @@
 #' Average templates
 #'
-#' This function just averages the templates. An average image is returned, but it is just all the images superimposed. To create a template-aware average, see \code{\link{avg}}.
+#' This function just averages the templates. An average image is returned, but it is just all the images superimposed. To create a template-aware average, see [avg()].
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param name Name for the average
 #'
-#' @return list with class stimlist
+#' @return list of stimuli consisting of just the average
 #' @export
+#' @family tem
 #'
 #' @examples
-#' demo_stim() |> average_tem()
-#'
+#' tem_only_avg <- demo_stim() |> average_tem()
+#' 
+#' # view the average template
+#' draw_tem(tem_only_avg, bg = "white")
+#' 
+#' # view the superimposed image
+#' plot(tem_only_avg)
 average_tem <- function(stimuli, name = "average") {
-  stimuli <- validate_stimlist(stimuli, TRUE)
+  stimuli <- require_tems(stimuli, TRUE)
 
   # dim is coord (x/y), pt_i, tem_n
   pt <- sapply(stimuli, `[[`, "points", simplify = "array")
@@ -31,5 +37,5 @@ average_tem <- function(stimuli, name = "average") {
     closed = stimuli[[1]]$closed
   )
 
-  validate_stimlist(stim)
+  as_stimlist(stim)
 }

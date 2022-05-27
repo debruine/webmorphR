@@ -7,24 +7,53 @@
 pad(stimuli, top = 10, right = top, bottom = top, left = right, ...)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
-\item{top}{number of pixels to pad the top}
+\item{top, right, bottom, left}{number of pixels or proportion (<1) to pad each side}
 
-\item{right}{number of pixels to pad the right side}
-
-\item{bottom}{number of pixels to pad the bottom}
-
-\item{left}{number of pixels to pad the left side}
-
-\item{...}{additional arguments to pass to \code{\link{crop}}}
+\item{...}{additional arguments to pass to \code{\link[=crop]{crop()}}}
 }
 \value{
-list of class stimlist
+list of stimuli
 }
 \description{
-Convenience function to calcuate offsets for crop
+Add padding to sides of stimuli. This is a convenience function to calculate offsets for \code{\link[=crop]{crop()}}.
+}
+\details{
+The value for top is copied to bottom and right, and the value for right is copied to left, so setting only top produces a consistent border, while setting just top and right sets different borders for top-bottom and right-left. (This convention will be familiar if you use CSS.)
+
+Padding size values are interpreted as a proportion of width or height if less than  1.
 }
 \examples{
-padded <- demo_stim() |> pad(10, fill = "red")
+stimuli <- demo_stim()
+default <- pad(stimuli)
+plot(default)
+
+\donttest{
+# change pad width and set fill
+red_border <- pad(stimuli, 2, fill = "red3")
+plot(red_border)
+
+# set top border to 10\% height
+# different colour for each image
+top_border <- pad(stimuli, 0.1, 1, 1, 1,
+                  fill = c("hotpink", "dodgerblue"))
+plot(top_border)
 }
+}
+\seealso{
+Stimulus manipulation functions
+\code{\link{align}()},
+\code{\link{crop_tem}()},
+\code{\link{crop}()},
+\code{\link{greyscale}()},
+\code{\link{horiz_eyes}()},
+\code{\link{image_func}()},
+\code{\link{mask_oval}()},
+\code{\link{mask}()},
+\code{\link{mirror}()},
+\code{\link{resize}()},
+\code{\link{rotate}()},
+\code{\link{to_size}()}
+}
+\concept{manipulators}

@@ -4,19 +4,27 @@
 \alias{rotate}
 \title{Rotate templates and images}
 \usage{
-rotate(stimuli, degrees = 0, fill = wm_opts("fill"), keep_size = TRUE)
+rotate(
+  stimuli,
+  degrees = 0,
+  fill = wm_opts("fill"),
+  keep_size = TRUE,
+  rotate_around = "image"
+)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{degrees}{degrees to rotate}
 
-\item{fill}{background color}
+\item{fill}{background color, see \code{\link[=color_conv]{color_conv()}}}
 
 \item{keep_size}{whether to keep the original size or expand images to the new rotated size}
+
+\item{rotate_around}{Whether to centre the rotation on the "image", template ("tem"), or the center of 1 or more delineation points (0-based)}
 }
 \value{
-stimlist with rotated tems and/or images
+list of stimuli with rotated tems and/or images
 }
 \description{
 Rotate templates and images
@@ -25,8 +33,26 @@ Rotate templates and images
 rotated <- demo_stim() |>
   rotate(45, fill = "dodgerblue") |>
   draw_tem()
+plot(rotated)
 
-rotate_corners <- demo_stim() |>
+rotate_keep <- demo_stim() |>
   rotate(45, keep_size = FALSE)
+plot(rotate_keep)
 
 }
+\seealso{
+Stimulus manipulation functions
+\code{\link{align}()},
+\code{\link{crop_tem}()},
+\code{\link{crop}()},
+\code{\link{greyscale}()},
+\code{\link{horiz_eyes}()},
+\code{\link{image_func}()},
+\code{\link{mask_oval}()},
+\code{\link{mask}()},
+\code{\link{mirror}()},
+\code{\link{pad}()},
+\code{\link{resize}()},
+\code{\link{to_size}()}
+}
+\concept{manipulators}

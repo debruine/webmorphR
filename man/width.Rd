@@ -7,7 +7,7 @@
 width(stimuli, type = c("all", "min", "max", "unique"))
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{type}{whether to return all widths, min, max, or only unique widths}
 }
@@ -21,3 +21,13 @@ Image widths
 
 demo_stim() |> width()
 }
+\seealso{
+Other info: 
+\code{\link{add_info}()},
+\code{\link{centroid}()},
+\code{\link{compare}()},
+\code{\link{get_info}()},
+\code{\link{get_point}()},
+\code{\link{height}()}
+}
+\concept{info}

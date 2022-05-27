@@ -2,7 +2,7 @@
 #' 
 #' Defaults to [mlabel] unless you use arguments specific to [gglabel]. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli. 
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param ... arguments to pass on to \code{mlabel} or \code{gglabel}
 #'
 #' @return stimlist with labelled images
@@ -60,7 +60,7 @@ label <- function(stimuli, ...) {
 #'
 #' Label image using [magick::image_annotate]. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli. Setting a font, weight, style only works if your imagemagick is compiled with fontconfig support. 
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param text a vector of the label text(s) or TRUE to use stimlist names
 #' @param color a vector of the label colour(s)
 #' @param gravity string with gravity value from \code{magick::gravity_types}.
@@ -99,7 +99,7 @@ mlabel <- function(stimuli,
                   color = "black",
                   strokecolor = NULL,
                   boxcolor = NULL) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
 
   if (isTRUE(text)) text <- names(stimuli)
   
@@ -167,7 +167,7 @@ mlabel <- function(stimuli,
 #' 
 #' Label image using [ggplot2::annotate]. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli. 
 #' 
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param label a vector of the label text(s) or TRUE to use stimlist names
 #' @param x x-coordinate for label anchor (left is 0); values <= 1 are interpreted as proportions of width
 #' @param y y-coordinate for label anchor (bottom is 0); values <= 1 are interpreted as proportions of height
@@ -201,7 +201,7 @@ gglabel <- function(stimuli, label = TRUE, x = 0.5, y = 0.95, geom = "text", ...
     stop("You need to install the package ggplot2 to use gglabel or label with ggplot options")
   }
   
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
   
   if (isTRUE(label)) label <- names(stimuli)
   dots <- list(...)

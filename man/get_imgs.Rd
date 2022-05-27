@@ -7,7 +7,7 @@
 get_imgs(stimuli)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 }
 \value{
 list of magick images

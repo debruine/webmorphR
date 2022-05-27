@@ -2,21 +2,21 @@
 % Please edit documentation in R/auto_delin.R
 \name{auto_delin}
 \alias{auto_delin}
-\title{Face++ Auto-Delineation}
+\title{Auto-Delineation}
 \usage{
 auto_delin(stimuli, model = c("fpp106", "fpp83"), replace = FALSE, face = 1)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{model}{Which model (fpp106, fpp83)}
 
-\item{replace}{if FALSE, only gets templates for images with no template}
+\item{replace}{logical; whether to replace original templates - if FALSE, only gets templates for images with no template}
 
 \item{face}{which face to delineate in each image if there is more than 1}
 }
 \value{
-stimlist with templates
+list of stimuli with templates
 }
 \description{
 Automatically delineate faces using Face++ (an external service). Since each delineation counts against a daily limit, you need to set up your own Face++ account (see details below).
@@ -35,3 +35,20 @@ FACEPLUSPLUS_SECRET="1234567890abcdefghijk"
     auto_delin(model = "fpp106", replace = TRUE)
 }
 }
+\seealso{
+Template functions
+\code{\link{average_tem}()},
+\code{\link{centroid}()},
+\code{\link{change_lines}()},
+\code{\link{delin}()},
+\code{\link{draw_tem}()},
+\code{\link{features}()},
+\code{\link{get_point}()},
+\code{\link{remove_tem}()},
+\code{\link{same_tems}()},
+\code{\link{squash_tem}()},
+\code{\link{subset_tem}()},
+\code{\link{tem_def}()},
+\code{\link{viz_tem_def}()}
+}
+\concept{tem}

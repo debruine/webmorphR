@@ -1,10 +1,10 @@
 #' Convert templates
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param from id of template definition of stimlist images
 #' @param to id of template definition to convert to
 #'
-#' @return stimlist with converted templates
+#' @return list of stimuli with converted templates
 #' @export
 #' @keywords internal
 #'
@@ -15,7 +15,7 @@
 convert_tem <- function(stimuli, 
                         from = c("guess", "frl", "fpp106", "fpp83", "dlib70", "dlib7"), 
                         to = c("frl", "fpp106", "fpp83", "dlib70", "dlib7")) {
-  stimuli <- validate_stimlist(stimuli, TRUE)
+  stimuli <- require_tems(stimuli)
   
   from <- match.arg(from)
   to <- match.arg(to)

@@ -7,10 +7,10 @@
 remove_tem(stimuli)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 }
 \value{
-list of class stimlist
+list of stimuli
 }
 \description{
 Remove templates
@@ -18,3 +18,20 @@ Remove templates
 \examples{
 demo_stim() |> remove_tem()
 }
+\seealso{
+Template functions
+\code{\link{auto_delin}()},
+\code{\link{average_tem}()},
+\code{\link{centroid}()},
+\code{\link{change_lines}()},
+\code{\link{delin}()},
+\code{\link{draw_tem}()},
+\code{\link{features}()},
+\code{\link{get_point}()},
+\code{\link{same_tems}()},
+\code{\link{squash_tem}()},
+\code{\link{subset_tem}()},
+\code{\link{tem_def}()},
+\code{\link{viz_tem_def}()}
+}
+\concept{tem}

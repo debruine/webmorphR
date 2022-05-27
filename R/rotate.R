@@ -1,86 +1,127 @@
 #' Rotate templates and images
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param degrees degrees to rotate
-#' @param fill background color
+#' @param fill background color, see [color_conv()]
 #' @param keep_size whether to keep the original size or expand images to the new rotated size
+#' @param rotate_around Whether to centre the rotation on the "image", template ("tem"), or the center of 1 or more delineation points (0-based)
 #'
-#' @return stimlist with rotated tems and/or images
+#' @return list of stimuli with rotated tems and/or images
 #'
 #' @export
+#' @family manipulators
 #'
 #' @examples
 #' rotated <- demo_stim() |>
 #'   rotate(45, fill = "dodgerblue") |>
 #'   draw_tem()
+#' plot(rotated)
 #'
-#' rotate_corners <- demo_stim() |>
+#' rotate_keep <- demo_stim() |>
 #'   rotate(45, keep_size = FALSE)
+#' plot(rotate_keep)
 #'
 rotate <- function(stimuli, degrees = 0,
                    fill = wm_opts("fill"),
-                   keep_size = TRUE) {
-  stimuli <- validate_stimlist(stimuli)
-  n <- length(stimuli)
+                   keep_size = TRUE,
+                   rotate_around = "image") {
+  stimuli <- as_stimlist(stimuli)
+  orig_w <- width(stimuli)
+  orig_h <- height(stimuli)
 
   degrees <- degrees |>
     rep(length.out = length(stimuli)) |>
     sapply(`%%`, 360)
   radians <- degrees * (pi/180)
 
+  fill <- sapply(fill, color_conv)
   suppressWarnings({
-    fill <- rep_len(fill, n)
+    l <- length(stimuli)
+    fill <- rep_len(fill, l)
   })
 
   for (i in seq_along(stimuli)) {
     w <- stimuli[[i]]$width
     h <- stimuli[[i]]$height
+    
+    # calculate xm1, ym1 ----
+    if ((keep_size && rotate_around == "tem") || 
+        is.null(w) || is.null(h)) {
+      ct <- centroid(stimuli[[i]])
+      xm1 <- ct[1, 'x']
+      ym1 <- ct[1, 'y']
+    } else if (!keep_size || rotate_around == "image") {
+      xm1 <- w/2
+      ym1 <- h/2
+    } else if (is.numeric(rotate_around)) {
+      ct <- centroid(stimuli[[i]], points = rotate_around)
+      xm1 <- ct[1, 'x']
+      ym1 <- ct[1, 'y']
+    }
+    
+    # calculate rotsize ----
+    if (keep_size) {
+      rotsize <- list(width = w, height = h)
+      xm2 <- xm1
+      ym2 <- ym1
+    } else {
+      w <- w %||% (2*xm1)
+      h <- h %||% (2*ym1)
+      rotsize <- rotated_size(w, h, degrees[i]) |> lapply(ceiling)
+      xm2 <- rotsize$width/2
+      ym2 <- rotsize$height/2
+    }
 
     # rotate image ----
     if ("magick-image" %in% class(stimuli[[i]]$img)) {
-      xm1 <- w/2
-      ym1 <- h/2
-
-      rotimg <- stimuli[[i]]$img |>
+      # centre image on xm1, ym1
+      if ((xm1 != w/2 || ym1 != h/2) && keep_size) {
+        new_w <- ceiling(max(xm1, w-xm1) * 2)
+        new_h <- ceiling(max(ym1, h-ym1) * 2)
+        x_off <- ifelse(xm1 < w-xm1, w - new_w, 0) |> round()
+        y_off <- ifelse(ym1 < h-ym1, h - new_h, 0) |> round()
+        centred_img <- crop(stimuli[[i]], 
+                            new_w, new_h, 
+                            x_off, y_off, 
+                            fill = fill[i])
+      } else {
+        centred_img <- stimuli[i]
+      }
+      
+      # rotate on center
+      rotimg <- centred_img[[1]]$img |>
         magick::image_background(color = fill[i]) |>
         magick::image_rotate(degrees[i])
-      if (keep_size) {
-        rotimg <- magick::image_crop(rotimg, magick::geometry_area(w, h))
-      }
       stimuli[[i]]$img <- magick::image_repage(rotimg)
+      
+      # crop back to right size
+      # get center of new img to xm2,ym2 at rotsize
       info <- magick::image_info(stimuli[[i]]$img)
-      xm2 <- info$width/2
-      ym2 <- info$height/2
-    } else if (!is.null(w) && !is.null(h)) {
-      xm1 <- w/2
-      ym1 <- h/2
-
-      if (keep_size) {
-        xm2 <- xm1
-        ym2 <- ym1
+      stimuli[[i]]$width <- info$width
+      stimuli[[i]]$height <- info$height
+      if (!keep_size) {
+        x_off <- NULL
+        y_off <- NULL
       } else {
-        rotsize <- rotated_size(w, h, degrees[i])
-        xm2 <- rotsize$width/2
-        ym2 <- rotsize$height/2
+        rot_xm <- info$width/2
+        rot_ym <- info$height/2
+        x_off <- round(rot_xm - xm2)
+        y_off <- round(rot_ym - ym2)
       }
-    } else if (!is.null(stimuli[[i]]$points)) {
-      # rotate around the centre of the points
-      centre <- apply(stimuli[[i]]$points, 1, mean)
-      xm1 <- centre[[1]]
-      ym1 <- centre[[2]]
-
-      if (keep_size) {
-        xm2 <- xm1
-        ym2 <- ym1
-      } else {
-        rotsize <- rotated_size(xm1*2, ym1*2, degrees[i])
-        xm2 <- rotsize$width/2
-        ym2 <- rotsize$height/2
-      }
+      
+      uncropimg <- crop(stimuli[[i]], 
+                        rotsize$width, 
+                        rotsize$height, 
+                        x_off, y_off, 
+                        fill = fill[i])
+      
+      stimuli[[i]]$img <- uncropimg[[1]]$img
+      
+      stimuli[[i]]$width = rotsize$width
+      stimuli[[i]]$height = rotsize$height
     }
-
-    stimuli[[i]]$width = round(xm2*2)
-    stimuli[[i]]$height = round(ym2*2)
+    
+    
 
     # rotate points ----
     if (!is.null(stimuli[[i]]$points)) {
@@ -95,6 +136,10 @@ rotate <- function(stimuli, degrees = 0,
                                     dimnames = dimnames(pt))
     }
   }
+  
+  # if (keep_size) {
+  #   stimuli <- crop(stimuli, orig_w, orig_h, fill = fill)
+  # }
 
   stimuli
 }
@@ -137,20 +182,25 @@ rotated_size <- function(width, height, degrees) {
 
 
 #' Make eyes horizontal
+#' 
+#' Rotate each stimulus so the eye points are horizontal. 
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param left_eye The first point to align (defaults to 0)
 #' @param right_eye The second point to align (defaults to 1)
-#' @param fill background color to pass to rotate
+#' @param fill background color to pass to rotate, see [color_conv()]
 #'
-#' @return stimlist with rotated tems and/or images
+#' @return list of stimuli with rotated tems and/or images
 #' @export
+#' @family manipulators
 #'
 #' @examples
-#' demo_stim() |> horiz_eyes()
+#' # the demo images already have nearly horizontal eyes
+#' horiz <- demo_stim() |> horiz_eyes(fill = "red")
+#' plot(horiz)
 #'
 horiz_eyes <- function(stimuli, left_eye = 0, right_eye = 1, fill = wm_opts("fill")) {
-  stimuli <- validate_stimlist(stimuli, TRUE)
+  stimuli <- require_tems(stimuli)
 
   degrees <- lapply(stimuli, `[[`, "points") |>
     lapply(function(pt) {

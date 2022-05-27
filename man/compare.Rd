@@ -62,3 +62,13 @@ compare(stimuli, stimuli$m_multi)
 compare(stimuli, stimuli$m_multi, "AE")
 compare(stimuli, stimuli$m_multi, "AE", fuzz = 5)
 }
+\seealso{
+Other info: 
+\code{\link{add_info}()},
+\code{\link{centroid}()},
+\code{\link{get_info}()},
+\code{\link{get_point}()},
+\code{\link{height}()},
+\code{\link{width}()}
+}
+\concept{info}

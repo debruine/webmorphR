@@ -1,7 +1,8 @@
 #' Mask Images with templates
 #'
-#' Create a mask using template points.
+#' Use template points to define the borders of a mask to apply to the images. The image outside of the mask (or inside, if `reverse = TRUE`) is replaced by the fill color.
 #'
+#' @details
 #' For FRL templates, the argument \code{mask} can be a vector with one or more of the following: oval, face, neck, ears (left_ear, right_ear), eyes (left_eye, right_eye), brows (left_brow, right_brow), mouth, teeth, nose.
 #'
 #' For Face++ templates (fpp83 or fpp106), the argument \code{mask} can be a vector with one or more of the following: face, eyes (left_eye, right_eye), brows (left_brow, right_brow), mouth, teeth, nose. Because these templates have no forehead points, "face" is usually disappointing.
@@ -12,28 +13,39 @@
 #'
 #' If you set expand = 0, there is sometimes a thin visible line where multiple components of the mask touch.
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param mask vector of masks or a custom list of template points
-#' @param fill color to make the mask
-#' @param reverse if TRUE, the mask covers the listed areas
-#' @param expand how many pixels to expand the mask
-#' @param tem_id template ID to pass on to \code{tem_def} to get built-in mask definitions, usually one of "frl", "fpp106" or "fpp83"
+#' @param fill color to make the mask, see [color_conv()]
+#' @param reverse logical; whether the mask covers the areas outside (FALSE) or inside (TRUE) the mask
+#' @param expand how many pixels to expand the mask (negative numbers contract the mask)
+#' @param tem_id template ID to pass on to [tem_def()] to get built-in mask definitions
 #'
-#' @return stimlist with masked images
+#' @return list of stimuli with masked images
 #' @export
+#' @family manipulators
 #'
 #' @examples
 #' stimuli <- demo_stim()
+#' 
 #' masked <- mask(stimuli, c("face", "neck", "ears"), "red")
-#'
-#' revmasked <- mask(stimuli, "eyes", "#FFFF00", TRUE) |>
-#'   mask("brows", "purple", TRUE) |>
-#'   mask("nose", "#FF000066", TRUE) |>
-#'   mask("mouth", "blue", TRUE)
+#' plot(masked)
+#' 
+#' expanded <- mask(stimuli, "face", expand = 30)
+#' plot(expanded)
+#' 
+#' \donttest{
+#' # reverse masking masks over the features
+#' revmasked <- stimuli |>
+#'   mask("eyes", "#FFFF00", TRUE) |>
+#'   mask("brows", rgb(0.2, 0.5, 0.5), TRUE) |>
+#'   mask("mouth", "#FF000066", TRUE)
+#' plot(revmasked)
+#' 
+#' }
 #'
 mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
                  reverse = FALSE, expand = 1, tem_id = "frl") {
-  stimuli <- validate_stimlist(stimuli, TRUE)
+  stimuli <- require_tems(stimuli, TRUE)
 
   # check masks
   if (is.list(mask)) {
@@ -81,9 +93,12 @@ mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
   }
 
   # allow for vectors of fill or expand
-  n <- length(stimuli)
-  fill <- rep_len(fill, n)
-  expand <- rep_len(expand, n)
+  fill <- sapply(fill, color_conv)
+  suppressWarnings({
+    l <- length(stimuli)
+    fill <- rep_len(fill, l)
+    expand <- rep_len(expand, l)
+  })
   w <- width(stimuli) |> round()
   h <- height(stimuli) |> round()
 
@@ -106,22 +121,24 @@ mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
 
     # make SVG
     if (isTRUE(reverse)) {
+      strokecolor <- ifelse(expand[i] < 0, "black", "white")
       svg_text <- "<svg
     width=\"%d\" height=\"%d\"
     xmlns=\"http://www.w3.org/2000/svg\">
-    <defs><mask id=\"image-mask\" fill=\"white\" stroke=\"white\" stroke-width=\"%f\">
+    <defs><mask id=\"image-mask\" fill=\"white\" stroke=\"%s\" stroke-width=\"%f\">
       %s
     </mask></defs>
 
     <rect width=\"100%%\" height=\"100%%\" fill=\"%s\" mask=\"url(#image-mask)\"/>
 </svg>"
     } else {
+      strokecolor <- ifelse(expand[i] < 0, "white", "black")
       svg_text <- "<svg
     width=\"%d\" height=\"%d\"
     xmlns=\"http://www.w3.org/2000/svg\">
     <defs><mask id=\"image-mask\">
     <rect fill=\"white\" width=\"100%%\" height=\"100%%\" fill-opacity=\"1\" />
-      <g stroke-width=\"%f\">
+      <g stroke=\"%s\" stroke-width=\"%f\">
       %s
       </g>
     </mask></defs>
@@ -131,7 +148,8 @@ mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
 
     }
 
-    svg <- sprintf(svg_text, w[i], h[i], expand[i], curves, color_conv(fill[i]))
+    svg <- sprintf(svg_text, w[i], h[i], strokecolor,
+                   abs(expand[i]), curves, fill[i])
 
     maskimg <- magick::image_read_svg(svg)
     stimuli[[i]]$img <- magick::image_composite(stimuli[[i]]$img, maskimg)

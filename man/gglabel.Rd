@@ -7,7 +7,7 @@
 gglabel(stimuli, label = TRUE, x = 0.5, y = 0.95, geom = "text", ...)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{label}{a vector of the label text(s) or TRUE to use stimlist names}
 

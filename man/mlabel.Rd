@@ -22,7 +22,7 @@ mlabel(
 )
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{text}{a vector of the label text(s) or TRUE to use stimlist names}
 

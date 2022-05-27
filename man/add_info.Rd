@@ -7,14 +7,14 @@
 add_info(stimuli, ..., .by = NULL)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{...}{data table or named vectors of info to add}
 
 \item{.by}{the column to use to match info to stimuli names; leave NULL if the data are to be matched by order}
 }
 \value{
-stimlist with info added
+list of stimuli with info added
 }
 \description{
 Add info with a data table that contains the info in either the same order as the stimulus list, or matching the stimuli item name with the column specified by \code{.by}.
@@ -29,3 +29,13 @@ stimuli <- demo_stim() |>
 stimuli$f_multi$info |> str()
 
 }
+\seealso{
+Other info: 
+\code{\link{centroid}()},
+\code{\link{compare}()},
+\code{\link{get_info}()},
+\code{\link{get_point}()},
+\code{\link{height}()},
+\code{\link{width}()}
+}
+\concept{info}

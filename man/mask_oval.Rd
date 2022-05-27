@@ -7,16 +7,16 @@
 mask_oval(stimuli, bounds = NULL, fill = wm_opts("fill"), each = TRUE)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{bounds}{bounds (t, r, b, l) of oval, calculated from templates if NULL}
 
-\item{fill}{background color for mask}
+\item{fill}{background color for mask, see \code{\link[=color_conv]{color_conv()}}}
 
 \item{each}{whether to calculate a mask for each image (default) or just one}
 }
 \value{
-stimlist with cropped tems and/or images
+list of stimuli with cropped tems and/or images
 }
 \description{
 Superimpose an oval mask on a set of images. If the images have templates and bounds = NULL, the maxiumum and minimum x and y coordinates for each image will be calculated (or the overall max and min if each = FALSE) and an oval with those dimensions and position will be placed over the face.
@@ -37,3 +37,19 @@ omask2 <- demo_stim() |>
 omask3 <- demo_stim() |>
   mask_oval(bounds = list(t= 70, r = 120, b = 70, l = 120))
 }
+\seealso{
+Stimulus manipulation functions
+\code{\link{align}()},
+\code{\link{crop_tem}()},
+\code{\link{crop}()},
+\code{\link{greyscale}()},
+\code{\link{horiz_eyes}()},
+\code{\link{image_func}()},
+\code{\link{mask}()},
+\code{\link{mirror}()},
+\code{\link{pad}()},
+\code{\link{resize}()},
+\code{\link{rotate}()},
+\code{\link{to_size}()}
+}
+\concept{manipulators}

@@ -7,14 +7,12 @@
 resize(stimuli, width = NULL, height = NULL)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
-\item{width}{new width (in pixels or percent if < 10)}
-
-\item{height}{new height (in pixels or percent if < 10)}
+\item{width, height}{new dimensions (in pixels or percent if < 10)}
 }
 \value{
-stimlist with resized tems and/or images
+list of stimuli with resized tems and/or images
 }
 \description{
 Resize templates and images
@@ -23,5 +21,23 @@ Resize templates and images
 resized <- demo_stim() |>
   resize(.5, .75) |>
   draw_tem()
+  
+plot(resized)
 
 }
+\seealso{
+Stimulus manipulation functions
+\code{\link{align}()},
+\code{\link{crop_tem}()},
+\code{\link{crop}()},
+\code{\link{greyscale}()},
+\code{\link{horiz_eyes}()},
+\code{\link{image_func}()},
+\code{\link{mask_oval}()},
+\code{\link{mask}()},
+\code{\link{mirror}()},
+\code{\link{pad}()},
+\code{\link{rotate}()},
+\code{\link{to_size}()}
+}
+\concept{manipulators}

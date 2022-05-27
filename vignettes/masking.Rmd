@@ -427,6 +427,25 @@ mask(stimuli, mask = c("eyes", "mouth"),
   plot()
 ```
 
+You can also set `expand` to increase or decrease the mask size.
+
+```{r}
+mask0 <- mask(stimuli[1], expand = 0)
+maskpos <- mask(stimuli[1],  expand = 20)
+maskneg <- mask(stimuli[1],  expand = -20)
+revmask0 <- mask(stimuli[1], expand = 0, reverse = TRUE)
+revmaskpos <- mask(stimuli[1], expand = 20, reverse = TRUE)
+revmaskneg <- mask(stimuli[1],expand = -20, reverse = TRUE)
+
+# plot
+c(mask0, maskpos, maskneg, revmask0, revmaskpos, revmaskneg) |> 
+  crop_tem() |> draw_tem() |>
+  pad(80, 0, 0, 0) |>
+  label(c("expand = 0", "expand = 20", "expand = -20")) |>
+  plot(nrow = 2)
+```
+
+
 
 ### Oval Mask
 
@@ -455,7 +474,7 @@ stimuli |>
 You can subset template points for images delineated with the FRL template using the convenience function `features()`. 
 
 ```{r features-demo}
-full_tem <- demo_stim()[1]
+full_tem <- demo_stim(1)
 pts_to_keep <- features("eyes", "nose", "mouth", "brows")
 pts_to_delete <- features("cheekbones", "undereyes", "smile_lines")
 

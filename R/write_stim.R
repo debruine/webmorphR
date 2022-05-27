@@ -1,6 +1,6 @@
 #' Write tems and images to files
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param dir Directory to save to
 #' @param names A vector of stimulus names or NULL to use names from the stimuli list
 #' @param format output format such as "png", "jpeg", "gif"; is overridden if names end in .png, .jpg, or .gif
@@ -12,12 +12,13 @@
 #'
 #' @examples
 #' \dontrun{
+#'   # write demo stim as jpegs to directory ./test_faces
 #'   demo_stim() |> write_stim("test_faces", format = "jpg")
 #' }
 write_stim <- function(stimuli, dir = ".", 
                        names = NULL, format = "png", ..., 
                        overwrite = wm_opts("overwrite")) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
   
   if (!is.null(names)) {
     n <- length(stimuli)

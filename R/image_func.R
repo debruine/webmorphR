@@ -1,46 +1,57 @@
-#' Apply function to each image
+#' Apply a magick function to each image
 #'
 #' This is a convenience function for applying {magick} functions that take an image as the first argument and return an image. It's fully vectorised, so you can set separate argument values for each image.
+#' 
+#' @details 
+#' These functions only affect the image, not the template. If a function changes the morphology of the image (e.g., "implode"), the template will not alter in the same way.
 #'
-#' @param stimuli list of class stimlist
-#' @param func the function or a string with the short name of the magick function (e.g., "blur" for \code{image_blur()}
+#' @param stimuli list of stimuli
+#' @param func the function or a string with the short name of the magick function (see [image_func_types()])
 #' @param ... arguments to pass to the function
 #'
-#' @return stimlist with new images
+#' @return list of stimuli with new images
 #' @export
+#' @family manipulators
 #'
 #' @examples
 #' stimuli <- demo_stim()
 #'
-#' # use magick::image_* functions
-#' image_func(stimuli, "fill", 
-#'            color = "black", 
-#'            fuzz = 10, 
-#'            point = "+0+10")
-#'
-#' blur <- image_func(stimuli, "blur", 5, 3)
-#' oilpaint <- image_func(stimuli, "oilpaint", radius = 5)
-#' negate <- image_func(stimuli, "negate")
-#' greenscreen <- image_func(stimuli, "transparent", 
-#'                           color = "green", fuzz = 5)
-#' colorize <- image_func(stimuli, "colorize", opacity = 50,
-#'                        color = c("hotpink", "dodgerblue"))
-#' sharpen <- image_func(stimuli, "contrast", sharpen = 1)
+#' # make a photographic negative version
+#' image_func(stimuli, "negate") |> 
+#'   plot(maxwidth = 500)
+#' 
+#' # set different argument values for each image
+#' image_func(stimuli, "implode", factor = c(0.2, -0.2)) |> 
+#'   plot(maxwidth = 500)
+#' 
+#' \donttest{
+#' # other image functions
+#' image_func(stimuli, "blur", 5, 3) |> 
+#'   plot(maxwidth = 500)
+#' image_func(stimuli, "contrast", sharpen = 1) |> 
+#'   plot(maxwidth = 500)
+#' image_func(stimuli, "oilpaint", radius = 5) |> 
+#'   plot(maxwidth = 500)
+#' image_func(stimuli, "colorize", opacity = 50,
+#'           color = c("hotpink", "dodgerblue")) |> 
+#'   plot(maxwidth = 500)
 #'
 #' # load a logo image and superimpose it on each image
 #' logo <- system.file("extdata/logo.png", package = "webmorphR") |>
 #'   magick::image_read() |>
 #'   magick::image_resize(100)
-#' image_func(stimuli, "composite", logo, offset = "+10+10")
+#' plus_logo <- image_func(stimuli, "composite", logo, 
+#'                         offset = "+10+10")
+#' plot(plus_logo, maxwidth = 500)
 #'
 #' # use a self-defined function
 #' testfunc <- function(image) {
 #'   image # just return the image unprocessed
 #' }
 #' test <- image_func(stimuli, testfunc)
-#'
+#' }
 image_func <- function(stimuli, func, ...) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
 
   # make sure func is a function or a magick image function
   if (is.character(func)) {
@@ -105,17 +116,23 @@ image_func_types <- function() {
 #'
 #' @return stimlist with new images
 #' @export
+#' @family manipulators
 #'
 #' @examples 
-#' demo_stim() |> greyscale()
+#' stimuli <- demo_stim()
+#' grey_stim <- greyscale(stimuli)
+#' plot(grey_stim)
 greyscale <- function(stimuli) {
   image_func(stimuli, "modulate", saturation = 0)
 }
 
 #' @rdname greyscale
 #' @export
+#' @family manipulators
 #'
 #' @examples
-#' demo_stim() |> grayscale()
+#' stimuli <- demo_stim()
+#' gray_stim <- grayscale(stimuli)
+#' plot(gray_stim)
 grayscale <- greyscale
 

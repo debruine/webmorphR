@@ -7,7 +7,7 @@
 tem_def(tem_id = "frl", path = NULL)
 }
 \arguments{
-\item{tem_id}{numeric ID of template to retrieve from webmorph.org}
+\item{tem_id}{the name of a built-in template (frl, fpp106, fpp83, dlib70, or dlib7) or a numeric ID of a template to retrieve from webmorph.org}
 
 \item{path}{path of local tem definition file}
 }
@@ -15,16 +15,36 @@ tem_def(tem_id = "frl", path = NULL)
 list with template definition
 }
 \description{
-Template definitions are specially formatted files that contain information about templates that are needed to do things like symmetrising and masking images. This function is mostly used internally.
+Template definitions are lists that contain information about templates that are needed to do things like symmetrising and masking images. This function is mostly used internally.
+}
+\details{
+If you have defined a custom template on webmorph.org, you can get its function definition by ID. You can see the ID numbers next to the templates available to you under the \emph{Template > Current Template} menu.
 }
 \examples{
-frl <- tem_def("frl")
-frl$points[1:10, ]
-
 fpp106 <- tem_def("fpp106")
 fpp106$lines |> str()
 
 fpp83 <- tem_def("fpp83")
 fpp83$mask |> str()
 
+frl <- tem_def("frl")
+frl$points[1:10, ]
+viz_tem_def(frl, pt.size = 10, line.size = 5)
 }
+\seealso{
+Template functions
+\code{\link{auto_delin}()},
+\code{\link{average_tem}()},
+\code{\link{centroid}()},
+\code{\link{change_lines}()},
+\code{\link{delin}()},
+\code{\link{draw_tem}()},
+\code{\link{features}()},
+\code{\link{get_point}()},
+\code{\link{remove_tem}()},
+\code{\link{same_tems}()},
+\code{\link{squash_tem}()},
+\code{\link{subset_tem}()},
+\code{\link{viz_tem_def}()}
+}
+\concept{tem}

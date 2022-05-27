@@ -62,3 +62,45 @@ test_that("custom mask from vectors", {
   expect_equal(c(f_multi = 0), 
                compare(t, l, scale = TRUE))
 })
+
+# expand ----
+test_that("expand", {
+  stimuli <- demo_stim(1)
+  top_pt <- stimuli[[1]]$points[, 139+1] |> round()
+  
+  mask1 <- mask(stimuli, fill = "red", expand = 0)
+  mask10 <- mask(stimuli, fill = "red", expand = 10)
+  negmask <- mask(stimuli, fill = "red", expand = -10)
+  revmask1 <- mask(stimuli, fill = "red", expand = 0, reverse = TRUE)
+  revmask10 <- mask(stimuli, fill = "red", expand = 10, reverse = TRUE)
+  revnegmask <- mask(stimuli, fill = "red", expand = -10, reverse = TRUE)
+  c(mask1, mask10, negmask, revmask1, revmask10, revnegmask) |> 
+    crop_tem() |> draw_tem() |> plot(nrow = 2)
+  
+  # check images are different
+  diff <- compare(mask1, mask10)[[1]]
+  expect_gt(diff, 0)
+  
+  negdiff <- compare(mask1, negmask)[[1]]
+  expect_gt(negdiff, 0)
+  
+  revdiff <- compare(revmask1, revmask10)[[1]]
+  expect_gt(revdiff, 0)
+  
+  revnegdiff <- compare(revmask1, revnegmask)[[1]]
+  expect_gt(revnegdiff, 0)
+  
+  patch1 <- patch(mask1, x1 = top_pt["x"], x2 = top_pt["x"], 
+                  y1 = top_pt["y"] - 3, y2 = top_pt["y"] - 3)
+  patch10 <- patch(mask10, x1 = top_pt["x"], x2 = top_pt["x"], 
+                  y1 = top_pt["y"] - 3, y2 = top_pt["y"] - 3)
+  expect_equal(patch1[[1]], "#FF0000FF")
+  expect_true(patch1 != patch10)
+  
+  revpatch1 <- patch(revmask1, x1 = top_pt["x"], x2 = top_pt["x"], 
+                  y1 = top_pt["y"] - 3, y2 = top_pt["y"] - 3)
+  revpatch10 <- patch(revmask10, x1 = top_pt["x"], x2 = top_pt["x"], 
+                   y1 = top_pt["y"] - 3, y2 = top_pt["y"] - 3)
+  expect_equal(revpatch10[[1]], "#FF0000FF")
+  expect_true(revpatch1 != revpatch10)
+})

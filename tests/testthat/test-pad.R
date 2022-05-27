@@ -46,5 +46,5 @@ test_that("pad", {
   
   x <- pad(s, fill = c("red", "green"))
   expect_equal(patch(x)[[1]], "#FF0000FF")
-  expect_equal(patch(x)[[2]], "#008000FF")
+  expect_equal(patch(x)[[2]], "#00FF00FF")
 })

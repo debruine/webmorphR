@@ -17,24 +17,78 @@ draw_tem(
 )
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
-\item{pt.color, line.color}{line or point color}
+\item{pt.color, line.color}{line or point color, see \code{\link[=color_conv]{color_conv()}}}
 
-\item{pt.alpha, line.alpha}{transparency (0-1), ignored if color is a hex value with transparency}
+\item{pt.alpha, line.alpha}{transparency (0-1), ignored if color is a hex value with transparency. Set alpha to 0 to omit lines or points.}
 
-\item{pt.size, line.size}{size in pixels (scales to image if NULL)}
+\item{pt.size, line.size}{size in pixels (scales to image size if NULL)}
 
 \item{pt.shape}{the shape of the points ("circle", "cross", "index")}
 
-\item{bg}{background color ("image" uses original image)}
+\item{bg}{background color ("image" uses the original image)}
 }
 \value{
-stimlist with template images
+list of stimuli with template images
 }
 \description{
-Set alpha to 0 to omit lines or points.
+Visualise a template on an image.
+}
+\details{
+Visualising the index of each point isn't great yet and will overlay
 }
 \examples{
-demo_stim() |> draw_tem() |> plot()
+# get an image with 2 different templates
+stimuli <- demo_tems("frl|fpp106")
+
+# default template
+default_tem <- draw_tem(stimuli)
+plot(default_tem, maxwidth = 500)
+
+\donttest{
+# custom template
+custom_tem <- draw_tem(stimuli, 
+                       pt.shape = "cross",
+                       pt.color = "red", 
+                       pt.alpha = 1,
+                       pt.size = 10,
+                       line.color = rgb(0, 0, 0),
+                       line.alpha = 0.5,
+                       line.size = 2)
+plot(custom_tem, maxwidth = 500)
+
+# indexed template
+index_tem <- draw_tem(stimuli, 
+                      pt.shape = "index",
+                      pt.size = 15, 
+                      pt.alpha = 1,
+                      line.alpha = 0)
+plot(index_tem, maxwidth = 500)
 }
+}
+\seealso{
+Template functions
+\code{\link{auto_delin}()},
+\code{\link{average_tem}()},
+\code{\link{centroid}()},
+\code{\link{change_lines}()},
+\code{\link{delin}()},
+\code{\link{features}()},
+\code{\link{get_point}()},
+\code{\link{remove_tem}()},
+\code{\link{same_tems}()},
+\code{\link{squash_tem}()},
+\code{\link{subset_tem}()},
+\code{\link{tem_def}()},
+\code{\link{viz_tem_def}()}
+
+Visualisation functions
+\code{\link{as_ggplot}()},
+\code{\link{plot.stimlist}()},
+\code{\link{plot.stim}()},
+\code{\link{plot_rows}()},
+\code{\link{plot_stim}()}
+}
+\concept{tem}
+\concept{viz}

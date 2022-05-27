@@ -146,3 +146,14 @@ test_that("print.stim", {
   expect_silent(print(stimuli[[1]]))
 })
 
+# S3 methods ----
+test_that("S3 methods", {
+  ## S3 registered methods 
+  stimuli <- demo_stim()
+  a <- lapply(stimuli, function(s) { s }) |> do.call(what = "c")
+  b <- c(stimuli[[1]], stimuli[[2]])
+  
+  expect_true("stimlist" %in% class(a))
+  expect_true("stimlist" %in% class(b))
+})
+

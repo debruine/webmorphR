@@ -21,8 +21,24 @@ test_that("basic", {
   # plot(new2)
 })
 
+# NULL width and height ----
+test_that("NULL width and height", {
+  stimuli <- demo_stim() |> 
+    resize(width = c(0.5, 0.8),
+           height = c(0.7, 0.6))
+  
+  orig_w <- width(stimuli)
+  orig_h <- height(stimuli)
+  
+  ts <- to_size(stimuli)
+  expect_equal(width(ts)[[1]], max(orig_w))
+  expect_equal(width(ts)[[2]], max(orig_w))
+  expect_equal(height(ts)[[1]], max(orig_h))
+  expect_equal(height(ts)[[2]], max(orig_h))
+})
+
 test_that("width and height", {
-  expect_error(to_size(stimuli, 10))
+  expect_error(to_size(stimuli, 0))
   expect_error(to_size(stimuli, 10, 0))
   expect_error(to_size(stimuli, "A", 10))
 
@@ -30,17 +46,9 @@ test_that("width and height", {
   expect_equal(width(x), c(f_multi = 100, m_multi = 200))
   expect_equal(height(x), c(f_multi = 300, m_multi = 400))
 
-  x <- to_size(stimuli, c(100, 200))
-  expect_equal(width(x), c(f_multi = 100, m_multi = 100))
-  expect_equal(height(x), c(f_multi = 200, m_multi = 200))
-
-  x <- to_size(stimuli, c(h = 200, w = 100))
-  expect_equal(width(x), c(f_multi = 100, m_multi = 100))
-  expect_equal(height(x), c(f_multi = 200, m_multi = 200))
-
-  x <- to_size(stimuli, c(height = 200, width = 100))
-  expect_equal(width(x), c(f_multi = 100, m_multi = 100))
-  expect_equal(height(x), c(f_multi = 200, m_multi = 200))
+  x <- to_size(stimuli, c(100, 200), c(300, 400))
+  expect_equal(width(x), c(f_multi = 100, m_multi = 200))
+  expect_equal(height(x), c(f_multi = 300, m_multi = 400))
 })
 
 test_that("no tem", {

@@ -11,14 +11,14 @@ convert_tem(
 )
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{from}{id of template definition of stimlist images}
 
 \item{to}{id of template definition to convert to}
 }
 \value{
-stimlist with converted templates
+list of stimuli with converted templates
 }
 \description{
 Convert templates

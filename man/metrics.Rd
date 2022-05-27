@@ -7,7 +7,7 @@
 metrics(stimuli, formula = c(0, 1))
 }
 \arguments{
-\item{stimuli}{list of class stimlist with tems}
+\item{stimuli}{list of stimuli with tems}
 
 \item{formula}{a vector of two points to measure the distance apart, or a string of the formula for the metric}
 }

@@ -1,14 +1,15 @@
 #' Resize and crop/pad images to a specified size
 #'
-#' @param stimuli of class stimlist
-#' @param width the target width (or a vector of width and height)
-#' @param height the target height (or null if width is dimensions)
-#' @param fill background color if cropping goes outside the original image
+#' @param stimuli list of stimuli
+#' @param width the target width (if null, the maximum stimulus width is used)
+#' @param height the target height (if null, the maximum stimulus height is used)
+#' @param fill background color if cropping goes outside the original image, see [color_conv()]
 #' @param crop whether to crop or pad images to make them the specified size
 #' @param keep_rels whether to keep the size relationships between images in the set, or make all the maximum size
 #'
-#' @return stimlist with cropped tems and/or images
+#' @return list of stimuli with cropped tems and/or images
 #' @export
+#' @family manipulators
 #'
 #' @examples
 #'
@@ -17,15 +18,15 @@
 #'
 #' to_size(stimuli, 300, 400, fill = "dodgerblue") |> plot()
 #'
-to_size <- function(stimuli, width, height = NULL,
+to_size <- function(stimuli, width = NULL, height = NULL,
                     fill = wm_opts("fill"),
                     crop = FALSE, keep_rels = FALSE) {
+  stimuli <- as_stimlist(stimuli)
+  
   # process width and height
-  if (length(width) == 2 && is.null(height)) {
-    dim <- width
-    width <- xget(dim, "width", "w", 1)
-    height <- xget(dim, "height", "h", 2)
-  }
+  # set to maximum width and height in set
+  if (is.null(width)) width <- width(stimuli, "max")
+  if (is.null(height)) height <- height(stimuli, "max")
 
   if (!is.numeric(width) || !is.numeric(height)) {
     stop("width and height must be numeric")

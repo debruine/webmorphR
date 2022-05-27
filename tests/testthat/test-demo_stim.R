@@ -10,4 +10,7 @@ test_that("demo_stim", {
   
   dlib <- demo_tems("dlib")
   expect_equal(names(dlib), c("dlib7", "dlib70"))
+  
+  us <- demo_unstandard()
+  expect_equal(length(us), 10)
 })

@@ -1,12 +1,13 @@
 #' Average Images
 #'
-#' @param stimuli images to average (list of class stimlist)
-#' @param texture logical, textured average
+#' @param stimuli list of stimuli to average 
+#' @param texture logical; whether textured should be averaged
 #' @param norm how to normalise
 #' @param normpoint points for twopoint normalisation
 #'
-#' @return stimlist with average image and template
+#' @return list of stimuli with the average image and template
 #' @export
+#' @family webmorph
 #'
 #' @examples
 #' \dontrun{
@@ -16,7 +17,7 @@ avg <- function(stimuli,
                 texture = TRUE,
                 norm = c("none", "twopoint", "rigid"),
                 normpoint = 0:1) {
-  stimuli <- validate_stimlist(stimuli, TRUE)
+  stimuli <- require_tems(stimuli, TRUE)
   if (length(stimuli) > 100) {
     stop("We can't average more than 100 images at a time. You can create sub-averages with equal numbers of faces and average those together.")
   }

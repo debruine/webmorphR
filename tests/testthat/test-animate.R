@@ -10,7 +10,7 @@ test_that("animate", {
   expect_equal(info$format, rep("gif", 2))
   
   ## args
-  x <- demo_stim()[1] |> rep(4) |>
+  x <- demo_stim(1) |> rep(4) |>
     rotate(c(0, 90, 180, 270)) |>
     animate(fps = 4, loop = 2, rev = TRUE)
   

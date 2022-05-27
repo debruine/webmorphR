@@ -7,21 +7,51 @@
 subset_tem(stimuli, ..., keep = TRUE)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{...}{vectors of points to keep or delete}
 
-\item{keep}{whether to keep or delete the points}
+\item{keep}{logical; whether to keep or delete the points}
 }
 \value{
 stimlist with altered templates
 }
 \description{
-Subset template points
+Keep or delete specified template points. Points will be renumbered and line definitions will be updated. If all points in a line are deleted, the line will be removed. POint indexing is 0-based, so the first two points (usually the pupils) are 0 and 1.
 }
 \examples{
-demo_stim()[1] |>
+# keep just the first two points
+demo_stim(1) |>
+  subset_tem(0:1) |>
+  draw_tem(pt.size = 10)
+
+# remove the last 10 points 
+# (produces the 179-point Perception Lab template)
+demo_stim(1) |>
+  subset_tem(179:188, keep = FALSE) |>
+  draw_tem(pt.size = 10)
+
+# use features() to keep only points from a pre-defined set 
+# "gmm" is points used for geometric morphometrics
+demo_stim(1) |>
   subset_tem(features("gmm")) |>
   draw_tem()
 
 }
+\seealso{
+Template functions
+\code{\link{auto_delin}()},
+\code{\link{average_tem}()},
+\code{\link{centroid}()},
+\code{\link{change_lines}()},
+\code{\link{delin}()},
+\code{\link{draw_tem}()},
+\code{\link{features}()},
+\code{\link{get_point}()},
+\code{\link{remove_tem}()},
+\code{\link{same_tems}()},
+\code{\link{squash_tem}()},
+\code{\link{tem_def}()},
+\code{\link{viz_tem_def}()}
+}
+\concept{tem}

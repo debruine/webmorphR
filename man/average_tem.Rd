@@ -7,17 +7,39 @@
 average_tem(stimuli, name = "average")
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{name}{Name for the average}
 }
 \value{
-list with class stimlist
+list of stimuli consisting of just the average
 }
 \description{
-This function just averages the templates. An average image is returned, but it is just all the images superimposed. To create a template-aware average, see \code{\link{avg}}.
+This function just averages the templates. An average image is returned, but it is just all the images superimposed. To create a template-aware average, see \code{\link[=avg]{avg()}}.
 }
 \examples{
-demo_stim() |> average_tem()
+tem_only_avg <- demo_stim() |> average_tem()
 
+# view the average template
+draw_tem(tem_only_avg, bg = "white")
+
+# view the superimposed image
+plot(tem_only_avg)
 }
+\seealso{
+Template functions
+\code{\link{auto_delin}()},
+\code{\link{centroid}()},
+\code{\link{change_lines}()},
+\code{\link{delin}()},
+\code{\link{draw_tem}()},
+\code{\link{features}()},
+\code{\link{get_point}()},
+\code{\link{remove_tem}()},
+\code{\link{same_tems}()},
+\code{\link{squash_tem}()},
+\code{\link{subset_tem}()},
+\code{\link{tem_def}()},
+\code{\link{viz_tem_def}()}
+}
+\concept{tem}

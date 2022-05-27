@@ -32,3 +32,11 @@ Continuum
   animate(cont, 20, rev = TRUE)
 }
 }
+\seealso{
+WebMorph.org functions
+\code{\link{avg}()},
+\code{\link{loop}()},
+\code{\link{symmetrize}()},
+\code{\link{trans}()}
+}
+\concept{webmorph}

@@ -14,23 +14,23 @@ mask(
 )
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{mask}{vector of masks or a custom list of template points}
 
-\item{fill}{color to make the mask}
+\item{fill}{color to make the mask, see \code{\link[=color_conv]{color_conv()}}}
 
-\item{reverse}{if TRUE, the mask covers the listed areas}
+\item{reverse}{logical; whether the mask covers the areas outside (FALSE) or inside (TRUE) the mask}
 
-\item{expand}{how many pixels to expand the mask}
+\item{expand}{how many pixels to expand the mask (negative numbers contract the mask)}
 
-\item{tem_id}{template ID to pass on to \code{tem_def} to get built-in mask definitions, usually one of "frl", "fpp106" or "fpp83"}
+\item{tem_id}{template ID to pass on to \code{\link[=tem_def]{tem_def()}} to get built-in mask definitions}
 }
 \value{
-stimlist with masked images
+list of stimuli with masked images
 }
 \description{
-Create a mask using template points.
+Use template points to define the borders of a mask to apply to the images. The image outside of the mask (or inside, if \code{reverse = TRUE}) is replaced by the fill color.
 }
 \details{
 For FRL templates, the argument \code{mask} can be a vector with one or more of the following: oval, face, neck, ears (left_ear, right_ear), eyes (left_eye, right_eye), brows (left_brow, right_brow), mouth, teeth, nose.
@@ -45,11 +45,37 @@ If you set expand = 0, there is sometimes a thin visible line where multiple com
 }
 \examples{
 stimuli <- demo_stim()
-masked <- mask(stimuli, c("face", "neck", "ears"), "red")
 
-revmasked <- mask(stimuli, "eyes", "#FFFF00", TRUE) |>
-  mask("brows", "purple", TRUE) |>
-  mask("nose", "#FF000066", TRUE) |>
-  mask("mouth", "blue", TRUE)
+masked <- mask(stimuli, c("face", "neck", "ears"), "red")
+plot(masked)
+
+expanded <- mask(stimuli, "face", expand = 30)
+plot(expanded)
+
+\donttest{
+# reverse masking masks over the features
+revmasked <- stimuli |>
+  mask("eyes", "#FFFF00", TRUE) |>
+  mask("brows", rgb(0.2, 0.5, 0.5), TRUE) |>
+  mask("mouth", "#FF000066", TRUE)
+plot(revmasked)
 
 }
+
+}
+\seealso{
+Stimulus manipulation functions
+\code{\link{align}()},
+\code{\link{crop_tem}()},
+\code{\link{crop}()},
+\code{\link{greyscale}()},
+\code{\link{horiz_eyes}()},
+\code{\link{image_func}()},
+\code{\link{mask_oval}()},
+\code{\link{mirror}()},
+\code{\link{pad}()},
+\code{\link{resize}()},
+\code{\link{rotate}()},
+\code{\link{to_size}()}
+}
+\concept{manipulators}

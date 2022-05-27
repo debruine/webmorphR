@@ -67,7 +67,7 @@ test_that("features", {
 
 ## frl features ----
 test_that("frl", {
-  stimuli <- demo_stim()[1]
+  stimuli <- demo_stim(1)
   
   mouth_pts <- features("mouth", tem_id = "frl")
   
@@ -147,9 +147,52 @@ test_that("centroid", {
                c(x = 248.7963, y = 215.0000), 
                tolerance = .0001)
   
+  # 1 point
+  left_eye <- centroid(stimuli, 0)
+  expect_equal(left_eye["f_multi", ], 
+               stimuli$f_multi$points[, 1], 
+               tolerance = .0001)
+  expect_equal(left_eye[2, ], 
+               stimuli$m_multi$points[, 1], 
+               tolerance = .0001)
+  
   # stim
   ctr1 <- centroid(stimuli[[1]])
   expect_equal(dim(ctr1), c(1, 2))
   expect_equal(dimnames(ctr1)[[1]], "f_multi")
   expect_equal(ctr1[1,], ctr[1,])
+})
+
+
+# change_lines ----
+test_that("change_lines", {
+  s <- demo_tems("dlib70")
+  s[[1]]$lines[[1]]
+  
+  # remove 1 line
+  s1 <- change_lines(s, line_id = 1, pts = NULL)
+  expect_equal(s[[1]]$lines[2:13], s1[[1]]$lines)
+  
+  # change 1 line
+  s2 <- change_lines(s, line_id = 1, pts = 18:1)
+  expect_equal(s2[[1]]$lines[[1]], 18:1)
+  expect_equal(length(s2[[1]]$lines), length(s[[1]]$lines))
+  
+  # remove multiple lines
+  s3 <- change_lines(s, line_id = 1:13, pts = NULL)
+  expect_equal(s3[[1]]$lines, list())
+  
+  # add new lines with names
+  s4 <- change_lines(s3, line_id = "face", pts = 2:18)
+  expect_equal(s4[[1]]$lines, list(face = 2:18))
+})
+
+# viz_tem_def ----
+test_that("viz_tem_def", {
+  dlib70 <- tem_def("dlib70")
+  vt <- viz_tem_def(dlib70)
+  
+  expect_equal(vt[[1]]$points |> rownames(), c("x", "y"))
+  expect_equal(vt[[1]]$points |> colnames(), dlib70$points$name)
+  expect_equal(vt[[1]]$lines, dlib70$lines)
 })

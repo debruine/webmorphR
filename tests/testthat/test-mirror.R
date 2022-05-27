@@ -1,4 +1,4 @@
-stimuli <- demo_stim()[1]
+stimuli <- demo_stim(1)
 
 test_that("no map", {
   m <- mirror(stimuli)

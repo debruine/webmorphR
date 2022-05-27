@@ -7,7 +7,7 @@
 label(stimuli, ...)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{...}{arguments to pass on to \code{mlabel} or \code{gglabel}}
 }

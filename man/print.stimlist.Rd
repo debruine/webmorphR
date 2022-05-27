@@ -7,7 +7,7 @@
 \method{print}{stimlist}(x, ...)
 }
 \arguments{
-\item{x}{a list of class stimlist}
+\item{x}{list of stimuli}
 
 \item{...}{arguments passed to or from other methods}
 }

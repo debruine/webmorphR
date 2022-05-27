@@ -7,14 +7,14 @@
 mirror(stimuli, tem_id = NULL, axis = "vertical")
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{tem_id}{template ID to be passed to \code{tem_def} (usually "frl" or "fpp106") or NULL}
 
 \item{axis}{vertical or horizontal axis of mirroring}
 }
 \value{
-stimlist with mirrored images and templates
+list of stimuli with mirrored images and templates
 }
 \description{
 Use tem_id to get the symmetry map for your template. If tem_id is omitted, images and templates will be fully reversed (e.g., if point 1 is the left eye in the original image, it will be the right eye in the mirrored image).
@@ -30,3 +30,19 @@ c(o, m) |>
   plot()
 
 }
+\seealso{
+Stimulus manipulation functions
+\code{\link{align}()},
+\code{\link{crop_tem}()},
+\code{\link{crop}()},
+\code{\link{greyscale}()},
+\code{\link{horiz_eyes}()},
+\code{\link{image_func}()},
+\code{\link{mask_oval}()},
+\code{\link{mask}()},
+\code{\link{pad}()},
+\code{\link{resize}()},
+\code{\link{rotate}()},
+\code{\link{to_size}()}
+}
+\concept{manipulators}

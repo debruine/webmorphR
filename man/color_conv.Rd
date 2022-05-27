@@ -7,8 +7,8 @@
 color_conv(
   color,
   alpha = 1,
-  from = c("guess", "col", "hex", "hexa", "hex3", "rgb", "rgba"),
-  to = c("hexa", "hex", "rgba", "rgb", "hsv")
+  from = c("guess", "col", "hex", "hexa", "hex3", "rgb", "rgba", "lab"),
+  to = c("hexa", "hex", "rgba", "rgb", "lab", "hsv")
 )
 }
 \arguments{
@@ -22,24 +22,44 @@ color_conv(
 color in \code{to} format
 }
 \description{
-Convert from common color inputs to specified output type, adding alpha transparency.
+Convert from common color inputs to specified output type, adding alpha transparency for output formats that support it (hexa, rgba).
 }
 \details{
-color: one of the R colours listed in c\code{colors()}, e.g., "red"
-hex: hexadecimal string, e.g., "#FF0000"
-hexa: hexadecimal string with alpha, e.g., "#FF0000FF"
-hex3: abbreviated hexadecimal string, e.g., "#F00"
-rgb: vector of red, green and blue values 0-255, e.g., c(255, 0, 0)
-rgb: vector of red, green, blue and alpha values 0-255, e.g., c(255, 0, 0, 255)
-hsv: vector of hue, saturation and value values (0-1), e.g., c(h=0, s = 1, v = 1)
+\itemize{
+\item color: one of the R colours listed in \code{\link[grDevices:colors]{grDevices::colors()}}, e.g., "red"
+\item hex: hexadecimal string, e.g., "#FF0000"
+\item hexa: hexadecimal string with alpha, e.g., "#FF0000FF"
+\item hex3: abbreviated hexadecimal string, e.g., "#F00"
+\item rgb: vector of red, green and blue values 0-255, e.g., c(255, 0, 0)
+\item rgba: vector of red, green, blue and alpha values 0-255, e.g., c(255, 0, 0, 255)
+\item lab: CIE-Lab color
+\item hsv: vector of hue, saturation and value values (0-1), e.g., c(h=0, s = 1, v = 1)
+}
 }
 \examples{
+# different ways to input red
 color_conv("red")
 color_conv("#FF0000")
 color_conv("#FF0000FF")
 color_conv(c(255,0,0))
+color_conv("rgb(255,0,0)") # you can use CSS-style text
 color_conv(c(255,0,0,255))
 
-color_conv("dodgerblue", 0.5, to = "rgba")
+# Lab must have names or use text format to be guessed
+color_conv(c(l = 53.2, a = 80.1, b = 67.2)) 
+color_conv("lab(53.2,80.1,67.2)")
+
+# else, it will be guessed as rgb; fix by setting from explicitly
+color_conv(c(53.2, 80.1, 67.2))
+color_conv(c(53.2, 80.1, 67.2), from = "lab")
+
+# add 50\% alpha transparency to dodgerblue
+color_conv("dodgerblue", alpha = 0.5, to = "rgba")
 
 }
+\seealso{
+Other color: 
+\code{\link{col2lab}()},
+\code{\link{lab2rgb}()}
+}
+\concept{color}

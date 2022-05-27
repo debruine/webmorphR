@@ -86,3 +86,12 @@ test_that("limits", {
                "#FFFFFFFF")
   
 })
+
+# no images ----
+test_that("no images", {
+  tem <- demo_stim(".tem")
+  expect_warning(tem_crop <- crop(tem, 0.5, 0.5))
+  diff <- tem$f_multi$points - tem_crop$f_multi$points
+  expect_equal(unique(diff[1, ]) |> length(), 1)
+  expect_equal(unique(diff[2, ]) |> length(), 1)
+})

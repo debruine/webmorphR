@@ -41,22 +41,17 @@ test_that("basic", {
 })
 
 test_that("multi-color patches", {
-  # hex values get rounded
-  expect_equal(patch(img, 0, 20, 0, 10)[[1]], "#7F0000FF")
-
-  # median gives average with *exact* balance
+  # median
   expect_equal(patch(img, 0, 20, 0, 10, "rgb")[[1]],
-               c(red = 127.5, green = 0, blue = 0, alpha = 255))
-  # but not with any imbalance
+               c(red = 122, green = 27, blue = 12, alpha = 255))
   expect_equal(patch(img, 0, 19, 0, 10, "rgb")[[1]],
                c(red = 0, green = 0, blue = 0, alpha = 255))
 
   # mean gives average no matter the balance
   expect_equal(patch(img, 0, 20, 0, 10, "rgb", mean)[[1]],
-               c(red = 127.5, green = 0, blue = 0, alpha = 255))
+               c(red = 122, green = 27, blue = 12, alpha = 255))
   expect_equal(patch(img, 0, 19, 0, 10, "rgb", mean)[[1]],
-               c(red = 120.7895, green = 0, blue = 0, alpha = 255),
-               tolerance = 0.001)
+               c(red = 116, green = 27, blue = 12, alpha = 255))
 })
 
 test_that("list", {

@@ -1,13 +1,12 @@
 #' Plot stimuli
 #'
-#' Plot stimuli in a stimlist.
-#'
 #' @param x list of class stimlist
 #' @param y omitted
-#' @param ... Arguments to be passed to \code{\link{plot_stim}}
+#' @param ... Arguments to be passed to [plot_stim()]
 #'
 #' @return stimlist
 #' @export
+#' @family viz
 #' @keywords internal
 #'
 #' @examples
@@ -23,10 +22,11 @@ plot.stimlist <- function(x, y, ...) {
 #'
 #' @param x stim
 #' @param y omitted
-#' @param ... Arguments to be passed to \code{\link{plot_stim}}
+#' @param ... Arguments to be passed to [plot_stim()]
 #'
 #' @return stimlist
 #' @export
+#' @family viz
 #' @keywords internal
 #'
 #' @examples
@@ -36,7 +36,7 @@ plot.stimlist <- function(x, y, ...) {
 #' }
 
 plot.stim <- function(x, y, ...) {
-  stimlist <- validate_stimlist(x)
+  stimlist <- as_stimlist(x)
   plot(stimlist, ...)
 }
 
@@ -51,26 +51,36 @@ plot.stim <- function(x, y, ...) {
 #' @param byrow fill grid by rows (first ncol images in the first row); if FALSE, fills by columns (first nrow images in the first column)
 #' @param padding around each image in pixels
 #' @param external_pad whether to include external padding
-#' @param fill background color
+#' @param fill background color, see [color_conv()]
 #' @param maxwidth,maxheight maximum width and height of grid in pixels
 #'
-#' @return stimlist with grid image (no templates)
+#' @return stimlist with the plot image (no templates)
 #' @export
+#' @family viz
 #'
 #' @examples
-#' \dontrun{
 #' stimuli <- demo_stim()
 #' plot_stim(stimuli)
+#' 
+#' \donttest{
+#' plot(stimuli, fill = "dodgerblue")
+#' plot(stimuli, padding = 0)
+#' 
+#' twins <- demo_unstandard()
+#' plot(twins, nrow = 2, maxwidth = 1000)
+#' 
+#' plot(twins, nrow = 2, byrow = FALSE, maxwidth = 1000)
 #' }
 plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
                       padding = 10, external_pad = TRUE,
                       fill = wm_opts("fill"),
                       maxwidth = wm_opts("plot.maxwidth"),
                       maxheight = wm_opts("plot.maxheight")) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
   w <- width(stimuli)
   h <- height(stimuli)
   n <- length(stimuli)
+  fill <- color_conv(fill)
 
   # calculate/validate nrow and ncol ----
   if (is.null(nrow) && is.null(ncol)) {
@@ -140,6 +150,7 @@ plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
 #'
 #' @return stimlist with plot
 #' @export
+#' @family viz
 #'
 #' @examples
 #' \dontrun{

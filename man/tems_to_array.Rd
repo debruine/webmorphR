@@ -7,7 +7,7 @@
 tems_to_array(stimuli)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 }
 \value{
 3D array

@@ -1,8 +1,10 @@
 #' Patch colour
 #'
 #' Get the median (or mean or user-defined function) colour value of a specified patch of pixels on an image. This is useful for matching background colours.
+#' 
+#' @details The colour values of each pixel in the patch are converted to CIE-Lab values before using the func to calculate the central tendency of the L (lightness), a (red-green axis) and b (blue-yellow axis); see [col2lab()] and [lab2rgb()] for more details.
 #'
-#' @param stimuli A stim or list of class stimlist
+#' @param stimuli list of stimuli
 #' @param x1,x2,y1,y2 start and end pixels of the patch, if <=1, interpreted as proportions of width or height
 #' @param color The type of color to return (hex, rgb)
 #' @param func The function to apply to an array of rgba values to determine the central colour (defaults to median, but mean, min, or max are also useful)
@@ -22,7 +24,7 @@
 #'
 patch <- function(stimuli, x1 = 0, x2 = 10, y1 = 0, y2 = 10,
                   color = c("hex", "rgb"), func = stats::median) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
   
   color <- match.arg(color)
   
@@ -49,8 +51,13 @@ patch <- function(stimuli, x1 = 0, x2 = 10, y1 = 0, y2 = 10,
     )
     pixels <- all_pixels[selected_pixels, ]
     
-    central_col <- grDevices::col2rgb(pixels$col, alpha = TRUE) |>
-      apply(1, func)
+    central_col <- sapply(pixels$col, col2lab) |>
+      apply(1, func) |>
+      lab2rgb()
+    central_col[['alpha']] <- paste0('0x', substr(pixels$col, 8, 9))|> strtoi() |> func()
+    
+    # central_col <- grDevices::col2rgb(pixels$col, alpha = TRUE) |>
+    #   apply(1, func)
     
     if (color == "rgb") {
       return(central_col)

@@ -7,21 +7,39 @@
 horiz_eyes(stimuli, left_eye = 0, right_eye = 1, fill = wm_opts("fill"))
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{left_eye}{The first point to align (defaults to 0)}
 
 \item{right_eye}{The second point to align (defaults to 1)}
 
-\item{fill}{background color to pass to rotate}
+\item{fill}{background color to pass to rotate, see \code{\link[=color_conv]{color_conv()}}}
 }
 \value{
-stimlist with rotated tems and/or images
+list of stimuli with rotated tems and/or images
 }
 \description{
-Make eyes horizontal
+Rotate each stimulus so the eye points are horizontal.
 }
 \examples{
-demo_stim() |> horiz_eyes()
+# the demo images already have nearly horizontal eyes
+horiz <- demo_stim() |> horiz_eyes(fill = "red")
+plot(horiz)
 
 }
+\seealso{
+Stimulus manipulation functions
+\code{\link{align}()},
+\code{\link{crop_tem}()},
+\code{\link{crop}()},
+\code{\link{greyscale}()},
+\code{\link{image_func}()},
+\code{\link{mask_oval}()},
+\code{\link{mask}()},
+\code{\link{mirror}()},
+\code{\link{pad}()},
+\code{\link{resize}()},
+\code{\link{rotate}()},
+\code{\link{to_size}()}
+}
+\concept{manipulators}

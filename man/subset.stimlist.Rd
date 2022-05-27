@@ -7,14 +7,14 @@
 \method{subset}{stimlist}(x, subset, ...)
 }
 \arguments{
-\item{x}{a list of class stimlist}
+\item{x}{list of stimuli}
 
 \item{subset}{a character string to use as a pattern for searching stimulus IDs, or a logical expression indicating elements or rows to keep: missing values are taken as false.}
 
 \item{...}{further arguments to be passed to or from other methods.}
 }
 \value{
-a list of class stimlist
+list of stimuli
 }
 \description{
 Returns a subset of the stimulus list meeting the condition.

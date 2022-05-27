@@ -3,11 +3,14 @@
 \name{demo_stim}
 \alias{demo_stim}
 \alias{demo_tems}
+\alias{demo_unstandard}
 \title{Demo Stimuli}
 \usage{
 demo_stim(pattern = NULL)
 
 demo_tems(pattern = NULL)
+
+demo_unstandard(pattern = NULL)
 }
 \arguments{
 \item{pattern}{defaults to all files}
@@ -18,7 +21,16 @@ stimlist
 \description{
 A convenience function to get demo stimuli
 }
+\details{
+\code{\link[=demo_stim]{demo_stim()}} is two composite faces with frl delineations; CC-BY https://doi.org/10.6084/m9.figshare.4055130.v1
+
+\code{\link[=demo_tems]{demo_tems()}} is an image of the author, provided on a CC0 license, with 5 different delineations
+
+\code{\link[=demo_unstandard]{demo_unstandard()}} is a set of 10 composite faces with frl delineations, rotated, resized, and cropped so face position is not standard and each image is a different size ; CC-BY https://doi.org/10.6084/m9.figshare.4055130.v1
+}
 \examples{
 demo_stim() |> plot()
 
+demo_tems() |> draw_tem() |> plot(maxwidth = 1000)
+demo_unstandard() |> plot(maxwidth = 1000)
 }

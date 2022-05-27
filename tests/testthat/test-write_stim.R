@@ -1,5 +1,5 @@
 test_that("works", {
-  stimuli <- demo_stim()[1]
+  stimuli <- demo_stim(1)
   dir <- file.path(tempdir(), "ftest")
 
   # default format ----

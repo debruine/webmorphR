@@ -7,7 +7,7 @@
 get_info(stimuli, ..., .rownames = "id")
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{...}{column names to return}
 
@@ -26,3 +26,13 @@ stimuli <- demo_stim() |>
 get_info(stimuli)
 get_info(stimuli, "gender")
 }
+\seealso{
+Other info: 
+\code{\link{add_info}()},
+\code{\link{centroid}()},
+\code{\link{compare}()},
+\code{\link{get_point}()},
+\code{\link{height}()},
+\code{\link{width}()}
+}
+\concept{info}

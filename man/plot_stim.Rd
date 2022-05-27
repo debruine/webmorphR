@@ -29,19 +29,36 @@ plot_stim(
 
 \item{external_pad}{whether to include external padding}
 
-\item{fill}{background color}
+\item{fill}{background color, see \code{\link[=color_conv]{color_conv()}}}
 
 \item{maxwidth, maxheight}{maximum width and height of grid in pixels}
 }
 \value{
-stimlist with grid image (no templates)
+stimlist with the plot image (no templates)
 }
 \description{
 Show all your stimuli in a grid.
 }
 \examples{
-\dontrun{
 stimuli <- demo_stim()
 plot_stim(stimuli)
+
+\donttest{
+plot(stimuli, fill = "dodgerblue")
+plot(stimuli, padding = 0)
+
+twins <- demo_unstandard()
+plot(twins, nrow = 2, maxwidth = 1000)
+
+plot(twins, nrow = 2, byrow = FALSE, maxwidth = 1000)
 }
 }
+\seealso{
+Visualisation functions
+\code{\link{as_ggplot}()},
+\code{\link{draw_tem}()},
+\code{\link{plot.stimlist}()},
+\code{\link{plot.stim}()},
+\code{\link{plot_rows}()}
+}
+\concept{viz}

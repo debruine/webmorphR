@@ -1,6 +1,6 @@
 #' Transform Images
 #'
-#' @param trans_img image(s) to transform (list of class stimlist)
+#' @param trans_img list of stimuli to transform 
 #' @param from_img negative transform dimension endpoint (0% image)
 #' @param to_img positive transform dimension endpoint (100% image)
 #' @param shape,color,texture amount to change along the vector defined by from_img and to_img (can range from -3 to +3)
@@ -10,8 +10,9 @@
 #' @param sample_contours whether to sample contours or just points
 #' @param warp warp type
 #'
-#' @return stimlist with transformed images and templates
+#' @return list of stimuli with transformed images and templates
 #' @export
+#' @family webmorph
 #'
 #' @examples
 #' \dontrun{
@@ -30,9 +31,9 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
                   normpoint = 0:1,
                   sample_contours = TRUE,
                   warp = c("multiscale", "linear", "multiscalerb")) {
-  trans_img <- validate_stimlist(trans_img, TRUE)
-  from_img <- validate_stimlist(from_img, TRUE)
-  to_img <- validate_stimlist(to_img, TRUE)
+  trans_img <- as_stimlist(trans_img, TRUE)
+  from_img <- as_stimlist(from_img, TRUE)
+  to_img <- as_stimlist(to_img, TRUE)
 
   norm <- match.arg(norm)
   warp <- match.arg(warp)

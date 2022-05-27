@@ -1,6 +1,6 @@
 #' Create a TPS file from a stimlist
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param path_to_tps optional filename to save TPS file
 #'
 #' @return text of tps file
@@ -13,7 +13,7 @@
 #'   cat()
 #'
 write_tps <- function(stimuli, path_to_tps = NULL) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
 
   tps <- mapply(function(stim, name) {
     pt <- {stim$points * c(1, -1)} |>
@@ -39,7 +39,7 @@ write_tps <- function(stimuli, path_to_tps = NULL) {
 
 #' Convert stimuli to array for geomorph
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #'
 #' @return 3D array
 #' @export
@@ -49,7 +49,7 @@ write_tps <- function(stimuli, path_to_tps = NULL) {
 #' dim(data)
 #'
 tems_to_array <- function(stimuli) {
-  stimuli <- validate_stimlist(stimuli, TRUE)
+  stimuli <- require_tems(stimuli, TRUE)
 
   # check number of points
   n_pts <- lapply(stimuli, `[[`, "points") |>

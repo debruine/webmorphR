@@ -7,14 +7,14 @@
 loop(stimuli, steps = 10, ...)
 }
 \arguments{
-\item{stimuli}{list of images to morph between}
+\item{stimuli}{list of stimuli to morph between}
 
 \item{steps}{number of steps from one image to the next}
 
-\item{...}{arguments to pass to \code{\link{trans}}}
+\item{...}{arguments to pass to \code{\link[=trans]{trans()}}}
 }
 \value{
-stimlist
+list of stimuli
 }
 \description{
 Loop
@@ -29,3 +29,11 @@ Loop
   animate(loop, 10)
 }
 }
+\seealso{
+WebMorph.org functions
+\code{\link{avg}()},
+\code{\link{continuum}()},
+\code{\link{symmetrize}()},
+\code{\link{trans}()}
+}
+\concept{webmorph}

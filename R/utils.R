@@ -14,7 +14,7 @@ print.stim <- function(x, ...) {
 
 #' Print stimlist
 #'
-#' @param x a list of class stimlist
+#' @param x list of stimuli
 #' @param ... arguments passed to or from other methods
 #'
 #' @return prints summary info and returns x
@@ -52,11 +52,11 @@ print.stimlist <- function(x, ...) {
 #'
 #' Returns a subset of the stimulus list meeting the condition.
 #'
-#' @param x a list of class stimlist
+#' @param x list of stimuli
 #' @param subset a character string to use as a pattern for searching stimulus IDs, or a logical expression indicating elements or rows to keep: missing values are taken as false.
 #' @param ... further arguments to be passed to or from other methods.
 #'
-#' @return a list of class stimlist
+#' @return list of stimuli
 #' @export
 #' @keywords internal
 #'
@@ -96,7 +96,7 @@ subset.stimlist <- function (x, subset, ...) {
 #' }
 rep.stim <- function (x, ...) {
   # turn into a list and handle below
-  x <- validate_stimlist(x)
+  x <- as_stimlist(x)
   rep.stimlist(x, ...)
 }
 
@@ -135,7 +135,7 @@ rep.stimlist <- function(x, ...) {
 c.stim <- function(...) {
   # turn into a stimlist and handle below
   list(...) |>
-    lapply(validate_stimlist) |>
+    lapply(as_stimlist) |>
     do.call(what = c.stimlist)
 }
 
@@ -149,7 +149,7 @@ c.stim <- function(...) {
 #' @keywords internal
 #'
 c.stimlist <- function(...) {
-  dots <- lapply(list(...), validate_stimlist) |>
+  dots <- lapply(list(...), as_stimlist) |>
     lapply(unclass) # prevent infinite recursion
   x <- do.call(c, dots)
   class(x) <- c("stimlist", "list")
@@ -255,7 +255,7 @@ format_size <- function (x) {
 
 #' Get Images into List
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #'
 #' @return list of magick images
 #' @keywords internal
@@ -265,7 +265,7 @@ format_size <- function (x) {
 #' imgs <- demo_stim() |> get_imgs()
 #' }
 get_imgs <- function(stimuli) {
-  args <- validate_stimlist(stimuli) |>
+  args <- as_stimlist(stimuli) |>
     lapply(`[[`, "img")
   
   do.call(c, args)

@@ -7,7 +7,7 @@
 height(stimuli, type = c("all", "min", "max", "unique"))
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{type}{whether to return all heights, min, max, or only unique heights}
 }
@@ -21,3 +21,13 @@ Image heights
 
 demo_stim() |> height()
 }
+\seealso{
+Other info: 
+\code{\link{add_info}()},
+\code{\link{centroid}()},
+\code{\link{compare}()},
+\code{\link{get_info}()},
+\code{\link{get_point}()},
+\code{\link{width}()}
+}
+\concept{info}

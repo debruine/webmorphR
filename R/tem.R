@@ -1,23 +1,27 @@
 #' Get template definition
 #'
-#' Template definitions are specially formatted files that contain information about templates that are needed to do things like symmetrising and masking images. This function is mostly used internally.
+#' Template definitions are lists that contain information about templates that are needed to do things like symmetrising and masking images. This function is mostly used internally.
+#' 
+#' @details 
+#' If you have defined a custom template on webmorph.org, you can get its function definition by ID. You can see the ID numbers next to the templates available to you under the *Template > Current Template* menu. 
 #'
-#' @param tem_id numeric ID of template to retrieve from webmorph.org
+#' @param tem_id the name of a built-in template (frl, fpp106, fpp83, dlib70, or dlib7) or a numeric ID of a template to retrieve from webmorph.org
 #' @param path path of local tem definition file
 #'
 #' @return list with template definition
 #' @export
+#' @family tem
 #'
 #' @examples
-#' frl <- tem_def("frl")
-#' frl$points[1:10, ]
-#'
 #' fpp106 <- tem_def("fpp106")
 #' fpp106$lines |> str()
 #'
 #' fpp83 <- tem_def("fpp83")
 #' fpp83$mask |> str()
 #'
+#' frl <- tem_def("frl")
+#' frl$points[1:10, ]
+#' viz_tem_def(frl, pt.size = 10, line.size = 5)
 tem_def <- function(tem_id = "frl", path = NULL) {
 
   # read file or url ----
@@ -60,38 +64,80 @@ tem_def <- function(tem_id = "frl", path = NULL) {
   tem_def
 }
 
-
-#' Change the points in a line
+#' Visualise a template definition
 #'
-#' @param stimuli list of class stimlist
-#' @param line_id IDs of the lines to change
-#' @param pts vector of points to change the line_id to (deletes line if NULL)
+#' @param tem_def the template definition; usually from [tem_def()]
+#' @param ... further arguments to pass to [draw_tem()]; pt.size and line.size often need to be adjusted
+#'
+#' @return a stimlist with a blank image and the template drawn on it
+#' @export
+#' @family tem
+#'
+#' @examples
+#' dlib70 <- tem_def("dlib70")
+#' viz_tem_def(dlib70, pt.size = 5, line.size = 3)
+#' 
+#' \dontrun{
+#' # get the FRL-bodies template from webmorph.org
+#' # see https://osf.io/g27wf/ for open-access body images with this template
+#' # warning: they are all nude (paid models from 3d.sk)
+#' frl_bodies <- tem_def(4)
+#' viz_tem_def(frl_bodies)
+#' }
+viz_tem_def <- function(tem_def, ...) {
+  # make a blank image the size of the template
+  width <- tem_def$width %||% mean(tem_def$points$x) * 2
+  height <- tem_def$height %||% max(tem_def$points$y) + 20
+  x <- blank(1, width, height) 
+  
+  # add the default template points and line to the blank image
+  points <- tem_def$points[c("x", "y")] |> 
+    as.matrix() |> t()
+  
+  colnames(points) <- tem_def$points$name
+  
+  x[[1]]$points <- points
+  x[[1]]$lines <- tem_def$lines
+  x[[1]]$closed <- tem_def$closed
+  
+  draw_tem(x, ...)
+}
+
+
+#' Change template lines
+#' 
+#' Alter, add or remove lines in a template
+#'
+#' @param stimuli list of stimuli
+#' @param line_id index of the line to change
+#' @param pts vector of points to change the line_idx to (deletes line if NULL)
 #'
 #' @return stimlist with altered templates
 #' @export
+#' @family tem
 #'
 #' @examples
-#' s <- demo_stim()[1] |>
-#'   subset_tem(features("face"))
+#' # get image with dlib70 template and view lines
+#' s <- demo_tems("dlib70")
 #' s[[1]]$lines
 #' 
 #' # remove all lines
-#' s2 <- s |>
-#'   change_lines(line_id = 1:8, pts = NULL)
+#' s2 <- change_lines(s, line_id = 1:13, pts = NULL)
 #' s2[[1]]$lines
 #' 
-#' draw_tem(s2, pt.shape = "index", pt.size = 10)
+#' # visualise point indices
+#' draw_tem(s2, pt.shape = "index", pt.size = 15)
 #' 
-#' # add new line
-#' s3 <- s2 |>
-#'   change_lines(line_id = 1, pts = c(0, 26, 1, 27, 2, 6:14, 5, 29, 4, 28, 3, 25:15, 0))
+#' # add a new line
+#' s3 <- change_lines(s2, line_id = "face_outline", 
+#'                    pts = c(2:18, 28:19, 2))
 #' s3[[1]]$lines
-#' draw_tem(s3, line.color = "hotpink", line.alpha = 1)
+#' draw_tem(s3)
 change_lines <- function(stimuli, line_id = 1, pts = NULL) {
   for (i in seq_along(stimuli)) {
     oldlines <- stimuli[[i]]$lines
     if (is.null(pts)) {
-      oldlines[line_id] <- pts
+      oldlines[line_id] <- NULL
     } else {
       oldlines[[line_id]] <- pts
     }
@@ -102,21 +148,37 @@ change_lines <- function(stimuli, line_id = 1, pts = NULL) {
 }
 
 #' Subset template points
-#'
-#' @param stimuli list of class stimlist
+#' 
+#' Keep or delete specified template points. Points will be renumbered and line definitions will be updated. If all points in a line are deleted, the line will be removed. POint indexing is 0-based, so the first two points (usually the pupils) are 0 and 1.
+#' 
+#' @param stimuli list of stimuli
 #' @param ... vectors of points to keep or delete
-#' @param keep whether to keep or delete the points
+#' @param keep logical; whether to keep or delete the points
 #'
 #' @return stimlist with altered templates
 #' @export
+#' @family tem
 #'
 #' @examples
-#' demo_stim()[1] |>
+#' # keep just the first two points
+#' demo_stim(1) |>
+#'   subset_tem(0:1) |>
+#'   draw_tem(pt.size = 10)
+#' 
+#' # remove the last 10 points 
+#' # (produces the 179-point Perception Lab template)
+#' demo_stim(1) |>
+#'   subset_tem(179:188, keep = FALSE) |>
+#'   draw_tem(pt.size = 10)
+#' 
+#' # use features() to keep only points from a pre-defined set 
+#' # "gmm" is points used for geometric morphometrics
+#' demo_stim(1) |>
 #'   subset_tem(features("gmm")) |>
 #'   draw_tem()
 #'
 subset_tem <- function(stimuli, ..., keep = TRUE) {
-  stimuli <- validate_stimlist(stimuli, tem = TRUE)
+  stimuli <- require_tems(stimuli, TRUE)
   points <- list(...) |> unlist() |> unique() |> sort()
   
   for (i in seq_along(stimuli)) {
@@ -182,6 +244,7 @@ subset_tem <- function(stimuli, ..., keep = TRUE) {
 #'
 #' @return vector of corresponding template indices
 #' @export
+#' @family tem
 #'
 #' @examples
 #' features("mouth")
@@ -249,15 +312,16 @@ features <- function(..., tem_id = c("frl", "dlib70")) {
 
 #' Remove templates
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #'
-#' @return list of class stimlist
+#' @return list of stimuli
 #' @export
+#' @family tem
 #'
 #' @examples
 #' demo_stim() |> remove_tem()
 remove_tem <- function(stimuli) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
   
   for (i in seq_along(stimuli)) {
     stimuli[[i]]$tempath <- NULL
@@ -272,10 +336,11 @@ remove_tem <- function(stimuli) {
 
 #' Check All Templates are the Same
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #'
 #' @return logical
 #' @export
+#' @family tem
 #'
 #' @examples
 #' stim <- demo_stim()
@@ -285,7 +350,7 @@ remove_tem <- function(stimuli) {
 #' 
 #' c(stim, stim2) |> same_tems()
 same_tems <- function(stimuli) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
   
   pts <- lapply(stimuli, `[[`, "points") |>
     sapply(ncol) |>
@@ -306,16 +371,18 @@ same_tems <- function(stimuli) {
 #'
 #' Get a data frame of the x and y coordinates of a template point
 #'
-#' @param stimuli list of class stimlist with templates
+#' @param stimuli list of stimuli with templates
 #' @param pt point(s) to return
 #'
 #' @return data frame of x and y coordinates of the specified point(s) for each stimulus
 #' @export
+#' @family tem
+#' @family info
 #'
 #' @examples
 #' demo_stim() |> get_point(0:1)
 get_point <- function(stimuli, pt = 0) {
-  stimuli <- validate_stimlist(stimuli, TRUE)
+  stimuli <- require_tems(stimuli)
   
   all_pts <- tems_to_array(stimuli)
   # this function reverses y-coordinates
@@ -330,11 +397,13 @@ get_point <- function(stimuli, pt = 0) {
 
 #' Get center coordinates
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param points which points to include (0-based); if NULL, all points will be used
 #'
 #' @return named matrix of centroid x and y coordinates
 #' @export
+#' @family tem
+#' @family info
 #'
 #' @examples
 #' demo_stim() |> centroid()
@@ -342,11 +411,11 @@ get_point <- function(stimuli, pt = 0) {
 #' # get the centre of the eye points
 #' demo_stim() |> centroid(0:1)
 centroid <- function(stimuli, points = NULL) {
-  s <- validate_stimlist(stimuli, TRUE)
+  stimuli <- require_tems(stimuli)
   
-  pts <- lapply(s, `[[`, "points")
+  pts <- lapply(stimuli, `[[`, "points")
   if (!is.null(points)) {
-    pts <- lapply(pts, `[`, , points+1)
+    pts <- lapply(pts, `[`, , points+1, drop = FALSE)
   }
   
   sapply(pts, apply, 1, mean) |> t()

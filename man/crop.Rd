@@ -14,36 +14,50 @@ crop(
 )
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
-\item{width}{width of cropped image in pixels or \% (<2)}
+\item{width, height}{dimensions of cropped image in pixels or proportion (<2)}
 
-\item{height}{height of cropped image in pixels or \% (<2)}
+\item{x_off, y_off}{offset in pixels or proportion (<1) (NULL centers cropped image)}
 
-\item{x_off}{x-offset in pixels or \% (<1) (NULL horizontally centers cropped image)}
-
-\item{y_off}{y-offset in pixels or \% (<1) (NULL vertically centers cropped image)}
-
-\item{fill}{background color if cropping goes outside the original image}
+\item{fill}{background color if cropping goes outside the original image, see \code{\link[=color_conv]{color_conv()}}}
 }
 \value{
-stimlist with cropped tems and/or images
+list of stimuli with cropped tems and/or images
 }
 \description{
 Remove or add margins to images and templates.
 }
 \details{
-Width, height, x_off and y_off can be set in pixels or proportions). For width and height, values less than 2 will be interpreted as proportions, otherwise pixels. For x_off and y_off, values between -1 and 1 are interpreted as proportions, otherwise pixels. Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set.
+Dimensions and offsets can be set in pixels or proportions. For width and height, values less than 2 will be interpreted as proportions, otherwise pixels. For x_off and y_off, values between -1 and 1 are interpreted as proportions, otherwise pixels.
 
-Fill can be set to R color names (see \code{colors()}) or valid hex or rgb values
+Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set.
 }
 \examples{
 stimuli <- demo_stim()
 
 # crop to 60\% width and 80\% height (centered)
-stim_centered <- crop(stimuli, width = .60, height = .80)
+cropped <- crop(stimuli, width = .60, height = .80)
+c(stimuli, cropped) |> plot(maxwidth = 500)
 
 # crop to upper right quadrant
 urq <- crop(stimuli, .5, .5, x_off = .5, y_off = 0)
+plot(urq)
 
 }
+\seealso{
+Stimulus manipulation functions
+\code{\link{align}()},
+\code{\link{crop_tem}()},
+\code{\link{greyscale}()},
+\code{\link{horiz_eyes}()},
+\code{\link{image_func}()},
+\code{\link{mask_oval}()},
+\code{\link{mask}()},
+\code{\link{mirror}()},
+\code{\link{pad}()},
+\code{\link{resize}()},
+\code{\link{rotate}()},
+\code{\link{to_size}()}
+}
+\concept{manipulators}

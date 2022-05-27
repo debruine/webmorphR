@@ -41,6 +41,7 @@
 #'
 #' @return Difference metric
 #' @export
+#' @family info
 #'
 #' @examples
 #' stimuli <- demo_stim()
@@ -48,12 +49,12 @@
 #' compare(stimuli, stimuli$m_multi, "AE")
 #' compare(stimuli, stimuli$m_multi, "AE", fuzz = 5)
 compare <- function(stimuli, ref_stim, metric = "MSE", fuzz = 0, scale = FALSE) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
   img1 <- get_imgs(stimuli)
   if (is.numeric(ref_stim) | is.character(ref_stim)) {
     img2 <- stimuli[[ref_stim[[1]]]]$img
   } else {
-    img2 <- validate_stimlist(ref_stim)[[1]]$img
+    img2 <- as_stimlist(ref_stim)[[1]]$img
   }
   comp <- magick::image_compare(img1, img2, metric, fuzz)
 

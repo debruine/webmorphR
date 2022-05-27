@@ -3,7 +3,12 @@
 * R version requirements decreased from 4.2.0 to 4.1.0
 * `quick_delin()` function changed to `delin()` and upgraded to be able to update full templates
 * `delin()` lets you adjust full templates now, but is still *very* experimental.
-* prepared for CRAN
+* Split `demo_stim()` into `demo_stim()` and `demo_tems()` and removed set argument.
+* Changed to `as_stimlist()` from `validate_stimlist()`
+* The `expand` argument in `mask()` works now and also does contraction with negative values.
+* `rotate()` has a new argument, `rotate_around`, that customises the rotation origin
+* `patch()` now converts pixel colours to CIE-L*ab values before taking the mean or median values, whcih should create closer visual matches than the old RGB method.
+* Prepared for CRAN
 
 # webmorphR 0.0.2.9003
 

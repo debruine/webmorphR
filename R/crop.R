@@ -3,35 +3,37 @@
 #' Remove or add margins to images and templates. 
 #' 
 #' @details 
-#' Width, height, x_off and y_off can be set in pixels or proportions). For width and height, values less than 2 will be interpreted as proportions, otherwise pixels. For x_off and y_off, values between -1 and 1 are interpreted as proportions, otherwise pixels. Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set.
+#' Dimensions and offsets can be set in pixels or proportions. For width and height, values less than 2 will be interpreted as proportions, otherwise pixels. For x_off and y_off, values between -1 and 1 are interpreted as proportions, otherwise pixels. 
+#' 
+#' Cropping is anchored at the image center (or calculated template centroid if there is no image) unless x_off or y_off are set.
 #'
-#' Fill can be set to R color names (see `colors()`) or valid hex or rgb values
+#' @param stimuli list of stimuli
+#' @param width,height dimensions of cropped image in pixels or proportion (<2)
+#' @param x_off,y_off offset in pixels or proportion (<1) (NULL centers cropped image)
+#' @param fill background color if cropping goes outside the original image, see [color_conv()]
 #'
-#' @param stimuli list of class stimlist
-#' @param width width of cropped image in pixels or % (<2)
-#' @param height height of cropped image in pixels or % (<2)
-#' @param x_off x-offset in pixels or % (<1) (NULL horizontally centers cropped image)
-#' @param y_off y-offset in pixels or % (<1) (NULL vertically centers cropped image)
-#' @param fill background color if cropping goes outside the original image
-#'
-#' @return stimlist with cropped tems and/or images
+#' @return list of stimuli with cropped tems and/or images
 #' @export
+#' @family manipulators
 #'
 #' @examples
 #' stimuli <- demo_stim()
 #'
 #' # crop to 60% width and 80% height (centered)
-#' stim_centered <- crop(stimuli, width = .60, height = .80)
+#' cropped <- crop(stimuli, width = .60, height = .80)
+#' c(stimuli, cropped) |> plot(maxwidth = 500)
 #'
 #' # crop to upper right quadrant
 #' urq <- crop(stimuli, .5, .5, x_off = .5, y_off = 0)
+#' plot(urq)
 #'
 crop <- function(stimuli,
                  width = 1.0, height = 1.0,
                  x_off = NULL, y_off = NULL,
                  fill = wm_opts("fill")) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
 
+  fill <- sapply(fill, color_conv)
   suppressWarnings({
     l <- length(stimuli)
     width <- rep(width, length.out = l)
@@ -41,6 +43,7 @@ crop <- function(stimuli,
     fill <- rep(fill, length.out = l)
   })
   
+  ## TODO: figure out the bug in this and move dim/offset calcs outside loop
   # origw <- width(stimuli)
   # w <- width %||% origw
   # w <- ifelse(w < 2, w * origw, w)
@@ -132,29 +135,45 @@ crop <- function(stimuli,
 
 #' Pad images
 #'
-#' Convenience function to calcuate offsets for crop
+#' Add padding to sides of stimuli. This is a convenience function to calculate offsets for [crop()].
+#' 
+#' @details
+#' The value for top is copied to bottom and right, and the value for right is copied to left, so setting only top produces a consistent border, while setting just top and right sets different borders for top-bottom and right-left. (This convention will be familiar if you use CSS.)
+#' 
+#' Padding size values are interpreted as a proportion of width or height if less than  1. 
 #'
-#' @param stimuli list of class stimlist
-#' @param top number of pixels to pad the top
-#' @param right number of pixels to pad the right side
-#' @param bottom number of pixels to pad the bottom
-#' @param left number of pixels to pad the left side
-#' @param ... additional arguments to pass to \code{\link{crop}}
+#' @param stimuli list of stimuli
+#' @param top,right,bottom,left number of pixels or proportion (<1) to pad each side
+#' @param ... additional arguments to pass to [crop()]
 #'
-#' @return list of class stimlist
+#' @return list of stimuli
 #' @export
+#' @family manipulators
 #'
 #' @examples
-#' padded <- demo_stim() |> pad(10, fill = "red")
+#' stimuli <- demo_stim()
+#' default <- pad(stimuli)
+#' plot(default)
+#' 
+#' \donttest{
+#' # change pad width and set fill
+#' red_border <- pad(stimuli, 2, fill = "red3")
+#' plot(red_border)
+#' 
+#' # set top border to 10% height
+#' # different colour for each image
+#' top_border <- pad(stimuli, 0.1, 1, 1, 1,
+#'                   fill = c("hotpink", "dodgerblue"))
+#' plot(top_border)
+#' }
 pad <- function(stimuli, top = 10, right = top, bottom = top, left = right, ...) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
 
   # convert if percents
   top    <- ifelse(abs(top) < 1,    top * height(stimuli),    top)
   bottom <- ifelse(abs(bottom) < 1, bottom * height(stimuli), bottom)
   left   <- ifelse(abs(left) < 1,   left * width(stimuli),    left)
   right  <- ifelse(abs(right) < 1,  right * width(stimuli),   right)
-
 
   stimuli |>
     crop(width = width(stimuli) + left + right,
@@ -166,24 +185,41 @@ pad <- function(stimuli, top = 10, right = top, bottom = top, left = right, ...)
 
 #' Crop to template boundaries and pad
 #'
-#' Calculate the max and min x and y coordinates across the stimuli and crop all image to this plus padding
+#' Calculate the maximum and minimum x and y coordinates across the stimuli (or for each stimulus) and crop all image to this plus padding.
 #'
-#' @param stimuli list of class stimlist
-#' @param top number of pixels to pad the top
-#' @param right number of pixels to pad the right side
-#' @param bottom number of pixels to pad the bottom
-#' @param left number of pixels to pad the left side
-#' @param each Whether to calculate bounds for the full set (default) or each image separately
-#' @param ... additional arguments to pass to \code{\link{crop}}
+#' @param stimuli list of stimuli
+#' @param top,right,bottom,left numeric; number of pixels or proportion (<1) to pad each side
+#' @param each logical; Whether to calculate bounds for the full set (default) or each image separately
+#' @param ... additional arguments to pass to [crop()]
 #'
-#' @return list of class stimlist
+#' @return list of stimuli
 #' @export
+#' @family manipulators
 #'
 #' @examples
-#' ctem <- demo_stim() |> crop_tem(20) |> draw_tem()
-#' plot(ctem)
+#' stimuli <- demo_stim()
+#' ctem <- crop_tem(stimuli, each = TRUE)
+#' draw_tem(ctem) |> plot()
+#' 
+#' \donttest{
+#' # demo with different templates
+#' stimuli <- demo_tems()
+#' 
+#' # default 10 pixels around maximum template
+#' ctem_all <- crop_tem(stimuli) 
+#' 
+#' # crop specific to each image
+#' ctem_each <- crop_tem(stimuli, each = TRUE)
+#' 
+#' # visualise difference
+#' c(ctem_all, ctem_each) |>
+#'   draw_tem(pt.size = 10) |> 
+#'   to_size() |>
+#'   plot(nrow = 2, maxwidth = 1000)
+#' }
+#' 
 crop_tem <- function(stimuli, top = 10, right = top, bottom = top, left = right, each = FALSE, ...) {
-  stimuli <- validate_stimlist(stimuli, TRUE)
+  stimuli <- require_tems(stimuli)
 
   b <- bounds(stimuli, each = each)
 
@@ -209,7 +245,7 @@ crop_tem <- function(stimuli, top = 10, right = top, bottom = top, left = right,
 #'
 #' demo_stim() |> bounds(each = TRUE)
 bounds <- function(stimuli, each = FALSE) {
-  stimuli <- validate_stimlist(stimuli, TRUE)
+  stimuli <- require_tems(stimuli)
 
   if (isTRUE(each)) {
     # get separate bounds for each stimulus
@@ -238,41 +274,3 @@ bounds <- function(stimuli, each = FALSE) {
 }
 
 
-#' Squash Template Points
-#' 
-#' Move template points that are outside the image boundaries (e.g., negative values or larger than image width or height) to the borders of the image.
-#'
-#' @param stimuli list of class stimlist
-#'
-#' @return list of class stimlist
-#' @export
-#'
-#' @examples
-#' nosquash <- demo_stim()[1] |> 
-#'   crop(0.4, 0.5) |> pad(50) |> 
-#'   draw_tem(line.size = 3)
-#' 
-#' squashed <- demo_stim()[1] |> 
-#'   crop(0.4, 0.5) |> squash_tem() |> pad(50) |> 
-#'   draw_tem(line.size = 3)
-#'   
-#' # c(nosquash, squashed) |> plot()
-squash_tem <- function(stimuli) {
-  stimuli <- validate_stimlist(stimuli, TRUE)
-  
-  for (i in seq_along(stimuli)) {
-    if (!is.null(stimuli[[i]]$points)) {
-      w <- stimuli[[i]]$width
-      h <- stimuli[[i]]$height
-      
-      stimuli[[i]]$points <- apply(stimuli[[i]]$points, 2, function(pt) {
-        # move points into image boundaries
-        pt |>
-          pmax(c(0, 0)) |>
-          pmin(c(w-1, h-1)) # subtract 1 for 0-vs 1-based origin
-      })
-    }
-  }
-  
-  stimuli
-}

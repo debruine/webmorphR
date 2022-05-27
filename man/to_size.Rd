@@ -6,7 +6,7 @@
 \usage{
 to_size(
   stimuli,
-  width,
+  width = NULL,
   height = NULL,
   fill = wm_opts("fill"),
   crop = FALSE,
@@ -14,20 +14,20 @@ to_size(
 )
 }
 \arguments{
-\item{stimuli}{of class stimlist}
+\item{stimuli}{list of stimuli}
 
-\item{width}{the target width (or a vector of width and height)}
+\item{width}{the target width (if null, the maximum stimulus width is used)}
 
-\item{height}{the target height (or null if width is dimensions)}
+\item{height}{the target height (if null, the maximum stimulus height is used)}
 
-\item{fill}{background color if cropping goes outside the original image}
+\item{fill}{background color if cropping goes outside the original image, see \code{\link[=color_conv]{color_conv()}}}
 
 \item{crop}{whether to crop or pad images to make them the specified size}
 
 \item{keep_rels}{whether to keep the size relationships between images in the set, or make all the maximum size}
 }
 \value{
-stimlist with cropped tems and/or images
+list of stimuli with cropped tems and/or images
 }
 \description{
 Resize and crop/pad images to a specified size
@@ -40,3 +40,19 @@ stimuli <- demo_stim() |> crop(c(0.8, 1.0)) |> resize(c(1.0, 0.5))
 to_size(stimuli, 300, 400, fill = "dodgerblue") |> plot()
 
 }
+\seealso{
+Stimulus manipulation functions
+\code{\link{align}()},
+\code{\link{crop_tem}()},
+\code{\link{crop}()},
+\code{\link{greyscale}()},
+\code{\link{horiz_eyes}()},
+\code{\link{image_func}()},
+\code{\link{mask_oval}()},
+\code{\link{mask}()},
+\code{\link{mirror}()},
+\code{\link{pad}()},
+\code{\link{resize}()},
+\code{\link{rotate}()}
+}
+\concept{manipulators}

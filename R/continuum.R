@@ -9,6 +9,7 @@
 #'
 #' @return stimlist
 #' @export
+#' @family webmorph
 #'
 #' @examples
 #' \dontrun{

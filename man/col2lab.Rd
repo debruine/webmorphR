@@ -4,18 +4,30 @@
 \alias{col2lab}
 \title{Color to Lab Conversion}
 \usage{
-col2lab(col)
+col2lab(col, ref_X = 95.047, ref_Y = 100, ref_Z = 108.883)
 }
 \arguments{
 \item{col}{vector of hex or color names}
+
+\item{ref_X, ref_Y, ref_Z}{Reference values for Observer= 2°, Illuminant= D65}
 }
 \value{
-list of L, a and b values
+vector of L, a and b values
 }
 \description{
-R color to LAB colourspace conversion. Calculated with Observer. = 2°, Illuminant = D65.
+R color to Lab colourspace conversion. Calculated with Observer. = 2°, Illuminant = D65.
+}
+\details{
+The formulas used to convert from RGB to XYZ and XYZ to Lab are from http://www.easyrgb.com/en/math.php and the reference values are from http://www.brucelindbloom.com/index.html?ColorCheckerCalcHelp.html
 }
 \examples{
 col2lab(c("red", "green", "blue"))
 
 }
+\seealso{
+Other color: 
+\code{\link{color_conv}()},
+\code{\link{lab2rgb}()}
+}
+\concept{color}
+\keyword{internal}

@@ -4,12 +4,13 @@
 #'
 #' You can also add data as named vectors.
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param ... data table or named vectors of info to add
 #' @param .by the column to use to match info to stimuli names; leave NULL if the data are to be matched by order
 #'
-#' @return stimlist with info added
+#' @return list of stimuli with info added
 #' @export
+#' @family info
 #'
 #' @examples
 #' stimuli <- demo_stim() |>
@@ -18,7 +19,7 @@
 #' stimuli$f_multi$info |> str()
 #'
 add_info <- function(stimuli, ..., .by = NULL) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
 
   # handle table or vector formats
   dots <- list(...)
@@ -55,12 +56,13 @@ add_info <- function(stimuli, ..., .by = NULL) {
 
 #' Get Information
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param ... column names to return
 #' @param .rownames whether to return a table with no rownames (NULL), rownames from the list item names (NA), or as a new column (the column name as a string)
 #'
 #' @return a data frame or vector of the info
 #' @export
+#' @family info
 #'
 #' @examples
 #' stimuli <- demo_stim() |>
@@ -96,17 +98,18 @@ get_info <- function(stimuli, ..., .rownames = "id") {
 
 #' Image widths
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param type whether to return all widths, min, max, or only unique widths
 #'
 #' @return vector of widths
 #' @export
+#' @family info
 #'
 #' @examples
 #'
 #' demo_stim() |> width()
 width <- function(stimuli, type = c("all", "min", "max", "unique")) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
 
   w <- sapply(stimuli, `[[`, "width")
 
@@ -120,17 +123,18 @@ width <- function(stimuli, type = c("all", "min", "max", "unique")) {
 
 #' Image heights
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param type whether to return all heights, min, max, or only unique heights
 #'
 #' @return vector of heights
 #' @export
+#' @family info
 #'
 #' @examples
 #'
 #' demo_stim() |> height()
 height <- function(stimuli, type = c("all", "min", "max", "unique")) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
 
   h <- sapply(stimuli, `[[`, "height")
 

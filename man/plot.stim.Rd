@@ -11,7 +11,7 @@
 
 \item{y}{omitted}
 
-\item{...}{Arguments to be passed to \code{\link{plot_stim}}}
+\item{...}{Arguments to be passed to \code{\link[=plot_stim]{plot_stim()}}}
 }
 \value{
 stimlist
@@ -25,4 +25,13 @@ stimuli <- demo_stim()
 plot(stimuli)
 }
 }
+\seealso{
+Visualisation functions
+\code{\link{as_ggplot}()},
+\code{\link{draw_tem}()},
+\code{\link{plot.stimlist}()},
+\code{\link{plot_rows}()},
+\code{\link{plot_stim}()}
+}
+\concept{viz}
 \keyword{internal}

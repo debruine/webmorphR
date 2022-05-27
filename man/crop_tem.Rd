@@ -15,27 +15,56 @@ crop_tem(
 )
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
-\item{top}{number of pixels to pad the top}
+\item{top, right, bottom, left}{numeric; number of pixels or proportion (<1) to pad each side}
 
-\item{right}{number of pixels to pad the right side}
+\item{each}{logical; Whether to calculate bounds for the full set (default) or each image separately}
 
-\item{bottom}{number of pixels to pad the bottom}
-
-\item{left}{number of pixels to pad the left side}
-
-\item{each}{Whether to calculate bounds for the full set (default) or each image separately}
-
-\item{...}{additional arguments to pass to \code{\link{crop}}}
+\item{...}{additional arguments to pass to \code{\link[=crop]{crop()}}}
 }
 \value{
-list of class stimlist
+list of stimuli
 }
 \description{
-Calculate the max and min x and y coordinates across the stimuli and crop all image to this plus padding
+Calculate the maximum and minimum x and y coordinates across the stimuli (or for each stimulus) and crop all image to this plus padding.
 }
 \examples{
-ctem <- demo_stim() |> crop_tem(20) |> draw_tem()
-plot(ctem)
+stimuli <- demo_stim()
+ctem <- crop_tem(stimuli, each = TRUE)
+draw_tem(ctem) |> plot()
+
+\donttest{
+# demo with different templates
+stimuli <- demo_tems()
+
+# default 10 pixels around maximum template
+ctem_all <- crop_tem(stimuli) 
+
+# crop specific to each image
+ctem_each <- crop_tem(stimuli, each = TRUE)
+
+# visualise difference
+c(ctem_all, ctem_each) |>
+  draw_tem(pt.size = 10) |> 
+  to_size() |>
+  plot(nrow = 2, maxwidth = 1000)
 }
+
+}
+\seealso{
+Stimulus manipulation functions
+\code{\link{align}()},
+\code{\link{crop}()},
+\code{\link{greyscale}()},
+\code{\link{horiz_eyes}()},
+\code{\link{image_func}()},
+\code{\link{mask_oval}()},
+\code{\link{mask}()},
+\code{\link{mirror}()},
+\code{\link{pad}()},
+\code{\link{resize}()},
+\code{\link{rotate}()},
+\code{\link{to_size}()}
+}
+\concept{manipulators}

@@ -14,7 +14,7 @@ write_stim(
 )
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{dir}{Directory to save to}
 
@@ -34,6 +34,7 @@ Write tems and images to files
 }
 \examples{
 \dontrun{
+  # write demo stim as jpegs to directory ./test_faces
   demo_stim() |> write_stim("test_faces", format = "jpg")
 }
 }

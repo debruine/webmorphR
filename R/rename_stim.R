@@ -17,7 +17,7 @@
 #'   names()
 rename_stim <- function(stimuli, new_names = NULL, prefix = "", suffix = "",
                    pattern = NULL, replacement = NULL, ...) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
 
   if (is.null(new_names)) {
     new_names <- names(stimuli)

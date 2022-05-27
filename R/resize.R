@@ -1,19 +1,21 @@
 #' Resize templates and images
 #'
-#' @param stimuli list of class stimlist
-#' @param width new width (in pixels or percent if < 10)
-#' @param height new height (in pixels or percent if < 10)
+#' @param stimuli list of stimuli
+#' @param width,height new dimensions (in pixels or percent if < 10)
 #'
-#' @return stimlist with resized tems and/or images
+#' @return list of stimuli with resized tems and/or images
 #' @export
+#' @family manipulators
 #'
 #' @examples
 #' resized <- demo_stim() |>
 #'   resize(.5, .75) |>
 #'   draw_tem()
+#'   
+#' plot(resized)
 #'
 resize <- function(stimuli, width = NULL, height = NULL) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
 
   if (is.null(width)) width <- 0
   if (is.null(height)) height <- 0

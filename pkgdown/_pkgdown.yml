@@ -30,7 +30,7 @@ template:
 navbar:
   structure:
     left: [intro, reference, articles, news]
-    right: [twitter, figshare, github]
+    right: [twitter, figshare, osf, github]
   components:
     twitter:
       icon: fa-twitter
@@ -40,6 +40,10 @@ navbar:
       icon: "ai-figshare"
       href: "https://figshare.com/search?q=webmorph%20psychomorph"
       aria-label: Figshare
+    osf:
+      icon: "ai-osf"
+      href="https://osf.io/search/?q=webmorph,psychomorph"
+      aria-laebl: OSF
 
 articles:
 - title: Demos
@@ -53,7 +57,7 @@ articles:
 
 reference:
 - title: Stimuli
-  desc: ~
+  desc: Read, write, or access stimuli
   contents:
   - '`blank`'
   - starts_with("demo_")
@@ -81,6 +85,7 @@ reference:
 - title: Plotting
   desc: ~
   contents:
+  - '`as_ggplot`'
   - '`gglabel`'
   - '`label`'
   - '`mlabel`'
@@ -132,12 +137,14 @@ reference:
 - title: Utilities
   desc: Mainly internally used functions, but might be of interest to some
   contents:
+  - '`as_stimlist`'
   - '`bounds`'
-  - '`col2lab`'
   - '`color_conv`'
   - '`new_stim`'
   - '`new_stimlist`'
   - '`patch`'
+  - '`require_tems`'
   - '`same_tems`'
   - '`tem_def`'
+  - '`viz_tem_def`'
 

@@ -2,10 +2,11 @@
 #'
 #' Adjust the templates in a shiny interface. This will overwrite existing templates.
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #'
-#' @return stimlist with new templates
+#' @return list of stimuli with new templates
 #' @export
+#' @family tem
 #' 
 #' @examples 
 #' \dontrun{
@@ -23,10 +24,10 @@ delin <- function(stimuli) {
   if (!all(pkg_available)) {
     pkg_txt <- pkg_available[pkg_available == FALSE] |> paste(collapse = ", ")
     stop("You need to install the following packages to use the shiny delineator: ",
-         pkg_text)
+         pkg_txt)
   }
   
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
 
   # save images to temp dir
   imgdir <- tempfile()

@@ -12,16 +12,16 @@ avg(
 )
 }
 \arguments{
-\item{stimuli}{images to average (list of class stimlist)}
+\item{stimuli}{list of stimuli to average}
 
-\item{texture}{logical, textured average}
+\item{texture}{logical; whether textured should be averaged}
 
 \item{norm}{how to normalise}
 
 \item{normpoint}{points for twopoint normalisation}
 }
 \value{
-stimlist with average image and template
+list of stimuli with the average image and template
 }
 \description{
 Average Images
@@ -31,3 +31,11 @@ Average Images
   avg <- demo_stim() |> avg()
 }
 }
+\seealso{
+WebMorph.org functions
+\code{\link{continuum}()},
+\code{\link{loop}()},
+\code{\link{symmetrize}()},
+\code{\link{trans}()}
+}
+\concept{webmorph}

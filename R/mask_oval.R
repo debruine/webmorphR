@@ -4,13 +4,14 @@
 #'
 #' If bounds are set to a list of top, right, bottom and left boundaries, these will be used instead of the boundaries derived from templates.
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param bounds bounds (t, r, b, l) of oval, calculated from templates if NULL
-#' @param fill background color for mask
+#' @param fill background color for mask, see [color_conv()]
 #' @param each whether to calculate a mask for each image (default) or just one
 #'
-#' @return stimlist with cropped tems and/or images
+#' @return list of stimuli with cropped tems and/or images
 #' @export
+#' @family manipulators
 #'
 #' @examples
 #' omask1 <- demo_stim() |> mask_oval(fill = "hotpink")
@@ -25,14 +26,15 @@
 #' omask3 <- demo_stim() |>
 #'   mask_oval(bounds = list(t= 70, r = 120, b = 70, l = 120))
 mask_oval <- function(stimuli, bounds = NULL, fill = wm_opts("fill"), each = TRUE) {
-  stimuli <- validate_stimlist(stimuli, is.null(bounds))
+  stimuli <- as_stimlist(stimuli) 
 
-  n <- length(stimuli)
   w <- width(stimuli)
   h <- height(stimuli)
 
+  # calculate oval coordinates
   b <- list()
   if (is.null(bounds)) {
+    stimuli <- require_tems(stimuli)
     bounds <- bounds(stimuli, each)
     b$top <- bounds$min_y
     b$right <- w - bounds$max_x
@@ -48,12 +50,21 @@ mask_oval <- function(stimuli, bounds = NULL, fill = wm_opts("fill"), each = TRU
     b = b$bottom %||% bounds$b %||% bounds[3],
     l = b$left %||% bounds$l %||% bounds[4]
   )
-
-  rx <- ((w - borders$r - borders$l)/2) |> rep_len(n)
-  ry <- ((h - borders$t - borders$b)/2) |> rep_len(n)
-  cx <- (borders$l + rx) |> rep_len(n)
-  cy <- (borders$t + ry) |> rep_len(n)
-  fill <- rep_len(fill, n)
+  
+  rx <- (w - borders$r - borders$l)/2
+  ry <- (h - borders$t - borders$b)/2
+  cx <- borders$l + rx
+  cy <- borders$t + ry
+  
+  fill <- sapply(fill, color_conv)
+  suppressWarnings({
+    l <- length(stimuli)
+    fill <- rep_len(fill, l)
+    rx <- rep_len(rx, l)
+    ry <- rep_len(ry, l)
+    cx <- rep_len(cx, l)
+    cy <- rep_len(cy, l)
+  })
 
   svg_text <- "<svg
     width=\"%d\" height=\"%d\"

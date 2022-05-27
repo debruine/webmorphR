@@ -1,11 +1,12 @@
 #' Loop
 #'
-#' @param stimuli list of images to morph between
+#' @param stimuli list of stimuli to morph between
 #' @param steps number of steps from one image to the next
-#' @param ... arguments to pass to \code{\link{trans}}
+#' @param ... arguments to pass to [trans()]
 #'
-#' @return stimlist
+#' @return list of stimuli
 #' @export
+#' @family webmorph
 #'
 #' @examples
 #' \dontrun{
@@ -17,7 +18,7 @@
 #'   animate(loop, 10)
 #' }
 loop <- function(stimuli, steps = 10, ...) {
-  stimuli <- validate_stimlist(stimuli, TRUE)
+  stimuli <- require_tems(stimuli, TRUE)
   if (length(stimuli) < 2) {
     stop("You need at least 2 stimuli")
   }

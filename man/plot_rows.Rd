@@ -25,3 +25,12 @@ plot_rows(upright = up, inverted = inv)
 plot_rows(upright = up, inverted = inv, color = "dodgerblue", top_label = TRUE)
 }
 }
+\seealso{
+Visualisation functions
+\code{\link{as_ggplot}()},
+\code{\link{draw_tem}()},
+\code{\link{plot.stimlist}()},
+\code{\link{plot.stim}()},
+\code{\link{plot_stim}()}
+}
+\concept{viz}

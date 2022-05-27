@@ -7,7 +7,7 @@
 get_point(stimuli, pt = 0)
 }
 \arguments{
-\item{stimuli}{list of class stimlist with templates}
+\item{stimuli}{list of stimuli with templates}
 
 \item{pt}{point(s) to return}
 }
@@ -20,3 +20,29 @@ Get a data frame of the x and y coordinates of a template point
 \examples{
 demo_stim() |> get_point(0:1)
 }
+\seealso{
+Template functions
+\code{\link{auto_delin}()},
+\code{\link{average_tem}()},
+\code{\link{centroid}()},
+\code{\link{change_lines}()},
+\code{\link{delin}()},
+\code{\link{draw_tem}()},
+\code{\link{features}()},
+\code{\link{remove_tem}()},
+\code{\link{same_tems}()},
+\code{\link{squash_tem}()},
+\code{\link{subset_tem}()},
+\code{\link{tem_def}()},
+\code{\link{viz_tem_def}()}
+
+Other info: 
+\code{\link{add_info}()},
+\code{\link{centroid}()},
+\code{\link{compare}()},
+\code{\link{get_info}()},
+\code{\link{height}()},
+\code{\link{width}()}
+}
+\concept{info}
+\concept{tem}

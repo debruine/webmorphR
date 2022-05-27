@@ -2,38 +2,55 @@
 % Please edit documentation in R/tem.R
 \name{change_lines}
 \alias{change_lines}
-\title{Change the points in a line}
+\title{Change template lines}
 \usage{
 change_lines(stimuli, line_id = 1, pts = NULL)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
-\item{line_id}{IDs of the lines to change}
+\item{line_id}{index of the line to change}
 
-\item{pts}{vector of points to change the line_id to (deletes line if NULL)}
+\item{pts}{vector of points to change the line_idx to (deletes line if NULL)}
 }
 \value{
 stimlist with altered templates
 }
 \description{
-Change the points in a line
+Alter, add or remove lines in a template
 }
 \examples{
-s <- demo_stim()[1] |>
-  subset_tem(features("face"))
+# get image with dlib70 template and view lines
+s <- demo_tems("dlib70")
 s[[1]]$lines
 
 # remove all lines
-s2 <- s |>
-  change_lines(line_id = 1:8, pts = NULL)
+s2 <- change_lines(s, line_id = 1:13, pts = NULL)
 s2[[1]]$lines
 
-draw_tem(s2, pt.shape = "index", pt.size = 10)
+# visualise point indices
+draw_tem(s2, pt.shape = "index", pt.size = 15)
 
-# add new line
-s3 <- s2 |>
-  change_lines(line_id = 1, pts = c(0, 26, 1, 27, 2, 6:14, 5, 29, 4, 28, 3, 25:15, 0))
+# add a new line
+s3 <- change_lines(s2, line_id = "face_outline", 
+                   pts = c(2:18, 28:19, 2))
 s3[[1]]$lines
-draw_tem(s3, line.color = "hotpink", line.alpha = 1)
+draw_tem(s3)
 }
+\seealso{
+Template functions
+\code{\link{auto_delin}()},
+\code{\link{average_tem}()},
+\code{\link{centroid}()},
+\code{\link{delin}()},
+\code{\link{draw_tem}()},
+\code{\link{features}()},
+\code{\link{get_point}()},
+\code{\link{remove_tem}()},
+\code{\link{same_tems}()},
+\code{\link{squash_tem}()},
+\code{\link{subset_tem}()},
+\code{\link{tem_def}()},
+\code{\link{viz_tem_def}()}
+}
+\concept{tem}

@@ -56,3 +56,31 @@ test_that("col2lab", {
   lindbloom_green = c(L = 87.73, a = -86.18, b = 83.18)
   expect_equal(lindbloom_green, green, tolerance = 0.05)
 })
+
+# lab2rgb ----
+test_that("lab2rgb", {
+  # white
+  col <- '#FFFFFF'
+  lab <- col2lab(col)
+  rgb <- lab2rgb(lab)
+  comp <- color_conv(col, to = 'rgb')
+  names(comp) <- c('red', 'green', 'blue')
+  expect_equal(rgb, comp)
+  
+  # red
+  col <- '#FF0000'
+  lab <- col2lab(col)
+  rgb <- lab2rgb(lab)
+  comp <- color_conv(col, to = 'rgb')
+  names(comp) <- c('red', 'green', 'blue')
+  expect_equal(rgb, comp)
+  
+  # dodgerblue
+  col <- 'dodgerblue'
+  lab <- col2lab(col)
+  rgb <- lab2rgb(lab)
+  comp <- color_conv(col, to = 'rgb')
+  names(comp) <- c('red', 'green', 'blue')
+  expect_equal(rgb, comp)
+  
+})

@@ -1,4 +1,4 @@
-#' Face++ Auto-Delineation
+#' Auto-Delineation
 #'
 #' Automatically delineate faces using Face++ (an external service). Since each delineation counts against a daily limit, you need to set up your own Face++ account (see details below).
 #'
@@ -9,13 +9,14 @@
 #'
 #' FACEPLUSPLUS_SECRET="1234567890abcdefghijk"
 #'
-#' @param stimuli list of class stimlist
+#' @param stimuli list of stimuli
 #' @param model Which model (fpp106, fpp83)
-#' @param replace if FALSE, only gets templates for images with no template
+#' @param replace logical; whether to replace original templates - if FALSE, only gets templates for images with no template
 #' @param face which face to delineate in each image if there is more than 1
 #'
-#' @return stimlist with templates
+#' @return list of stimuli with templates
 #' @export
+#' @family tem
 #'
 #' @examples
 #' \dontrun{
@@ -27,7 +28,7 @@ auto_delin <- function(stimuli,
                            model = c("fpp106", "fpp83"), 
                            replace = FALSE, 
                            face = 1) {
-  stimuli <- validate_stimlist(stimuli)
+  stimuli <- as_stimlist(stimuli)
   model <- match.arg(model)
   
   # find out which stimuli need tems ----

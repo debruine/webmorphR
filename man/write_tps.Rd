@@ -7,7 +7,7 @@
 write_tps(stimuli, path_to_tps = NULL)
 }
 \arguments{
-\item{stimuli}{list of class stimlist}
+\item{stimuli}{list of stimuli}
 
 \item{path_to_tps}{optional filename to save TPS file}
 }

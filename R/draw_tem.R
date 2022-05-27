@@ -1,26 +1,56 @@
 #' Draw template
 #'
-#' Set alpha to 0 to omit lines or points.
+#' Visualise a template on an image. 
+#' 
+#' @details
+#' Visualising the index of each point isn't great yet and will overlay 
 #'
-#' @param stimuli list of class stimlist
-#' @param pt.color,line.color line or point color
-#' @param pt.alpha,line.alpha transparency (0-1), ignored if color is a hex value with transparency
-#' @param pt.size,line.size size in pixels (scales to image if NULL)
+#' @param stimuli list of stimuli
+#' @param pt.color,line.color line or point color, see [color_conv()]
+#' @param pt.alpha,line.alpha transparency (0-1), ignored if color is a hex value with transparency. Set alpha to 0 to omit lines or points.
+#' @param pt.size,line.size size in pixels (scales to image size if NULL)
 #' @param pt.shape the shape of the points ("circle", "cross", "index")
-#' @param bg background color ("image" uses original image)
+#' @param bg background color ("image" uses the original image)
 #'
-#' @return stimlist with template images
+#' @return list of stimuli with template images
 #' @export
+#' @family tem
+#' @family viz
 #'
 #' @examples
-#' demo_stim() |> draw_tem() |> plot()
+#' # get an image with 2 different templates
+#' stimuli <- demo_tems("frl|fpp106")
+#' 
+#' # default template
+#' default_tem <- draw_tem(stimuli)
+#' plot(default_tem, maxwidth = 500)
+#' 
+#' \donttest{
+#' # custom template
+#' custom_tem <- draw_tem(stimuli, 
+#'                        pt.shape = "cross",
+#'                        pt.color = "red", 
+#'                        pt.alpha = 1,
+#'                        pt.size = 10,
+#'                        line.color = rgb(0, 0, 0),
+#'                        line.alpha = 0.5,
+#'                        line.size = 2)
+#' plot(custom_tem, maxwidth = 500)
+#' 
+#' # indexed template
+#' index_tem <- draw_tem(stimuli, 
+#'                       pt.shape = "index",
+#'                       pt.size = 15, 
+#'                       pt.alpha = 1,
+#'                       line.alpha = 0)
+#' plot(index_tem, maxwidth = 500)
+#' }
 draw_tem <- function(stimuli, pt.color = wm_opts("pt.color"), pt.alpha = 0.75, pt.size = NULL, pt.shape = c("circle", "cross", "index"),
                      line.color = wm_opts("line.color"), line.alpha = 0.5, line.size = NULL,
                      bg = "image") {
-  stimuli <- validate_stimlist(stimuli, TRUE)
+  stimuli <- require_tems(stimuli)
   w <- width(stimuli) |> round()
   h <- height(stimuli) |> round()
-  n <- length(stimuli)
   pt.shape <- match.arg(pt.shape)
 
   # scale size to image if NULL
@@ -32,13 +62,18 @@ draw_tem <- function(stimuli, pt.color = wm_opts("pt.color"), pt.alpha = 0.75, p
   }
 
   # allow for vectors
-  pt.color <- rep_len(pt.color, n)
-  pt.alpha <- rep_len(pt.alpha, n)
-  pt.size <- rep_len(pt.size %||% 0, n)
-  line.color <- rep_len(line.color, n)
-  line.alpha <- rep_len(line.alpha, n)
-  line.size <- rep_len(line.size %||% 0, n)
-  bg <- rep_len(bg, n)
+  # pt and line color and alpha combined below
+  bg[bg != "image"] <- sapply(bg[bg != "image"], color_conv)
+  suppressWarnings({
+    l <- length(stimuli)
+    pt.color <- rep_len(pt.color, l)
+    pt.alpha <- rep_len(pt.alpha, l)
+    pt.size <- rep_len(pt.size %||% 0, l)
+    line.color <- rep_len(line.color, l)
+    line.alpha <- rep_len(line.alpha, l)
+    line.size <- rep_len(line.size %||% 0, l)
+    bg <- rep_len(bg, l)
+  })
 
   for (i in seq_along(stimuli)) {
     temPoints <- stimuli[[i]]$points
