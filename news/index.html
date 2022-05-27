@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">webmorphR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.2.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,12 @@
   </a>
 </li>
 <li class="nav-item">
+  <a class="external-link nav-link" href="https://osf.io/search/?q=webmorph,psychomorph" aria-label="OSF">
+    <span class="ai ai-osf"></span>
+     
+  </a>
+</li>
+<li class="nav-item">
   <a class="external-link nav-link" href="https://github.com/debruine/webmorphR/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
@@ -70,12 +76,21 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0.2.9004" id="webmorphr-0029004">webmorphR 0.0.2.9004<a class="anchor" aria-label="anchor" href="#webmorphr-0029004"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.1.0.0" id="webmorphr-0100">webmorphR 0.1.0.0<a class="anchor" aria-label="anchor" href="#webmorphr-0100"></a></h2>
 <ul><li>R version requirements decreased from 4.2.0 to 4.1.0</li>
 <li>
 <code>quick_delin()</code> function changed to <code><a href="../reference/delin.html">delin()</a></code> and upgraded to be able to update full templates</li>
 <li>
 <code><a href="../reference/delin.html">delin()</a></code> lets you adjust full templates now, but is still <em>very</em> experimental.</li>
+<li>Split <code><a href="../reference/demo_stim.html">demo_stim()</a></code> into <code><a href="../reference/demo_stim.html">demo_stim()</a></code> and <code><a href="../reference/demo_stim.html">demo_tems()</a></code> and removed set argument.</li>
+<li>Changed to <code><a href="../reference/as_stimlist.html">as_stimlist()</a></code> from <code>validate_stimlist()</code>
+</li>
+<li>The <code>expand</code> argument in <code><a href="../reference/mask.html">mask()</a></code> works now and also does contraction with negative values.</li>
+<li>
+<code><a href="../reference/rotate.html">rotate()</a></code> has a new argument, <code>rotate_around</code>, that customises the rotation origin</li>
+<li>
+<code><a href="../reference/patch.html">patch()</a></code> now converts pixel colours to CIE-L*ab values before taking the mean or median values, whcih should create closer visual matches than the old RGB method.</li>
+<li>Prepared for CRAN</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.2.9003" id="webmorphr-0029003">webmorphR 0.0.2.9003<a class="anchor" aria-label="anchor" href="#webmorphr-0029003"></a></h2>
@@ -109,7 +124,7 @@
 <h2 class="pkg-version" data-toc-text="0.0.2.9000" id="webmorphr-0029000">webmorphR 0.0.2.9000<a class="anchor" aria-label="anchor" href="#webmorphr-0029000"></a></h2>
 <ul><li>moved all python functions to webmorphR.dlib</li>
 <li>
-<code><a href="../reference/auto_delin.html">auto_delin()</a></code> is now a wrapper for <code><a href="../reference/fpp_auto_delin.html">fpp_auto_delin()</a></code> (for Face++) and <code><a href="https://rdrr.io/pkg/webmorphR.dlib/man/dlib_auto_delin.html" class="external-link">webmorphR.dlib::dlib_auto_delin()</a></code> (for python/dlib/face_recognition delineations).</li>
+<code><a href="../reference/auto_delin.html">auto_delin()</a></code> is now a wrapper for <code>fpp_auto_delin()</code> (for Face++) and <code><a href="https://rdrr.io/pkg/webmorphR.dlib/man/dlib_auto_delin.html" class="external-link">webmorphR.dlib::dlib_auto_delin()</a></code> (for python/dlib/face_recognition delineations).</li>
 <li>Manuals and vignettes updated</li>
 </ul></div>
     <div class="section level2">
@@ -117,7 +132,7 @@
 <ul><li>Reduced package dependencies, but now requires R&gt;=4.2.0</li>
 <li>All code and examples use |&gt; pipe</li>
 <li>
-<code>facetrain()</code> function for training a dlib shape predictor model (still really experimental)</li>
+<code><a href="https://rdrr.io/pkg/webmorphR.dlib/man/facetrain.html" class="external-link">facetrain()</a></code> function for training a dlib shape predictor model (still really experimental)</li>
 <li>Various bug fixes</li>
 </ul></div>
     <div class="section level2">
@@ -242,7 +257,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Lisa DeBruine.</p>
+  <p></p><p>Developed by <a href="https://debruine.github.io/" class="external-link">Lisa DeBruine</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

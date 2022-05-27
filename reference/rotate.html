@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">webmorphR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.2.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,12 @@
   </a>
 </li>
 <li class="nav-item">
+  <a class="external-link nav-link" href="https://osf.io/search/?q=webmorph,psychomorph" aria-label="OSF">
+    <span class="ai ai-osf"></span>
+     
+  </a>
+</li>
+<li class="nav-item">
   <a class="external-link nav-link" href="https://github.com/debruine/webmorphR/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
@@ -76,23 +82,47 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rotate</span><span class="op">(</span><span class="va">stimuli</span>, degrees <span class="op">=</span> <span class="fl">0</span>, fill <span class="op">=</span> <span class="fu"><a href="wm_opts.html">wm_opts</a></span><span class="op">(</span><span class="st">"fill"</span><span class="op">)</span>, keep_size <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rotate</span><span class="op">(</span>
+  <span class="va">stimuli</span>,
+  degrees <span class="op">=</span> <span class="fl">0</span>,
+  fill <span class="op">=</span> <span class="fu"><a href="wm_opts.html">wm_opts</a></span><span class="op">(</span><span class="st">"fill"</span><span class="op">)</span>,
+  keep_size <span class="op">=</span> <span class="cn">TRUE</span>,
+  rotate_around <span class="op">=</span> <span class="st">"image"</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>stimuli</dt>
-<dd><p>list of class stimlist</p></dd>
+<dd><p>list of stimuli</p></dd>
 <dt>degrees</dt>
 <dd><p>degrees to rotate</p></dd>
 <dt>fill</dt>
-<dd><p>background color</p></dd>
+<dd><p>background color, see <code><a href="color_conv.html">color_conv()</a></code></p></dd>
 <dt>keep_size</dt>
 <dd><p>whether to keep the original size or expand images to the new rotated size</p></dd>
+<dt>rotate_around</dt>
+<dd><p>Whether to centre the rotation on the "image", template ("tem"), or the center of 1 or more delineation points (0-based)</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>stimlist with rotated tems and/or images</p>
+    <p>list of stimuli with rotated tems and/or images</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>Stimulus manipulation functions
+<code><a href="align.html">align</a>()</code>,
+<code><a href="crop_tem.html">crop_tem</a>()</code>,
+<code><a href="crop.html">crop</a>()</code>,
+<code><a href="greyscale.html">greyscale</a>()</code>,
+<code><a href="horiz_eyes.html">horiz_eyes</a>()</code>,
+<code><a href="image_func.html">image_func</a>()</code>,
+<code><a href="mask_oval.html">mask_oval</a>()</code>,
+<code><a href="mask.html">mask</a>()</code>,
+<code><a href="mirror.html">mirror</a>()</code>,
+<code><a href="pad.html">pad</a>()</code>,
+<code><a href="resize.html">resize</a>()</code>,
+<code><a href="to_size.html">to_size</a>()</code></p></div>
     </div>
 
     <div class="section level2">
@@ -100,9 +130,17 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">rotated</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span> |&gt;</span>
 <span class="r-in">  <span class="fu">rotate</span><span class="op">(</span><span class="fl">45</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span> |&gt;</span>
 <span class="r-in">  <span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rotated</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/6w/y3tyzgs1403cz7tgw8k4lk600000gq/T//Rtmptj0tUe/file16b06e975069.png"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "knit_image_paths" "knit_asis"       </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">rotate_corners</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span> |&gt;</span>
+<span class="r-in"><span class="va">rotate_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span> |&gt;</span>
 <span class="r-in">  <span class="fu">rotate</span><span class="op">(</span><span class="fl">45</span>, keep_size <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">rotate_keep</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/6w/y3tyzgs1403cz7tgw8k4lk600000gq/T//Rtmptj0tUe/file16b010205638.png"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "knit_image_paths" "knit_asis"       </span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
@@ -111,7 +149,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Lisa DeBruine.</p>
+  <p></p><p>Developed by <a href="https://debruine.github.io/" class="external-link">Lisa DeBruine</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

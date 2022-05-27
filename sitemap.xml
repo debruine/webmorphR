@@ -49,6 +49,12 @@
     <loc>https://debruine.github.io/webmorphR/reference/animate.html</loc>
   </url>
   <url>
+    <loc>https://debruine.github.io/webmorphR/reference/as_ggplot.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/webmorphR/reference/as_stimlist.html</loc>
+  </url>
+  <url>
     <loc>https://debruine.github.io/webmorphR/reference/auto_delin.html</loc>
   </url>
   <url>
@@ -112,9 +118,6 @@
     <loc>https://debruine.github.io/webmorphR/reference/format_size.html</loc>
   </url>
   <url>
-    <loc>https://debruine.github.io/webmorphR/reference/fpp_auto_delin.html</loc>
-  </url>
-  <url>
     <loc>https://debruine.github.io/webmorphR/reference/get_imgs.html</loc>
   </url>
   <url>
@@ -143,6 +146,9 @@
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/webmorphR/reference/lab2rgb.html</loc>
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/label.html</loc>
@@ -223,6 +229,9 @@
     <loc>https://debruine.github.io/webmorphR/reference/rep.stimlist.html</loc>
   </url>
   <url>
+    <loc>https://debruine.github.io/webmorphR/reference/require_tems.html</loc>
+  </url>
+  <url>
     <loc>https://debruine.github.io/webmorphR/reference/resize.html</loc>
   </url>
   <url>
@@ -292,7 +301,7 @@
     <loc>https://debruine.github.io/webmorphR/reference/unique_names.html</loc>
   </url>
   <url>
-    <loc>https://debruine.github.io/webmorphR/reference/validate_stimlist.html</loc>
+    <loc>https://debruine.github.io/webmorphR/reference/viz_tem_def.html</loc>
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/webmorphR.html</loc>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">webmorphR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.2.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,12 @@
   </a>
 </li>
 <li class="nav-item">
+  <a class="external-link nav-link" href="https://osf.io/search/?q=webmorph,psychomorph" aria-label="OSF">
+    <span class="ai ai-osf"></span>
+     
+  </a>
+</li>
+<li class="nav-item">
   <a class="external-link nav-link" href="https://github.com/debruine/webmorphR/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
@@ -71,7 +77,7 @@
     <div class="section level2">
       <h2 id="stimuli">Stimuli<a class="anchor" aria-label="anchor" href="#stimuli"></a></h2>
       
-      
+      <p class="section-desc"></p><p>Read, write, or access stimuli</p>
 
       
     </div><div id="" class="section level2">
@@ -86,7 +92,7 @@
         <dd>Make blank images</dd>
       </dl><dl><dt>
           
-          <code><a href="demo_stim.html">demo_stim()</a></code> 
+          <code><a href="demo_stim.html">demo_stim()</a></code> <code><a href="demo_stim.html">demo_tems()</a></code> <code><a href="demo_stim.html">demo_unstandard()</a></code> 
         </dt>
         <dd>Demo Stimuli</dd>
       </dl><dl><dt>
@@ -160,7 +166,7 @@
           
           <code><a href="change_lines.html">change_lines()</a></code> 
         </dt>
-        <dd>Change the points in a line</dd>
+        <dd>Change template lines</dd>
       </dl><dl><dt>
           
           <code><a href="delin.html">delin()</a></code> 
@@ -171,11 +177,6 @@
           <code><a href="draw_tem.html">draw_tem()</a></code> 
         </dt>
         <dd>Draw template</dd>
-      </dl><dl><dt>
-          
-          <code><a href="fpp_auto_delin.html">fpp_auto_delin()</a></code> 
-        </dt>
-        <dd>Face++ Auto-Delineation</dd>
       </dl><dl><dt>
           
           <code><a href="squash_tem.html">squash_tem()</a></code> 
@@ -203,6 +204,11 @@
       
 
       <dl><dt>
+          
+          <code><a href="as_ggplot.html">as_ggplot()</a></code> 
+        </dt>
+        <dd>Convert stimuli to a ggplot</dd>
+      </dl><dl><dt>
           
           <code><a href="gglabel.html">gglabel()</a></code> 
         </dt>
@@ -272,7 +278,7 @@
           
           <code><a href="image_func.html">image_func()</a></code> 
         </dt>
-        <dd>Apply function to each image</dd>
+        <dd>Apply a magick function to each image</dd>
       </dl><dl><dt>
           
           <code><a href="mask.html">mask()</a></code> 
@@ -439,14 +445,14 @@
 
       <dl><dt>
           
+          <code><a href="as_stimlist.html">as_stimlist()</a></code> 
+        </dt>
+        <dd>Convert list to stimlist</dd>
+      </dl><dl><dt>
+          
           <code><a href="bounds.html">bounds()</a></code> 
         </dt>
         <dd>Get template bounds</dd>
-      </dl><dl><dt>
-          
-          <code><a href="col2lab.html">col2lab()</a></code> 
-        </dt>
-        <dd>Color to Lab Conversion</dd>
       </dl><dl><dt>
           
           <code><a href="color_conv.html">color_conv()</a></code> 
@@ -469,6 +475,11 @@
         <dd>Patch colour</dd>
       </dl><dl><dt>
           
+          <code><a href="require_tems.html">require_tems()</a></code> 
+        </dt>
+        <dd>Require templates</dd>
+      </dl><dl><dt>
+          
           <code><a href="same_tems.html">same_tems()</a></code> 
         </dt>
         <dd>Check All Templates are the Same</dd>
@@ -477,13 +488,18 @@
           <code><a href="tem_def.html">tem_def()</a></code> 
         </dt>
         <dd>Get template definition</dd>
+      </dl><dl><dt>
+          
+          <code><a href="viz_tem_def.html">viz_tem_def()</a></code> 
+        </dt>
+        <dd>Visualise a template definition</dd>
       </dl></div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Lisa DeBruine.</p>
+  <p></p><p>Developed by <a href="https://debruine.github.io/" class="external-link">Lisa DeBruine</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">

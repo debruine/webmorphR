@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">webmorphR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.2.9004</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.1.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,12 @@
   </a>
 </li>
 <li class="nav-item">
+  <a class="external-link nav-link" href="https://osf.io/search/?q=webmorph,psychomorph" aria-label="OSF">
+    <span class="ai ai-osf"></span>
+     
+  </a>
+</li>
+<li class="nav-item">
   <a class="external-link nav-link" href="https://github.com/debruine/webmorphR/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
@@ -66,7 +72,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Squash Template Points</h1>
-      <small class="dont-index">Source: <a href="https://github.com/debruine/webmorphR/blob/HEAD/R/crop.R" class="external-link"><code>R/crop.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/debruine/webmorphR/blob/HEAD/R/squash_tem.R" class="external-link"><code>R/squash_tem.R</code></a></small>
       <div class="d-none name"><code>squash_tem.Rd</code></div>
     </div>
 
@@ -82,24 +88,47 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>stimuli</dt>
-<dd><p>list of class stimlist</p></dd>
+<dd><p>list of stimuli</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>list of class stimlist</p>
+    <p>list of stimuli</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>Template functions
+<code><a href="auto_delin.html">auto_delin</a>()</code>,
+<code><a href="average_tem.html">average_tem</a>()</code>,
+<code><a href="centroid.html">centroid</a>()</code>,
+<code><a href="change_lines.html">change_lines</a>()</code>,
+<code><a href="delin.html">delin</a>()</code>,
+<code><a href="draw_tem.html">draw_tem</a>()</code>,
+<code><a href="features.html">features</a>()</code>,
+<code><a href="get_point.html">get_point</a>()</code>,
+<code><a href="remove_tem.html">remove_tem</a>()</code>,
+<code><a href="same_tems.html">same_tems</a>()</code>,
+<code><a href="subset_tem.html">subset_tem</a>()</code>,
+<code><a href="tem_def.html">tem_def</a>()</code>,
+<code><a href="viz_tem_def.html">viz_tem_def</a>()</code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">nosquash</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> |&gt; </span>
-<span class="r-in">  <span class="fu"><a href="crop.html">crop</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0.5</span><span class="op">)</span> |&gt; <span class="fu"><a href="pad.html">pad</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> |&gt; </span>
-<span class="r-in">  <span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span>line.size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">nosquash</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> |&gt; </span>
+<span class="r-in">  <span class="fu"><a href="crop.html">crop</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0.5</span><span class="op">)</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="va">squashed</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> |&gt; </span>
-<span class="r-in">  <span class="fu"><a href="crop.html">crop</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0.5</span><span class="op">)</span> |&gt; <span class="fu">squash_tem</span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="pad.html">pad</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> |&gt; </span>
-<span class="r-in">  <span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span>line.size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in">  </span>
-<span class="r-in"><span class="co"># c(nosquash, squashed) |&gt; plot()</span></span>
+<span class="r-in"><span class="va">squash</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span> |&gt; </span>
+<span class="r-in">  <span class="fu"><a href="crop.html">crop</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0.5</span><span class="op">)</span> |&gt; </span>
+<span class="r-in">  <span class="fu">squash_tem</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co"># add padding and visualise templates</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">nosquash</span>, <span class="va">squash</span><span class="op">)</span> |&gt; </span>
+<span class="r-in">  <span class="fu"><a href="pad.html">pad</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> |&gt;</span>
+<span class="r-in">  <span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> |&gt; </span>
+<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/6w/y3tyzgs1403cz7tgw8k4lk600000gq/T//Rtmptj0tUe/file16b06bacf216.png"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "knit_image_paths" "knit_asis"       </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -107,7 +136,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Lisa DeBruine.</p>
+  <p></p><p>Developed by <a href="https://debruine.github.io/" class="external-link">Lisa DeBruine</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
