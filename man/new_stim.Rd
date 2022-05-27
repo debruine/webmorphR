@@ -19,3 +19,11 @@ list with class stim
 \description{
 Make a new stim
 }
+\seealso{
+Other stim: 
+\code{\link{as_stimlist}()},
+\code{\link{new_stimlist}()},
+\code{\link{read_stim}()},
+\code{\link{write_stim}()}
+}
+\concept{stim}

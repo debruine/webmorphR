@@ -19,7 +19,7 @@
 #'   stimuli <- demo_stim()
 #'   sexdim <- trans(stimuli, stimuli$f_multi, stimuli$m_multi,
 #'                   shape = c(fem = -0.5, masc = 0.5))
-#'   sexdim |> draw_tem() |> label() |> plot()
+#'   sexdim |> draw_tem() |> label()
 #' }
 #'
 trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
@@ -31,9 +31,9 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
                   normpoint = 0:1,
                   sample_contours = TRUE,
                   warp = c("multiscale", "linear", "multiscalerb")) {
-  trans_img <- as_stimlist(trans_img, TRUE)
-  from_img <- as_stimlist(from_img, TRUE)
-  to_img <- as_stimlist(to_img, TRUE)
+  trans_img <- require_tems(trans_img)
+  from_img <- require_tems(from_img)
+  to_img <- require_tems(to_img)
 
   norm <- match.arg(norm)
   warp <- match.arg(warp)
@@ -259,7 +259,6 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
   trans <- file.path(tdir, "trans") |>
     read_stim()
   unlink(tdir, recursive = TRUE) # clean up temp directory
-  # trans |> draw_tem() |> plot()
 
   trans[batch$outname]
 }

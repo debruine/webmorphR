@@ -4,12 +4,10 @@
 \alias{as_stimlist}
 \title{Convert list to stimlist}
 \usage{
-as_stimlist(x, tem = FALSE)
+as_stimlist(x)
 }
 \arguments{
 \item{x}{The object}
-
-\item{tem}{require templates (images without templates are removed)}
 }
 \value{
 A stimlist
@@ -17,3 +15,33 @@ A stimlist
 \description{
 Checks if an object is a list of class stimlist. If class stim, wrap in stimlist. If a properly structured list without the right class, add the right class.
 }
+\details{
+Some webmorphR functions, like \code{\link[=plot]{plot()}} and \code{\link[=print]{print()}} require objects to have a "stimlist" class. If you've processed a list of stimuli withiterator functions like \code{\link[=lapply]{lapply()}} or \code{\link[purrr:map]{purrr::map()}} functions and the resulting object prints or plots oddly, it is probably unclassed, and this function will fix that.
+}
+\examples{
+stimuli <- demo_stim() |>
+  lapply(function(stim) {
+    # remove template lines
+    stim$lines <- NULL
+    return(stim)
+  })
+  
+class(stimuli)
+
+\dontrun{
+plot(stimuli) # error
+}
+
+s <- as_stimlist(stimuli)
+class(s)
+plot(s)
+
+}
+\seealso{
+Other stim: 
+\code{\link{new_stimlist}()},
+\code{\link{new_stim}()},
+\code{\link{read_stim}()},
+\code{\link{write_stim}()}
+}
+\concept{stim}

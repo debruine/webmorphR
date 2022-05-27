@@ -22,5 +22,16 @@ magick image
 Create an animated gif from a list of stimuli
 }
 \examples{
-gif <- demo_stim() |> animate()
+\donttest{
+# slideshow of images (1/second)
+demo_stim() |> animate()
+
+# rotate a face
+degrees <- seq(0, 350, 10)
+demo_stim(1) |>
+  mask() |>
+  rep(length(degrees)) |>
+  rotate(degrees) |>
+  animate(fps = 10)
+}
 }

@@ -29,8 +29,10 @@ A convenience function to get demo stimuli
 \code{\link[=demo_unstandard]{demo_unstandard()}} is a set of 10 composite faces with frl delineations, rotated, resized, and cropped so face position is not standard and each image is a different size ; CC-BY https://doi.org/10.6084/m9.figshare.4055130.v1
 }
 \examples{
-demo_stim() |> plot()
+demo_stim()
 
-demo_tems() |> draw_tem() |> plot(maxwidth = 1000)
-demo_unstandard() |> plot(maxwidth = 1000)
+demo_tems() |> 
+  draw_tem(pt.size = 10) |> 
+  plot(nrow = 2, maxwidth = 600)
+demo_unstandard() |> plot(nrow = 2, maxwidth = 600)
 }

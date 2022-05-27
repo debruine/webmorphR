@@ -26,23 +26,24 @@ stimlist with labelled images
 Label image using \link[ggplot2:annotate]{ggplot2::annotate}. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli.
 }
 \examples{
+if (require("ggplot2")) {
 stimuli <- demo_stim()
 
 # label with image names
-labeled_stim <- gglabel(stimuli)
+# the default text size in ggplot is tiny
+gglabel(stimuli)
 
 # add a watermark
-watermark <- gglabel(
-  stimuli,
-  label = "watermark",
-  x = 0.5, 
-  y = 0.5,
-  geom = "text",
-  size = 20,
-  color = "black",
-  angle = -30,
-  alpha = 0.5
-)
+gglabel(stimuli,
+        label = "watermark",
+        x = 0.5, 
+        y = 0.5,
+        geom = "text",
+        size = 30,
+        color = "black",
+        angle = -30,
+        alpha = 0.5)
+}
 }
 \seealso{
 \code{\link[=label]{label()}} for a labeller using syntax like \link[magick:painting]{magick::image_annotate}

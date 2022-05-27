@@ -46,9 +46,7 @@ You can add a border to each image using `pad`. Values less than 1 will set bord
 
 
 ```{r pink}
-stimuli |>
-  pad(1, fill = "hotpink") |>
-  plot()
+pad(stimuli, 1, fill = "hotpink")
 ```
 
 
@@ -57,17 +55,14 @@ You can set different border sizes for the top, right, bottom and left sides (th
 ```{r border}
 stimuli |>
   pad(60, 0, 0, 0, fill = "black") |>
-  label(color = "white", size = 50) |>
-  plot()
+  label(color = "white", size = 50)
 ```
 
 
 You can set the border colour separately for each image.
 
 ```{r}
-stimuli |>
-  pad(10, fill = c("#F9DEC9", "#BAEDDD")) |>
-  plot()
+pad(stimuli, 10, fill = c("#F9DEC9", "#BAEDDD"))
 ```
 
 ## Rows and columns
@@ -112,20 +107,18 @@ c(comp[3], ind, comp[8]) |>
 Use the draw_tem() function to show the delineations. By default, points are translucent green circles and lines are translucent blue.
 
 ```{r draw-tem}
-stimuli %>%
-  draw_tem() %>%
-  plot()
+stimuli |>
+  draw_tem()
 ```
 
 You can change the default colours and translucency with the `line.color`, `pt.color`, `line.alpha` and `pt.alpha` arguments. Remove the image and set the background colour with `bg`.
 
 ```{r daw-tem-custom}
-stimuli %>%
-  resize(1000) %>%
+stimuli |>
+  resize(1000) |>
   draw_tem(line.color = "grey", line.size = 2, line.alpha = 0.2, 
-           pt.color = "red", pt.size = 4, bg = "grey") %>%
-  crop_tem(50) %>%
-  plot()
+           pt.color = "red", pt.size = 4, bg = "grey") |>
+  crop_tem(50)
 ```
 
 
@@ -139,9 +132,7 @@ There are two labelling functions: `mlabel()` uses syntax like `magick::image_an
 Label figure panels with the image name.
 
 ```{r}
-stimuli |>
-  mlabel() |>
-  plot()
+mlabel(stimuli)
 ```
 
 Use the `rename_stim()` function to set new names.
@@ -157,16 +148,14 @@ load_stim_composite() |>
 Alternatively, set `text` to a vector of labels to use. Labels can be positioned with the `gravity` and `location` arguments from the {magick} package. In the example below, the text is positioned at the northwest (upper-left) corner, 10 pixels to the right and 5 pixels down.
 
 ```{r custom-labels-label}
-stimuli |>
-  label(
-    text = c("Female", "Male"),
-    gravity = "northwest",
-    location = "+10+5",
-    color = c("darkgreen", "darkmagenta"),
-    size = 40, 
-    style = c("normal", "italic")
-  ) |>
-  plot()
+label(stimuli,
+      text = c("Female", "Male"),
+      gravity = "northwest",
+      location = "+10+5",
+      color = c("darkgreen", "darkmagenta"),
+      size = 40, 
+      style = c("normal", "italic")
+)
 ```
 
 You can customise the labels further, including vectors with a different value for each image. Vectors that are too long will be truncated and short vectors will be recycled.
@@ -200,8 +189,7 @@ stimuli |>
         gravity = "southwest",
         location = c("+10+100", "+10+110"),
         degrees = 45
-  ) |>
-  plot()
+  )
 ```
 
 ### gglabel()
@@ -210,24 +198,20 @@ stimuli |>
 Label figure panels with the image name. 
 
 ```{r}
-stimuli |>
-  gglabel() |>
-  plot()
+gglabel(stimuli)
 ```
 
 Set `label` to a vector of labels to use. The default font size used by ggplot is pretty small, so increase `size`. I can't help you with how to set that argument; I just use trial-and-error. Labels can be positioned with the `x` and `y` arguments. Unlike `mlabel()`, the origin is the lower left corner, so setting the label 5 pixel below the top requires you to calculate the image height and subtract 5. However, unlike ggplot, x and y values less than or equal to 1 are interpreted as percentages. Adjust label alignment with `hjust` and `vjust`. 
 
 ```{r custom-labels-gglabel}
-stimuli |>
-  label(
-    label = c("Female", "Male"),
-    size = 15,
-    x = 10,  y = height(stimuli) - 5,
-    hjust = 0, vjust = 1,
-    color = c("darkgreen", "darkmagenta"),
-    fontface = c("plain", "italic")
-  ) |>
-  plot()
+label(stimuli,
+      label = c("Female", "Male"),
+      size = 15,
+      x = 10,  y = height(stimuli) - 5,
+      hjust = 0, vjust = 1,
+      color = c("darkgreen", "darkmagenta"),
+      fontface = c("plain", "italic")
+)
 ```
 
 You can customise the labels further, including vectors with a different value for each image. Vectors that are too long will be truncated and short vectors will be recycled.
@@ -272,8 +256,7 @@ stimuli |>
     fontface = "bold",
     angle = -30,
     alpha = 0.25
-  ) |>
-  plot()
+  )
 ```
 
 ### Other annotations
@@ -311,8 +294,7 @@ stimuli |>
     geom = "hline",
     yintercept = intercepts$y,
     color = "purple", size = 2
-  ) |>
-  plot()
+  )
 ```
 
 

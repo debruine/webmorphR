@@ -37,13 +37,17 @@ Cropping is anchored at the image center (or calculated template centroid if the
 stimuli <- demo_stim()
 
 # crop to 60\% width and 80\% height (centered)
-cropped <- crop(stimuli, width = .60, height = .80)
-c(stimuli, cropped) |> plot(maxwidth = 500)
+crop(stimuli, width = .60, height = .80)
 
 # crop to upper right quadrant
-urq <- crop(stimuli, .5, .5, x_off = .5, y_off = 0)
-plot(urq)
+crop(stimuli, .5, .5, x_off = .5, y_off = 0)
 
+\donttest{
+# negative offset with fill
+crop(stimuli, 260, 260, 
+     x_off = -10, y_off = -10, 
+     fill = c("red", "dodgerblue"))
+}
 }
 \seealso{
 Stimulus manipulation functions

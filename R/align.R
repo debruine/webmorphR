@@ -25,11 +25,10 @@
 #' @examples
 #' # align eye points to specific x and y coordinates
 #' # in a 300x300 pixel image
-#' aligned <- demo_unstandard(1:3) |>
+#' demo_unstandard(1:3) |>
 #'   align(pt1 = 0, pt2 = 1,
 #'         x1 = 100, x2 = 200, y1 = 100, y2 = 100, 
 #'         width = 300, height = 300)
-#' plot(aligned)
 #' 
 #' \donttest{
 #' orig <- demo_unstandard(1:5)
@@ -65,7 +64,7 @@ align <- function(stimuli, pt1 = 0, pt2 = 1,
     width <- width %||% width(avg)[[1]]
     height <- height %||% height(avg)[[1]]
   } else if (is.list(ref_img)) {
-    ref_img <- as_stimlist(ref_img, TRUE)
+    ref_img <- require_tems(ref_img)
     ref_points <- ref_img[[1]]$points
     width <- width %||% ref_img[[1]]$width
     height <- height %||% ref_img[[1]]$height

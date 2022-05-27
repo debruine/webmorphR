@@ -32,23 +32,17 @@ Calculate the maximum and minimum x and y coordinates across the stimuli (or for
 \examples{
 stimuli <- demo_stim()
 ctem <- crop_tem(stimuli, each = TRUE)
-draw_tem(ctem) |> plot()
+draw_tem(ctem)
 
 \donttest{
 # demo with different templates
 stimuli <- demo_tems()
 
 # default 10 pixels around maximum template
-ctem_all <- crop_tem(stimuli) 
+crop_tem(stimuli) 
 
 # crop specific to each image
-ctem_each <- crop_tem(stimuli, each = TRUE)
-
-# visualise difference
-c(ctem_all, ctem_each) |>
-  draw_tem(pt.size = 10) |> 
-  to_size() |>
-  plot(nrow = 2, maxwidth = 1000)
+crop_tem(stimuli, each = TRUE)
 }
 
 }

@@ -8,9 +8,12 @@
 #' @keywords internal
 #'
 print.stim <- function(x, ...) {
-  # uses magick:::print.magick-image
-  print(x$img, FALSE)
+  as_stimlist(x) |> print()
 }
+# print.stim <- function(x, ...) {
+#   # uses magick:::print.magick-image
+#   print(x$img, FALSE)
+# }
 
 #' Print stimlist
 #'
@@ -22,31 +25,63 @@ print.stim <- function(x, ...) {
 #' @keywords internal
 #'
 print.stimlist <- function(x, ...) {
-  img <- get_imgs(x)
-
-  # print image inline if option set and not knitting
-  # TODO: only run this if in an Rmd chunk
-  #rmd_inline <- rstudioapi::readRStudioPreference("rmd_chunk_output_inline", NA)
-  if (length(img) == 1 &&
-      interactive() &&
-      wm_opts("plot") == "inline" &&
-      #rmd_inline &&
-      !isTRUE(getOption("knitr.in.progress"))) {
-    tmp <- tempfile(fileext = ".png")
-    magick::image_write(img, tmp)
-    suppressWarnings({
-      # suppress warning about absolute paths
-      knitr::include_graphics(tmp) |> print()
-    })
+  if (!length(x)) return(invisible(x))
+  
+  if (length(x) == 1) {
+    if (length(x[[1]]$img) > 1) {
+      # animated gif
+      print(x[[1]]$img, info = FALSE)
+      return(invisible(x))
+    }
+  } else {
+    x <- plot(x)
   }
   
-  # prints in the viewer using magick:::print.magick-image
-  # if multiple images or not in an Rmd document
-  suppressWarnings({
-    # suppress warning about absolute paths
-    print(img, FALSE)
-  })
+  grid::grid.newpage()
+  grid::grid.raster(x[[1]]$img)
+                    # width = x[[1]]$width, 
+                    # height = x[[1]]$height,
+                    # default.units = "points")
+  
+  invisible(x)
 }
+
+# This is registered as an S3 method in .onLoad()
+knit_print.stimlist <- function(x, ...) {
+  if (!length(x)) return(invisible())
+  
+  if (length(x) == 1) {
+    print(x[[1]]$img, info = FALSE)
+  } else {
+    plot(x) |> get_imgs() |> print(info = FALSE)
+  }
+}
+# print.stimlist <- function(x, ...) {
+#   img <- get_imgs(x)
+# 
+#   # print image inline if option set and not knitting
+#   # TODO: only run this if in an Rmd chunk
+#   #rmd_inline <- rstudioapi::readRStudioPreference("rmd_chunk_output_inline", NA)
+#   if (length(img) == 1 &&
+#       interactive() &&
+#       wm_opts("plot") == "inline" &&
+#       #rmd_inline &&
+#       !isTRUE(getOption("knitr.in.progress"))) {
+#     tmp <- tempfile(fileext = ".png")
+#     magick::image_write(img, tmp)
+#     suppressWarnings({
+#       # suppress warning about absolute paths
+#       knitr::include_graphics(tmp) |> print()
+#     })
+#   }
+#   
+#   # prints in the viewer using magick:::print.magick-image
+#   # if multiple images or not in an Rmd document
+#   suppressWarnings({
+#     # suppress warning about absolute paths
+#     print(img, FALSE)
+#   })
+# }
 
 #' Subset Stimulus Lists
 #'
@@ -113,8 +148,7 @@ rep.stim <- function (x, ...) {
 #' \dontrun{
 #' demo_stim() |>
 #'   rep(3) |>
-#'   rotate(seq(10, 60, 10), fill = rainbow(6)) |>
-#'   plot()
+#'   rotate(seq(10, 60, 10), fill = rainbow(6))
 #' }
 rep.stimlist <- function(x, ...) {
   nm <- names(x)

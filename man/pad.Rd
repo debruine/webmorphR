@@ -26,19 +26,18 @@ Padding size values are interpreted as a proportion of width or height if less t
 }
 \examples{
 stimuli <- demo_stim()
-default <- pad(stimuli)
-plot(default)
+
+# default 10-pixel padding
+pad(stimuli, fill = "dodgerblue")
 
 \donttest{
 # change pad width and set fill
-red_border <- pad(stimuli, 2, fill = "red3")
-plot(red_border)
+pad(stimuli, 2, fill = "dodgerblue")
 
 # set top border to 10\% height
 # different colour for each image
-top_border <- pad(stimuli, 0.1, 1, 1, 1,
-                  fill = c("hotpink", "dodgerblue"))
-plot(top_border)
+pad(stimuli, 0.1, 1, 1, 1,
+    fill = c("hotpink", "dodgerblue"))
 }
 }
 \seealso{

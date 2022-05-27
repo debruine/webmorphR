@@ -19,12 +19,6 @@ stimlist
 \description{
 Plot stimuli
 }
-\examples{
-\dontrun{
-stimuli <- demo_stim()
-plot(stimuli)
-}
-}
 \seealso{
 Visualisation functions
 \code{\link{as_ggplot}()},

@@ -24,7 +24,7 @@ tem_only_avg <- demo_stim() |> average_tem()
 draw_tem(tem_only_avg, bg = "white")
 
 # view the superimposed image
-plot(tem_only_avg)
+tem_only_avg
 }
 \seealso{
 Template functions

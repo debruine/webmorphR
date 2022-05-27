@@ -52,11 +52,10 @@ Visualise the template points with \code{\link[=draw_tem]{draw_tem()}} to determ
 \examples{
 # align eye points to specific x and y coordinates
 # in a 300x300 pixel image
-aligned <- demo_unstandard(1:3) |>
+demo_unstandard(1:3) |>
   align(pt1 = 0, pt2 = 1,
         x1 = 100, x2 = 200, y1 = 100, y2 = 100, 
         width = 300, height = 300)
-plot(aligned)
 
 \donttest{
 orig <- demo_unstandard(1:5)

@@ -8,12 +8,6 @@
 #' @export
 #' @family viz
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' stimuli <- demo_stim()
-#' plot(stimuli)
-#' }
 plot.stimlist <- function(x, y, ...) {
   plot_stim(x, ...)
 }
@@ -28,12 +22,6 @@ plot.stimlist <- function(x, y, ...) {
 #' @export
 #' @family viz
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' stimuli <- demo_stim()
-#' plot(stimuli)
-#' }
 
 plot.stim <- function(x, y, ...) {
   stimlist <- as_stimlist(x)
@@ -59,17 +47,24 @@ plot.stim <- function(x, y, ...) {
 #' @family viz
 #'
 #' @examples
-#' stimuli <- demo_stim()
+#' stimuli <- demo_stim() |> resize(0.5)
 #' plot_stim(stimuli)
 #' 
 #' \donttest{
+#' # default padding is 10px internal and external
 #' plot(stimuli, fill = "dodgerblue")
-#' plot(stimuli, padding = 0)
+#' plot(stimuli, external_pad = 0, fill = "dodgerblue")
+#' plot(stimuli, padding = 0, fill = "dodgerblue")
 #' 
-#' twins <- demo_unstandard()
-#' plot(twins, nrow = 2, maxwidth = 1000)
+#' # make 8 numbered images
+#' n <- blank(8, color = grDevices::cm.colors(8)) |> 
+#'   label(1:8, gravity = "center", size = 50)
 #' 
-#' plot(twins, nrow = 2, byrow = FALSE, maxwidth = 1000)
+#' # 2 rows, allocating by row
+#' plot(n, nrow = 2)
+#' 
+#' # 2 rows, allocating by column
+#' plot(n, nrow = 2, byrow = FALSE)
 #' }
 plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
                       padding = 10, external_pad = TRUE,

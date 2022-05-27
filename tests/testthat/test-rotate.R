@@ -99,8 +99,8 @@ test_that("horiz_eyes", {
   expect_equal(pt[1, ], pt[2, ], tolerance = .0001)
 })
 
-# rotate_around ----
-test_that("rotate_around", {
+# origin ----
+test_that("origin", {
   stimuli <- demo_stim() |> rep(2) |>
     pad(c(500, 0, 0, 0), 
         c(0, 500, 0, 0), 
@@ -134,7 +134,7 @@ test_that("rotate_around", {
   expect_equal(get_point(stimuli, 0:5)$x, get_point(rot, 0:5)$y)
   
   # rotate on tem centroid, keep size
-  rotk <- rotate(stimuli, degrees, rotate_around = "tem")
+  rotk <- rotate(stimuli, degrees, origin = "tem")
   expect_equal(width(rotk), width(stimuli))
   expect_equal(height(rotk), height(stimuli))
   rotk_ct <- centroid(rotk)
@@ -144,23 +144,23 @@ test_that("rotate_around", {
   expect_equal(orig_ct[4, 'x'], rotk_ct[4, 'x'])
   
   # tem centroid, don't keep size
-  rot <- rotate(stimuli, degrees, keep_size = FALSE, rotate_around = "tem")
+  rot <- rotate(stimuli, degrees, keep_size = FALSE, origin = "tem")
   expect_equal(width(rot), height(stimuli))
   expect_equal(height(rot), width(stimuli))
   expect_equal(get_point(stimuli, 0:5)$x, get_point(rot, 0:5)$y)
   
   # visualise
   # rotk <- rotate(stimuli, degrees, keep_size = TRUE,
-  #                rotate_around = "image")
+  #                origin = "image")
   # rot <- rotate(stimuli, degrees, keep_size = FALSE, 
-  #               rotate_around = "image")
+  #               origin = "image")
   # c(stimuli, rotk, rot) |> draw_tem() |>
   #   pad(1, fill = "red") |> plot(maxwidth = 600)
   # 
   # rotk <- rotate(stimuli, degrees,  keep_size = TRUE, 
-  #                rotate_around = "tem")
+  #                origin = "tem")
   # rot <- rotate(stimuli, degrees, keep_size = FALSE, 
-  #               rotate_around = "tem")
+  #               origin = "tem")
   # c(stimuli, rotk, rot) |> draw_tem() |>
   #   pad(1, fill = "red") |> plot(maxwidth = 600)
   

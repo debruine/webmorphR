@@ -14,41 +14,35 @@
 #' @family manipulators
 #'
 #' @examples
-#' stimuli <- demo_stim()
+#' stimuli <- demo_stim() |> resize(0.5)
 #'
 #' # make a photographic negative version
-#' image_func(stimuli, "negate") |> 
-#'   plot(maxwidth = 500)
+#' image_func(stimuli, "negate")
 #' 
 #' # set different argument values for each image
-#' image_func(stimuli, "implode", factor = c(0.2, -0.2)) |> 
-#'   plot(maxwidth = 500)
+#' image_func(stimuli, "implode", factor = c(0.2, -0.2))
 #' 
 #' \donttest{
 #' # other image functions
-#' image_func(stimuli, "blur", 5, 3) |> 
-#'   plot(maxwidth = 500)
-#' image_func(stimuli, "contrast", sharpen = 1) |> 
-#'   plot(maxwidth = 500)
-#' image_func(stimuli, "oilpaint", radius = 5) |> 
-#'   plot(maxwidth = 500)
+#' image_func(stimuli, "blur", 5, 3)
+#' image_func(stimuli, "contrast", sharpen = 1)
+#' image_func(stimuli, "oilpaint", radius = 5)
 #' image_func(stimuli, "colorize", opacity = 50,
-#'           color = c("hotpink", "dodgerblue")) |> 
-#'   plot(maxwidth = 500)
+#'           color = c("hotpink", "dodgerblue"))
 #'
 #' # load a logo image and superimpose it on each image
 #' logo <- system.file("extdata/logo.png", package = "webmorphR") |>
 #'   magick::image_read() |>
-#'   magick::image_resize(100)
-#' plus_logo <- image_func(stimuli, "composite", logo, 
-#'                         offset = "+10+10")
-#' plot(plus_logo, maxwidth = 500)
+#'   magick::image_resize(70)
+#'   
+#' image_func(stimuli, "composite", logo, offset = "+5+10")
 #'
 #' # use a self-defined function
 #' testfunc <- function(image) {
-#'   image # just return the image unprocessed
+#'   rot <- magick::image_rotate(image, 180)
+#'   c(image, rot) |> magick::image_average()
 #' }
-#' test <- image_func(stimuli, testfunc)
+#' image_func(stimuli, testfunc)
 #' }
 image_func <- function(stimuli, func, ...) {
   stimuli <- as_stimlist(stimuli)
@@ -129,10 +123,5 @@ greyscale <- function(stimuli) {
 #' @rdname greyscale
 #' @export
 #' @family manipulators
-#'
-#' @examples
-#' stimuli <- demo_stim()
-#' gray_stim <- grayscale(stimuli)
-#' plot(gray_stim)
 grayscale <- greyscale
 

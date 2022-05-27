@@ -17,3 +17,11 @@ A stimlist
 \description{
 Make a new stimlist
 }
+\seealso{
+Other stim: 
+\code{\link{as_stimlist}()},
+\code{\link{new_stim}()},
+\code{\link{read_stim}()},
+\code{\link{write_stim}()}
+}
+\concept{stim}

@@ -22,28 +22,25 @@
 #' stimuli <- demo_tems("frl|fpp106")
 #' 
 #' # default template
-#' default_tem <- draw_tem(stimuli)
-#' plot(default_tem, maxwidth = 500)
+#' draw_tem(stimuli)
 #' 
 #' \donttest{
 #' # custom template
-#' custom_tem <- draw_tem(stimuli, 
-#'                        pt.shape = "cross",
-#'                        pt.color = "red", 
-#'                        pt.alpha = 1,
-#'                        pt.size = 10,
-#'                        line.color = rgb(0, 0, 0),
-#'                        line.alpha = 0.5,
-#'                        line.size = 2)
-#' plot(custom_tem, maxwidth = 500)
+#' draw_tem(stimuli, 
+#'          pt.shape = "cross",
+#'          pt.color = "red", 
+#'          pt.alpha = 1,
+#'          pt.size = 10,
+#'          line.color = rgb(0, 0, 0),
+#'          line.alpha = 0.5,
+#'          line.size = 2)
 #' 
 #' # indexed template
-#' index_tem <- draw_tem(stimuli, 
-#'                       pt.shape = "index",
-#'                       pt.size = 15, 
-#'                       pt.alpha = 1,
-#'                       line.alpha = 0)
-#' plot(index_tem, maxwidth = 500)
+#' draw_tem(stimuli, 
+#'          pt.shape = "index",
+#'          pt.size = 15, 
+#'          pt.alpha = 1,
+#'          line.alpha = 0)
 #' }
 draw_tem <- function(stimuli, pt.color = wm_opts("pt.color"), pt.alpha = 0.75, pt.size = NULL, pt.shape = c("circle", "cross", "index"),
                      line.color = wm_opts("line.color"), line.alpha = 0.5, line.size = NULL,

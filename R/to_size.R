@@ -13,10 +13,10 @@
 #'
 #' @examples
 #'
-#' # make images with different aspect ratios and sizes
-#' stimuli <- demo_stim() |> crop(c(0.8, 1.0)) |> resize(c(1.0, 0.5))
+#' # images with different aspect ratios and sizes
+#' stimuli <- demo_unstandard(c(1:4, 6:9))
 #'
-#' to_size(stimuli, 300, 400, fill = "dodgerblue") |> plot()
+#' to_size(stimuli, 200, 200, fill = "dodgerblue")
 #'
 to_size <- function(stimuli, width = NULL, height = NULL,
                     fill = wm_opts("fill"),

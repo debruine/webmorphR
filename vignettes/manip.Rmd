@@ -48,15 +48,14 @@ Resizing your images at the start of a chain can make everything go faster if yo
 
 ```{r resize, fig.cap="Resized Images"}
 stimuli |>
-  resize(.1) |>
-  plot()
+  resize(.1)
 ```
+
 You can set the resize dimensions by proportions or pixels. Numbers less than 10 are interpreted as proportions, so the code above resized the images to 0.1 of their original size. Numbers larger than 10 are interpreted as pixels. If you set just width or just height, the other dimension is calculated proportionally to keep the aspect ratio.
 
 ```{r resize-pixel, fig.cap="Resized Images by pixel"}
 stimuli |>
-  resize(height = 200) |>
-  plot()
+  resize(height = 200)
 ```
 
 
@@ -64,8 +63,7 @@ If you set both width and height, you may alter the aspect ratio. Make sure you 
 
 ```{r resize-both, fig.cap="Resized Images by width and height"}
 stimuli |>
-  resize(width = 200, height = 100) |>
-  plot()
+  resize(width = 200, height = 100)
 ```
 
 ## Rotate
@@ -74,8 +72,7 @@ Rotate images by degrees. Set the `fill` argument to fill in the corners with a 
 
 ```{r rotate, fig.cap="Rotated Images and Templates"}
 stimuli |>
-  rotate(degrees = 45, fill = patch(stimuli)) |>
-  plot()
+  rotate(degrees = 45, fill = patch(stimuli))
 ```
 
 If images aren't centered, you may want to rotate around the center of the image or the center of the face, and may want to keep the original image dimensions or expand to the full rotated image dimensions.
@@ -95,19 +92,13 @@ degrees = seq(0, 90, by = 30)
 By default, the rotate happens around the centre of the image. This can be undesirable if the face is off-centre.
 
 ```{r}
-image_centered <- offset  |> 
-  rotate(degrees, rotate_around = "image", fill = "pink")
-
-image_centered |> plot(nrow = 1)
+rotate(offset, degrees, origin = "image", fill = "pink")
 ```
 
-Set `rotate_around = "tem"` to rotate around the centre of the template.
+Set `origin = "tem"` to rotate around the centre of the template.
 
 ```{r}
-tem_centered <- offset |> 
-  rotate(degrees, rotate_around = "tem", fill = "pink")
-
-tem_centered |> plot(nrow = 1)
+rotate(offset, degrees, origin = "tem", fill = "pink")
 ```
 
 ```{r, eval = FALSE, echo = FALSE}
@@ -123,30 +114,30 @@ img <- demo_stim(1) |>
 # rotate around centre of image
 image_centered <- img |> 
   mask(fill = "dodgerblue") |>
-  rotate(degrees, rotate_around = "image", fill = "dodgerblue")|>
+  rotate(degrees, origin = "image", fill = "dodgerblue")|>
   pad(30, 0, 0, 0) |> 
-  label('rotate_around = "image"', size = 20)
+  label('origin = "image"', size = 20)
 
 # rotate around centre of template
 tem_centered <- img |> 
   mask(fill = "hotpink") |>
-  rotate(degrees, rotate_around = "tem", fill = "hotpink")|>
+  rotate(degrees, origin = "tem", fill = "hotpink")|>
   pad(30, 0, 0, 0) |> 
-  label('rotate_around = "tem"', size = 20)
+  label('origin = "tem"', size = 20)
 
 # rotate around left eye point
 lefteye_centered <- img |>
   mask(fill = "orange") |>
-  rotate(degrees, rotate_around = 0, fill = "orange")|>
+  rotate(degrees, origin = 0, fill = "orange")|>
   pad(30, 0, 0, 0) |> 
-  label('rotate_around = 0 (left eye)', size = 20)
+  label('origin = 0 (left eye)', size = 20)
 
 # rotate around right eye point
 righteye_centered <- img |> 
   mask(fill = "purple") |>
-  rotate(degrees, rotate_around = 1, fill = "purple")|>
+  rotate(degrees, origin = 1, fill = "purple")|>
   pad(30, 0, 0, 0) |> 
-  label('rotate_around = 1 (right eye)', size = 20)
+  label('origin = 1 (right eye)', size = 20)
 
 # combine and animate
 c(image_centered, tem_centered, 
@@ -154,13 +145,10 @@ c(image_centered, tem_centered,
   animate(fps = 20)
 ```
 
-If you set `keep_size = FALSE`, the image and template will be rotated and keep the maximum rotated size (so it doesn't matter what you set `rotate_around` to).
+If you set `keep_size = FALSE`, the image and template will be rotated and keep the maximum rotated size (so it doesn't matter what you set `origin` to).
 
 ```{r}
-no_keep <- offset |> 
-  rotate(degrees, keep_size = FALSE, fill = "pink")
-
-no_keep |> plot(nrow = 1)
+rotate(offset, degrees, keep_size = FALSE, fill = "pink")
 ```
 
 
@@ -182,18 +170,15 @@ c(unstandard, horiz) |> plot(nrow = 2)
 Crop images to a new width and height. You can specify sizes in proportions or pixels. Values < 2 will be interpreted as proportions. 
 
 ```{r crop, fig.cap="Cropped images with default center cropping."}
-stimuli |>
-  crop(width = .6, height = .8) |>
-  plot()
+crop(stimuli, width = .6, height = .8)
 ```
 
 The x- and y-offsets default to NULL, which centres the cropping. You can set the offsets to a proportion or pixel value and the cropping will start there. The origin is the upper left corner, so setting `x_off = 0` starts the cropping from the left side, and setting `y_off = 0` starts the cropping from the top.
 
 ```{r crop-offset, fig.cap="Cropped images with offsets."}
-stimuli |>
-  crop(width = 250, height = 300, 
-       x_off = 0, y_off = 0) |>
-  plot()
+crop(stimuli, 
+     width = 250, height = 300, 
+    x_off = 0, y_off = 0)
 ```
 
 ## Pad 
@@ -201,18 +186,15 @@ stimuli |>
 Pad images with a border. Values less than 1 are interpreted as proportions. Set the colour with `fill`, otherwise its value defaults to the value of `wm_opts("fill")`, which is white unless you reset it.
 
 ```{r pad, fig.cap="Padded images with the same value for each side."}
-stimuli |>
-  pad(0.05, fill = "black") |>
-  plot()
+pad(stimuli, 0.05, fill = "black")
 ```
 
 Pad the top, right, bottom and left borders with different values, and set a different colour for each fill.
 
 ```{r pad-multi, fig.cap="Padded images with different values for each side."}
-stimuli |>
-  pad(top = 10, right = 20, bottom = 30, left = 40,
-       fill = c("dodgerblue", "hotpink")) |>
-  plot()
+pad(stimuli,
+    top = 10, right = 20, bottom = 30, left = 40,
+    fill = c("dodgerblue", "hotpink"))
 ```
 
 Or you can use the `patch` function to get the median colour from a patch of the image. If you set `patch` to `TRUE`, this will default to the top left 10 pixel square.
@@ -251,8 +233,7 @@ You can use the `crop_tem()` function to get the minimum and maximum x- and y-va
 ```{r bounds}
 load_stim_lisa() |>
   crop_tem(100) |>
-  draw_tem() |>
-  plot()
+  draw_tem()
 ```
 
 Set `each` to TRUE to calculate the boundaries separately for each template in the list instead of the full set.
@@ -260,8 +241,7 @@ Set `each` to TRUE to calculate the boundaries separately for each template in t
 ```{r bounds-each}
 load_stim_lisa() |>
   crop_tem(20, each = TRUE) |>
-  draw_tem() |>
-  plot()
+  draw_tem()
 ```
 
 ## To Size
@@ -281,38 +261,37 @@ lab <- paste0(width(multisize), "x", height(multisize))
 
 multisize |> 
   pad(60, 0, 0, 0) |>
-  label(lab, size = 40) |>
-  plot()
+  label(lab, size = 40)
 ```
 
 The code below resizes each image to fit into a 300 x 400 pixel image and fills in any extra background with blue. You'll probably choose your background colour for a real stimulus set, but this makes the demo clearer.
 
 ```{r fig-fit-pad, fig.cap="By default, to_size() will change relative sizes and cover the background without cropping any original image content."}
-fit_pad <- to_size(multisize, 300, 400, fill = "dodgerblue")
-plot(fit_pad)
+to_size(multisize, 300, 400, 
+        fill = "dodgerblue")
 ```
 
 Set `keep_rels = TRUE` to bring the largest image to fit in the new size, resize the others proportionally, and pad.
 
 ```{r fig-rel-pad, fig.cap="Set keep_rels = TRUE to keep relative size differences between original images."}
-rel_pad <- to_size(multisize, 300, 400, 
-                   fill = "dodgerblue", 
-                   keep_rels = TRUE)
-plot(rel_pad)
+to_size(multisize, 300, 400, 
+        fill = "dodgerblue", 
+        keep_rels = TRUE)
 ```
 
 Set `crop = TRUE` to resize all images until they cover the new size and crop the "overhang". There is no need to set the fill color for padding when crop is TRUE.
 
 ```{r fig-fit-crop, fig.cap="Set crop = TRUE to cover the new image size and crop off overhang."}
-fit_crop <- to_size(multisize, 400, 400, crop = TRUE)
-plot(fit_crop)
+to_size(multisize, 400, 400, 
+        crop = TRUE)
 ```
 
 Set `keep_rels = TRUE` to bring the smallest image to cover the new size, resize the others proportionally, and crop any overhang. 
 
 ```{r fig-rel-crop}
-rel_crop <- to_size(multisize, 400, 400, crop = TRUE, keep_rels = TRUE)
-plot(rel_crop)
+to_size(multisize, 400, 400, 
+        crop = TRUE, 
+        keep_rels = TRUE)
 ```
 
 
@@ -326,8 +305,7 @@ If you don't set the x and y coordinates, the images will align to the average v
 unstandard_men <- demo_unstandard(6:10)
 
 unstandard_men |>
-  align(fill = "dodgerblue") |>
-  plot()
+  align(fill = "dodgerblue")
 ```
 
 You can manually set the values for the x and y coordinates, as well as the resulting width and height of the images. These values must be in pixels.
@@ -335,8 +313,7 @@ You can manually set the values for the x and y coordinates, as well as the resu
 ```{r align-manual, fig.cap="Two-point alignment with align(); setting values manually"}
 unstandard_men |>
   align(x1 = 350, y1 = 350, x2 = 450, y2 = 450,
-        width = 800, height = 800, fill = "dodgerblue") |>
-  plot()
+        width = 800, height = 800, fill = "dodgerblue")
 ```
 
 Instead of aligning to the average of all the images, you may want to align to a reference image. Set `ref_img` to the index or name of the chosen image. 
@@ -356,8 +333,7 @@ You can align images to a single point by setting pt1 and pt2 the same. For exam
 
 ```{r align-1pt, fig.cap = "One-point alignment."}
 align(unstandard_men, pt1 = 55, pt2 = 55, 
-      fill = "dodgerblue") |>
-  plot()
+      fill = "dodgerblue")
 ```
 
 
@@ -366,8 +342,7 @@ align(unstandard_men, pt1 = 55, pt2 = 55,
 You can set the `procrustes` argument to TRUE to use [Procrustes analysis](https://en.wikipedia.org/wiki/Procrustes_analysis) to align the images and templates to fit the average shape (or a reference image) as closely as possible.
 
 ```{r procrustes, fig.cap = "Procrustes alignment."}
-align(unstandard_men, procrustes = TRUE, fill = "dodgerblue") |>
-  plot()
+align(unstandard_men, procrustes = TRUE, fill = "dodgerblue")
 ```
 
 Currently, [webmorph](https://webmorph.org) does not have this capability, but you can download your images and tems, procrustes align them with the R package, save the images and templates, and upload them back to webmorph.
@@ -382,8 +357,7 @@ You can also chain image manipulation commands.
 stimuli |>
   rotate(c(45, -45)) |>
   crop(.5, .5) |>
-  pad(0.1, fill = "dodgerblue") |>
-  plot()
+  pad(0.1, fill = "dodgerblue")
 ```
 
 ## Repeating images
@@ -456,8 +430,7 @@ demo_stim(1) |>
   rep(5)  |>
   image_func("fill", "white", point="+10+10", 
              fuzz = seq(5, 25, 5)) |> 
-  label(text = paste("fuzz =", seq(5, 25, 5))) |>
-  plot()
+  label(text = paste("fuzz =", seq(5, 25, 5)))
 ```
 
 

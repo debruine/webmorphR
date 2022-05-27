@@ -90,7 +90,7 @@ test_that("frl", {
   )
   
   # skip("needs visual check")
-  # new |> rename_stim(features) |> label() |> plot()
+  # new |> rename_stim(features) |> label()
 })
 
 ## dlib70 features ----
@@ -118,7 +118,7 @@ test_that("dlib70", {
   })
   
   # skip("needs visual check")
-  # new |> rename_stim(features) |> label() |> plot()
+  # new |> rename_stim(features) |> label()
 })
 
 

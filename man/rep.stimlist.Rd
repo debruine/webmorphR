@@ -21,8 +21,7 @@ Repeat stim in a list
 \dontrun{
 demo_stim() |>
   rep(3) |>
-  rotate(seq(10, 60, 10), fill = rainbow(6)) |>
-  plot()
+  rotate(seq(10, 60, 10), fill = rainbow(6))
 }
 }
 \keyword{internal}

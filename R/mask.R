@@ -27,20 +27,33 @@
 #' @examples
 #' stimuli <- demo_stim()
 #' 
-#' masked <- mask(stimuli, c("face", "neck", "ears"), "red")
-#' plot(masked)
+#' mask(stimuli, 
+#'      mask = c("face", "neck", "ears"), 
+#'      fill = "dodgerblue")
 #' 
-#' expanded <- mask(stimuli, "face", expand = 30)
-#' plot(expanded)
+#' mask(stimuli, "face", expand = 30)
 #' 
 #' \donttest{
 #' # reverse masking masks over the features
-#' revmasked <- stimuli |>
+#' stimuli |>
 #'   mask("eyes", "#FFFF00", TRUE) |>
 #'   mask("brows", rgb(0.2, 0.5, 0.5), TRUE) |>
 #'   mask("mouth", "#FF000066", TRUE)
-#' plot(revmasked)
+#'   
+#' # custom mask (list style)
+#' fpp83_eyes <- list(
+#'   left_eye = list(
+#'     c(44,4,56,51,79),
+#'     c(79,58,11,25,44)
+#'   ),
+#'   right_eye = list(
+#'     c(61,67,38,34,40),
+#'     c(40,41,17,47,61)
+#'   )
+#' )
 #' 
+#' demo_tems("fpp83") |>
+#'   mask(fpp83_eyes, fill = color_conv("dodgerblue", alpha = 0.5))
 #' }
 #'
 mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),

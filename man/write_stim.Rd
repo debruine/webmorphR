@@ -38,3 +38,11 @@ Write tems and images to files
   demo_stim() |> write_stim("test_faces", format = "jpg")
 }
 }
+\seealso{
+Other stim: 
+\code{\link{as_stimlist}()},
+\code{\link{new_stimlist}()},
+\code{\link{new_stim}()},
+\code{\link{read_stim}()}
+}
+\concept{stim}

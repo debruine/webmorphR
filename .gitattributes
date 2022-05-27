@@ -3,3 +3,4 @@ docs/* linguist-documentation
 *.css linguist-detectable=false
 *.js linguist-detectable=false
 *.tex linguist-detectable=false
+stuff/java/helper_classes/** linguist-vendored

@@ -11,14 +11,15 @@
 #' @family manipulators
 #'
 #' @examples
-#' o <- demo_stim(1)
+#' # load an image and mirror it
+#' o <- demo_tems("frl") |> resize(0.5)
 #' m <- mirror(o, "frl")
 #'
+#' # visualise the face outline points
 #' c(o, m) |>
 #'   subset_tem(features("face")) |>
-#'   draw_tem(pt.shape = "index", pt.color = "white", pt.size = 10) |>
-#'   label(c("original", "mirrored")) |>
-#'   plot()
+#'   draw_tem(pt.shape = "index", pt.size = 15) |>
+#'   label(c("original", "mirrored"))
 #'
 mirror <- function(stimuli, tem_id = NULL, axis = "vertical") {
   stimuli <- as_stimlist(stimuli)

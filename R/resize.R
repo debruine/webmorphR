@@ -1,4 +1,6 @@
-#' Resize templates and images
+#' Resize stimuli
+#' 
+#' Resize images and templates to the specified width and height. 
 #'
 #' @param stimuli list of stimuli
 #' @param width,height new dimensions (in pixels or percent if < 10)
@@ -8,11 +10,13 @@
 #' @family manipulators
 #'
 #' @examples
-#' resized <- demo_stim() |>
-#'   resize(.5, .75) |>
-#'   draw_tem()
-#'   
-#' plot(resized)
+#' stimuli <- demo_stim()
+#' 
+#' # set width to proportion, height proportional
+#' resize(stimuli, .5) |> draw_tem()
+#' 
+#' # set width and height separately by pixels
+#' resize(stimuli, 400, 250) |> draw_tem()
 #'
 resize <- function(stimuli, width = NULL, height = NULL) {
   stimuli <- as_stimlist(stimuli)

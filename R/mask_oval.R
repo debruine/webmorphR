@@ -1,30 +1,33 @@
 #' Apply an oval mask to images
 #'
-#' Superimpose an oval mask on a set of images. If the images have templates and bounds = NULL, the maxiumum and minimum x and y coordinates for each image will be calculated (or the overall max and min if each = FALSE) and an oval with those dimensions and position will be placed over the face.
+#' Superimpose an oval mask on a set of images. 
+#' 
+#' @details
+#' If the images have templates and `bounds = NULL`, the maxiumum and minimum x and y coordinates for each image will be calculated (or the overall max and min if `each = FALSE`) and an oval with those dimensions and position will be placed over the face.
 #'
-#' If bounds are set to a list of top, right, bottom and left boundaries, these will be used instead of the boundaries derived from templates.
+#' If `bounds` are set to a list of top, right, bottom and left boundaries, these will be used instead of the boundaries derived from templates.
 #'
 #' @param stimuli list of stimuli
 #' @param bounds bounds (t, r, b, l) of oval, calculated from templates if NULL
 #' @param fill background color for mask, see [color_conv()]
-#' @param each whether to calculate a mask for each image (default) or just one
+#' @param each logical; whether to calculate a mask for each image (default) or just one
 #'
 #' @return list of stimuli with cropped tems and/or images
 #' @export
 #' @family manipulators
 #'
 #' @examples
-#' omask1 <- demo_stim() |> mask_oval(fill = "hotpink")
+#' # remove external template points and crop
+#' stimuli <- demo_stim() |> subset_tem(features("face")) |> crop_tem(25)
 #'
-#' # remove external points
-#' omask2 <- demo_stim() |>
-#'   subset_tem(features("face")) |>
-#'   crop_tem(25) |>
-#'   mask_oval()
-#'
-#' # set bounds manually
-#' omask3 <- demo_stim() |>
-#'   mask_oval(bounds = list(t= 70, r = 120, b = 70, l = 120))
+#' # three styles of mask
+#' omask1 <- mask_oval(stimuli) |> label("default")
+#' omask2 <- mask_oval(stimuli, each = FALSE) |> label("each = FALSE")
+#' omask3 <- mask_oval(stimuli, bounds = list(t= 50, r = 30, b = 40, l = 30)) |> 
+#'   label("manual bounds")
+#' 
+#' # visualise masks
+#' c(omask1, omask2, omask3) |> plot(nrow = 2, byrow = FALSE)
 mask_oval <- function(stimuli, bounds = NULL, fill = wm_opts("fill"), each = TRUE) {
   stimuli <- as_stimlist(stimuli) 
 

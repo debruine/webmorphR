@@ -24,3 +24,11 @@ path <- system.file("extdata/test", package = "webmorphR")
 stimuli <- read_stim(path)
 
 }
+\seealso{
+Other stim: 
+\code{\link{as_stimlist}()},
+\code{\link{new_stimlist}()},
+\code{\link{new_stim}()},
+\code{\link{write_stim}()}
+}
+\concept{stim}

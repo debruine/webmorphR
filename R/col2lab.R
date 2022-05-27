@@ -14,7 +14,8 @@
 #' @family color
 #'
 #' @examples
-#' col2lab(c("red", "green", "blue"))
+#' col2lab("red")
+#' col2lab("#FF0000")
 #'
 col2lab <- function(col, ref_X =  95.047, ref_Y = 100.000, ref_Z = 108.883) {
   # Observer= 2°, Illuminant= D65
@@ -74,12 +75,10 @@ col2lab <- function(col, ref_X =  95.047, ref_Y = 100.000, ref_Z = 108.883) {
 #'
 #' @examples
 #' lab <- c(100, 0, 0)
-#' rgb <- lab2rgb(lab)
-#' rgb
+#' lab2rgb(lab)
 #' 
 #' lab <- col2lab("red")
-#' rgb <- lab2rgb(lab)
-#' rgb
+#' lab2rgb(lab)
 lab2rgb <- function(lab, ref_X =  95.047, ref_Y = 100.000, ref_Z = 108.883) {
   # CIE-L*ab → XYZ via http://www.easyrgb.com/index.php?X=MATH&H=07#text7
   

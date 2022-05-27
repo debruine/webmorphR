@@ -21,7 +21,8 @@ R color to Lab colourspace conversion. Calculated with Observer. = 2°, Illumina
 The formulas used to convert from RGB to XYZ and XYZ to Lab are from http://www.easyrgb.com/en/math.php and the reference values are from http://www.brucelindbloom.com/index.html?ColorCheckerCalcHelp.html
 }
 \examples{
-col2lab(c("red", "green", "blue"))
+col2lab("red")
+col2lab("#FF0000")
 
 }
 \seealso{

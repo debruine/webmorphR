@@ -48,7 +48,7 @@ Transform Images
   stimuli <- demo_stim()
   sexdim <- trans(stimuli, stimuli$f_multi, stimuli$m_multi,
                   shape = c(fem = -0.5, masc = 0.5))
-  sexdim |> draw_tem() |> label() |> plot()
+  sexdim |> draw_tem() |> label()
 }
 
 }

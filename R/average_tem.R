@@ -16,7 +16,7 @@
 #' draw_tem(tem_only_avg, bg = "white")
 #' 
 #' # view the superimposed image
-#' plot(tem_only_avg)
+#' tem_only_avg
 average_tem <- function(stimuli, name = "average") {
   stimuli <- require_tems(stimuli, TRUE)
 

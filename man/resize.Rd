@@ -2,7 +2,7 @@
 % Please edit documentation in R/resize.R
 \name{resize}
 \alias{resize}
-\title{Resize templates and images}
+\title{Resize stimuli}
 \usage{
 resize(stimuli, width = NULL, height = NULL)
 }
@@ -15,14 +15,16 @@ resize(stimuli, width = NULL, height = NULL)
 list of stimuli with resized tems and/or images
 }
 \description{
-Resize templates and images
+Resize images and templates to the specified width and height.
 }
 \examples{
-resized <- demo_stim() |>
-  resize(.5, .75) |>
-  draw_tem()
-  
-plot(resized)
+stimuli <- demo_stim()
+
+# set width to proportion, height proportional
+resize(stimuli, .5) |> draw_tem()
+
+# set width and height separately by pixels
+resize(stimuli, 400, 250) |> draw_tem()
 
 }
 \seealso{

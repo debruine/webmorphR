@@ -9,6 +9,7 @@
 #'
 #' @return list of saved paths
 #' @export
+#' @family stim
 #'
 #' @examples
 #' \dontrun{

@@ -6,10 +6,10 @@ test_that("delin", {
   # adjust full delineations
   stimuli <- demo_stim()
   expect_message(x <- delin(stimuli))
-  draw_tem(x) |> plot()
+  draw_tem(x)
   
   # add delineations
   stimuli <- demo_stim() |> remove_tem()
   x2 <- delin(stimuli)
-  draw_tem(x2) |> plot()
+  draw_tem(x2)
 })

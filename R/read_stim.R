@@ -5,8 +5,8 @@
 #' @param ... further arguments to pass on to other functions, e.g., breaks argument for unique_names()
 #'
 #' @return a list with class stimlist
-#'
 #' @export
+#' @family stim
 #'
 #' @examples
 #' path <- system.file("extdata/test", package = "webmorphR")

@@ -22,12 +22,10 @@ The formulas used to convert from Lab to XYZ and XYZ to RGB are from http://www.
 }
 \examples{
 lab <- c(100, 0, 0)
-rgb <- lab2rgb(lab)
-rgb
+lab2rgb(lab)
 
 lab <- col2lab("red")
-rgb <- lab2rgb(lab)
-rgb
+lab2rgb(lab)
 }
 \seealso{
 Other color: 

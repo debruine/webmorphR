@@ -5,6 +5,7 @@
 #'
 #' @return A stimlist
 #' @export
+#' @family stim
 
 new_stimlist <- function(..., .names = NULL) {
   stimuli <- list(...)
@@ -31,6 +32,7 @@ new_stimlist <- function(..., .names = NULL) {
 #'
 #' @return list with class stim
 #' @export
+#' @family stim
 #'
 new_stim <- function(img, path = "", ...) {
   info <- magick::image_info(img)
@@ -50,14 +52,35 @@ new_stim <- function(img, path = "", ...) {
 #' Convert list to stimlist
 #'
 #' Checks if an object is a list of class stimlist. If class stim, wrap in stimlist. If a properly structured list without the right class, add the right class. 
+#' 
+#' @details
+#' Some webmorphR functions, like [plot()] and [print()] require objects to have a "stimlist" class. If you've processed a list of stimuli withiterator functions like [lapply()] or [purrr::map()] functions and the resulting object prints or plots oddly, it is probably unclassed, and this function will fix that.
 #'
 #' @param x The object
-#' @param tem require templates (images without templates are removed)
 #'
 #' @return A stimlist
 #' @export
+#' @family stim
+#' 
+#' @examples 
+#' stimuli <- demo_stim() |>
+#'   lapply(function(stim) {
+#'     # remove template lines
+#'     stim$lines <- NULL
+#'     return(stim)
+#'   })
+#'   
+#' class(stimuli)
+#' 
+#' \dontrun{
+#' plot(stimuli) # error
+#' }
+#' 
+#' s <- as_stimlist(stimuli)
+#' class(s)
+#' plot(s)
 #'
-as_stimlist <- function(x, tem = FALSE) {
+as_stimlist <- function(x) {
   # handle list without stim or stimlist classes
   if (is.list(x) &&
       !"stimlist" %in% class(x) &&

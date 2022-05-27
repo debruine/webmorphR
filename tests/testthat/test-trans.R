@@ -30,7 +30,7 @@ test_that("trans", {
   
   ## visual checks ----
   # skip("needs visual check")
-  # draw_tem(masc) |> label() |> plot()
+  # draw_tem(masc) |> label()
   # draw_tem(fem_masc) |> label() |> plot(nrow = 2)
   # plot(cont)
   # 

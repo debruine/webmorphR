@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples
-#' demo_stim() |> plot()
+#' demo_stim()
 #'
 demo_stim <- function(pattern = NULL) {
   path <- file.path("extdata", "test") |>
@@ -28,7 +28,9 @@ demo_stim <- function(pattern = NULL) {
 #' @rdname demo_stim
 #' 
 #' @examples
-#' demo_tems() |> draw_tem() |> plot(maxwidth = 1000)
+#' demo_tems() |> 
+#'   draw_tem(pt.size = 10) |> 
+#'   plot(nrow = 2, maxwidth = 600)
 demo_tems <- function(pattern = NULL) {
   path <- file.path("extdata", "tem_examples") |>
     system.file(package = "webmorphR")
@@ -41,7 +43,7 @@ demo_tems <- function(pattern = NULL) {
 #' @rdname demo_stim
 #' 
 #' @examples
-#' demo_unstandard() |> plot(maxwidth = 1000)
+#' demo_unstandard() |> plot(nrow = 2, maxwidth = 600)
 demo_unstandard <- function(pattern = NULL) {
   path <- file.path("extdata", "unstandard") |>
     system.file(package = "webmorphR")

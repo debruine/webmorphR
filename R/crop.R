@@ -20,13 +20,17 @@
 #' stimuli <- demo_stim()
 #'
 #' # crop to 60% width and 80% height (centered)
-#' cropped <- crop(stimuli, width = .60, height = .80)
-#' c(stimuli, cropped) |> plot(maxwidth = 500)
+#' crop(stimuli, width = .60, height = .80)
 #'
 #' # crop to upper right quadrant
-#' urq <- crop(stimuli, .5, .5, x_off = .5, y_off = 0)
-#' plot(urq)
-#'
+#' crop(stimuli, .5, .5, x_off = .5, y_off = 0)
+#' 
+#' \donttest{
+#' # negative offset with fill
+#' crop(stimuli, 260, 260, 
+#'      x_off = -10, y_off = -10, 
+#'      fill = c("red", "dodgerblue"))
+#' }
 crop <- function(stimuli,
                  width = 1.0, height = 1.0,
                  x_off = NULL, y_off = NULL,
@@ -152,19 +156,18 @@ crop <- function(stimuli,
 #'
 #' @examples
 #' stimuli <- demo_stim()
-#' default <- pad(stimuli)
-#' plot(default)
+#' 
+#' # default 10-pixel padding
+#' pad(stimuli, fill = "dodgerblue")
 #' 
 #' \donttest{
 #' # change pad width and set fill
-#' red_border <- pad(stimuli, 2, fill = "red3")
-#' plot(red_border)
+#' pad(stimuli, 2, fill = "dodgerblue")
 #' 
 #' # set top border to 10% height
 #' # different colour for each image
-#' top_border <- pad(stimuli, 0.1, 1, 1, 1,
-#'                   fill = c("hotpink", "dodgerblue"))
-#' plot(top_border)
+#' pad(stimuli, 0.1, 1, 1, 1,
+#'     fill = c("hotpink", "dodgerblue"))
 #' }
 pad <- function(stimuli, top = 10, right = top, bottom = top, left = right, ...) {
   stimuli <- as_stimlist(stimuli)
@@ -199,23 +202,17 @@ pad <- function(stimuli, top = 10, right = top, bottom = top, left = right, ...)
 #' @examples
 #' stimuli <- demo_stim()
 #' ctem <- crop_tem(stimuli, each = TRUE)
-#' draw_tem(ctem) |> plot()
+#' draw_tem(ctem)
 #' 
 #' \donttest{
 #' # demo with different templates
 #' stimuli <- demo_tems()
 #' 
 #' # default 10 pixels around maximum template
-#' ctem_all <- crop_tem(stimuli) 
+#' crop_tem(stimuli) 
 #' 
 #' # crop specific to each image
-#' ctem_each <- crop_tem(stimuli, each = TRUE)
-#' 
-#' # visualise difference
-#' c(ctem_all, ctem_each) |>
-#'   draw_tem(pt.size = 10) |> 
-#'   to_size() |>
-#'   plot(nrow = 2, maxwidth = 1000)
+#' crop_tem(stimuli, each = TRUE)
 #' }
 #' 
 crop_tem <- function(stimuli, top = 10, right = top, bottom = top, left = right, each = FALSE, ...) {

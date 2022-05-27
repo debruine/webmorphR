@@ -9,7 +9,7 @@ rotate(
   degrees = 0,
   fill = wm_opts("fill"),
   keep_size = TRUE,
-  rotate_around = "image"
+  origin = "image"
 )
 }
 \arguments{
@@ -21,7 +21,12 @@ rotate(
 
 \item{keep_size}{whether to keep the original size or expand images to the new rotated size}
 
-\item{rotate_around}{Whether to centre the rotation on the "image", template ("tem"), or the center of 1 or more delineation points (0-based)}
+\item{origin}{The origin of the rotation. Options are:
+\code{"image"} will rotate around the image center.
+
+\code{"tem"} will rotate around the average of all template coordinates.
+
+A vector of 1 or more point indices (0-based) will rotate around their average position.}
 }
 \value{
 list of stimuli with rotated tems and/or images
@@ -30,14 +35,28 @@ list of stimuli with rotated tems and/or images
 Rotate templates and images
 }
 \examples{
-rotated <- demo_stim() |>
-  rotate(45, fill = "dodgerblue") |>
-  draw_tem()
-plot(rotated)
+stimuli <- demo_stim() |> resize(0.5)
 
-rotate_keep <- demo_stim() |>
-  rotate(45, keep_size = FALSE)
-plot(rotate_keep)
+rotate(stimuli, 45, fill = "dodgerblue")
+rotate(stimuli, 45, fill = "dodgerblue", keep_size = FALSE)
+  
+\donttest{
+# if images are not in the centre of the image,
+# try setting the origin to tem or specific point(s)
+offset <- stimuli[1] |> 
+  draw_tem() |> 
+  pad(0, 250, 0, 0, fill = "dodgerblue")
+  
+rotate(offset, 45, origin = "image", fill = "pink")
+rotate(offset, 45, origin = "tem", fill = "pink")
+}
+
+\dontrun{
+# rotate around point 0 (left eye)
+offset |> crop_tem() |> rep(8) |>
+  rotate(seq(0, 325, 45), origin = 0, fill = "pink") |>
+  animate(fps = 5)
+}
 
 }
 \seealso{

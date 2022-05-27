@@ -22,9 +22,6 @@ Make images greyscale
 stimuli <- demo_stim()
 grey_stim <- greyscale(stimuli)
 plot(grey_stim)
-stimuli <- demo_stim()
-gray_stim <- grayscale(stimuli)
-plot(gray_stim)
 }
 \seealso{
 Stimulus manipulation functions

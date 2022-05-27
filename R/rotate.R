@@ -4,7 +4,12 @@
 #' @param degrees degrees to rotate
 #' @param fill background color, see [color_conv()]
 #' @param keep_size whether to keep the original size or expand images to the new rotated size
-#' @param rotate_around Whether to centre the rotation on the "image", template ("tem"), or the center of 1 or more delineation points (0-based)
+#' @param origin The origin of the rotation. Options are:
+#'    `"image"` will rotate around the image center. 
+#'    
+#'    `"tem"` will rotate around the average of all template coordinates.
+#'    
+#'    A vector of 1 or more point indices (0-based) will rotate around their average position. 
 #'
 #' @return list of stimuli with rotated tems and/or images
 #'
@@ -12,19 +17,33 @@
 #' @family manipulators
 #'
 #' @examples
-#' rotated <- demo_stim() |>
-#'   rotate(45, fill = "dodgerblue") |>
-#'   draw_tem()
-#' plot(rotated)
-#'
-#' rotate_keep <- demo_stim() |>
-#'   rotate(45, keep_size = FALSE)
-#' plot(rotate_keep)
+#' stimuli <- demo_stim() |> resize(0.5)
+#' 
+#' rotate(stimuli, 45, fill = "dodgerblue")
+#' rotate(stimuli, 45, fill = "dodgerblue", keep_size = FALSE)
+#'   
+#' \donttest{
+#' # if images are not in the centre of the image,
+#' # try setting the origin to tem or specific point(s)
+#' offset <- stimuli[1] |> 
+#'   draw_tem() |> 
+#'   pad(0, 250, 0, 0, fill = "dodgerblue")
+#'   
+#' rotate(offset, 45, origin = "image", fill = "pink")
+#' rotate(offset, 45, origin = "tem", fill = "pink")
+#' }
+#' 
+#' \dontrun{
+#' # rotate around point 0 (left eye)
+#' offset |> crop_tem() |> rep(8) |>
+#'   rotate(seq(0, 325, 45), origin = 0, fill = "pink") |>
+#'   animate(fps = 5)
+#' }
 #'
 rotate <- function(stimuli, degrees = 0,
                    fill = wm_opts("fill"),
                    keep_size = TRUE,
-                   rotate_around = "image") {
+                   origin = "image") {
   stimuli <- as_stimlist(stimuli)
   orig_w <- width(stimuli)
   orig_h <- height(stimuli)
@@ -45,16 +64,16 @@ rotate <- function(stimuli, degrees = 0,
     h <- stimuli[[i]]$height
     
     # calculate xm1, ym1 ----
-    if ((keep_size && rotate_around == "tem") || 
+    if ((keep_size && origin == "tem") || 
         is.null(w) || is.null(h)) {
       ct <- centroid(stimuli[[i]])
       xm1 <- ct[1, 'x']
       ym1 <- ct[1, 'y']
-    } else if (!keep_size || rotate_around == "image") {
+    } else if (!keep_size || origin == "image") {
       xm1 <- w/2
       ym1 <- h/2
-    } else if (is.numeric(rotate_around)) {
-      ct <- centroid(stimuli[[i]], points = rotate_around)
+    } else if (is.numeric(origin)) {
+      ct <- centroid(stimuli[[i]], points = origin)
       xm1 <- ct[1, 'x']
       ym1 <- ct[1, 'y']
     }
@@ -181,37 +200,3 @@ rotated_size <- function(width, height, degrees) {
 }
 
 
-#' Make eyes horizontal
-#' 
-#' Rotate each stimulus so the eye points are horizontal. 
-#'
-#' @param stimuli list of stimuli
-#' @param left_eye The first point to align (defaults to 0)
-#' @param right_eye The second point to align (defaults to 1)
-#' @param fill background color to pass to rotate, see [color_conv()]
-#'
-#' @return list of stimuli with rotated tems and/or images
-#' @export
-#' @family manipulators
-#'
-#' @examples
-#' # the demo images already have nearly horizontal eyes
-#' horiz <- demo_stim() |> horiz_eyes(fill = "red")
-#' plot(horiz)
-#'
-horiz_eyes <- function(stimuli, left_eye = 0, right_eye = 1, fill = wm_opts("fill")) {
-  stimuli <- require_tems(stimuli)
-
-  degrees <- lapply(stimuli, `[[`, "points") |>
-    lapply(function(pt) {
-      x1 = pt[[1, left_eye+1]]
-      y1 = pt[[2, left_eye+1]]
-      x2 = pt[[1, right_eye+1]]
-      y2 = pt[[2, right_eye+1]]
-      rad <- atan2(y1 - y2, x1 - x2) %% (2*pi)
-      180 - (rad / (pi/180))
-  })
-
-  stimuli |>
-    rotate(degrees = degrees, fill = fill, keep_size = TRUE)
-}

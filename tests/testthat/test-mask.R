@@ -42,7 +42,7 @@ test_that("custom mask from vectors", {
   stimuli[1] |>
     crop_tem() |>
     resize(2) |>
-  draw_tem(pt.shape = "index", pt.size = 10) |> plot()
+    draw_tem(pt.shape = "index", pt.size = 10)
   
   list_mask <- list(list(
     c(71:75, 50, 56, 78:82),

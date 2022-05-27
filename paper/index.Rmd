@@ -243,7 +243,7 @@ x <- load_stim_london("005|024|036|119")
 notex <- avg(x, texture = FALSE)
 tex <- avg(x, texture = TRUE)
 
-c(notex, tex) |> crop(0.5, 0.75, y_off = 0.1) |> plot()
+c(notex, tex) |> crop(0.5, 0.75, y_off = 0.1)
 ```
 
 
@@ -321,8 +321,7 @@ load_stim_composite("f_multi") |>
   resize(2) |>
   draw_tem(pt.shape = "index", 
            pt.color = "#FFFFFFFF", 
-           pt.size = 25) |>
-  plot()
+           pt.size = 25)
 ```
 
 The function `tem_def()` retrieves a template definition that includes point names, default coordinates, and the identity of the symmetrically matching point for mirroring or symmetrising images Table\ \@ref(tab:tem-def).
@@ -356,8 +355,7 @@ fpp83_tem <- auto_delin(f, "fpp83", replace = TRUE)
 
 c(f[1], fpp106_tem[1], fpp83_tem[1], dlib70_tem[1], dlib7_tem[1]) |>
   draw_tem() |>
-  label(LETTERS, gravity = "northwest", location = "+20+10") |>
-  plot()
+  label(LETTERS, gravity = "northwest", location = "+20+10")
 ```
 
 A study comparing the accuracy of four common measures of face shape (sexual dimorphism, distinctiveness, bilateral asymmetry, and facial width to height ratio) between automatic and manual delineation concluded that automatic delineation had higher replicability and good correlations with manual delineation [@jones2021facial]. However, around 2% of images had noticeably inaccurate automatic delineation, which should be screened for by outlier detection and visual inspection. 
@@ -381,8 +379,7 @@ frl_avg <- avg(f)
 fpp_avg <- avg(fpp106_tem)
 
 c(frl_avg, fpp_avg) |> 
-  label(LETTERS, gravity = "northwest", location = "+20+10") |>
-  plot()
+  label(LETTERS, gravity = "northwest", location = "+20+10")
 ```
 
 ### Facial Metrics
@@ -678,8 +675,7 @@ c(neu_avg,
   plot(smi, external_pad = 0, ncol = 1),
   smi_avg
 ) |> 
-  resize(height = height(neu_avg)) |>
-  plot()
+  resize(height = height(neu_avg))
 ```
 
 We use the "dlib70" auto-delineation model, which is available through webmorphR.dlib [@R-webmorphR.dlib], but requires the installation of python and some python packages. However, it has the advantage of not requiring setting up an account at Face++ and doesn't transfer your images to a third party. Try "fpp106" if you have trouble setting up webmorphR.dlib.
@@ -731,8 +727,7 @@ c(f_avg,
   plot(m, external_pad = 0, ncol = 1),
   m_avg
 ) |> 
-  resize(height = height(f_avg)) |>
-  plot()
+  resize(height = height(f_avg))
 ```
 
 Next, transform each individual image using the average female and male faces as transform endpoints (Fig.\ \@ref(fig:sexdim-transform)).

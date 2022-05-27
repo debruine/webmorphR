@@ -19,9 +19,7 @@
 #' # add padding and visualise templates
 #' c(nosquash, squash) |> 
 #'   pad(50) |>
-#'   draw_tem(pt.size = 5) |> 
-#'   plot()
-
+#'   draw_tem(pt.size = 5) 
 squash_tem <- function(stimuli) {
   stimuli <- as_stimlist(stimuli)
   

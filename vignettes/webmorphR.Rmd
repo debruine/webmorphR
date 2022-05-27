@@ -62,7 +62,7 @@ These faces already have webmorph templates, so you can make an average. The `av
 ```{r avg}
 avg <- avg(face_set)
 
-plot(avg)
+avg
 ```
 
 
@@ -175,7 +175,7 @@ stimuli <- load_stim_zoom() |>
   resize(1/2) |>
   auto_delin(replace = TRUE)
 
-draw_tem(stimuli, pt.size = 10) |> plot()
+draw_tem(stimuli, pt.size = 10)
 ```
 
 Alternatively, you can use the Face++ auto-delineator by setting `model = "fpp106"`. This requires you to set up a Face++ account and set some environment variables (see the [Making Stimuli vignette](articles/stimuli.html)). It transfers your images to Face++, so make sure you read their privacy information.
@@ -185,7 +185,7 @@ stimuli <- load_stim_zoom() |>
   resize(1/2) |>
   auto_delin(model = "fpp106", replace = TRUE)
 
-draw_tem(stimuli, pt.size = 8) |> plot()
+draw_tem(stimuli, pt.size = 8)
 ```
 
 ### Align and crop

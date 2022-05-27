@@ -45,6 +45,18 @@ navbar:
       href: "https://osf.io/search/?q=webmorph,psychomorph"
       aria-label: OSF
 
+figures:
+  dev: ragg::agg_png
+  dpi: 96
+  dev.args: []
+  fig.ext: png
+  fig.width: 7.2916667
+  fig.height: ~
+  fig.retina: 2
+  fig.asp: 0.5048544
+  bg: "#F1F3F5"
+  other.parameters: []
+
 articles:
 - title: Demos
   navbar: ~

@@ -9,7 +9,18 @@
 #' @export
 #'
 #' @examples
-#' gif <- demo_stim() |> animate()
+#' \donttest{
+#' # slideshow of images (1/second)
+#' demo_stim() |> animate()
+#' 
+#' # rotate a face
+#' degrees <- seq(0, 350, 10)
+#' demo_stim(1) |>
+#'   mask() |>
+#'   rep(length(degrees)) |>
+#'   rotate(degrees) |>
+#'   animate(fps = 10)
+#' }
 animate <- function(stimuli, fps = 1, loop = 0, rev = FALSE) {
   if (length(stimuli) < 2) {
     stop("You need at least two images in the list to make an animated gif")

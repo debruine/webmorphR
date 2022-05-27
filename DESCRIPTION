@@ -24,7 +24,6 @@ BugReports: https://github.com/debruine/webmorphR/issues
 Depends: 
     R (>= 4.1.0)
 Imports: 
-    knitr,
     tools,
     grDevices,
     stats,
@@ -34,7 +33,8 @@ Imports:
     geomorph,
     httr,
     progress,
-    rsvg
+    rsvg,
+    grid
 Suggests: 
     shiny,
     shinyjs,

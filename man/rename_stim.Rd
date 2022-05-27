@@ -15,7 +15,7 @@ rename_stim(
 )
 }
 \arguments{
-\item{stimuli}{A stimlist}
+\item{stimuli}{A list of stimuli}
 
 \item{new_names}{Vector of new names - must be the same length as the stimlist}
 
@@ -30,7 +30,7 @@ rename_stim(
 \item{...}{Additional arguments to pass on to \code{base::gsub()}}
 }
 \value{
-a stimlist
+A list of stimuli with the new names
 }
 \description{
 Set stimulus names in a stimlist

@@ -109,7 +109,6 @@ Now we can make an average version of these faces. This uses the morphing functi
 avg <- avg(cropped)
 
 # show average with and without template
-draw_tem(avg) |> c(avg) |> plot()
 ```
 
 ### Transform

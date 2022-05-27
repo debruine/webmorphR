@@ -1,6 +1,6 @@
 #' Set stimulus names in a stimlist
 #'
-#' @param stimuli A stimlist
+#' @param stimuli A list of stimuli
 #' @param new_names Vector of new names - must be the same length as the stimlist
 #' @param prefix String to prefix to each name
 #' @param suffix String to append to each name
@@ -8,7 +8,7 @@
 #' @param replacement Replacement for gsub
 #' @param ... Additional arguments to pass on to `base::gsub()`
 #'
-#' @return a stimlist
+#' @return A list of stimuli with the new names
 #' @export
 #'
 #' @examples

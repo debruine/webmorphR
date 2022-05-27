@@ -25,7 +25,9 @@ Loop
     resize(300) |>
     rep(4) |>
     rotate(seq(0, 360-45, 45))
+    
   loop <- loop(stimuli, 5)
+  
   animate(loop, 10)
 }
 }

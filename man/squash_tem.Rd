@@ -26,8 +26,7 @@ squash <- demo_stim(1) |>
 # add padding and visualise templates
 c(nosquash, squash) |> 
   pad(50) |>
-  draw_tem(pt.size = 5) |> 
-  plot()
+  draw_tem(pt.size = 5) 
 }
 \seealso{
 Template functions
