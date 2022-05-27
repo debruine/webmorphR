@@ -42,8 +42,8 @@ navbar:
       aria-label: Figshare
     osf:
       icon: "ai-osf"
-      href="https://osf.io/search/?q=webmorph,psychomorph"
-      aria-laebl: OSF
+      href: "https://osf.io/search/?q=webmorph,psychomorph"
+      aria-label: OSF
 
 articles:
 - title: Demos
