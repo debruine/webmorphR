@@ -3,6 +3,8 @@
 #' Get the median (or mean or user-defined function) colour value of a specified patch of pixels on an image. This is useful for matching background colours.
 #' 
 #' @details The colour values of each pixel in the patch are converted to CIE-Lab values before using the func to calculate the central tendency of the L (lightness), a (red-green axis) and b (blue-yellow axis); see [col2lab()] and [lab2rgb()] for more details.
+#' 
+#' This excludes transparent pixels, and returns "transparent" if all pixels in the patch are transparent.
 #'
 #' @param stimuli list of stimuli
 #' @param x1,x2,y1,y2 start and end pixels of the patch, if <=1, interpreted as proportions of width or height
@@ -51,9 +53,20 @@ patch <- function(stimuli, x1 = 0, x2 = 10, y1 = 0, y2 = 10,
     )
     pixels <- all_pixels[selected_pixels, ]
     
-    central_col <- sapply(pixels$col, col2lab) |>
-      apply(1, func) |>
-      lab2rgb()
+    # remove transparent pixels
+    pixels <- pixels[pixels$col != "transparent", ]
+    if (nrow(pixels) == 0) {
+      return("transparent")
+    }
+    
+    # convert to Lab and get func
+    # prevent calling col2lab more than necessary
+    unique_col <- dplyr::count(pixels, col)
+    lab <- sapply(unique_col$col, col2lab)
+    mult <- apply(lab, 1, rep, times = unique_col$n, 
+                  simplify = FALSE)
+    avg_lab <- sapply(mult, func)
+    central_col <- lab2rgb(avg_lab)
     central_col[['alpha']] <- paste0('0x', substr(pixels$col, 8, 9))|> strtoi() |> func()
     
     # central_col <- grDevices::col2rgb(pixels$col, alpha = TRUE) |>

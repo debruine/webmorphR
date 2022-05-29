@@ -1,12 +1,13 @@
 #' Label images
 #' 
-#' Defaults to [mlabel] unless you use arguments specific to [gglabel]. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli. 
-#'
+#' Defaults to [mlabel()] unless you use arguments specific to [gglabel()]. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli. 
+#' 
 #' @param stimuli list of stimuli
-#' @param ... arguments to pass on to \code{mlabel} or \code{gglabel}
+#' @param ... arguments to pass on to [mlabel()] or [gglabel()]
 #'
 #' @return stimlist with labelled images
 #' @export
+#' @family viz
 #' 
 #' @seealso [mlabel()], [gglabel()]
 #'
@@ -19,16 +20,14 @@
 #'       gravity = c("north", "south"),
 #'       color = "red")
 #' 
-#' if (require("ggplot2")) {
 #' # label with ggplot2::annotate
 #' label(stimuli,
 #'       label = c("CHINWE", "GEORGE"), 
 #'       x = 0.5, 
 #'       y = c(0.99, 0.02),
 #'       vjust = c(1, 0), 
-#'       size = 15,
+#'       size = 18,
 #'       color = "red")
-#' }
 label <- function(stimuli, ...) {
   args <- names(list(...))
   
@@ -79,6 +78,7 @@ label <- function(stimuli, ...) {
 #' @seealso [gglabel()] for a labeller using syntax like [ggplot2::annotate()]
 #' @return stimlist with labelled images
 #' @export
+#' @family viz
 #'
 #' @examples
 #' stimuli <- demo_stim()
@@ -178,9 +178,9 @@ mlabel <- function(stimuli,
 #' @return stimlist with labelled images
 #' @seealso [label()] for a labeller using syntax like [magick::image_annotate]
 #' @export
+#' @family viz
 #'
 #' @examples
-#' if (require("ggplot2")) {
 #' stimuli <- demo_stim()
 #' 
 #' # label with image names
@@ -197,12 +197,7 @@ mlabel <- function(stimuli,
 #'         color = "black",
 #'         angle = -30,
 #'         alpha = 0.5)
-#' }
 gglabel <- function(stimuli, label = TRUE, x = 0.5, y = 0.95, geom = "text", ...) {
-  if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("You need to install the package ggplot2 to use gglabel or label with ggplot options")
-  }
-  
   stimuli <- as_stimlist(stimuli)
   
   if (isTRUE(label)) label <- names(stimuli)

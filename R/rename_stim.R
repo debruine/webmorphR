@@ -10,6 +10,7 @@
 #'
 #' @return A list of stimuli with the new names
 #' @export
+#' @family info
 #'
 #' @examples
 #' demo_stim() |>

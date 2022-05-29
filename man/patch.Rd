@@ -31,6 +31,8 @@ Get the median (or mean or user-defined function) colour value of a specified pa
 }
 \details{
 The colour values of each pixel in the patch are converted to CIE-Lab values before using the func to calculate the central tendency of the L (lightness), a (red-green axis) and b (blue-yellow axis); see \code{\link[=col2lab]{col2lab()}} and \code{\link[=lab2rgb]{lab2rgb()}} for more details.
+
+This excludes transparent pixels, and returns "transparent" if all pixels in the patch are transparent.
 }
 \examples{
 # get colour from the upper left corder

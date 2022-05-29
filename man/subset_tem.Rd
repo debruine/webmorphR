@@ -29,7 +29,7 @@ demo_stim(1) |>
 # (produces the 179-point Perception Lab template)
 demo_stim(1) |>
   subset_tem(179:188, keep = FALSE) |>
-  draw_tem(pt.size = 10)
+  draw_tem()
 
 # use features() to keep only points from a pre-defined set 
 # "gmm" is points used for geometric morphometrics
@@ -49,6 +49,7 @@ Template functions
 \code{\link{features}()},
 \code{\link{get_point}()},
 \code{\link{remove_tem}()},
+\code{\link{require_tems}()},
 \code{\link{same_tems}()},
 \code{\link{squash_tem}()},
 \code{\link{tem_def}()},

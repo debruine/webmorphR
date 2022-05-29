@@ -138,10 +138,13 @@ test_that("plot_rows", {
   s1 <- demo_stim()
   s2 <- demo_stim()
   
-  x <- plot_rows(s1, s2)
-  x1 <- plot_rows(a = s1, b = s2, size = 50)
-  x2 <- plot_rows(a = s1, b = s2, size = 50, top_label = TRUE)
+  a1 <- plot_rows(s1, s2)
+  a2 <- plot_rows(a = s1, b = s2)
+  x1 <- plot_rows(a = s1, b = s2, size = 40, top_label = FALSE)
+  x2 <- plot_rows(a = s1, b = s2, size = 40, top_label = TRUE)
   
-  expect_equal(height(x), height(x1))
-  expect_equal(height(x2), c(plot = 1170))
+  expect_equal(height(a1), height(x1))
+  expect_equal(height(a2), height(x2))
+  expect_equal(height(x1), c(plot = 1030))
+  expect_equal(height(x2), c(plot = 1150))
 })

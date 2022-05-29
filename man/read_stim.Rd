@@ -4,31 +4,40 @@
 \alias{read_stim}
 \title{Read stimuli}
 \usage{
-read_stim(path, pattern = NULL, ...)
+read_stim(path, pattern = NULL, breaks = "/")
 }
 \arguments{
 \item{path}{Path to directory containing image and/or template files (or a single file path)}
 
 \item{pattern}{Vector of patterns to use to search for files, or a vector of image indices (e.g., 1:4 selects the first 4 images and their templates if they exist)}
 
-\item{...}{further arguments to pass on to other functions, e.g., breaks argument for unique_names()}
+\item{breaks}{a vector of characters used to determine the stimulus names from the file names}
 }
 \value{
-a list with class stimlist
+a list of stimuli
 }
 \description{
-Read stimuli
+Read images and templates from a directory.
 }
 \examples{
 path <- system.file("extdata/test", package = "webmorphR")
+
+# read in all images and templates in a directory
 stimuli <- read_stim(path)
+
+# read in just images and templates with "m_"
+m_stimuli <- read_stim(path, "m_")
 
 }
 \seealso{
-Other stim: 
+Stimulus creating functions
+\code{\link{animate}()},
 \code{\link{as_stimlist}()},
+\code{\link{blank}()},
 \code{\link{new_stimlist}()},
 \code{\link{new_stim}()},
+\code{\link{read_img}()},
+\code{\link{read_tem}()},
 \code{\link{write_stim}()}
 }
 \concept{stim}

@@ -9,13 +9,13 @@ label(stimuli, ...)
 \arguments{
 \item{stimuli}{list of stimuli}
 
-\item{...}{arguments to pass on to \code{mlabel} or \code{gglabel}}
+\item{...}{arguments to pass on to \code{\link[=mlabel]{mlabel()}} or \code{\link[=gglabel]{gglabel()}}}
 }
 \value{
 stimlist with labelled images
 }
 \description{
-Defaults to \link{mlabel} unless you use arguments specific to \link{gglabel}. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli.
+Defaults to \code{\link[=mlabel]{mlabel()}} unless you use arguments specific to \code{\link[=gglabel]{gglabel()}}. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli.
 }
 \examples{
 stimuli <- demo_stim()
@@ -26,17 +26,26 @@ label(stimuli,
       gravity = c("north", "south"),
       color = "red")
 
-if (require("ggplot2")) {
 # label with ggplot2::annotate
 label(stimuli,
       label = c("CHINWE", "GEORGE"), 
       x = 0.5, 
       y = c(0.99, 0.02),
       vjust = c(1, 0), 
-      size = 15,
+      size = 18,
       color = "red")
-}
 }
 \seealso{
 \code{\link[=mlabel]{mlabel()}}, \code{\link[=gglabel]{gglabel()}}
+
+Visualisation functions
+\code{\link{as_ggplot}()},
+\code{\link{draw_tem}()},
+\code{\link{gglabel}()},
+\code{\link{mlabel}()},
+\code{\link{plot.stimlist}()},
+\code{\link{plot.stim}()},
+\code{\link{plot_rows}()},
+\code{\link{plot_stim}()}
 }
+\concept{viz}

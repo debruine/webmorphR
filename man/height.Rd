@@ -24,10 +24,11 @@ demo_stim() |> height()
 \seealso{
 Other info: 
 \code{\link{add_info}()},
-\code{\link{centroid}()},
 \code{\link{compare}()},
 \code{\link{get_info}()},
 \code{\link{get_point}()},
+\code{\link{metrics}()},
+\code{\link{rename_stim}()},
 \code{\link{width}()}
 }
 \concept{info}

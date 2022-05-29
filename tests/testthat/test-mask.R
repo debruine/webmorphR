@@ -104,3 +104,13 @@ test_that("expand", {
   expect_equal(revpatch10[[1]], "#FF0000FF")
   expect_true(revpatch1 != revpatch10)
 })
+
+# transparent fill ----
+test_that("transparent fill", {
+  stimuli <- demo_stim()
+  fill = "none"
+  
+  x <- mask(stimuli, fill = fill)
+  bg <- patch(x)
+  expect_equal(bg[[1]], "transparent")
+})

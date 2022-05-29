@@ -47,6 +47,7 @@ Template functions
 \code{\link{features}()},
 \code{\link{get_point}()},
 \code{\link{remove_tem}()},
+\code{\link{require_tems}()},
 \code{\link{same_tems}()},
 \code{\link{squash_tem}()},
 \code{\link{subset_tem}()},

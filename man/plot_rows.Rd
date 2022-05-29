@@ -4,12 +4,19 @@
 \alias{plot_rows}
 \title{Plot in rows}
 \usage{
-plot_rows(..., top_label = FALSE)
+plot_rows(
+  ...,
+  top_label = NULL,
+  maxwidth = wm_opts("plot.maxwidth"),
+  maxheight = wm_opts("plot.maxheight")
+)
 }
 \arguments{
 \item{...}{stimlists (optionally named) and any arguments to pass on to \code{\link{label}}}
 
-\item{top_label}{whether to plot row labels above the row or inside}
+\item{top_label}{logical; whether to plot row labels above the row (TRUE) or inside (FALSE), if NULL, then TRUE if stimlists are named}
+
+\item{maxwidth, maxheight}{maximum width and height of each row in pixels}
 }
 \value{
 stimlist with plot
@@ -29,6 +36,9 @@ plot_rows(upright = up, inverted = inv, color = "dodgerblue", top_label = TRUE)
 Visualisation functions
 \code{\link{as_ggplot}()},
 \code{\link{draw_tem}()},
+\code{\link{gglabel}()},
+\code{\link{label}()},
+\code{\link{mlabel}()},
 \code{\link{plot.stimlist}()},
 \code{\link{plot.stim}()},
 \code{\link{plot_stim}()}

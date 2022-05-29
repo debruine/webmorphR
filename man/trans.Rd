@@ -29,7 +29,7 @@ trans(
 
 \item{outname}{name to save each image as}
 
-\item{norm}{how to normalise the images}
+\item{norm}{how to normalise the images; see Details}
 
 \item{normpoint}{points for twopoint normalisation}
 
@@ -41,13 +41,36 @@ trans(
 list of stimuli with transformed images and templates
 }
 \description{
-Transform Images
+Transform a base image in shape, color, and/or texture by the differences between two images.
+}
+\details{
+\subsection{Normalisation options}{
+\itemize{
+\item none: averages will have all coordinates as the mathematical average of the coordinates in the component templates
+\item twopoint: all images are first aligned to the 2 alignment points designated in \code{normpoint}. Their position is set to their position in the first image in stimuli
+\item rigid: procrustes aligns all images to the position of the first image in stimuli
+}
+}
+
+\subsection{Sample contours}{
+
+This interpolates more control points along the lines. This can improve the accuracy of averages and transforms. If you see a “feathery” appearance along lines that have many, close-together points, try turning this off.
+}
+
+\subsection{Warp types}{
+\itemize{
+\item multiscale: Implements multi-scale affine interpolation for image warping. This is the default, with a good balance between speed and accuracy
+\item linear: Implements triangulated linear interpolation for image warping. Linear warping is least accurate, often resulting in image artifacts, but is very fast.
+\item multiscalerb: Implements multi-scale rigid body interpolation for image warping. This decreases image artifacts in some circumstances, but is much slower.
+}
+}
 }
 \examples{
 \dontrun{
   stimuli <- demo_stim()
   sexdim <- trans(stimuli, stimuli$f_multi, stimuli$m_multi,
                   shape = c(fem = -0.5, masc = 0.5))
+  
   sexdim |> draw_tem() |> label()
 }
 

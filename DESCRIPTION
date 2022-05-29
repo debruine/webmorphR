@@ -34,7 +34,8 @@ Imports:
     httr,
     progress,
     rsvg,
-    grid
+    grid,
+    ggplot2
 Suggests: 
     shiny,
     shinyjs,
@@ -42,7 +43,6 @@ Suggests:
     shinyWidgets,
     DT,
     gifski,
-    ggplot2,
     testthat,
     usethis,
     rmarkdown,

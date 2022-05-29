@@ -22,7 +22,6 @@ plot.stimlist <- function(x, y, ...) {
 #' @export
 #' @family viz
 #' @keywords internal
-
 plot.stim <- function(x, y, ...) {
   stimlist <- as_stimlist(x)
   plot(stimlist, ...)
@@ -31,7 +30,7 @@ plot.stim <- function(x, y, ...) {
 
 #' Plot stimuli
 #'
-#' Show all your stimuli in a grid.
+#' Show all the stimuli in a grid. You can use [plot()] as an alias.
 #'
 #' @param stimuli list of class stimlist
 #' @param nrow number of rows
@@ -141,7 +140,8 @@ plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
 #' Plot in rows
 #'
 #' @param ... stimlists (optionally named) and any arguments to pass on to \code{\link{label}}
-#' @param top_label whether to plot row labels above the row or inside
+#' @param top_label logical; whether to plot row labels above the row (TRUE) or inside (FALSE), if NULL, then TRUE if stimlists are named
+#' @param maxwidth,maxheight maximum width and height of each row in pixels
 #'
 #' @return stimlist with plot
 #' @export
@@ -154,13 +154,23 @@ plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
 #' plot_rows(upright = up, inverted = inv)
 #' plot_rows(upright = up, inverted = inv, color = "dodgerblue", top_label = TRUE)
 #' }
-plot_rows <- function(..., top_label = FALSE) {
+plot_rows <- function(..., top_label = NULL,
+                      maxwidth = wm_opts("plot.maxwidth"),
+                      maxheight = wm_opts("plot.maxheight")) {
   dots <- list(...)
   is_stimlist <- sapply(dots, inherits, "stimlist")
   rowlist <- dots[is_stimlist]
+  
+  if (is.null(top_label)) {
+    top_label <- !is.null(names(rowlist))
+  }
 
-  args <- lapply(rowlist, plot_stim, nrow = 1, external_pad = 0)
-  rows <- do.call(c, args)
+  rows <- lapply(rowlist, plot_stim, 
+                 nrow = 1, 
+                 external_pad = 0,
+                 maxwidth = maxwidth, 
+                 maxheight = maxheight)|>
+    do.call(what = c)
   rows <- resize(rows, width = min(width(rows)))
 
   # add top padding
@@ -183,7 +193,9 @@ plot_rows <- function(..., top_label = FALSE) {
     rows <- do.call(label, label_args)
   }
 
-  plot_stim(rows, ncol = 1)
+  plot_stim(rows, ncol = 1, 
+            maxwidth = Inf, 
+            maxheight = Inf)
 }
 
 

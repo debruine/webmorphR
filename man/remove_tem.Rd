@@ -28,6 +28,7 @@ Template functions
 \code{\link{draw_tem}()},
 \code{\link{features}()},
 \code{\link{get_point}()},
+\code{\link{require_tems}()},
 \code{\link{same_tems}()},
 \code{\link{squash_tem}()},
 \code{\link{subset_tem}()},

@@ -9,6 +9,7 @@
 #'
 #' @return named vector of the metric
 #' @export
+#' @family info
 #'
 #' @examples
 #' stimuli <- demo_stim()

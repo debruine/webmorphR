@@ -26,7 +26,6 @@ stimlist with labelled images
 Label image using \link[ggplot2:annotate]{ggplot2::annotate}. All arguments are vectorised over the stimuli and values are recycled or truncated if there are fewer or more than stimuli.
 }
 \examples{
-if (require("ggplot2")) {
 stimuli <- demo_stim()
 
 # label with image names
@@ -44,7 +43,17 @@ gglabel(stimuli,
         angle = -30,
         alpha = 0.5)
 }
-}
 \seealso{
 \code{\link[=label]{label()}} for a labeller using syntax like \link[magick:painting]{magick::image_annotate}
+
+Visualisation functions
+\code{\link{as_ggplot}()},
+\code{\link{draw_tem}()},
+\code{\link{label}()},
+\code{\link{mlabel}()},
+\code{\link{plot.stimlist}()},
+\code{\link{plot.stim}()},
+\code{\link{plot_rows}()},
+\code{\link{plot_stim}()}
 }
+\concept{viz}

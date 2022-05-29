@@ -5,6 +5,7 @@
 #'
 #' @return A stimlist
 #' @export
+#' @keywords internal
 #' @family stim
 
 new_stimlist <- function(..., .names = NULL) {
@@ -32,6 +33,7 @@ new_stimlist <- function(..., .names = NULL) {
 #'
 #' @return list with class stim
 #' @export
+#' @keywords internal
 #' @family stim
 #'
 new_stim <- function(img, path = "", ...) {
@@ -51,10 +53,10 @@ new_stim <- function(img, path = "", ...) {
 
 #' Convert list to stimlist
 #'
-#' Checks if an object is a list of class stimlist. If class stim, wrap in stimlist. If a properly structured list without the right class, add the right class. 
+#' Checks if an object is a stimulus or list of stimuli and repairs common problems.
 #' 
 #' @details
-#' Some webmorphR functions, like [plot()] and [print()] require objects to have a "stimlist" class. If you've processed a list of stimuli withiterator functions like [lapply()] or [purrr::map()] functions and the resulting object prints or plots oddly, it is probably unclassed, and this function will fix that.
+#' Some webmorphR functions, like [plot()] and [print()] require objects to have a "stimlist" class. If you've processed a list of stimuli with iterator functions like [lapply()] or [purrr::map()] and the resulting object prints or plots oddly, it is probably unclassed, and this function will fix that.
 #'
 #' @param x The object
 #'
@@ -172,6 +174,7 @@ as_stimlist <- function(x) {
 #'
 #' @return list of stimuli with tems
 #' @export
+#' @family tem
 #'
 #' @examples
 #' stimuli <- demo_stim()

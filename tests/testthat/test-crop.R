@@ -95,3 +95,21 @@ test_that("no images", {
   expect_equal(unique(diff[1, ]) |> length(), 1)
   expect_equal(unique(diff[2, ]) |> length(), 1)
 })
+
+# transparent fill ----
+test_that("transparent fill", {
+  stimuli <- demo_stim() |> mask(fill = "red")
+  fill <- "#00000066"
+  
+  x <- crop(stimuli, 1.2, .8, fill = fill)
+  fg <- patch(x, .45, .55)
+  expect_equal(fg[[1]], "#FF0000FF")
+  bg <- patch(x, 0, 10, 0, 1)
+  expect_equal(bg[[1]], fill)
+  
+  x <- crop(stimuli, 1.2, .8, fill = "none")
+  fg <- patch(x, .45, .55)
+  expect_equal(fg[[1]], "#FF0000FF")
+  bg <- patch(x, 0, 10, 0, 1)
+  expect_equal(bg[[1]], "transparent")
+})

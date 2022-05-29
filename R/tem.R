@@ -169,7 +169,7 @@ change_lines <- function(stimuli, line_id = 1, pts = NULL) {
 #' # (produces the 179-point Perception Lab template)
 #' demo_stim(1) |>
 #'   subset_tem(179:188, keep = FALSE) |>
-#'   draw_tem(pt.size = 10)
+#'   draw_tem()
 #' 
 #' # use features() to keep only points from a pre-defined set 
 #' # "gmm" is points used for geometric morphometrics
@@ -403,7 +403,6 @@ get_point <- function(stimuli, pt = 0) {
 #' @return named matrix of centroid x and y coordinates
 #' @export
 #' @family tem
-#' @family info
 #'
 #' @examples
 #' demo_stim() |> centroid()

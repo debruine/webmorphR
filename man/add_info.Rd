@@ -31,11 +31,12 @@ stimuli$f_multi$info |> str()
 }
 \seealso{
 Other info: 
-\code{\link{centroid}()},
 \code{\link{compare}()},
 \code{\link{get_info}()},
 \code{\link{get_point}()},
 \code{\link{height}()},
+\code{\link{metrics}()},
+\code{\link{rename_stim}()},
 \code{\link{width}()}
 }
 \concept{info}

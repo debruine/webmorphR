@@ -1,11 +1,31 @@
 #' Transform Images
+#' 
+#' Transform a base image in shape, color, and/or texture by the differences between two images.
+#' 
+#' @details 
+#' 
+#' ### Normalisation options
+#' 
+#' * none: averages will have all coordinates as the mathematical average of the coordinates in the component templates
+#' * twopoint: all images are first aligned to the 2 alignment points designated in `normpoint`. Their position is set to their position in the first image in stimuli
+#' * rigid: procrustes aligns all images to the position of the first image in stimuli
+#' 
+#' ### Sample contours
+#' 
+#' This interpolates more control points along the lines. This can improve the accuracy of averages and transforms. If you see a “feathery” appearance along lines that have many, close-together points, try turning this off.
+#' 
+#' ### Warp types
+#' 
+#' * multiscale: Implements multi-scale affine interpolation for image warping. This is the default, with a good balance between speed and accuracy
+#' * linear: Implements triangulated linear interpolation for image warping. Linear warping is least accurate, often resulting in image artifacts, but is very fast.
+#' * multiscalerb: Implements multi-scale rigid body interpolation for image warping. This decreases image artifacts in some circumstances, but is much slower.
 #'
 #' @param trans_img list of stimuli to transform 
 #' @param from_img negative transform dimension endpoint (0% image)
 #' @param to_img positive transform dimension endpoint (100% image)
 #' @param shape,color,texture amount to change along the vector defined by from_img and to_img (can range from -3 to +3)
 #' @param outname name to save each image as
-#' @param norm how to normalise the images
+#' @param norm how to normalise the images; see Details
 #' @param normpoint points for twopoint normalisation
 #' @param sample_contours whether to sample contours or just points
 #' @param warp warp type
@@ -19,6 +39,7 @@
 #'   stimuli <- demo_stim()
 #'   sexdim <- trans(stimuli, stimuli$f_multi, stimuli$m_multi,
 #'                   shape = c(fem = -0.5, masc = 0.5))
+#'   
 #'   sexdim |> draw_tem() |> label()
 #' }
 #'

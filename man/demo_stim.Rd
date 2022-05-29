@@ -13,26 +13,41 @@ demo_tems(pattern = NULL)
 demo_unstandard(pattern = NULL)
 }
 \arguments{
-\item{pattern}{defaults to all files}
+\item{pattern}{Vector of patterns to use to search for files, or a vector of image indices (e.g., 1:4 selects the first 4 images and their templates)}
 }
 \value{
-stimlist
+list of stimuli
 }
 \description{
-A convenience function to get demo stimuli
+A convenience function to get demo stimuli. See the Details below for citation and license info.
 }
 \details{
-\code{\link[=demo_stim]{demo_stim()}} is two composite faces with frl delineations; CC-BY https://doi.org/10.6084/m9.figshare.4055130.v1
+\itemize{
+\item \code{\link[=demo_stim]{demo_stim()}}: two composite faces with frl delineations; 500x500 pixels
+\item \code{\link[=demo_tems]{demo_tems()}}: an image with 5 different delineations; 675x900 pixels
+\item \code{\link[=demo_unstandard]{demo_unstandard()}}: a set of 10 composite faces with frl delineations; rotated, resized, and cropped so face position is not standard and each image is a different size (444 to 645 pixels)
+}
+\subsection{Citation}{
 
-\code{\link[=demo_tems]{demo_tems()}} is an image of the author, provided on a CC0 license, with 5 different delineations
+The images from \code{demo_stim()} and \code{demo_unstandard()} are usable on a CC-BY license, citing:
 
-\code{\link[=demo_unstandard]{demo_unstandard()}} is a set of 10 composite faces with frl delineations, rotated, resized, and cropped so face position is not standard and each image is a different size ; CC-BY https://doi.org/10.6084/m9.figshare.4055130.v1
+DeBruine, L. (2016).Young adult composite faces (Version1). figshare. doi: \href{https://doi.org/10.6084/m9.figshare.4055130.v1}{10.6084/m9.figshare.4055130.v1}.
+
+The image from \code{demo_tems()} is Lisa DeBruine (the author of webmorphR) and available on a CC-O license (no attribution needed).
+}
 }
 \examples{
-demo_stim()
+demo_stim() |> label()
 
+# visualise templates
 demo_tems() |> 
   draw_tem(pt.size = 10) |> 
-  plot(nrow = 2, maxwidth = 600)
-demo_unstandard() |> plot(nrow = 2, maxwidth = 600)
+  label() |>
+  plot(maxwidth = 1000)
+# visualise keeping relative sizes
+demo_unstandard() |> 
+  to_size(keep_rels = TRUE) |>
+  pad(80, 0, 0, 0) |>
+  label() |>
+  plot(nrow = 2, maxwidth = 1000)
 }

@@ -109,7 +109,7 @@ rotate <- function(stimuli, degrees = 0,
       
       # rotate on center
       rotimg <- centred_img[[1]]$img |>
-        magick::image_background(color = fill[i]) |>
+        magick::image_background(color = "none") |>
         magick::image_rotate(degrees[i])
       stimuli[[i]]$img <- magick::image_repage(rotimg)
       

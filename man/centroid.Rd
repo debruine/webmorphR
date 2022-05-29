@@ -33,19 +33,11 @@ Template functions
 \code{\link{features}()},
 \code{\link{get_point}()},
 \code{\link{remove_tem}()},
+\code{\link{require_tems}()},
 \code{\link{same_tems}()},
 \code{\link{squash_tem}()},
 \code{\link{subset_tem}()},
 \code{\link{tem_def}()},
 \code{\link{viz_tem_def}()}
-
-Other info: 
-\code{\link{add_info}()},
-\code{\link{compare}()},
-\code{\link{get_info}()},
-\code{\link{get_point}()},
-\code{\link{height}()},
-\code{\link{width}()}
 }
-\concept{info}
 \concept{tem}

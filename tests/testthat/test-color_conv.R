@@ -84,3 +84,8 @@ test_that("lab2rgb", {
   expect_equal(rgb, comp)
   
 })
+
+# none ----
+test_that("none", {
+  expect_equal(color_conv("none"), "none")
+})

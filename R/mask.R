@@ -161,11 +161,27 @@ mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
 
     }
 
-    svg <- sprintf(svg_text, w[i], h[i], strokecolor,
-                   abs(expand[i]), curves, fill[i])
-
-    maskimg <- magick::image_read_svg(svg)
-    stimuli[[i]]$img <- magick::image_composite(stimuli[[i]]$img, maskimg)
+    if (fill[i] == "none") {
+      svg <- sprintf(svg_text, w[i], h[i], strokecolor,
+                     abs(expand[i]), curves, "#000000")
+      
+      maskimg <- magick::image_read_svg(svg)
+      stimuli[[i]]$img <- magick::image_composite(
+        image = stimuli[[i]]$img,
+        composite_image = maskimg,
+        operator = "Over") |>
+        magick::image_transparent("#000000", fuzz = 0) |>
+        magick::image_background("none", flatten = TRUE)
+    } else {
+      svg <- sprintf(svg_text, w[i], h[i], strokecolor,
+                     abs(expand[i]), curves, fill[i])
+  
+      maskimg <- magick::image_read_svg(svg)
+      stimuli[[i]]$img <- magick::image_composite(
+        image = stimuli[[i]]$img,
+        composite_image = maskimg,
+        operator = "Over")
+    }
   }
 
   stimuli

@@ -46,6 +46,8 @@ color_conv <- function(color, alpha = 1,
   # handle NULL and NA
   if (is.null(color) || any(is.na(color))) {
     return(NULL)
+  } else if (any(color == "none")) {
+    return("none")
   }
   
   from <- match.arg(from)

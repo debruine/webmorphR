@@ -2,7 +2,7 @@
 % Please edit documentation in R/write_stim.R
 \name{write_stim}
 \alias{write_stim}
-\title{Write tems and images to files}
+\title{Write images and templates to files}
 \usage{
 write_stim(
   stimuli,
@@ -30,19 +30,24 @@ write_stim(
 list of saved paths
 }
 \description{
-Write tems and images to files
+Write images and templates to files
 }
 \examples{
 \dontrun{
-  # write demo stim as jpegs to directory ./test_faces
-  demo_stim() |> write_stim("test_faces", format = "jpg")
+# write demo stim as jpegs to directory ./test_faces
+demo_stim() |> 
+  write_stim("test_faces", format = "jpg")
 }
 }
 \seealso{
-Other stim: 
+Stimulus creating functions
+\code{\link{animate}()},
 \code{\link{as_stimlist}()},
+\code{\link{blank}()},
 \code{\link{new_stimlist}()},
 \code{\link{new_stim}()},
-\code{\link{read_stim}()}
+\code{\link{read_img}()},
+\code{\link{read_stim}()},
+\code{\link{read_tem}()}
 }
 \concept{stim}

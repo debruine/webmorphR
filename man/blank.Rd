@@ -9,20 +9,32 @@ blank(n = 1, width = 100, height = 100, color = "white", names = "img")
 \arguments{
 \item{n}{the number of images to return}
 
-\item{width}{width of the images}
+\item{width, height}{image dimensions}
 
-\item{height}{height of the images}
+\item{color}{background color, see \code{\link[=color_conv]{color_conv()}}}
 
-\item{color}{background colour of the images}
-
-\item{names}{names of the images}
+\item{names}{names of the images (appended with index if < n)}
 }
 \value{
-stimlist with labelled images
+list of stimuli
 }
 \description{
 Make blank images
 }
 \examples{
-blank(5, 100, 300, color = rainbow(5))
+stimuli <- blank(5, 100, 250, color = rainbow(5))
+
+label(stimuli, size = 20)
 }
+\seealso{
+Stimulus creating functions
+\code{\link{animate}()},
+\code{\link{as_stimlist}()},
+\code{\link{new_stimlist}()},
+\code{\link{new_stim}()},
+\code{\link{read_img}()},
+\code{\link{read_stim}()},
+\code{\link{read_tem}()},
+\code{\link{write_stim}()}
+}
+\concept{stim}

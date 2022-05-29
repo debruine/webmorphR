@@ -14,21 +14,21 @@ loop(stimuli, steps = 10, ...)
 \item{...}{arguments to pass to \code{\link[=trans]{trans()}}}
 }
 \value{
-list of stimuli
+list of stimuli containing each step of the loop
 }
 \description{
-Loop
+Morph between each image in a list of stimuli, looping back to the start.
 }
 \examples{
 \dontrun{
-  stimuli <- demo_stim() |> 
-    resize(300) |>
-    rep(4) |>
-    rotate(seq(0, 360-45, 45))
-    
-  loop <- loop(stimuli, 5)
-  
-  animate(loop, 10)
+# align and crop images
+stimuli <- demo_unstandard(1:5) |> 
+  align() |> crop_tem()
+
+loop <- loop(stimuli, 5)
+
+# create an animated gif
+animate(loop, fps = 10)
 }
 }
 \seealso{

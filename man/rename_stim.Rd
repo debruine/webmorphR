@@ -40,3 +40,14 @@ demo_stim() |>
   rename_stim(prefix = "new_") |>
   names()
 }
+\seealso{
+Other info: 
+\code{\link{add_info}()},
+\code{\link{compare}()},
+\code{\link{get_info}()},
+\code{\link{get_point}()},
+\code{\link{height}()},
+\code{\link{metrics}()},
+\code{\link{width}()}
+}
+\concept{info}

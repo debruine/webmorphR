@@ -7,7 +7,7 @@
 as_ggplot(stimuli, ...)
 }
 \arguments{
-\item{stimuli}{list of stimuli (usually the result of \code{\link[=plot_stim]{plot_stim()}})}
+\item{stimuli}{list of stimuli}
 
 \item{...}{Additional arguments to pass to \code{\link[=plot_stim]{plot_stim()}} if stimuli contains more than 1 image}
 }
@@ -15,10 +15,9 @@ as_ggplot(stimuli, ...)
 a ggplot object
 }
 \description{
-Convert stimuli to a ggplot
+Convert a stimulus or list of stimuli into a ggplot, which can be further used with ggplot functions.
 }
 \examples{
-\donttest{if (require("ggplot2")) {
 stimuli <- demo_stim()
 gg <- as_ggplot(stimuli)
 
@@ -34,11 +33,13 @@ gg +
     title = "This is a ggplot!",
     caption = "Made with webmorphR"
   )
-}}
 }
 \seealso{
 Visualisation functions
 \code{\link{draw_tem}()},
+\code{\link{gglabel}()},
+\code{\link{label}()},
+\code{\link{mlabel}()},
 \code{\link{plot.stimlist}()},
 \code{\link{plot.stim}()},
 \code{\link{plot_rows}()},

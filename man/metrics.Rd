@@ -30,3 +30,14 @@ fwh <- "abs(max(x[113],x[112],x[114])-min(x[110],x[111],x[109]))/abs(y[90]-min(y
 metrics(stimuli, fwh)
 
 }
+\seealso{
+Other info: 
+\code{\link{add_info}()},
+\code{\link{compare}()},
+\code{\link{get_info}()},
+\code{\link{get_point}()},
+\code{\link{height}()},
+\code{\link{rename_stim}()},
+\code{\link{width}()}
+}
+\concept{info}

@@ -20,10 +20,15 @@ list with class stim
 Make a new stim
 }
 \seealso{
-Other stim: 
+Stimulus creating functions
+\code{\link{animate}()},
 \code{\link{as_stimlist}()},
+\code{\link{blank}()},
 \code{\link{new_stimlist}()},
+\code{\link{read_img}()},
 \code{\link{read_stim}()},
+\code{\link{read_tem}()},
 \code{\link{write_stim}()}
 }
 \concept{stim}
+\keyword{internal}

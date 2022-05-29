@@ -83,3 +83,4 @@ test_that("multiple tems", {
   path <- system.file("extdata/tem_examples", package = "webmorphR")
   expect_silent(s <- read_stim(path))
 })
+

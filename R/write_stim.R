@@ -1,4 +1,4 @@
-#' Write tems and images to files
+#' Write images and templates to files
 #'
 #' @param stimuli list of stimuli
 #' @param dir Directory to save to
@@ -13,8 +13,9 @@
 #'
 #' @examples
 #' \dontrun{
-#'   # write demo stim as jpegs to directory ./test_faces
-#'   demo_stim() |> write_stim("test_faces", format = "jpg")
+#' # write demo stim as jpegs to directory ./test_faces
+#' demo_stim() |> 
+#'   write_stim("test_faces", format = "jpg")
 #' }
 write_stim <- function(stimuli, dir = ".", 
                        names = NULL, format = "png", ..., 
@@ -26,7 +27,9 @@ write_stim <- function(stimuli, dir = ".",
     if (length(names) > n) {
       names <- names[1:n]
     } else if (length(names) < n) {
-      names <- rep_len(names, n) |> paste0("_", 1:n)
+      idx <- as.character(n) |> nchar() |>
+        formatC(x = 1:n, digits = 0, flag = "0")
+      names <- rep_len(names, n) |> paste0("_", idx)
     }
     
     stimuli <- rename_stim(stimuli, names)
@@ -59,19 +62,19 @@ write_stim <- function(stimuli, dir = ".",
       has_ext <- grepl("\\.(png|gif|jpg|jpeg)$", tolower(name))
       if (has_ext) {
         img_format <- gsub("^.+\\.", "", tolower(name)) |>
-          switch(png = "png",
-                 jpg = "jpeg",
+          switch(png  = "png",
+                 jpg  = "jpeg",
                  jpeg = "jpeg",
-                 gif = "gif")
+                 gif  = "gif")
         # remove ext from name for tem
         name <- gsub("\\.(png|gif|jpg|jpeg)$", "", 
                      name, ignore.case = TRUE)
       }
       
       ext <- switch(img_format,
-                    png = ".png",
+                    png  = ".png",
                     jpeg = ".jpg",
-                    gif = ".gif")
+                    gif  = ".gif")
       
       imgpath <- file.path(dir, paste0(name, ext))
       

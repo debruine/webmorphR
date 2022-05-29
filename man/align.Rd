@@ -58,23 +58,25 @@ demo_unstandard(1:3) |>
         width = 300, height = 300)
 
 \donttest{
-orig <- demo_unstandard(1:5)
-bg <- patch(orig)
+orig <- demo_unstandard()
 
 # align to bottom-centre of nose (average position)
-one_pt <- align(orig, pt1 = 55, pt2 = 55, fill = bg)
+one_pt <- align(orig, pt1 = 55, pt2 = 55, fill = "dodgerblue")
 
 # align to pupils of second image
-two_pt <- align(orig, ref_img = 2, fill = bg)
+two_pt <- align(orig, ref_img = 2, fill = "dodgerblue")
 
 # procrustes align to average position
-proc <- align(orig, procrustes = TRUE, fill = bg)
+proc <- align(orig, procrustes = TRUE, fill = "dodgerblue")
 
 # visualise all alignments
-c(orig, one_pt, two_pt, proc) |>
-  pad(1, fill = "black") |>
-  to_size() |>
-  plot(nrow = 4, maxwidth = 1000)
+plot_rows(
+  "Original" = orig,
+  "1-point" = one_pt,
+  "2-point" = two_pt,
+  "Procrustes" = proc,
+  maxwidth = 1000
+)
 }
 }
 \seealso{

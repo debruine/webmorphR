@@ -35,3 +35,15 @@ demo_stim(1) |>
   animate(fps = 10)
 }
 }
+\seealso{
+Stimulus creating functions
+\code{\link{as_stimlist}()},
+\code{\link{blank}()},
+\code{\link{new_stimlist}()},
+\code{\link{new_stim}()},
+\code{\link{read_img}()},
+\code{\link{read_stim}()},
+\code{\link{read_tem}()},
+\code{\link{write_stim}()}
+}
+\concept{stim}

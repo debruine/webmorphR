@@ -108,7 +108,7 @@ crop <- function(stimuli,
       )
 
       # make background image with fill
-      bg <- magick::image_blank(w, h, color = fill[i])
+      bg <- magick::image_blank(w, h, color = fill[i]) 
       offset <- magick::geometry_point(
         x = max(0, -x_off[i]),
         y = max(0, -y_off[i])
@@ -117,6 +117,7 @@ crop <- function(stimuli,
       stimuli[[i]]$img <- magick::image_composite(
         image = bg,
         composite_image = newimg,
+        operator = "Over",
         offset = offset
       )
       

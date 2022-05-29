@@ -37,7 +37,7 @@ plot_stim(
 stimlist with the plot image (no templates)
 }
 \description{
-Show all your stimuli in a grid.
+Show all the stimuli in a grid. You can use \code{\link[=plot]{plot()}} as an alias.
 }
 \examples{
 stimuli <- demo_stim() |> resize(0.5)
@@ -64,6 +64,9 @@ plot(n, nrow = 2, byrow = FALSE)
 Visualisation functions
 \code{\link{as_ggplot}()},
 \code{\link{draw_tem}()},
+\code{\link{gglabel}()},
+\code{\link{label}()},
+\code{\link{mlabel}()},
 \code{\link{plot.stimlist}()},
 \code{\link{plot.stim}()},
 \code{\link{plot_rows}()}

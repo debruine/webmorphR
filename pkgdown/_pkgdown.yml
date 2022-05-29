@@ -46,9 +46,10 @@ navbar:
       aria-label: OSF
 
 figures:
-  dev: ragg::agg_png
+  dev: grDevices::png
   dpi: 96
-  dev.args: []
+  dev.args: 
+    bg: "#F1F3F5"
   fig.ext: png
   fig.width: 7.2916667
   fig.height: ~
@@ -71,92 +72,44 @@ reference:
 - title: Stimuli
   desc: Read, write, or access stimuli
   contents:
-  - '`blank`'
   - starts_with("demo_")
-  - '`read_stim`'
-  - '`write_stim`'
+  - has_concept("stim")
 - title: Webmorph
-  desc: Functions that link to webmorph.org
+  desc: Average or tansform images using webmorph.org
   contents:
-  - '`avg`'
-  - '`continuum`'
-  - '`loop`'
-  - '`symmetrize`'
-  - '`trans`'
-- title: Delineation
-  desc: Functions that create or alter delineations
-  contents:
-  - '`auto_delin`'
-  - '`average_tem`'
-  - '`change_lines`'
-  - '`delin`'
-  - '`draw_tem`'
-  - '`squash_tem`'
-  - '`subset_tem`'
-  - '`remove_tem`'
-- title: Plotting
+  - has_concept("webmorph")
+- title: Visualisation
   desc: ~
   contents:
-  - '`as_ggplot`'
-  - '`gglabel`'
-  - '`label`'
-  - '`mlabel`'
-  - '`plot_rows`'
-  - '`plot_stim`'
+  - has_concept("viz")
 - title: Image Manipulation
   desc: ~
   contents:
-  - '`align`'
-  - '`animate`'
-  - '`crop`'
-  - '`crop_tem`'
-  - '`greyscale`'
-  - '`horiz_eyes`'
-  - '`image_func`'
-  - '`mask`'
-  - '`mask_oval`'
-  - '`mirror`'
-  - '`pad`'
-  - '`resize`'
-  - '`rotate`'
-  - '`to_size`'
+  - has_concept("manipulators")
+- title: Delineation
+  desc: Create, alter, or access delineations
+  contents:
+  - has_concept("tem")
 - title: Metrics/Info
   desc: ~
   contents:
-  - '`add_info`'
-  - '`centroid`'
-  - '`compare`'
-  - '`get_info`'
-  - '`get_point`'
-  - '`height`'
-  - '`metrics`'
-  - '`rename_stim`'
-  - '`width`'
+  - has_concept("info")
 - title: Helper functions
   desc: ~
   contents:
+  - '`bounds`'
+  - '`color_conv`'
   - '`features`'
   - '`image_func_types`'
+  - '`patch`'
   - '`social_media_size`'
   - '`subset.stimlist`'
   - '`wm_opts`'
   - '`wm_opts_defaults`'
 - title: Geomorph functions
-  desc: Functions to translate between formats used by webmorphR and geomorph
+  desc: Functions to create geomorph-compatible formats
   contents:
   - '`tems_to_array`'
   - '`write_tps`'
-- title: Utilities
-  desc: Mainly internally used functions, but might be of interest to some
-  contents:
-  - '`as_stimlist`'
-  - '`bounds`'
-  - '`color_conv`'
-  - '`new_stim`'
-  - '`new_stimlist`'
-  - '`patch`'
-  - '`require_tems`'
-  - '`same_tems`'
-  - '`tem_def`'
-  - '`viz_tem_def`'
+
 

@@ -23,6 +23,9 @@ Plot stim
 Visualisation functions
 \code{\link{as_ggplot}()},
 \code{\link{draw_tem}()},
+\code{\link{gglabel}()},
+\code{\link{label}()},
+\code{\link{mlabel}()},
 \code{\link{plot.stimlist}()},
 \code{\link{plot_rows}()},
 \code{\link{plot_stim}()}

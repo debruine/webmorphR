@@ -65,4 +65,15 @@ mlabel(stimuli,
 }
 \seealso{
 \code{\link[=gglabel]{gglabel()}} for a labeller using syntax like \code{\link[ggplot2:annotate]{ggplot2::annotate()}}
+
+Visualisation functions
+\code{\link{as_ggplot}()},
+\code{\link{draw_tem}()},
+\code{\link{gglabel}()},
+\code{\link{label}()},
+\code{\link{plot.stimlist}()},
+\code{\link{plot.stim}()},
+\code{\link{plot_rows}()},
+\code{\link{plot_stim}()}
 }
+\concept{viz}

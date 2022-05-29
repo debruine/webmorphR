@@ -2,7 +2,7 @@
 % Please edit documentation in R/continuum.R
 \name{continuum}
 \alias{continuum}
-\title{Continuum}
+\title{Morph between two images}
 \usage{
 continuum(from_img, to_img, from = 0, to = 1, by = 0.1, ...)
 }
@@ -17,19 +17,21 @@ continuum(from_img, to_img, from = 0, to = 1, by = 0.1, ...)
 
 \item{by}{step size}
 
-\item{...}{arguments to pass to \code{\link{trans}}}
+\item{...}{arguments to pass to \code{\link[=trans]{trans()}}}
 }
 \value{
-stimlist
+a list of stimuli containing each step of the continuum
 }
 \description{
-Continuum
+Morph from one image to another in the specified steps.
 }
 \examples{
 \dontrun{
-  stimuli <- demo_stim()
-  cont <- continuum(stimuli$f_multi, stimuli$m_multi)
-  animate(cont, 20, rev = TRUE)
+stimuli <- demo_stim()
+cont <- continuum(stimuli$f_multi, stimuli$m_multi)
+
+# create an animated gif
+animate(cont, fps = 10, rev = TRUE)
 }
 }
 \seealso{

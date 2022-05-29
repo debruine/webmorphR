@@ -30,6 +30,7 @@ Template functions
 \code{\link{draw_tem}()},
 \code{\link{features}()},
 \code{\link{remove_tem}()},
+\code{\link{require_tems}()},
 \code{\link{same_tems}()},
 \code{\link{squash_tem}()},
 \code{\link{subset_tem}()},
@@ -38,10 +39,11 @@ Template functions
 
 Other info: 
 \code{\link{add_info}()},
-\code{\link{centroid}()},
 \code{\link{compare}()},
 \code{\link{get_info}()},
 \code{\link{height}()},
+\code{\link{metrics}()},
+\code{\link{rename_stim}()},
 \code{\link{width}()}
 }
 \concept{info}

@@ -7,6 +7,7 @@
 #'
 #' @return magick image
 #' @export
+#' @family stim
 #'
 #' @examples
 #' \donttest{

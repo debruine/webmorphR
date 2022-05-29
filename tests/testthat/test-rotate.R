@@ -181,3 +181,22 @@ test_that("rotated_size", {
   expect_equal(size, expected)
 })
 
+# transparent fill ----
+test_that("transparent fill", {
+  stimuli <- demo_stim() |> mask(fill = "red")
+  degrees = 45
+  fill <- "#00000066"
+  
+  x <- rotate(stimuli, degrees, fill = fill)
+  fg <- patch(x, .45, .55)
+  expect_equal(fg[[1]], "#FF0000FF")
+  bg <- patch(x, 0, 10, 0, 10)
+  expect_equal(bg[[1]], fill)
+  
+  x <- rotate(stimuli, degrees, fill = "none")
+  fg <- patch(x, .45, .55)
+  expect_equal(fg[[1]], "#FF0000FF")
+  bg <- patch(x, 0, 10, 0, 10)
+  expect_equal(bg[[1]], "transparent")
+})
+

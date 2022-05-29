@@ -13,10 +13,10 @@ as_stimlist(x)
 A stimlist
 }
 \description{
-Checks if an object is a list of class stimlist. If class stim, wrap in stimlist. If a properly structured list without the right class, add the right class.
+Checks if an object is a stimulus or list of stimuli and repairs common problems.
 }
 \details{
-Some webmorphR functions, like \code{\link[=plot]{plot()}} and \code{\link[=print]{print()}} require objects to have a "stimlist" class. If you've processed a list of stimuli withiterator functions like \code{\link[=lapply]{lapply()}} or \code{\link[purrr:map]{purrr::map()}} functions and the resulting object prints or plots oddly, it is probably unclassed, and this function will fix that.
+Some webmorphR functions, like \code{\link[=plot]{plot()}} and \code{\link[=print]{print()}} require objects to have a "stimlist" class. If you've processed a list of stimuli with iterator functions like \code{\link[=lapply]{lapply()}} or \code{\link[purrr:map]{purrr::map()}} and the resulting object prints or plots oddly, it is probably unclassed, and this function will fix that.
 }
 \examples{
 stimuli <- demo_stim() |>
@@ -38,10 +38,14 @@ plot(s)
 
 }
 \seealso{
-Other stim: 
+Stimulus creating functions
+\code{\link{animate}()},
+\code{\link{blank}()},
 \code{\link{new_stimlist}()},
 \code{\link{new_stim}()},
+\code{\link{read_img}()},
 \code{\link{read_stim}()},
+\code{\link{read_tem}()},
 \code{\link{write_stim}()}
 }
 \concept{stim}

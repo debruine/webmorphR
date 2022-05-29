@@ -1,6 +1,8 @@
 #' Convert stimuli to a ggplot
+#' 
+#' Convert a stimulus or list of stimuli into a ggplot, which can be further used with ggplot functions.
 #'
-#' @param stimuli list of stimuli (usually the result of [plot_stim()])
+#' @param stimuli list of stimuli 
 #' @param ... Additional arguments to pass to [plot_stim()] if stimuli contains more than 1 image
 #'
 #' @return a ggplot object
@@ -8,7 +10,6 @@
 #' @family viz
 #'
 #' @examples
-#' \donttest{if (require("ggplot2")) {
 #' stimuli <- demo_stim()
 #' gg <- as_ggplot(stimuli)
 #' 
@@ -24,12 +25,7 @@
 #'     title = "This is a ggplot!",
 #'     caption = "Made with webmorphR"
 #'   )
-#' }}
 as_ggplot <- function(stimuli, ...) {
-  if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("You need to install the package ggplot2 to use as_ggplot()")
-  }
-  
   stimuli <- as_stimlist(stimuli)
   
   if (length(stimuli) > 1) {

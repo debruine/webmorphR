@@ -16,7 +16,7 @@ avg(
 
 \item{texture}{logical; whether textured should be averaged}
 
-\item{norm}{how to normalise}
+\item{norm}{how to normalise; see Details}
 
 \item{normpoint}{points for twopoint normalisation}
 }
@@ -24,11 +24,29 @@ avg(
 list of stimuli with the average image and template
 }
 \description{
-Average Images
+Create an average from a list of delineated stimuli.
+}
+\details{
+\subsection{Normalisation options}{
+\itemize{
+\item none: averages will have all coordinates as the mathematical average of the coordinates in the component templates
+\item twopoint: all images are first aligned to the 2 alignment points designated in \code{normpoint}. Their position is set to their position in the first image in stimuli
+\item rigid: procrustes aligns all images to the position of the first image in stimuli
+}
+}
+
+\subsection{Texture}{
+
+This applies a representative texture to the average, resulting in composite images with more realistic texture instead of the very smooth, bland texture most other averaging programs create. See the papers below for methodological details.
+
+B. Tiddeman, M. Stirrat and D. Perrett (2005). Towards realism in facial prototyping: results of a wavelet MRF method. Theory and Practice of Computer Graphics.
+
+B. Tiddeman, D.M. Burt and D. Perrett (2001). Computer Graphics in Facial Perception Research. IEEE Computer Graphics and Applications, 21(5), 42-50.
+}
 }
 \examples{
 \dontrun{
-  avg <- demo_stim() |> avg()
+  demo_stim() |> avg()
 }
 }
 \seealso{

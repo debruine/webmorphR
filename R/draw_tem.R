@@ -30,10 +30,10 @@
 #'          pt.shape = "cross",
 #'          pt.color = "red", 
 #'          pt.alpha = 1,
-#'          pt.size = 10,
+#'          pt.size = 15,
 #'          line.color = rgb(0, 0, 0),
 #'          line.alpha = 0.5,
-#'          line.size = 2)
+#'          line.size = 5)
 #' 
 #' # indexed template
 #' draw_tem(stimuli, 
