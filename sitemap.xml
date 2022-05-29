@@ -211,7 +211,13 @@
     <loc>https://debruine.github.io/webmorphR/reference/procrustes_coords.html</loc>
   </url>
   <url>
+    <loc>https://debruine.github.io/webmorphR/reference/read_img.html</loc>
+  </url>
+  <url>
     <loc>https://debruine.github.io/webmorphR/reference/read_stim.html</loc>
+  </url>
+  <url>
+    <loc>https://debruine.github.io/webmorphR/reference/read_tem.html</loc>
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/readline_check.html</loc>

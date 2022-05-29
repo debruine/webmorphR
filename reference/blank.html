@@ -89,23 +89,35 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>n</dt>
 <dd><p>the number of images to return</p></dd>
-<dt>width</dt>
-<dd><p>width of the images</p></dd>
-<dt>height</dt>
-<dd><p>height of the images</p></dd>
+<dt>width, height</dt>
+<dd><p>image dimensions</p></dd>
 <dt>color</dt>
-<dd><p>background colour of the images</p></dd>
+<dd><p>background color, see <code><a href="color_conv.html">color_conv()</a></code></p></dd>
 <dt>names</dt>
-<dd><p>names of the images</p></dd>
+<dd><p>names of the images (appended with index if &lt; n)</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>stimlist with labelled images</p>
+    <p>list of stimuli</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>Stimulus creating functions
+<code><a href="animate.html">animate</a>()</code>,
+<code><a href="as_stimlist.html">as_stimlist</a>()</code>,
+<code><a href="new_stimlist.html">new_stimlist</a>()</code>,
+<code><a href="new_stim.html">new_stim</a>()</code>,
+<code><a href="read_img.html">read_img</a>()</code>,
+<code><a href="read_stim.html">read_stim</a>()</code>,
+<code><a href="read_tem.html">read_tem</a>()</code>,
+<code><a href="write_stim.html">write_stim</a>()</code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">blank</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">100</span>, <span class="fl">300</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">rainbow</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu">blank</span><span class="op">(</span><span class="fl">5</span>, <span class="fl">100</span>, <span class="fl">250</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">rainbow</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="fu"><a href="label.html">label</a></span><span class="op">(</span><span class="va">stimuli</span>, size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="blank-1.png" alt="" width="700" height="353"></span>
 </code></pre></div>
     </div>

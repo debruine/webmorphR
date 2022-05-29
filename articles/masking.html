@@ -179,6 +179,28 @@ always FALSE.</p>
 <span class="co">#&gt; [25] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span>
 <span class="co">#&gt; [37] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></code></pre></div>
 <div class="section level3">
+<h3 id="visualise-delineations">Visualise delineations<a class="anchor" aria-label="anchor" href="#visualise-delineations"></a>
+</h3>
+<p>Use the <code><a href="../reference/draw_tem.html">draw_tem()</a></code> function to show the delineations. By
+default, points are translucent green circles and lines are translucent
+blue.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span></code></pre></div>
+<p><img src="images/masking/unnamed-chunk-6-1.png" width="100%"></p>
+<p>You can change the default colours and translucency with the
+<code>line.color</code> <code>pt.color</code> and
+<code>line.alpha</code> and <code>pt.alpha</code> arguments. Change the
+point shape with <code>pt.shape</code>. Remove the image and set the
+background color with the <code>bg</code> argument.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
+  <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>line.color <span class="op">=</span> <span class="st">"grey"</span>, line.size <span class="op">=</span> <span class="fl">1</span>, line.alpha <span class="op">=</span> <span class="fl">0.2</span>, 
+           pt.color <span class="op">=</span> <span class="st">"red"</span>, pt.size <span class="op">=</span> <span class="fl">5</span>, pt.alpha <span class="op">=</span> <span class="fl">1</span>,
+           pt.shape <span class="op">=</span> <span class="st">"cross"</span>, bg <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span> <span class="co"># crop with 20px space around the largest tem</span></code></pre></div>
+<p><img src="images/masking/delin-custom-1.png" width="100%"></p>
+</div>
+<div class="section level3">
 <h3 id="templates">Templates<a class="anchor" aria-label="anchor" href="#templates"></a>
 </h3>
 <p>Delineations need to follow the same template in order to work
@@ -210,37 +232,37 @@ of this.</li>
 <li>fpp83: The 83-point Face++ template. This is an old template, but I
 keep it for consistency with the old auto-delineation template on <a href="https://webmorph.org" class="external-link">webmorph.org</a>.</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_london</a></span><span class="op">(</span><span class="st">"030"</span><span class="op">)</span>
 <span class="va">dlib7</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">s</span>, <span class="st">"dlib7"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">dlib70</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">s</span>, <span class="st">"dlib70"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">fpp106</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">s</span>, <span class="st">"fpp106"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">fpp83</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">s</span>, <span class="st">"fpp83"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">s</span>, <span class="va">dlib7</span>, <span class="va">dlib70</span>, <span class="va">fpp106</span>, <span class="va">fpp83</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/rename_stim.html">rename_stim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"frl"</span>, <span class="st">"dlib7"</span>, <span class="st">"dlib70"</span>, <span class="st">"fpp106"</span>, <span class="st">"fpp83"</span><span class="op">)</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">.15</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/gglabel.html">gglabel</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
-<p><img src="images/masking/unnamed-chunk-7-1.png" width="100%"></p>
+<p><img src="images/masking/unnamed-chunk-8-1.png" width="100%"></p>
 <p>The “smiling” demo dataset doesn’t have FRL templates yet (it will
 soon), but can demonstrate how the automatic delineation algorithms deal
 with open mouths.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">smile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_smiling</a></span><span class="op">(</span><span class="st">"030"</span><span class="op">)</span>
 <span class="va">dlib7s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">smile</span>, <span class="st">"dlib7"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">dlib70s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">smile</span>, <span class="st">"dlib70"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">fpp106s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">smile</span>, <span class="st">"fpp106"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">fpp83s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">smile</span>, <span class="st">"fpp83"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dlib7s</span>, <span class="va">dlib70s</span>, <span class="va">fpp106s</span>, <span class="va">fpp83s</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/rename_stim.html">rename_stim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"dlib7"</span>, <span class="st">"dlib70"</span>, <span class="st">"fpp106"</span>, <span class="st">"fpp83"</span><span class="op">)</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">.15</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/gglabel.html">gglabel</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
-<p><img src="images/masking/unnamed-chunk-9-1.png" width="100%"></p>
+<p><img src="images/masking/unnamed-chunk-10-1.png" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="automatic-delineation">Automatic Delineation<a class="anchor" aria-label="anchor" href="#automatic-delineation"></a>
@@ -257,7 +279,7 @@ without transferring them to a third-party service. These files are big
 (~100MB) and it’s tricky to include on CRAN, so you can download them
 from github. I’ll be training more templates to include in this package
 soon.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"debruine/webmorphR.dlib"</span><span class="op">)</span></code></pre></div>
 <p>This also requires <a href="https://rstudio.github.io/reticulate/" class="external-link">reticulate</a>, python and
 the installation of a few packages, and can be tricky.</p>
@@ -272,17 +294,17 @@ corners of the eyes, and their midpoints) and works without access to
 external services. It uses Davis King’s <a href="https://github.com/davisking/dlib-models#shape_predictor_5_face_landmarksdatbz2" class="external-link">shape_predictor_5_face_landmarks.dat</a>.</p>
 <p>A better (but slower) option is “dlib70”, a 70-point template (68
 plus 2 added centre eye points) from Davis King’s <a href="https://github.com/davisking/dlib-models#shape_predictor_68_face_landmarksdatbz2" class="external-link">shape_predictor_68_face_landmarks.dat</a>.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">frl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="st">"m_multi"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">.8</span>, <span class="fl">.8</span><span class="op">)</span>
 <span class="va">dlib7</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">frl</span>, <span class="st">"dlib7"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">dlib70</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">frl</span>, <span class="st">"dlib70"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="images/masking/unnamed-chunk-12-1.png" width="100%"></p>
+<p><img src="images/masking/unnamed-chunk-13-1.png" width="100%"></p>
 <p>You can also use your own landmark file by including it with the
 argument <code>model_path</code>. Learn more about <a href="https://pyimagesearch.com/2017/04/03/facial-landmarks-dlib-opencv-python/" class="external-link">training
 landmark models</a> or search for pre-trained models, such as this <a href="https://github.com/codeniko/shape_predictor_81_face_landmarks" class="external-link">81-point
 model</a>. (I don’t think it handles the hairline well, so am working on
 training my own model using stimuli more typical to face research.)</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="st">"https://github.com/codeniko/shape_predictor_81_face_landmarks/raw/master/shape_predictor_81_face_landmarks.dat"</span>, <span class="st">"dlib81.dat"</span><span class="op">)</span>
 
 <span class="va">dlib_custom</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">frl</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, 
@@ -291,14 +313,14 @@ training my own model using stimuli more typical to face research.)</p>
 <span class="va">dlib_custom</span> |&gt; 
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.shape <span class="op">=</span> <span class="st">"index"</span>, 
            pt.size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></code></pre></div>
-<p><img src="images/masking/unnamed-chunk-13-1.png" width="100%"></p>
+<p><img src="images/masking/unnamed-chunk-14-1.png" width="100%"></p>
 <p>I added the lines and pupil centres to the existing 5-point and
 68-point shape landmark files for webmorphR; you can add your own lines
 with <code><a href="../reference/change_lines.html">change_lines()</a></code>. Yes, all of the available landmark
 files use a bonkers numbering system like this. The lines don’t do much
 for image processing, but do help you to visually assess the accuracy of
 the delineation.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dlib_custom_lines</span> <span class="op">&lt;-</span> <span class="va">dlib_custom</span> |&gt;
   <span class="fu"><a href="../reference/change_lines.html">change_lines</a></span><span class="op">(</span>line_id <span class="op">=</span> <span class="st">"face"</span>, pts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">16</span>, <span class="fl">78</span>, <span class="fl">74</span>, <span class="fl">79</span>, <span class="fl">73</span>, <span class="fl">72</span>, <span class="fl">80</span>, 
                                          <span class="fl">71</span>, <span class="fl">70</span>, <span class="fl">69</span>, <span class="fl">68</span>, <span class="fl">76</span>, <span class="fl">75</span>, <span class="fl">77</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> |&gt;
@@ -317,7 +339,7 @@ the delineation.</p>
 
 <span class="va">dlib_custom_lines</span> |&gt;
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="images/masking/unnamed-chunk-14-1.png" width="100%"></p>
+<p><img src="images/masking/unnamed-chunk-15-1.png" width="100%"></p>
 </div>
 <div class="section level4">
 <h4 id="face">Face++<a class="anchor" aria-label="anchor" href="#face"></a>
@@ -335,10 +357,10 @@ restart R to load these into your environment.</p>
 <span class="va">FACEPLUSPLUS_SECRET</span><span class="op">=</span><span class="st">"1234567890abcdefghijk"</span></code></pre>
 <p>Now you can access the 106-point (fpp106) and 83-point (fpp83)
 templates. Remember, this uploads your images to the Face++ website.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fpp83</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">frl</span>, <span class="st">"fpp83"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">fpp106</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="va">frl</span>, <span class="st">"fpp106"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="images/masking/unnamed-chunk-15-1.png" width="100%"></p>
+<p><img src="images/masking/unnamed-chunk-16-1.png" width="100%"></p>
 <p>The 83-point template has a confusing structure and is the only
 template where the first two points aren’t the left and right pupil, so
 I don’t recommend using it, but it’s available for consistency with the
@@ -347,7 +369,7 @@ old method used on <a href="https://webmorph.org" class="external-link">webmorh.
 face. By default, they return the delineation for the first face (I’m
 not entirely ure how they decide which is first), but you can set the
 face argument to another number if your images have multiple faces.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># combine two faces into one image with a border</span>
 <span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span> |&gt; 
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>padding <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> |&gt; 
@@ -359,7 +381,7 @@ face argument to another number if your images have multiple faces.</p>
 
 <span class="co"># add template viz and plot</span>
 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">face1</span>, <span class="va">face2</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<p><img src="images/masking/unnamed-chunk-16-1.png" width="100%"></p>
+<p><img src="images/masking/unnamed-chunk-17-1.png" width="100%"></p>
 </div>
 </div>
 <div class="section level3">
@@ -369,32 +391,10 @@ face argument to another number if your images have multiple faces.</p>
 experimental) shiny app that lets you adjust delineations manually. If
 you notice that an auto-delineation isn’t quite right, you can open up
 the stimuli using <code><a href="../reference/delin.html">delin()</a></code> and manually adjust it.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="st">"dlib7"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="va">manual_delin</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/delin.html">delin</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span></code></pre></div>
 <video controls="controls" width="800" height="618" name="Manual Delineation Shiny App Demo"><source src="images/masking/webmorphR_delin_demo.mov"></source></video>
-</div>
-<div class="section level3">
-<h3 id="visualise-delineations">Visualise delineations<a class="anchor" aria-label="anchor" href="#visualise-delineations"></a>
-</h3>
-<p>Use the <code><a href="../reference/draw_tem.html">draw_tem()</a></code> function to show the delineations. By
-default, points are translucent green circles and lines are translucent
-blue.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span></code></pre></div>
-<p><img src="images/masking/unnamed-chunk-18-1.png" width="100%"></p>
-<p>You can change the default colours and translucency with the
-<code>line.color</code> <code>pt.color</code> and
-<code>line.alpha</code> and <code>pt.alpha</code> arguments. Change the
-point shape with <code>pt.shape</code>. Remove the image and set the
-background color with the <code>bg</code> argument.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>line.color <span class="op">=</span> <span class="st">"grey"</span>, line.size <span class="op">=</span> <span class="fl">1</span>, line.alpha <span class="op">=</span> <span class="fl">0.2</span>, 
-           pt.color <span class="op">=</span> <span class="st">"red"</span>, pt.size <span class="op">=</span> <span class="fl">5</span>, pt.alpha <span class="op">=</span> <span class="fl">1</span>,
-           pt.shape <span class="op">=</span> <span class="st">"cross"</span>, bg <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">20</span><span class="op">)</span> <span class="co"># crop with 20px space around the largest tem</span></code></pre></div>
-<p><img src="images/masking/delin-custom-1.png" width="100%"></p>
 </div>
 </div>
 <div class="section level2">
@@ -412,10 +412,6 @@ webmorph.org) or the dlib70 template.</p>
 <code class="sourceCode R"><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"left_eye"</span>, <span class="st">"right_eye"</span><span class="op">)</span>
 <span class="co">#&gt;  [1]  0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24</span>
 <span class="co">#&gt; [26] 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43</span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="subset-template-1">Subset template<a class="anchor" aria-label="anchor" href="#subset-template-1"></a>
-</h3>
 <p>The “gmm” features are the eyebrows, eyes, nose, and mouth points,
 plus the face oval. This is a common subset to use for geometric
 morphometric analyses. Use the <code><a href="../reference/subset_tem.html">subset_tem()</a></code> function to
@@ -443,13 +439,44 @@ add points manually.</p>
   <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="va">keep_pts</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
 <p><img src="images/masking/point-remove-1.png" width="100%"></p>
+<p>Here are all of the available named features. The feature “gmm” is
+the subset of points commonly used for geometric morphometrics, which
+excludes points that don’t have clear anatomical definitions.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="va">features</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gmm"</span>, <span class="st">"oval"</span>, <span class="st">"face"</span>, <span class="st">"mouth"</span>, <span class="st">"nose"</span>, <span class="st">"eyes"</span>, <span class="st">"brows"</span>,
+              <span class="st">"left_eye"</span>,  <span class="st">"right_eye"</span>, <span class="st">"left_brow"</span>,  <span class="st">"right_brow"</span>,
+              <span class="st">"ears"</span>, <span class="st">"undereyes"</span>, <span class="st">"teeth"</span>, <span class="st">"smile_lines"</span>, 
+              <span class="st">"cheekbones"</span>, <span class="st">"philtrum"</span>, <span class="st">"chin"</span>, <span class="st">"neck"</span>, <span class="st">"halo"</span><span class="op">)</span>
+
+<span class="co"># crop stimuli to make them easier to see</span>
+<span class="va">original</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> |&gt; 
+  <span class="fu"><a href="../reference/rename_stim.html">rename_stim</a></span><span class="op">(</span><span class="st">"frl"</span><span class="op">)</span>
+
+<span class="co"># plot each feature subset</span>
+<span class="va">new_tems</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">features</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ft</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="va">original</span>, <span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="va">ft</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span> |&gt; 
+  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span>what <span class="op">=</span> <span class="va">c</span><span class="op">)</span> |&gt; <span class="co"># combine results into a stimlist</span>
+  <span class="fu"><a href="../reference/rename_stim.html">rename_stim</a></span><span class="op">(</span><span class="va">features</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">original</span>, <span class="va">new_tems</span><span class="op">)</span> |&gt; 
+    <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.color <span class="op">=</span> <span class="st">"#FF0099"</span>,
+             pt.size <span class="op">=</span> <span class="fl">8</span>,
+             line.color <span class="op">=</span> <span class="st">"#FFFF00"</span>,
+             line.size <span class="op">=</span> <span class="fl">5</span>,
+             line.alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> |&gt; 
+  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<p><img src="images/masking/features-all-1.png" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="change-lines">Change lines<a class="anchor" aria-label="anchor" href="#change-lines"></a>
 </h3>
 <p>When you alter the number of points, the remaining lines don’t always
 make sense.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">s</span> <span class="op">&lt;-</span> <span class="va">stimuli</span> |&gt; <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"face"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">s</span> |&gt;
@@ -460,7 +487,7 @@ make sense.</p>
 around the outside of the ears, and weren’t automatically deleted
 because the two points that connect them to the head are still
 there.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">s</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> |&gt;
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.shape <span class="op">=</span> <span class="st">"index"</span>, pt.size <span class="op">=</span> <span class="fl">10</span>,
            line.color <span class="op">=</span> <span class="st">"hotpink"</span>, line.alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> |&gt; 
@@ -469,7 +496,7 @@ there.</p>
 <p>Figure out the relevant line numbers from the template. Here, they
 are the lines connecting points 0 and 2, and connecting points 3 and 5,
 so lines 3 and 4.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">s</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">lines</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; List of 8</span>
 <span class="co">#&gt;  $ : num [1:5] 0 26 1 27 2</span>
@@ -480,7 +507,7 @@ so lines 3 and 4.</p>
 <span class="co">#&gt;  $ : num [1:3] 2 6 7</span>
 <span class="co">#&gt;  $ : num [1:7] 7 8 9 10 11 12 13</span>
 <span class="co">#&gt;  $ : num [1:3] 13 14 5</span></code></pre></div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">s1</span> <span class="op">&lt;-</span> <span class="va">s</span> |&gt;
   <span class="fu"><a href="../reference/change_lines.html">change_lines</a></span><span class="op">(</span>line_id <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">4</span>, pts <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 
@@ -490,7 +517,7 @@ so lines 3 and 4.</p>
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></code></pre></div>
 <p><img src="images/masking/unnamed-chunk-22-1.png" width="100%"></p>
 <p>Alternatively, you can delete all of the lines and start over.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># remove all lines</span>
 <span class="va">s2</span> <span class="op">&lt;-</span> <span class="va">s</span> |&gt;
   <span class="fu"><a href="../reference/change_lines.html">change_lines</a></span><span class="op">(</span>line_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, pts <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
@@ -507,7 +534,7 @@ template from the Perception Lab in St Andrews. The extra points around
 the ears, nose, and neck were added then, so they’re out of order. But
 there are thousands of faces delineated with this template, so it’s too
 late to change.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">face_oval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">26</span>, <span class="fl">1</span>, <span class="fl">27</span>, <span class="fl">2</span>, <span class="fl">6</span><span class="op">:</span><span class="fl">14</span>, <span class="fl">5</span>, <span class="fl">29</span>, <span class="fl">4</span>, <span class="fl">28</span>, <span class="fl">3</span>, <span class="fl">25</span><span class="op">:</span><span class="fl">15</span>, <span class="fl">0</span><span class="op">)</span>
 
 <span class="va">s3</span> <span class="op">&lt;-</span> <span class="va">s2</span> |&gt;
@@ -528,42 +555,53 @@ late to change.</p>
 <p>If your images are delineated with the FRL template (the default for
 example stimuli in webmorph), you can use the built-in masking
 features.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># load stimuli with templates</span>
-<span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_composite</a></span><span class="op">(</span><span class="st">"multi"</span><span class="op">)</span></code></pre></div>
-<p>The default mask crops around the face with a white background.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># load stimuli with templates and crop around template</span>
+<span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_composite</a></span><span class="op">(</span><span class="st">"multi"</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>The default mask crops around the face with a white background (or
+whatever colour you set fill to with <code><a href="../reference/wm_opts.html">wm_opts()</a></code>).</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span></code></pre></div>
 <p><img src="images/masking/mask-default-1.png" width="100%"></p>
 <p>You can set the mask to any combination of the following: oval, face,
 neck, ears (left_ear, right_ear), eyes (left_eye, right_eye), brows
 (left_brow, right_brow), mouth, teeth, nose.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span>, mask <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"face"</span>, <span class="st">"neck"</span>, <span class="st">"ears"</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span>, mask <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"face"</span>, <span class="st">"neck"</span>, <span class="st">"ears"</span><span class="op">)</span>, 
+     fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></code></pre></div>
 <p><img src="images/masking/mask-combo-1.png" width="100%"></p>
 <p>You can reverse the mask. You can also use alpha transparency for the
 fill colour.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span>, mask <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"eyes"</span>, <span class="st">"mouth"</span><span class="op">)</span>, 
      fill <span class="op">=</span> <span class="st">"#00000099"</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="images/masking/mask-reverse-1.png" width="100%"></p>
+<p>To get a completely transparent mask, set
+<code>fill = "none"</code>.</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span>, fill <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
+<p><img src="images/masking/mask-none-1.png" width="100%"></p>
+<p>NB: If you set fill to a colour with 0 alpha (e.g., “#FFFFFF00”),
+then the mask itself will be transparent and you will be able to see the
+original background through the mask, so it will appear that the mask
+has done nothing.</p>
 <p>You can also set <code>expand</code> to increase or decrease the mask
 size.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mask0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, expand <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>
-<span class="va">maskpos</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,  expand <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
-<span class="va">maskneg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,  expand <span class="op">=</span> <span class="op">-</span><span class="fl">20</span><span class="op">)</span>
+<span class="va">maskpos</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,  expand <span class="op">=</span> <span class="fl">40</span><span class="op">)</span>
+<span class="va">maskneg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,  expand <span class="op">=</span> <span class="op">-</span><span class="fl">40</span><span class="op">)</span>
 <span class="va">revmask0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, expand <span class="op">=</span> <span class="fl">0</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">revmaskpos</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, expand <span class="op">=</span> <span class="fl">20</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">revmaskneg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,expand <span class="op">=</span> <span class="op">-</span><span class="fl">20</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">revmaskpos</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, expand <span class="op">=</span> <span class="fl">40</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">revmaskneg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,expand <span class="op">=</span> <span class="op">-</span><span class="fl">40</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># plot</span>
 <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mask0</span>, <span class="va">maskpos</span>, <span class="va">maskneg</span>, <span class="va">revmask0</span>, <span class="va">revmaskpos</span>, <span class="va">revmaskneg</span><span class="op">)</span> |&gt; 
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"expand = 0"</span>, <span class="st">"expand = 20"</span>, <span class="st">"expand = -20"</span><span class="op">)</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"expand = 0"</span>, <span class="st">"expand = 40"</span>, <span class="st">"expand = -40"</span><span class="op">)</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
-<p><img src="images/masking/unnamed-chunk-26-1.png" width="100%"></p>
+<p><img src="images/masking/mask-expand-1.png" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="oval-mask">Oval Mask<a class="anchor" aria-label="anchor" href="#oval-mask"></a>
@@ -571,77 +609,32 @@ size.</p>
 <p>I hate the “standard oval mask”, which was mainly used because it was
 easy, rather than a good idea for face perception. But if you really
 want to replicate some stimuli from the 80s…</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> |&gt;
   <span class="fu"><a href="../reference/greyscale.html">greyscale</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/mask_oval.html">mask_oval</a></span><span class="op">(</span><span class="op">)</span> </code></pre></div>
 <p><img src="images/masking/mask-oval-1.png" width="100%"></p>
 <p>By default, the oval mask calculates the maximum and minimum x and y
-coordinates in the template and masks each face according to this. Set
-<code>each = FALSE</code> to calculate this across all images and apply
-the same oval to each.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+coordinates for each face in the template and masks each face according
+to this. Set <code>each = FALSE</code> to calculate this across all
+images and apply the same oval to each.</p>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> |&gt;
   <span class="fu"><a href="../reference/greyscale.html">greyscale</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="co"># remove template points to make the oval tighter around the face</span>
   <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"face"</span><span class="op">)</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/mask_oval.html">mask_oval</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"black"</span>, each <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </code></pre></div>
 <p><img src="images/masking/mask-oval-each-1.png" width="100%"></p>
-</div>
-<div class="section level3">
-<h3 id="subset-templates">Subset templates<a class="anchor" aria-label="anchor" href="#subset-templates"></a>
-</h3>
-<p>You can subset template points for images delineated with the FRL
-template using the convenience function <code><a href="../reference/features.html">features()</a></code>.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">full_tem</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
-<span class="va">pts_to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"eyes"</span>, <span class="st">"nose"</span>, <span class="st">"mouth"</span>, <span class="st">"brows"</span><span class="op">)</span>
-<span class="va">pts_to_delete</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="st">"cheekbones"</span>, <span class="st">"undereyes"</span>, <span class="st">"smile_lines"</span><span class="op">)</span>
-
-<span class="va">internal_features</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="va">full_tem</span>, <span class="va">pts_to_keep</span><span class="op">)</span>
-<span class="va">no_lines</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="va">full_tem</span>, <span class="va">pts_to_delete</span>, keep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">full_tem</span>, <span class="va">internal_features</span>, <span class="va">no_lines</span><span class="op">)</span> |&gt; 
-  <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt; 
-  <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="op">)</span> </code></pre></div>
-<p><img src="images/masking/features-demo-1.png" width="100%"></p>
-<p>Here are all of the available named features. The feature “gmm” is
-the subset of points commonly used for geometric morphometrics, which
-excludes points that don’t have clear anatomical definitions.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">features</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gmm"</span>, <span class="st">"oval"</span>, <span class="st">"face"</span>, <span class="st">"mouth"</span>, <span class="st">"nose"</span>, <span class="st">"eyes"</span>, <span class="st">"brows"</span>,
-              <span class="st">"left_eye"</span>,  <span class="st">"right_eye"</span>, <span class="st">"left_brow"</span>,  <span class="st">"right_brow"</span>,
-              <span class="st">"ears"</span>, <span class="st">"undereyes"</span>, <span class="st">"teeth"</span>, <span class="st">"smile_lines"</span>, 
-              <span class="st">"cheekbones"</span>, <span class="st">"philtrum"</span>, <span class="st">"chin"</span>, <span class="st">"neck"</span>, <span class="st">"halo"</span><span class="op">)</span>
-
-<span class="co"># crop stimuli to make them easier to see</span>
-<span class="va">crops</span> <span class="op">&lt;-</span>  <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="va">full_tem</span><span class="op">)</span>
-
-<span class="co"># plot each feature subset</span>
-<span class="va">new_tems</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">features</span>, <span class="kw">function</span><span class="op">(</span><span class="va">ft</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">crops</span> |&gt; 
-    <span class="fu"><a href="../reference/subset_tem.html">subset_tem</a></span><span class="op">(</span><span class="fu"><a href="../reference/features.html">features</a></span><span class="op">(</span><span class="va">ft</span><span class="op">)</span><span class="op">)</span> |&gt; 
-    <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.color <span class="op">=</span> <span class="st">"#FF0099"</span>,
-             pt.size <span class="op">=</span> <span class="fl">8</span>,
-             line.color <span class="op">=</span> <span class="st">"#FFFF00"</span>,
-             line.size <span class="op">=</span> <span class="fl">5</span>,
-             line.alpha <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span> |&gt; <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span>what <span class="op">=</span> <span class="va">c</span><span class="op">)</span>
-
-<span class="va">new_tems</span> |&gt; 
-  <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> |&gt;
-  <span class="fu"><a href="../reference/rename_stim.html">rename_stim</a></span><span class="op">(</span><span class="va">features</span><span class="op">)</span> |&gt; 
-  <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="images/masking/features-all-1.png" width="100%"></p>
-</div>
-</div>
-<div class="section level2">
-<h2 id="stimulus-set">Stimulus set<a class="anchor" aria-label="anchor" href="#stimulus-set"></a>
-</h2>
+<p>You can also set the bounds manually (top, right, bottom, left).</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">stimuli</span> |&gt;
+  <span class="fu"><a href="../reference/greyscale.html">greyscale</a></span><span class="op">(</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="../reference/mask_oval.html">mask_oval</a></span><span class="op">(</span>bounds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">180</span>, <span class="fl">110</span>, <span class="fl">120</span>, <span class="fl">110</span><span class="op">)</span>, 
+            fill <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> </code></pre></div>
+<p><img src="images/masking/mask-oval-bounds-1.png" width="100%"></p>
 <p>Now it’s relatively straightforward to create a stimulus set that
 matches old papers.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_london</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/greyscale.html">greyscale</a></span><span class="op">(</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span><span class="op">)</span> |&gt;
@@ -652,7 +645,7 @@ matches old papers.</p>
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="images/masking/mask-oval-all-1.png" width="100%"></p>
 <p>Although I still think the delineated masking is better :)</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_london</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/resize.html">resize</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span> |&gt; <span class="co"># resize to process faster</span>
   <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> |&gt;
@@ -664,14 +657,14 @@ matches old papers.</p>
   <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="images/masking/mask-oval-better-1.png" width="100%"></p>
 </div>
-<div class="section level2">
-<h2 id="custom-masks">Custom Masks<a class="anchor" aria-label="anchor" href="#custom-masks"></a>
-</h2>
+<div class="section level3">
+<h3 id="custom-masks">Custom Masks<a class="anchor" aria-label="anchor" href="#custom-masks"></a>
+</h3>
 <p>You can define a custom mask. The code below is useful for finding
 the template points you want to outline. It crops around the points,
 makes the image darker, makes it larger (so the text is
 higher-resolution), and plots it with the point indices.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_smiling</a></span><span class="op">(</span><span class="st">"030"</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/auto_delin.html">auto_delin</a></span><span class="op">(</span><span class="st">"dlib70"</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
@@ -681,12 +674,12 @@ higher-resolution), and plots it with the point indices.</p>
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.size <span class="op">=</span> <span class="fl">35</span>, pt.shape <span class="op">=</span> <span class="st">"circle"</span>, pt.alpha <span class="op">=</span> <span class="fl">1</span>, pt.color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/draw_tem.html">draw_tem</a></span><span class="op">(</span>pt.size <span class="op">=</span> <span class="fl">20</span>, pt.shape <span class="op">=</span> <span class="st">"index"</span>, pt.alpha <span class="op">=</span> <span class="fl">1</span>, pt.color <span class="op">=</span> <span class="st">"black"</span>,
            line.alpha <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> </code></pre></div>
-<p><img src="images/masking/unnamed-chunk-27-1.png" width="100%"></p>
+<p><img src="images/masking/find-points-1.png" width="100%"></p>
 <p>Let’s say you wanted to mask the right side of the face and the left
 eye. You set up the mask as a list of named areas, and each area is a
 list of vectors of the points along each segment of the enclosing
 mask.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mask</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
   right_face <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
     <span class="fl">10</span><span class="op">:</span><span class="fl">18</span>, <span class="co">#chin to right temple</span>
@@ -701,10 +694,11 @@ mask.</p>
 
 <span class="fu"><a href="../reference/mask.html">mask</a></span><span class="op">(</span><span class="va">stimuli</span>, <span class="va">mask</span>, fill <span class="op">=</span> <span class="st">"hotpink"</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/crop.html">crop</a></span><span class="op">(</span><span class="fl">.6</span>, <span class="fl">.6</span><span class="op">)</span></code></pre></div>
-<p><img src="images/masking/unnamed-chunk-28-1.png" width="100%"></p>
+<p><img src="images/masking/mask-custom-1.png" width="100%"></p>
 <hr>
 <p>This script took 1.2 minutes to render all the included images from
 scratch.</p>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

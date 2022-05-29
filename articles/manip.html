@@ -292,9 +292,8 @@ Padded images with different values for each side.
 </p>
 </div>
 <p>Or you can use the <code>patch</code> function to get the median
-colour from a patch of the image. If you set <code>patch</code> to
-<code>TRUE</code>, this will default to the top left 10 pixel
-square.</p>
+colour from a patch of the image. The <code><a href="../reference/patch.html">patch()</a></code> function
+defaults to the top left 10 pixel square of each image.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/webmorphR.stim/man/load_stim.html" class="external-link">load_stim_rainbow</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>
 
@@ -307,19 +306,14 @@ Cropped images with background matched to top left 10-pixel square
 </p>
 </div>
 <p>Or you can set the boundaries of the patch manually. The code below
-sets the patch colour to the average colour from a 100x100-pixel square
-in the center of each image.</p>
+sets the patch colour to the average colour from to 10% of width and
+height in the centre of each image.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># get center x and y coordinates of each image</span>
-<span class="va">cx</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/width.html">width</a></span><span class="op">(</span><span class="va">rb</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>
-<span class="va">cy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/height.html">height</a></span><span class="op">(</span><span class="va">rb</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span>
-<span class="va">r</span> <span class="op">&lt;-</span> <span class="fl">50</span> <span class="co"># half-height of patch </span>
-
-<span class="va">patch_fills</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/patch.html">patch</a></span><span class="op">(</span><span class="va">rb</span>, 
-                     x1 <span class="op">=</span> <span class="va">cx</span> <span class="op">-</span> <span class="va">r</span>, 
-                     x2 <span class="op">=</span> <span class="va">cx</span> <span class="op">+</span> <span class="va">r</span>, 
-                     y1 <span class="op">=</span> <span class="va">cy</span> <span class="op">-</span> <span class="va">r</span>, 
-                     y2 <span class="op">=</span> <span class="va">cy</span> <span class="op">+</span> <span class="va">r</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">patch_fills</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/patch.html">patch</a></span><span class="op">(</span><span class="va">rb</span>, 
+                     width <span class="op">=</span> <span class="fl">.1</span>, 
+                     height <span class="op">=</span> <span class="fl">.1</span>, 
+                     x_off <span class="op">=</span> <span class="fl">.45</span>, 
+                     y_off <span class="op">=</span> <span class="fl">.45</span><span class="op">)</span>
 
 <span class="va">rb</span> |&gt;
   <span class="fu"><a href="../reference/pad.html">pad</a></span><span class="op">(</span><span class="fl">50</span>, fill <span class="op">=</span> <span class="va">patch_fills</span><span class="op">)</span> |&gt;
@@ -595,7 +589,7 @@ a different fuzz for each image.</p>
   <span class="fu"><a href="../reference/label.html">label</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"fuzz ="</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">25</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="images/manip/image-fill-1.png" width="100%"></p>
 <hr>
-<p>This script took 0.4 minutes to render all the included images from
+<p>This script took 0.3 minutes to render all the included images from
 scratch.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

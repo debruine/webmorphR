@@ -330,7 +330,7 @@ information.</p>
 align the images and crop them all to the same dimensions.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aligned</span> <span class="op">&lt;-</span> <span class="va">stimuli</span> |&gt;
-  <span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span>procrustes <span class="op">=</span> <span class="cn">TRUE</span>, fill <span class="op">=</span> <span class="fu"><a href="../reference/patch.html">patch</a></span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span><span class="op">)</span> |&gt;
+  <span class="fu"><a href="../reference/align.html">align</a></span><span class="op">(</span>procrustes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> |&gt;
   <span class="fu"><a href="../reference/crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="fl">120</span>, <span class="fl">20</span>, <span class="fl">20</span>, <span class="fl">20</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">aligned</span><span class="op">)</span></code></pre></div>

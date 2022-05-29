@@ -82,7 +82,12 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_rows</span><span class="op">(</span><span class="va">...</span>, top_label <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plot_rows</span><span class="op">(</span>
+  <span class="va">...</span>,
+  top_label <span class="op">=</span> <span class="cn">NULL</span>,
+  maxwidth <span class="op">=</span> <span class="fu"><a href="wm_opts.html">wm_opts</a></span><span class="op">(</span><span class="st">"plot.maxwidth"</span><span class="op">)</span>,
+  maxheight <span class="op">=</span> <span class="fu"><a href="wm_opts.html">wm_opts</a></span><span class="op">(</span><span class="st">"plot.maxheight"</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -90,7 +95,9 @@
     <dl><dt>...</dt>
 <dd><p>stimlists (optionally named) and any arguments to pass on to <code><a href="label.html">label</a></code></p></dd>
 <dt>top_label</dt>
-<dd><p>whether to plot row labels above the row or inside</p></dd>
+<dd><p>logical; whether to plot row labels above the row (TRUE) or inside (FALSE), if NULL, then TRUE if stimlists are named</p></dd>
+<dt>maxwidth, maxheight</dt>
+<dd><p>maximum width and height of each row in pixels</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -101,6 +108,9 @@
     <div class="dont-index"><p>Visualisation functions
 <code><a href="as_ggplot.html">as_ggplot</a>()</code>,
 <code><a href="draw_tem.html">draw_tem</a>()</code>,
+<code><a href="gglabel.html">gglabel</a>()</code>,
+<code><a href="label.html">label</a>()</code>,
+<code><a href="mlabel.html">mlabel</a>()</code>,
 <code><a href="plot.stimlist.html">plot.stimlist</a>()</code>,
 <code><a href="plot.stim.html">plot.stim</a>()</code>,
 <code><a href="plot_stim.html">plot_stim</a>()</code></p></div>

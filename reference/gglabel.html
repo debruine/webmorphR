@@ -106,18 +106,27 @@
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="label.html">label()</a></code> for a labeller using syntax like <a href="https://docs.ropensci.org/magick/reference/painting.html" class="external-link">magick::image_annotate</a></p></div>
+    <div class="dont-index"><p><code><a href="label.html">label()</a></code> for a labeller using syntax like <a href="https://docs.ropensci.org/magick/reference/painting.html" class="external-link">magick::image_annotate</a></p>
+<p>Visualisation functions
+<code><a href="as_ggplot.html">as_ggplot</a>()</code>,
+<code><a href="draw_tem.html">draw_tem</a>()</code>,
+<code><a href="label.html">label</a>()</code>,
+<code><a href="mlabel.html">mlabel</a>()</code>,
+<code><a href="plot.stimlist.html">plot.stimlist</a>()</code>,
+<code><a href="plot.stim.html">plot.stim</a>()</code>,
+<code><a href="plot_rows.html">plot_rows</a>()</code>,
+<code><a href="plot_stim.html">plot_stim</a>()</code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://ggplot2.tidyverse.org" class="external-link">"ggplot2"</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># label with image names</span></span>
 <span class="r-in"><span class="co"># the default text size in ggplot is tiny</span></span>
 <span class="r-in"><span class="fu">gglabel</span><span class="op">(</span><span class="va">stimuli</span><span class="op">)</span></span>
-<span class="r-in"></span>
+<span class="r-plt img"><img src="gglabel-1.png" alt="" width="700" height="353"></span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="co"># add a watermark</span></span>
 <span class="r-in"><span class="fu">gglabel</span><span class="op">(</span><span class="va">stimuli</span>,</span>
 <span class="r-in">        label <span class="op">=</span> <span class="st">"watermark"</span>,</span>
@@ -128,7 +137,8 @@
 <span class="r-in">        color <span class="op">=</span> <span class="st">"black"</span>,</span>
 <span class="r-in">        angle <span class="op">=</span> <span class="op">-</span><span class="fl">30</span>,</span>
 <span class="r-in">        alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+<span class="r-plt img"><img src="gglabel-2.png" alt="" width="700" height="353"></span>
+<span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
