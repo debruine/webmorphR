@@ -7,51 +7,51 @@
 #' This excludes transparent pixels, and returns "transparent" if all pixels in the patch are transparent.
 #'
 #' @param stimuli list of stimuli
-#' @param x1,x2,y1,y2 start and end pixels of the patch, if <=1, interpreted as proportions of width or height
+#' @param width,height dimensions of the patch in pixels, if <=1, interpreted as proportions of width or height
+#' @param x_off,y_off offset in pixels or proportion (<1)
 #' @param color The type of color to return (hex, rgb)
-#' @param func The function to apply to an array of rgba values to determine the central colour (defaults to median, but mean, min, or max are also useful)
+#' @param func The function to apply to an array of L*ab color values to determine the central colour (defaults to median, but mean, min, or max can also be useful)
 #'
 #' @return a vector of hex or rgba color values
 #' @export
 #'
 #' @examples
+#' stimuli <- demo_stim()
+#' 
 #' # get colour from the upper left corder
-#' demo_stim() |> patch()
+#' patch(stimuli)
 #' 
 #' # get median colour from centre .1 width pixels
-#' demo_stim() |> patch(x1 = .45, x2 = .55, y1 = .45, y2 = .55)
+#' patch(stimuli, width = .1, height = .1, 
+#'       x_off = .45, y_off = .45)
 #' 
-#' # get mean rgb colour from a 10-pixel strip across the top of the image
-#' demo_stim() |> patch(0, 1, 0, 10, color = "rgb", func = mean)
+#' # get mean rgb colour from full image
+#' patch(stimuli, width = 1, height = 1, 
+#'       color = "rgb", func = mean)
 #'
-patch <- function(stimuli, x1 = 0, x2 = 10, y1 = 0, y2 = 10,
+patch <- function(stimuli, width = 10, height = 10, x_off = 0, y_off = 0,
                   color = c("hex", "rgb"), func = stats::median) {
   stimuli <- as_stimlist(stimuli)
   
   color <- match.arg(color)
   
   l <- length(stimuli)
-  x1 <- rep_len(x1, l)
-  x2 <- rep_len(x2, l)
-  y1 <- rep_len(y1, l)
-  y2 <- rep_len(y2, l)
+  w <- rep_len(width, l)
+  h <- rep_len(height, l)
+  x <- rep_len(x_off, l)
+  y <- rep_len(y_off, l)
   
   # handle proportions
-  x1 <- ifelse(x1 <= 1, x1 * width(stimuli), x1)
-  x2 <- ifelse(x2 <= 1, x2 * width(stimuli), x2)
-  y1 <- ifelse(y1 <= 1, y1 * height(stimuli), y1)
-  y2 <- ifelse(y2 <= 1, y2 * height(stimuli), y2)
-  
+  w <- ifelse(w <= 1, w * width(stimuli), w) |> round()
+  h <- ifelse(h <= 1, h * width(stimuli), h) |> round()
+  x <- ifelse(x < 1, x * height(stimuli), x) |> round()
+  y <- ifelse(y < 1, y * height(stimuli), y) |> round()
   
   patches <- lapply(seq_along(stimuli), function(i) {
-    all_pixels <- magick::image_raster(stimuli[[i]]$img)
-    selected_pixels <- (
-      all_pixels$x >= min(x1[i], x2[i]) &
-      all_pixels$x <= max(x1[i], x2[i]) &
-      all_pixels$y >= min(y1[i], y2[i]) &
-      all_pixels$y <= max(y1[i], y2[i])
-    )
-    pixels <- all_pixels[selected_pixels, ]
+    # crop image and get pixels
+    ga <- magick::geometry_area(w[i], h[i], x[i], y[i])
+    cropped <- magick::image_crop(stimuli[[i]]$img, ga, repage = TRUE)
+    pixels <- magick::image_raster(cropped)
     
     # remove transparent pixels
     pixels <- pixels[pixels$col != "transparent", ]
@@ -68,22 +68,19 @@ patch <- function(stimuli, x1 = 0, x2 = 10, y1 = 0, y2 = 10,
     avg_lab <- sapply(mult, func)
     central_col <- lab2rgb(avg_lab)
     central_col[['alpha']] <- paste0('0x', substr(pixels$col, 8, 9))|> strtoi() |> func()
-    
-    # central_col <- grDevices::col2rgb(pixels$col, alpha = TRUE) |>
-    #   apply(1, func)
-    
+
     if (color == "rgb") {
-      return(central_col)
+      central_col
+    } else {
+      # get hex value
+      grDevices::rgb(
+        central_col[['red']],
+        central_col[['green']],
+        central_col[['blue']],
+        central_col[['alpha']],
+        maxColorValue = 255
+      )
     }
-    
-    # return hex value
-    grDevices::rgb(
-      central_col[['red']],
-      central_col[['green']],
-      central_col[['blue']],
-      central_col[['alpha']],
-      maxColorValue = 255
-    )
   })
   
   names(patches) <- names(stimuli)

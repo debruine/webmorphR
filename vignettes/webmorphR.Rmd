@@ -194,7 +194,7 @@ Now you can [procrustes](https://en.wikipedia.org/wiki/Procrustes_analysis)* ali
 
 ```{r align-crop}
 aligned <- stimuli |>
-  align(procrustes = TRUE, fill = patch(stimuli)) |>
+  align(procrustes = TRUE) |>
   crop_tem(120, 20, 20, 20)
 
 plot(aligned)

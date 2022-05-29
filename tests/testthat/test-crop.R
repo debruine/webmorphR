@@ -76,13 +76,13 @@ test_that("limits", {
   # 99% offset
   x <- crop(s, x_off = .99, y_off = .99)
   expect_equal(patch(x$f_multi, 
-                     x1 = 10, y1 = 10,
-                     x2 = 500, y2 = 500)[[1]],
+                     width = 495, height = 495,
+                     x_off = 5, y_off = 5)[[1]],
                "#FFFFFFFF")
   
   # 1-pixel offset 
   x <- crop(s, x_off = 1, y_off = 1)
-  expect_true(patch(x$f_multi, x2 = 500, y2 = 500)[[1]] !=
+  expect_true(patch(x$f_multi, 500, 500)[[1]] !=
                "#FFFFFFFF")
   
 })
@@ -102,14 +102,14 @@ test_that("transparent fill", {
   fill <- "#00000066"
   
   x <- crop(stimuli, 1.2, .8, fill = fill)
-  fg <- patch(x, .45, .55)
+  fg <- patch(x, .1, 10, .45)
   expect_equal(fg[[1]], "#FF0000FF")
-  bg <- patch(x, 0, 10, 0, 1)
+  bg <- patch(x, 10, 1)
   expect_equal(bg[[1]], fill)
   
   x <- crop(stimuli, 1.2, .8, fill = "none")
-  fg <- patch(x, .45, .55)
+  fg <- patch(x, .1, 10, .45)
   expect_equal(fg[[1]], "#FF0000FF")
-  bg <- patch(x, 0, 10, 0, 1)
+  bg <- patch(x, 10, 1)
   expect_equal(bg[[1]], "transparent")
 })

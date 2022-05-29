@@ -16,6 +16,34 @@ bm <- benchmark(
 )
 bm
 
+
+## patch -----
+img <- stimuli$`001_03`$img
+bm <- benchmark(
+  crop_first = {
+    crop <- magick::image_crop(img, magick::geometry_area(10, 10, 0, 0))
+    pixels <- magick::image_raster(crop)
+  },
+  crop_second = {
+    all_pixels <- magick::image_raster(img)
+    selected_pixels <- (
+      all_pixels$x >= min(0, 10) &
+        all_pixels$x <= max(0, 10) &
+        all_pixels$y >= min(0, 10) &
+        all_pixels$y <= max(0, 10)
+    )
+    pixels <- all_pixels[selected_pixels, ]
+  },
+  replications = 10
+)
+
+benchmark(
+  patch = {patch(stimuli)},
+  replications = 1
+)
+
+
+
 ## benchmark: point rotation
 i = 2
 degrees = c(45, 30)

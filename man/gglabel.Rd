@@ -31,7 +31,7 @@ stimuli <- demo_stim()
 # label with image names
 # the default text size in ggplot is tiny
 gglabel(stimuli)
-
+\donttest{
 # add a watermark
 gglabel(stimuli,
         label = "watermark",
@@ -42,6 +42,7 @@ gglabel(stimuli,
         color = "black",
         angle = -30,
         alpha = 0.5)
+}
 }
 \seealso{
 \code{\link[=label]{label()}} for a labeller using syntax like \link[magick:painting]{magick::image_annotate}

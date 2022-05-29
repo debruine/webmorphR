@@ -3,7 +3,7 @@ set.seed(8675309)
 
 # make unstandardised images
 s <- webmorphR.stim::load_stim_composite()
-bg <- patch(s, 0, 1)
+bg <- patch(s, width = 1)
 rot <- s |> rotate(seq(-5, 5, length.out = 10) |> sample(), fill = bg)
 res <- rot |> resize(seq(.8, 1, length.out = 10) |> sample())
 crp <- res |> crop(seq(.8, 1, length.out = 5),

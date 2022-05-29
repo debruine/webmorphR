@@ -31,7 +31,7 @@
 #'         x1 = 100, x2 = 200, y1 = 100, y2 = 100, 
 #'         width = 300, height = 300)
 #' 
-#' \donttest{
+#' \dontrun{
 #' orig <- demo_unstandard()
 #'
 #' # align to bottom-centre of nose (average position)

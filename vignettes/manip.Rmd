@@ -197,7 +197,7 @@ pad(stimuli,
     fill = c("dodgerblue", "hotpink"))
 ```
 
-Or you can use the `patch` function to get the median colour from a patch of the image. If you set `patch` to `TRUE`, this will default to the top left 10 pixel square.
+Or you can use the `patch` function to get the median colour from a patch of the image. The `patch()` function defaults to the top left 10 pixel square of each image.
 
 ```{r crop-patch, fig.cap="Cropped images with background matched to top left 10-pixel square"}
 rb <- load_stim_rainbow(1:8)
@@ -207,19 +207,14 @@ rb |>
   plot(nrow = 2)
 ```
 
-Or you can set the boundaries of the patch manually. The code below sets the patch colour to the average colour from a 100x100-pixel square in the center of each image.
+Or you can set the boundaries of the patch manually. The code below sets the patch colour to the average colour from to 10% of width and height in the centre of each image.
 
 ```{r crop-match, fig.cap="Cropped Images with background matched to centre."}
-# get center x and y coordinates of each image
-cx <- width(rb)/2
-cy <- height(rb)/2
-r <- 50 # half-height of patch 
-
 patch_fills <- patch(rb, 
-                     x1 = cx - r, 
-                     x2 = cx + r, 
-                     y1 = cy - r, 
-                     y2 = cy + r)
+                     width = .1, 
+                     height = .1, 
+                     x_off = .45, 
+                     y_off = .45)
 
 rb |>
   pad(50, fill = patch_fills) |>

@@ -133,7 +133,8 @@ mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
       paste(collapse = "\n\n")
 
     # make SVG
-    if (isTRUE(reverse)) {
+    if ((isTRUE(reverse) & fill[i] != "none") |
+        (!isTRUE(reverse) & fill[i] == "none")) {
       strokecolor <- ifelse(expand[i] < 0, "black", "white")
       svg_text <- "<svg
     width=\"%d\" height=\"%d\"
@@ -163,15 +164,14 @@ mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
 
     if (fill[i] == "none") {
       svg <- sprintf(svg_text, w[i], h[i], strokecolor,
-                     abs(expand[i]), curves, "#000000")
-      
+                     abs(expand[i]), curves, "#000000ff")
       maskimg <- magick::image_read_svg(svg)
+      
       stimuli[[i]]$img <- magick::image_composite(
         image = stimuli[[i]]$img,
         composite_image = maskimg,
-        operator = "Over") |>
-        magick::image_transparent("#000000", fuzz = 0) |>
-        magick::image_background("none", flatten = TRUE)
+        operator = "CopyOpacity"
+      )
     } else {
       svg <- sprintf(svg_text, w[i], h[i], strokecolor,
                      abs(expand[i]), curves, fill[i])
@@ -180,7 +180,8 @@ mask <- function(stimuli, mask = "face", fill = wm_opts("fill"),
       stimuli[[i]]$img <- magick::image_composite(
         image = stimuli[[i]]$img,
         composite_image = maskimg,
-        operator = "Over")
+        operator = "Over") |>
+        magick::image_background("transparent")
     }
   }
 

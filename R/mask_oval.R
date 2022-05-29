@@ -48,10 +48,10 @@ mask_oval <- function(stimuli, bounds = NULL, fill = wm_opts("fill"), each = TRU
   }
 
   borders <- list(
-    t = b$top %||% bounds$t %||% bounds[1],
-    r = b$right %||% bounds$r %||% bounds[2],
-    b = b$bottom %||% bounds$b %||% bounds[3],
-    l = b$left %||% bounds$l %||% bounds[4]
+    t = b$top %||% bounds$t %||% bounds[[1]],
+    r = b$right %||% bounds$r %||% bounds[[2]],
+    b = b$bottom %||% bounds$b %||% bounds[[3]],
+    l = b$left %||% bounds$l %||% bounds[[4]]
   )
   
   rx <- (w - borders$r - borders$l)/2
@@ -79,9 +79,12 @@ mask_oval <- function(stimuli, bounds = NULL, fill = wm_opts("fill"), each = TRU
 
     <rect width=\"100%%\" height=\"100%%\" fill=\"%s\" mask=\"url(#image-mask)\"/>
     </svg>"
+  
 
   for (i in seq_along(stimuli)) {
-    svg <- sprintf(svg_text, w[i], h[i], cx[i], cy[i], rx[i], ry[i], color_conv(fill[i]))
+    svg <- sprintf(svg_text, w[i], h[i], 
+                   cx[i], cy[i], rx[i], ry[i], 
+                   fill[i])
 
     maskimg <- magick::image_read_svg(svg)
     stimuli[[i]]$img <- magick::image_composite(stimuli[[i]]$img, maskimg)

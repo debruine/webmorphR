@@ -8,9 +8,8 @@
 #'
 #' @examples
 #' # set path_to_tps to save to a file
-#' demo_stim() |>
-#'   write_tps() |>
-#'   cat()
+#' tps <- demo_stim() |>
+#'   write_tps()
 #'
 write_tps <- function(stimuli, path_to_tps = NULL) {
   stimuli <- as_stimlist(stimuli)

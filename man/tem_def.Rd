@@ -24,12 +24,14 @@ If you have defined a custom template on webmorph.org, you can get its function 
 fpp106 <- tem_def("fpp106")
 fpp106$lines |> str()
 
+\donttest{
 fpp83 <- tem_def("fpp83")
 fpp83$mask |> str()
 
 frl <- tem_def("frl")
 frl$points[1:10, ]
 viz_tem_def(frl, pt.size = 10, line.size = 5)
+}
 }
 \seealso{
 Template functions

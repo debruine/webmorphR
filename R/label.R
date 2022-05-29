@@ -186,7 +186,7 @@ mlabel <- function(stimuli,
 #' # label with image names
 #' # the default text size in ggplot is tiny
 #' gglabel(stimuli)
-#' 
+#' \donttest{
 #' # add a watermark
 #' gglabel(stimuli,
 #'         label = "watermark",
@@ -197,6 +197,7 @@ mlabel <- function(stimuli,
 #'         color = "black",
 #'         angle = -30,
 #'         alpha = 0.5)
+#' }
 gglabel <- function(stimuli, label = TRUE, x = 0.5, y = 0.95, geom = "text", ...) {
   stimuli <- as_stimlist(stimuli)
   

@@ -188,15 +188,15 @@ test_that("transparent fill", {
   fill <- "#00000066"
   
   x <- rotate(stimuli, degrees, fill = fill)
-  fg <- patch(x, .45, .55)
+  fg <- patch(x, .1, 10, .45)
   expect_equal(fg[[1]], "#FF0000FF")
-  bg <- patch(x, 0, 10, 0, 10)
+  bg <- patch(x)
   expect_equal(bg[[1]], fill)
   
   x <- rotate(stimuli, degrees, fill = "none")
-  fg <- patch(x, .45, .55)
+  fg <- patch(x, .1, 10, .45)
   expect_equal(fg[[1]], "#FF0000FF")
-  bg <- patch(x, 0, 10, 0, 10)
+  bg <- patch(x)
   expect_equal(bg[[1]], "transparent")
 })
 

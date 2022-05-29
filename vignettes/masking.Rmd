@@ -66,6 +66,24 @@ NB: Currently, I'm assuming any lines that start and end with the same point are
 stimuli[[1]]$closed
 ```
 
+### Visualise delineations
+
+Use the `draw_tem()` function to show the delineations. By default, points are translucent green circles and lines are translucent blue.
+
+```{r}
+draw_tem(stimuli)
+```
+
+You can change the default colours and translucency with the `line.color` `pt.color` and `line.alpha` and `pt.alpha` arguments. Change the point shape with `pt.shape`. Remove the image and set the background color with the `bg` argument.
+
+```{r delin-custom}
+stimuli |>
+  draw_tem(line.color = "grey", line.size = 1, line.alpha = 0.2, 
+           pt.color = "red", pt.size = 5, pt.alpha = 1,
+           pt.shape = "cross", bg = "grey") |>
+  crop_tem(20) # crop with 20px space around the largest tem
+```
+
 ### Templates
 
 Delineations need to follow the same template in order to work together. For example, you can't average faces that are delineated with different templates. 
@@ -259,23 +277,7 @@ manual_delin <- delin(stimuli)
 </video>
 
 
-### Visualise delineations
 
-Use the `draw_tem()` function to show the delineations. By default, points are translucent green circles and lines are translucent blue.
-
-```{r}
-draw_tem(stimuli)
-```
-
-You can change the default colours and translucency with the `line.color` `pt.color` and `line.alpha` and `pt.alpha` arguments. Change the point shape with `pt.shape`. Remove the image and set the background color with the `bg` argument.
-
-```{r delin-custom}
-stimuli |>
-  draw_tem(line.color = "grey", line.size = 1, line.alpha = 0.2, 
-           pt.color = "red", pt.size = 5, pt.alpha = 1,
-           pt.shape = "cross", bg = "grey") |>
-  crop_tem(20) # crop with 20px space around the largest tem
-```
 
 
 ## Subset template
@@ -289,8 +291,6 @@ The `features()` function returns the points that make up different subsets of t
 ```{r features}
 features("left_eye", "right_eye")
 ```
-
-### Subset template
 
 The "gmm" features are the eyebrows, eyes, nose, and mouth points, plus the face oval. This is a common subset to use for geometric morphometric analyses. Use the `subset_tem()` function to select just those delineation points. The line definitions will be automatically updated and any lines that no longer have points will be deleted.
 
@@ -314,6 +314,37 @@ keep_pts <- c(0, 1, features("face", tem_id = "dlib70"))
 stimuli_newdelin |>
   subset_tem(keep_pts) |>
   draw_tem(pt.size = 5)
+```
+
+Here are all of the available named features. The feature "gmm" is the subset of points commonly used for geometric morphometrics, which excludes points that don't have clear anatomical definitions.
+
+```{r features-all}
+
+features <- c("gmm", "oval", "face", "mouth", "nose", "eyes", "brows",
+              "left_eye",  "right_eye", "left_brow",  "right_brow",
+              "ears", "undereyes", "teeth", "smile_lines", 
+              "cheekbones", "philtrum", "chin", "neck", "halo")
+
+# crop stimuli to make them easier to see
+original <-  crop_tem(stimuli[1]) |> 
+  rename_stim("frl")
+
+# plot each feature subset
+new_tems <- lapply(features, function(ft) {
+  subset_tem(original, features(ft))
+}) |> 
+  do.call(what = c) |> # combine results into a stimlist
+  rename_stim(features)
+
+c(original, new_tems) |> 
+    draw_tem(pt.color = "#FF0099",
+             pt.size = 8,
+             line.color = "#FFFF00",
+             line.size = 5,
+             line.alpha = 1) |>
+  pad(50, 0, 0, 0, fill = "white") |> 
+  label() |>
+  plot(nrow = 3)
 ```
 
 ### Change lines
@@ -389,11 +420,11 @@ s3[[1]] |>
 If your images are delineated with the FRL template (the default for example stimuli in webmorph), you can use the built-in masking features.
 
 ```{r}
-# load stimuli with templates
-stimuli <- load_stim_composite("multi")
+# load stimuli with templates and crop around template
+stimuli <- load_stim_composite("multi") |> crop_tem()
 ```
 
-The default mask crops around the face with a white background.
+The default mask crops around the face with a white background (or whatever colour you set fill to with `wm_opts()`).
 
 ```{r mask-default}
 mask(stimuli)
@@ -402,7 +433,8 @@ mask(stimuli)
 You can set the mask to any combination of the following: oval, face, neck, ears (left_ear, right_ear), eyes (left_eye, right_eye), brows (left_brow, right_brow), mouth, teeth, nose.
 
 ```{r mask-combo}
-mask(stimuli, mask = c("face", "neck", "ears"), fill = "dodgerblue")
+mask(stimuli, mask = c("face", "neck", "ears"), 
+     fill = "dodgerblue")
 ```
 
 You can reverse the mask. You can also use alpha transparency for the fill colour.
@@ -412,21 +444,29 @@ mask(stimuli, mask = c("eyes", "mouth"),
      fill = "#00000099", reverse = TRUE)
 ```
 
+To get a completely transparent mask, set `fill = "none"`.
+
+```{r mask-none}
+mask(stimuli, fill = "none")
+```
+
+NB: If you set fill to a colour with 0 alpha (e.g., "#FFFFFF00"), then the mask itself will be transparent and you will be able to see the original background through the mask, so it will appear that the mask has done nothing.
+
 You can also set `expand` to increase or decrease the mask size.
 
-```{r}
+```{r mask-expand}
 mask0 <- mask(stimuli[1], expand = 0)
-maskpos <- mask(stimuli[1],  expand = 20)
-maskneg <- mask(stimuli[1],  expand = -20)
+maskpos <- mask(stimuli[1],  expand = 40)
+maskneg <- mask(stimuli[1],  expand = -40)
 revmask0 <- mask(stimuli[1], expand = 0, reverse = TRUE)
-revmaskpos <- mask(stimuli[1], expand = 20, reverse = TRUE)
-revmaskneg <- mask(stimuli[1],expand = -20, reverse = TRUE)
+revmaskpos <- mask(stimuli[1], expand = 40, reverse = TRUE)
+revmaskneg <- mask(stimuli[1],expand = -40, reverse = TRUE)
 
 # plot
 c(mask0, maskpos, maskneg, revmask0, revmaskpos, revmaskneg) |> 
   crop_tem() |> draw_tem() |>
   pad(80, 0, 0, 0) |>
-  label(c("expand = 0", "expand = 20", "expand = -20")) |>
+  label(c("expand = 0", "expand = 40", "expand = -40")) |>
   plot(nrow = 2)
 ```
 
@@ -442,7 +482,7 @@ stimuli |>
   mask_oval() 
 ```
 
-By default, the oval mask calculates the maximum and minimum x and y coordinates in the template and masks each face according to this. Set `each = FALSE` to calculate this across all images and apply the same oval to each. 
+By default, the oval mask calculates the maximum and minimum x and y coordinates for each face in the template and masks each face according to this. Set `each = FALSE` to calculate this across all images and apply the same oval to each. 
 
 ```{r mask-oval-each}
 stimuli |>
@@ -452,54 +492,15 @@ stimuli |>
   mask_oval(fill = "black", each = FALSE) 
 ```
 
-### Subset templates
+You can also set the bounds manually (top, right, bottom, left).
 
-You can subset template points for images delineated with the FRL template using the convenience function `features()`. 
-
-```{r features-demo}
-full_tem <- demo_stim(1)
-pts_to_keep <- features("eyes", "nose", "mouth", "brows")
-pts_to_delete <- features("cheekbones", "undereyes", "smile_lines")
-
-internal_features <- subset_tem(full_tem, pts_to_keep)
-no_lines <- subset_tem(full_tem, pts_to_delete, keep = FALSE)
-
-c(full_tem, internal_features, no_lines) |> 
-  draw_tem() |> 
-  crop_tem() 
+```{r mask-oval-bounds}
+stimuli |>
+  greyscale() |>
+  mask_oval(bounds = c(180, 110, 120, 110), 
+            fill = "black") 
 ```
 
-Here are all of the available named features. The feature "gmm" is the subset of points commonly used for geometric morphometrics, which excludes points that don't have clear anatomical definitions.
-
-```{r features-all}
-
-features <- c("gmm", "oval", "face", "mouth", "nose", "eyes", "brows",
-              "left_eye",  "right_eye", "left_brow",  "right_brow",
-              "ears", "undereyes", "teeth", "smile_lines", 
-              "cheekbones", "philtrum", "chin", "neck", "halo")
-
-# crop stimuli to make them easier to see
-crops <-  crop_tem(full_tem)
-
-# plot each feature subset
-new_tems <- lapply(features, function(ft) {
-  crops |> 
-    subset_tem(features(ft)) |> 
-    draw_tem(pt.color = "#FF0099",
-             pt.size = 8,
-             line.color = "#FFFF00",
-             line.size = 5,
-             line.alpha = 1)
-}) |> do.call(what = c)
-
-new_tems |> 
-  pad(50, 0, 0, 0, fill = "white") |>
-  rename_stim(features) |> 
-  label()
-```
-
-
-## Stimulus set
 
 Now it's relatively straightforward to create a stimulus set that matches old papers.
 
@@ -528,11 +529,11 @@ load_stim_london(1:10) |>
   plot(nrow = 2)
 ```
 
-## Custom Masks
+### Custom Masks
 
 You can define a custom mask. The code below is useful for finding the template points you want to outline. It crops around the points, makes the image darker, makes it larger (so the text is higher-resolution), and plots it with the point indices.
 
-```{r}
+```{r find-points}
 stimuli <- load_stim_smiling("030") |>
   auto_delin("dlib70", replace = TRUE)
 
@@ -546,7 +547,7 @@ stimuli |>
 
 Let's say you wanted to mask the right side of the face and the left eye. You set up the mask as a list of named areas, and each area is a list of vectors of the points along each segment of the enclosing mask.
 
-```{r}
+```{r mask-custom}
 mask <- list(
   right_face = list(
     10:18, #chin to right temple

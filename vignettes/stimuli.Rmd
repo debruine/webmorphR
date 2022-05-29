@@ -80,7 +80,7 @@ The `horiz_eyes` function just makes sure that the first image has good alignmen
 
 ```{r align, message=FALSE}
 # get patch color for each image from top 10 pixels
-patch_fill <- patch(subset, x1 = 0, x2 = 1, y1 = 0, y2 = 10)
+patch_fill <- patch(subset, width = 1, height = 10)
 
 aligned <- subset |>
   horiz_eyes(fill = patch_fill) |>
@@ -169,7 +169,7 @@ resized <- stimuli |>
   resize(.5)
 
 # get patch color for each image
-patch_fill <- patch(resized, x1 = 0, x2 = 1, y1 = 0, y2 = 10)
+patch_fill <- patch(resized, width = 1, height = 10)
 
 # align and crop
 cropped <- resized |>

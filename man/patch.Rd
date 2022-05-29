@@ -6,10 +6,10 @@
 \usage{
 patch(
   stimuli,
-  x1 = 0,
-  x2 = 10,
-  y1 = 0,
-  y2 = 10,
+  width = 10,
+  height = 10,
+  x_off = 0,
+  y_off = 0,
   color = c("hex", "rgb"),
   func = stats::median
 )
@@ -17,11 +17,13 @@ patch(
 \arguments{
 \item{stimuli}{list of stimuli}
 
-\item{x1, x2, y1, y2}{start and end pixels of the patch, if <=1, interpreted as proportions of width or height}
+\item{width, height}{dimensions of the patch in pixels, if <=1, interpreted as proportions of width or height}
+
+\item{x_off, y_off}{offset in pixels or proportion (<1)}
 
 \item{color}{The type of color to return (hex, rgb)}
 
-\item{func}{The function to apply to an array of rgba values to determine the central colour (defaults to median, but mean, min, or max are also useful)}
+\item{func}{The function to apply to an array of L*ab color values to determine the central colour (defaults to median, but mean, min, or max can also be useful)}
 }
 \value{
 a vector of hex or rgba color values
@@ -35,13 +37,17 @@ The colour values of each pixel in the patch are converted to CIE-Lab values bef
 This excludes transparent pixels, and returns "transparent" if all pixels in the patch are transparent.
 }
 \examples{
+stimuli <- demo_stim()
+
 # get colour from the upper left corder
-demo_stim() |> patch()
+patch(stimuli)
 
 # get median colour from centre .1 width pixels
-demo_stim() |> patch(x1 = .45, x2 = .55, y1 = .45, y2 = .55)
+patch(stimuli, width = .1, height = .1, 
+      x_off = .45, y_off = .45)
 
-# get mean rgb colour from a 10-pixel strip across the top of the image
-demo_stim() |> patch(0, 1, 0, 10, color = "rgb", func = mean)
+# get mean rgb colour from full image
+patch(stimuli, width = 1, height = 1, 
+      color = "rgb", func = mean)
 
 }

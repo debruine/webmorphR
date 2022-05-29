@@ -7,7 +7,7 @@
 * Changed to `as_stimlist()` from `validate_stimlist()`
 * The `expand` argument in `mask()` works now and also does contraction with negative values.
 * `rotate()` has a new argument, `origin`, that customises the rotation origin
-* `patch()` now converts pixel colours to CIE-L*ab values before taking the mean or median values, whcih should create closer visual matches than the old RGB method.
+* `patch()` now converts pixel colours to CIE-L*ab values before taking the mean or median values, which should create closer visual matches than the old RGB method. Also changed from taking x and y max and min values to width, height, x_off and y_off (like `crop()`).
 * Prepared for CRAN
 
 # webmorphR 0.0.2.9003

@@ -17,7 +17,7 @@ test_that("pad", {
   x <- pad(s, 50)
   expect_equal(width(s) + 100, width(x))
   expect_equal(height(s) + 100, height(x))
-  expect_equal(patch(x[2], x2 = 100, y2 = 100)[[1]], "#FFFFFFFF")
+  expect_equal(patch(x[2], 100, 100)[[1]], "#FFFFFFFF")
   
   # negative (should I prevent this?)
   x <- pad(s, -50)
@@ -28,8 +28,8 @@ test_that("pad", {
   x <- pad(s, 1)
   expect_equal(width(s) + 2, width(x))
   expect_equal(height(s) + 2, height(x))
-  expect_equal(patch(x[1], x2 = 1, y2 = 1.1)[[1]], "#FFFFFFFF")
-  expect_true(patch(x[1], x2 = 100, y2 = 100)[[1]] != "#FFFFFFFF")
+  expect_equal(patch(x[1], 1, 1.1)[[1]], "#FFFFFFFF")
+  expect_true(patch(x[1], 100, 100)[[1]] != "#FFFFFFFF")
   
   # fill
   x <- pad(s, fill = "red")

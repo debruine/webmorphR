@@ -90,17 +90,13 @@ test_that("expand", {
   revnegdiff <- compare(revmask1, revnegmask)[[1]]
   expect_gt(revnegdiff, 0)
   
-  patch1 <- patch(mask1, x1 = top_pt["x"], x2 = top_pt["x"], 
-                  y1 = top_pt["y"] - 3, y2 = top_pt["y"] - 3)
-  patch10 <- patch(mask10, x1 = top_pt["x"], x2 = top_pt["x"], 
-                  y1 = top_pt["y"] - 3, y2 = top_pt["y"] - 3)
+  patch1 <- patch(mask1, 1.1, 1.1, top_pt["x"], top_pt["y"] - 3)
+  patch10 <- patch(mask10, 1.1,1.1, top_pt["x"], top_pt["y"] - 3)
   expect_equal(patch1[[1]], "#FF0000FF")
   expect_true(patch1 != patch10)
   
-  revpatch1 <- patch(revmask1, x1 = top_pt["x"], x2 = top_pt["x"], 
-                  y1 = top_pt["y"] - 3, y2 = top_pt["y"] - 3)
-  revpatch10 <- patch(revmask10, x1 = top_pt["x"], x2 = top_pt["x"], 
-                   y1 = top_pt["y"] - 3, y2 = top_pt["y"] - 3)
+  revpatch1 <- patch(revmask1, 1.1, 1.1,  top_pt["x"], top_pt["y"] - 3)
+  revpatch10 <- patch(revmask10, 1.1, 1.1, top_pt["x"], top_pt["y"] - 3)
   expect_equal(revpatch10[[1]], "#FF0000FF")
   expect_true(revpatch1 != revpatch10)
 })
