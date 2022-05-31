@@ -66,12 +66,14 @@ This interpolates more control points along the lines. This can improve the accu
 }
 }
 \examples{
-\dontrun{
+\donttest{
+if (webmorph_up()) {
   stimuli <- demo_stim()
   sexdim <- trans(stimuli, stimuli$f_multi, stimuli$m_multi,
                   shape = c(fem = -0.5, masc = 0.5))
   
   sexdim |> draw_tem() |> label()
+}
 }
 
 }
@@ -80,6 +82,7 @@ WebMorph.org functions
 \code{\link{avg}()},
 \code{\link{continuum}()},
 \code{\link{loop}()},
-\code{\link{symmetrize}()}
+\code{\link{symmetrize}()},
+\code{\link{webmorph_up}()}
 }
 \concept{webmorph}

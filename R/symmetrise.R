@@ -13,13 +13,15 @@
 #' @aliases symmetrise
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' if (webmorph_up()) {
 #'   stimuli <- demo_stim(1)
 #'
 #'   sym_both <- symmetrize(stimuli)
 #'   sym_shape <- symmetrize(stimuli, color = 0)
 #'   sym_color <- symmetrize(stimuli, shape = 0)
 #'   sym_anti <- symmetrize(stimuli, shape = -1.0, color = 0)
+#' }
 #' }
 symmetrize <- function(stimuli, shape = 1.0, color = 1.0, tem_id = "frl", ...) {
   stimuli <- require_tems(stimuli, TRUE)

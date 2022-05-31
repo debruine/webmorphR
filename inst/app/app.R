@@ -260,6 +260,8 @@ server <- function(input, output, session) {
     content = function(file) {
       tryCatch({
         # change wd to tempdir for zipping
+        oldwd <- getwd()
+        on.exit(setwd(oldwd))
         tdir <- tempfile()
         write_stim(v$stimuli, tdir, overwrite = TRUE)
         setwd(tdir)

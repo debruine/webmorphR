@@ -23,9 +23,4 @@ list of stimuli with converted templates
 \description{
 Convert templates
 }
-\examples{
-\dontrun{
-fpp106 <- demo_stim() |> convert_tem("guess", "fpp106")
-}
-}
 \keyword{internal}

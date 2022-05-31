@@ -17,18 +17,4 @@ a data table
 \description{
 List format to table format
 }
-\examples{
-\dontrun{
-list_format <- list(
-  item1 = list(x = 1, y = "A"),
-  item2 = list(x = 2),
-  item3 = list(y = "C", z = TRUE),
-  item4 = list(x = NULL, y = NULL, z = NULL),
-  item5 = list(),
-  item6 = NULL
-)
-
-list_to_tbl(list_format, rownames = "item")
-}
-}
 \keyword{internal}

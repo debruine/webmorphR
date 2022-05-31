@@ -6,18 +6,6 @@
 #'
 #' @return a list or vector of names with the common beginnings removed
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' # breaks at /
-#' unique_names(c("common/face_A.tem",
-#'                "common/face_B.tem"))
-#'
-#' # breaks at each character
-#' unique_names(c("common/face_A.tem",
-#'                "common/face_B.tem"),
-#'                breaks = "")
-#' }
 unique_names <- function(full_names,
                          breaks = "/",
                          remove_ext = TRUE) {
@@ -49,7 +37,7 @@ unique_names <- function(full_names,
       # break and take last section
       unames <- fnames[[1]] |>
         strsplit(breaks) |> # break
-        .bb(1)
+        .subset2(1)
       unames <- unames[length(unames)] # get last item
     }
     names(unames) <- full_names[[1]]

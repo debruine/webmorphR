@@ -19,9 +19,4 @@ string with Q path component
 \description{
 SVG Path Quadratic Curve
 }
-\examples{
-\dontrun{
-svgCubicTo(20.123, 30.456, 40.123, 50.456, 60.123, 70.456)
-}
-}
 \keyword{internal}

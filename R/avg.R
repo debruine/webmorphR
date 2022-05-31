@@ -28,8 +28,10 @@
 #' @family webmorph
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' if (webmorph_up()) {
 #'   demo_stim() |> avg()
+#' }
 #' }
 avg <- function(stimuli,
                 texture = TRUE,
@@ -38,6 +40,10 @@ avg <- function(stimuli,
   stimuli <- require_tems(stimuli, TRUE)
   if (length(stimuli) > 100) {
     stop("We can't average more than 100 images at a time. You can create sub-averages with equal numbers of faces and average those together.")
+  }
+  
+  if (!webmorph_up()) {
+    stop("Webmorph.org can't be reached. Check if you are connected to the internet.")
   }
   
   norm <- match.arg(norm)
@@ -74,4 +80,20 @@ avg <- function(stimuli,
   unlink(tdir, recursive = TRUE) # clean up temp directory
   
   avg
+}
+
+
+#' Check if webmorph.org is available
+#' 
+#' @export
+#' @family webmorph
+#' @examples 
+#' webmorph_up()
+webmorph_up <- function() {
+  tryCatch({
+    paste0(wm_opts("server"), "/scripts/status") |>
+      httr::HEAD() |> httr::status_code() |> identical(200L)
+  }, error = function(e) {
+    return(FALSE)
+  })
 }

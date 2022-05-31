@@ -14,12 +14,14 @@
 #' @family webmorph
 #'
 #' @examples
-#' \dontrun{
-#' stimuli <- demo_stim()
-#' cont <- continuum(stimuli$f_multi, stimuli$m_multi)
-#' 
-#' # create an animated gif
-#' animate(cont, fps = 10, rev = TRUE)
+#' \donttest{
+#' if (webmorph_up()) {
+#'   stimuli <- demo_stim()
+#'   cont <- continuum(stimuli$f_multi, stimuli$m_multi)
+#'   
+#'   # create an animated gif
+#'   animate(cont, fps = 10, rev = TRUE)
+#' }
 #' }
 continuum <- function(from_img, to_img, from = 0, to = 1, by = 0.1, ...) {
   steps <- seq(from, to, by)

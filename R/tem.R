@@ -78,14 +78,6 @@ tem_def <- function(tem_id = "frl", path = NULL) {
 #' @examples
 #' dlib70 <- tem_def("dlib70")
 #' viz_tem_def(dlib70, pt.size = 5, line.size = 3)
-#' 
-#' \dontrun{
-#' # get the FRL-bodies template from webmorph.org
-#' # see https://osf.io/g27wf/ for open-access body images with this template
-#' # warning: they are all nude (paid models from 3d.sk)
-#' frl_bodies <- tem_def(4)
-#' viz_tem_def(frl_bodies)
-#' }
 viz_tem_def <- function(tem_def, ...) {
   # make a blank image the size of the template
   width <- tem_def$width %||% mean(tem_def$points$x) * 2

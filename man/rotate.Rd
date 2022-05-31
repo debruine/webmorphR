@@ -49,9 +49,7 @@ offset <- stimuli[1] |>
   
 rotate(offset, 45, origin = "image", fill = "pink")
 rotate(offset, 45, origin = "tem", fill = "pink")
-}
 
-\dontrun{
 # rotate around point 0 (left eye)
 offset |> crop_tem() |> rep(8) |>
   rotate(seq(0, 325, 45), origin = 0, fill = "pink") |>

@@ -5,11 +5,6 @@
 #'
 #' @return string with M path component
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' svgMoveTo(20.123, 30.456)
-#' }
 svgMoveTo <- function(x, y, digits = 2) {
   paste0("M %.", digits, "f %.", digits, "f") |>
     sprintf(round(x, digits), round(y, digits))
@@ -22,11 +17,6 @@ svgMoveTo <- function(x, y, digits = 2) {
 #'
 #' @return string with L path component
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' svgLineTo(20.123, 30.456)
-#' }
 svgLineTo <- function(x, y, digits = 2) {
   paste0("L %.", digits, "f %.", digits, "f") |>
     sprintf(round(x, digits), round(y, digits))
@@ -40,11 +30,6 @@ svgLineTo <- function(x, y, digits = 2) {
 #'
 #' @return string with Q path component
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' svgQuadraticTo(20.123, 30.456, 40.123, 50.456)
-#' }
 svgQuadraticTo <- function(x1, y1, x, y, digits = 2) {
   paste0("Q %.", digits, "f %.", digits, "f, %.",
          digits, "f %.", digits, "f") |>
@@ -60,11 +45,6 @@ svgQuadraticTo <- function(x1, y1, x, y, digits = 2) {
 #'
 #' @return string with Q path component
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' svgCubicTo(20.123, 30.456, 40.123, 50.456, 60.123, 70.456)
-#' }
 svgCubicTo <- function(x1, y1, x2, y2, x, y, digits = 2) {
   paste0("C %.", digits, "f %.", digits, "f, %.",
          digits, "f %.", digits, "f, %.",
@@ -83,11 +63,6 @@ svgCubicTo <- function(x1, y1, x2, y2, x, y, digits = 2) {
 #'
 #' @return x- and y-coordinates of control points (x1, y1, x2, y2)
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' svgControlPoints(10, 10, 20, 20, 30, 10)
-#' }
 svgControlPoints <- function(x0, y0, x1, y1, x2, y2, t = 0.3) {
   d01 <- sqrt(`^`(x1-x0,2) + `^`(y1-y0,2))
   d12 <- sqrt(`^`(x2-x1,2) + `^`(y2-y1,2))
@@ -110,16 +85,6 @@ svgControlPoints <- function(x0, y0, x1, y1, x2, y2, t = 0.3) {
 #'
 #' @return string with path component
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' stimuli <- demo_stim()
-#' # get upper and lower eye points
-#' l_upper <- stimuli$f_multi$points[, 18:22]
-#' l_lower <- stimuli$f_multi$points[, c(22, 30, 29, 28, 18)]
-#' svgBezier(l_upper, 1)
-#' svgBezier(l_lower, 2)
-#' }
 svgBezier <- function(v, idx = 1) {
   path <- list()
   

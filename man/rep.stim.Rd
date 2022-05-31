@@ -17,10 +17,4 @@ A stimlist
 \description{
 Repeat stim in a list
 }
-\examples{
-\dontrun{
-a <- demo_stim()
-rep(a[[1]], 3)
-}
-}
 \keyword{internal}

@@ -94,11 +94,6 @@ knit_print.stimlist <- function(x, ...) {
 #' @return list of stimuli
 #' @export
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' f <- demo_stim() |> subset("f_")
-#' }
 subset.stimlist <- function (x, subset, ...) {
   e <- substitute(subset)
   info <- get_info(x)
@@ -123,12 +118,6 @@ subset.stimlist <- function (x, subset, ...) {
 #' @return A stimlist
 #' @export
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' a <- demo_stim()
-#' rep(a[[1]], 3)
-#' }
 rep.stim <- function (x, ...) {
   # turn into a list and handle below
   x <- as_stimlist(x)
@@ -143,13 +132,6 @@ rep.stim <- function (x, ...) {
 #' @return A stimlist
 #' @export
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' demo_stim() |>
-#'   rep(3) |>
-#'   rotate(seq(10, 60, 10), fill = rainbow(6))
-#' }
 rep.stimlist <- function(x, ...) {
   nm <- names(x)
   newnm <- rep(nm, ...)
@@ -234,37 +216,6 @@ message <- function(...) {
 }
 
 
-#' Get named item when unsure of name
-#'
-#' If a user gives you a named vector or list and there are a few possibilities for the item you want to get, list the possible names in order, using integers for indices.
-#'
-#' @param x named vector or list
-#' @param ... possible names in x in priority order
-#' @param .default default value if no names found
-#'
-#' @return list or vector item
-#' @keywords internal
-#'
-#' @examples 
-#' \dontrun{
-#' x <- c(h = 100, w = 200)
-#' width <- xget(x, "width", "w", 1)
-#' height <- xget(x, "height", "h", 2)
-#' }
-xget <- function(x, ..., .default = NULL) {
-  possible <- list(...) |> # get possible names
-    lapply(function(y) {   
-      # retrieve from x
-      z <- x[y][[1]]
-      # missing from vectors = NA, # from list = NULL
-      if (is.null(z)) NA else z
-    }) |>
-    c(list(.default)) # add default to the end
-  
-  # get rid of NAs and return first item
-  possible[!is.na(possible)][[1]]
-}
-
 
 #' Format file size
 #'
@@ -272,11 +223,6 @@ xget <- function(x, ..., .default = NULL) {
 #'
 #' @return human-readable file size
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' format_size(1024*1024)
-#' }
 format_size <- function (x) {
   digits = 1L
   base <- 1024
@@ -293,11 +239,6 @@ format_size <- function (x) {
 #'
 #' @return list of magick images
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' imgs <- demo_stim() |> get_imgs()
-#' }
 get_imgs <- function(stimuli) {
   args <- as_stimlist(stimuli) |>
     lapply(`[[`, "img")

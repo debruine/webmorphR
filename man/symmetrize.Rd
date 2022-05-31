@@ -25,7 +25,8 @@ list of stimuli with symmetrised images and templates
 Use webmorph.org to make faces symmetric in shape and/or colour.
 }
 \examples{
-\dontrun{
+\donttest{
+if (webmorph_up()) {
   stimuli <- demo_stim(1)
 
   sym_both <- symmetrize(stimuli)
@@ -34,11 +35,13 @@ Use webmorph.org to make faces symmetric in shape and/or colour.
   sym_anti <- symmetrize(stimuli, shape = -1.0, color = 0)
 }
 }
+}
 \seealso{
 WebMorph.org functions
 \code{\link{avg}()},
 \code{\link{continuum}()},
 \code{\link{loop}()},
-\code{\link{trans}()}
+\code{\link{trans}()},
+\code{\link{webmorph_up}()}
 }
 \concept{webmorph}

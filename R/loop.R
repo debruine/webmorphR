@@ -11,15 +11,17 @@
 #' @family webmorph
 #'
 #' @examples
-#' \dontrun{
-#' # align and crop images
-#' stimuli <- demo_unstandard(1:5) |> 
-#'   align() |> crop_tem()
-#' 
-#' loop <- loop(stimuli, 5)
-#' 
-#' # create an animated gif
-#' animate(loop, fps = 10)
+#' \donttest{
+#' if (webmorph_up()) {
+#'   # align and crop images
+#'   stimuli <- demo_unstandard(1:5) |> 
+#'     align() |> crop_tem()
+#'   
+#'   loop <- loop(stimuli, 5)
+#'   
+#'   # create an animated gif
+#'   animate(loop, fps = 10)
+#' }
 #' }
 loop <- function(stimuli, steps = 10, ...) {
   stimuli <- require_tems(stimuli, TRUE)

@@ -13,7 +13,4 @@
   if (is.null(l)) r else l
 }
 
-.b <- `[`
-.bb <- `[[`
-
 

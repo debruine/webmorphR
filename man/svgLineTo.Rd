@@ -17,9 +17,4 @@ string with L path component
 \description{
 SVG Path Line
 }
-\examples{
-\dontrun{
-svgLineTo(20.123, 30.456)
-}
-}
 \keyword{internal}

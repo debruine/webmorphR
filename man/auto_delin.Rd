@@ -31,8 +31,8 @@ FACEPLUSPLUS_SECRET="1234567890abcdefghijk"
 \examples{
 \dontrun{
 # requires an API key in .Renviron
-  auto_fpp106 <- demo_stim() |>
-    auto_delin(model = "fpp106", replace = TRUE)
+auto_fpp106 <- demo_stim() |>
+  auto_delin(model = "fpp106", replace = TRUE)
 }
 }
 \seealso{

@@ -50,33 +50,6 @@ test_that("[", {
   expect_equal(names(m), "m_multi")
 })
 
-# xget ----
-test_that("xget", {
-  # vectors
-  x <- c(a = 1, b = 2)
-  expect_equal(xget(x, "A", "a"), 1)
-  expect_equal(xget(x, 2, "a"), 2)
-  expect_equal(xget(x, "b", "a"), 2)
-  expect_equal(xget(x, "B", "nope", .default = 3), 3)
-  expect_null(xget(x, "A", "B"))
-
-  # lists
-  x <- list(a = 1, b = 2)
-  expect_equal(xget(x, "A", "a"), 1)
-  expect_equal(xget(x, 2, "a"), 2)
-  expect_equal(xget(x, "b", "a"), 2)
-  expect_equal(xget(x, "B", "A", .default = 3), 3)
-  expect_null(xget(x, "A", "B"))
-
-  # more complex lists
-  x <- list(a = 1, b = TRUE, c = list(1, 2))
-  expect_equal(xget(x, "A", "a"), 1)
-  expect_equal(xget(x, 2, "a"), TRUE)
-  expect_equal(xget(x, "c", "a"), list(1, 2))
-  expect_equal(xget(x, "B", "A", .default = 3), 3)
-  expect_null(xget(x, "A", "B"))
-})
-
 # subset ----
 test_that("subset", {
   stimuli <- demo_stim() |>

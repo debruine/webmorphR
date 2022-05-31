@@ -9,7 +9,7 @@
 #' @family tem
 #' 
 #' @examples 
-#' \dontrun{
+#' if (interactive()) {
 #' # adjust existing delineations
 #' stimuli <- demo_stim() |> delin()
 #' 

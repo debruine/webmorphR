@@ -140,10 +140,8 @@ write_stim <- function(stimuli, dir = ".",
 #' @keywords internal
 #'
 #' @examples
-#' \dontrun{
 #' stimuli <- demo_stim()
-#' tem_text(stimuli$f_multi)
-#' }
+#' f_tem_text <- tem_text(stimuli$f_multi)
 tem_text <- function(stim) {
   txt <- list()
   

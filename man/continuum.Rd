@@ -26,12 +26,14 @@ a list of stimuli containing each step of the continuum
 Morph from one image to another in the specified steps.
 }
 \examples{
-\dontrun{
-stimuli <- demo_stim()
-cont <- continuum(stimuli$f_multi, stimuli$m_multi)
-
-# create an animated gif
-animate(cont, fps = 10, rev = TRUE)
+\donttest{
+if (webmorph_up()) {
+  stimuli <- demo_stim()
+  cont <- continuum(stimuli$f_multi, stimuli$m_multi)
+  
+  # create an animated gif
+  animate(cont, fps = 10, rev = TRUE)
+}
 }
 }
 \seealso{
@@ -39,6 +41,7 @@ WebMorph.org functions
 \code{\link{avg}()},
 \code{\link{loop}()},
 \code{\link{symmetrize}()},
-\code{\link{trans}()}
+\code{\link{trans}()},
+\code{\link{webmorph_up}()}
 }
 \concept{webmorph}

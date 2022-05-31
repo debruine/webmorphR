@@ -16,9 +16,7 @@ The text for a .tem file
 Make text version of a template
 }
 \examples{
-\dontrun{
 stimuli <- demo_stim()
-tem_text(stimuli$f_multi)
-}
+f_tem_text <- tem_text(stimuli$f_multi)
 }
 \keyword{internal}

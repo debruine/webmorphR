@@ -16,7 +16,7 @@ list of stimuli with new templates
 Adjust the templates in a shiny interface. This will overwrite existing templates.
 }
 \examples{
-\dontrun{
+if (interactive()) {
 # adjust existing delineations
 stimuli <- demo_stim() |> delin()
 

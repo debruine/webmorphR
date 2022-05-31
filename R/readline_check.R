@@ -10,20 +10,6 @@
 #'
 #' @return the validated result of readline
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' if(interactive()){
-#' readline_check("Type a number: ", "numeric")
-#' readline_check("Type two characters: ", 
-#'                "length", min = 2, max = 2)
-#' readline_check("Type at least 3 characters: ", 
-#'                "length", min = 3)
-#' readline_check("Type no more than 4 characters: ", 
-#'                 "length", max = 4)
-#' readline_check("Type a letter and a number: ", 
-#'                "grep", pattern = "^[a-zA-Z]\\d$")
-#' }}
 readline_check <- function(prompt, type = c("numeric", "integer", "length", "grep"), 
                            min = -Inf, max = Inf, warning = NULL, default = NULL, ...) {
   # get connection from options (hack to allow for unit testing)

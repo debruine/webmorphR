@@ -5,20 +5,6 @@
 #'
 #' @return a data table
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' list_format <- list(
-#'   item1 = list(x = 1, y = "A"),
-#'   item2 = list(x = 2),
-#'   item3 = list(y = "C", z = TRUE),
-#'   item4 = list(x = NULL, y = NULL, z = NULL),
-#'   item5 = list(),
-#'   item6 = NULL
-#' )
-#'
-#' list_to_tbl(list_format, rownames = "item")
-#' }
 list_to_tbl <- function(list, rownames = NULL) {
   tbl_format <- list |>
     # handle list() and NULL

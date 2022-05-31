@@ -25,12 +25,12 @@ stimlist with plot
 Plot in rows
 }
 \examples{
-\dontrun{
-up <- demo_stim()
-inv <- rotate(up, 180)
-plot_rows(upright = up, inverted = inv)
-plot_rows(upright = up, inverted = inv, color = "dodgerblue", top_label = TRUE)
-}
+s <- demo_unstandard()
+plot_rows(
+  female = s[1:3],
+  male = s[6:8],
+  maxwidth = 600
+)
 }
 \seealso{
 Visualisation functions

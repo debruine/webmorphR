@@ -17,14 +17,4 @@ string with path component
 \description{
 Construct Bezier Curves from Template Points
 }
-\examples{
-\dontrun{
-stimuli <- demo_stim()
-# get upper and lower eye points
-l_upper <- stimuli$f_multi$points[, 18:22]
-l_lower <- stimuli$f_multi$points[, c(22, 30, 29, 28, 18)]
-svgBezier(l_upper, 1)
-svgBezier(l_lower, 2)
-}
-}
 \keyword{internal}

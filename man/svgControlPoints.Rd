@@ -21,9 +21,4 @@ x- and y-coordinates of control points (x1, y1, x2, y2)
 \description{
 Get Control Points
 }
-\examples{
-\dontrun{
-svgControlPoints(10, 10, 20, 20, 30, 10)
-}
-}
 \keyword{internal}

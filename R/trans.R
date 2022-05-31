@@ -35,12 +35,14 @@
 #' @family webmorph
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' if (webmorph_up()) {
 #'   stimuli <- demo_stim()
 #'   sexdim <- trans(stimuli, stimuli$f_multi, stimuli$m_multi,
 #'                   shape = c(fem = -0.5, masc = 0.5))
 #'   
 #'   sexdim |> draw_tem() |> label()
+#' }
 #' }
 #'
 trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
@@ -52,6 +54,10 @@ trans <- function(trans_img = NULL, from_img = NULL, to_img = NULL,
                   normpoint = 0:1,
                   sample_contours = TRUE,
                   warp = c("multiscale", "linear", "multiscalerb")) {
+  if (!webmorph_up()) {
+    stop("Webmorph.org can't be reached. Check if you are connected to the internet.")
+  }
+  
   trans_img <- require_tems(trans_img)
   from_img <- require_tems(from_img)
   to_img <- require_tems(to_img)

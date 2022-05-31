@@ -45,8 +45,10 @@ B. Tiddeman, D.M. Burt and D. Perrett (2001). Computer Graphics in Facial Percep
 }
 }
 \examples{
-\dontrun{
+\donttest{
+if (webmorph_up()) {
   demo_stim() |> avg()
+}
 }
 }
 \seealso{
@@ -54,6 +56,7 @@ WebMorph.org functions
 \code{\link{continuum}()},
 \code{\link{loop}()},
 \code{\link{symmetrize}()},
-\code{\link{trans}()}
+\code{\link{trans}()},
+\code{\link{webmorph_up}()}
 }
 \concept{webmorph}

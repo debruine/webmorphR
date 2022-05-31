@@ -17,9 +17,4 @@ string with M path component
 \description{
 SVG Path Move
 }
-\examples{
-\dontrun{
-svgMoveTo(20.123, 30.456)
-}
-}
 \keyword{internal}

@@ -19,9 +19,4 @@ list of stimuli
 \description{
 Returns a subset of the stimulus list meeting the condition.
 }
-\examples{
-\dontrun{
-f <- demo_stim() |> subset("f_")
-}
-}
 \keyword{internal}

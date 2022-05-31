@@ -228,7 +228,7 @@ gglabel <- function(stimuli, label = TRUE, x = 0.5, y = 0.95, geom = "text", ...
   dots$y <- ifelse(dots$y <= 1, dots$y*h, dots$y)
   
   for (i in seq_along(stimuli)) {
-    args <- lapply(dots, .bb, i)
+    args <- lapply(dots, `[[`, i)
     info <- magick::image_info(stimuli[[i]]$img)
     res <- gsub("x.*$", "", info$density)
     res <- as.integer(res)

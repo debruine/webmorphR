@@ -148,12 +148,12 @@ plot_stim <- function(stimuli, nrow = NULL, ncol = NULL, byrow = TRUE,
 #' @family viz
 #'
 #' @examples
-#' \dontrun{
-#' up <- demo_stim()
-#' inv <- rotate(up, 180)
-#' plot_rows(upright = up, inverted = inv)
-#' plot_rows(upright = up, inverted = inv, color = "dodgerblue", top_label = TRUE)
-#' }
+#' s <- demo_unstandard()
+#' plot_rows(
+#'   female = s[1:3],
+#'   male = s[6:8],
+#'   maxwidth = 600
+#' )
 plot_rows <- function(..., top_label = NULL,
                       maxwidth = wm_opts("plot.maxwidth"),
                       maxheight = wm_opts("plot.maxheight")) {

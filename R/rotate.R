@@ -31,9 +31,7 @@
 #'   
 #' rotate(offset, 45, origin = "image", fill = "pink")
 #' rotate(offset, 45, origin = "tem", fill = "pink")
-#' }
 #' 
-#' \dontrun{
 #' # rotate around point 0 (left eye)
 #' offset |> crop_tem() |> rep(8) |>
 #'   rotate(seq(0, 325, 45), origin = 0, fill = "pink") |>
@@ -171,11 +169,6 @@ rotate <- function(stimuli, degrees = 0,
 #'
 #' @return list of rotated width and height
 #' @keywords internal
-#'
-#' @examples
-#' \dontrun{
-#' rotated_size(100, 100, 45)
-#' }
 rotated_size <- function(width, height, degrees) {
   degrees <- degrees %% 180
 

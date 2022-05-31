@@ -15,9 +15,4 @@ list of magick images
 \description{
 Get Images into List
 }
-\examples{
-\dontrun{
-imgs <- demo_stim() |> get_imgs()
-}
-}
 \keyword{internal}

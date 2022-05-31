@@ -20,15 +20,17 @@ list of stimuli containing each step of the loop
 Morph between each image in a list of stimuli, looping back to the start.
 }
 \examples{
-\dontrun{
-# align and crop images
-stimuli <- demo_unstandard(1:5) |> 
-  align() |> crop_tem()
-
-loop <- loop(stimuli, 5)
-
-# create an animated gif
-animate(loop, fps = 10)
+\donttest{
+if (webmorph_up()) {
+  # align and crop images
+  stimuli <- demo_unstandard(1:5) |> 
+    align() |> crop_tem()
+  
+  loop <- loop(stimuli, 5)
+  
+  # create an animated gif
+  animate(loop, fps = 10)
+}
 }
 }
 \seealso{
@@ -36,6 +38,7 @@ WebMorph.org functions
 \code{\link{avg}()},
 \code{\link{continuum}()},
 \code{\link{symmetrize}()},
-\code{\link{trans}()}
+\code{\link{trans}()},
+\code{\link{webmorph_up}()}
 }
 \concept{webmorph}

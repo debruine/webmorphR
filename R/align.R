@@ -31,26 +31,20 @@
 #'         x1 = 100, x2 = 200, y1 = 100, y2 = 100, 
 #'         width = 300, height = 300)
 #' 
-#' \dontrun{
+#' \donttest{
 #' orig <- demo_unstandard()
 #'
 #' # align to bottom-centre of nose (average position)
-#' one_pt <- align(orig, pt1 = 55, pt2 = 55, fill = "dodgerblue")
+#' align(orig, pt1 = 55, pt2 = 55, fill = "dodgerblue")
 #'
 #' # align to pupils of second image
-#' two_pt <- align(orig, ref_img = 2, fill = "dodgerblue")
+#' align(orig, ref_img = 2, fill = "dodgerblue")
+#' }
 #' 
+#' \dontrun{
 #' # procrustes align to average position
-#' proc <- align(orig, procrustes = TRUE, fill = "dodgerblue")
-#' 
-#' # visualise all alignments
-#' plot_rows(
-#'   "Original" = orig,
-#'   "1-point" = one_pt,
-#'   "2-point" = two_pt,
-#'   "Procrustes" = proc,
-#'   maxwidth = 1000
-#' )
+#' # this requires XQuartz on mac and may not run on linux
+#' align(orig, procrustes = TRUE, fill = "dodgerblue")
 #' }
 
 align <- function(stimuli, pt1 = 0, pt2 = 1,
@@ -268,7 +262,7 @@ procrustes_coords <- function(data, ref_img = NULL) {
   #     }) |>
   #     dplyr::summarise_all(mean)
   #
-  #   min_diff <- as.list(dd) |> sapply(abs) |> .b(. == min(.)) |> names()
+  #   min_diff <- as.list(dd) |> sapply(abs) |> .subset(. == min(.)) |> names()
   #   #message("rotation: ", min_diff)
   #
   #   if (min_diff == "p1") {

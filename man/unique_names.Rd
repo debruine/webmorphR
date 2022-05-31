@@ -19,16 +19,4 @@ a list or vector of names with the common beginnings removed
 \description{
 Get unique names
 }
-\examples{
-\dontrun{
-# breaks at /
-unique_names(c("common/face_A.tem",
-               "common/face_B.tem"))
-
-# breaks at each character
-unique_names(c("common/face_A.tem",
-               "common/face_B.tem"),
-               breaks = "")
-}
-}
 \keyword{internal}
