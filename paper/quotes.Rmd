@@ -92,6 +92,8 @@ The reference above [@gonzalez2002digital] has been cited by 2384 papers on Goog
 
 > Each face was put into an oval so that the hairstyle was not visible. The oval was 670 pixels high x 510 pixels wide, which corresponded to a size of about 14.5 x 11 cm on the screen. [@baudouin2006face, p. 792]
 
-> Each face was manually delineated with 189 landmark points outlining features and the face shape. Each face was then averaged with its mirror‑image to create a perfectly symmetric version. The original face was then warped 75% toward its perfectly symmetric version, or had its asymmetries exaggerated by 75% changing the shape of the faces, but maintaining original texture (see Tiddeman et al 2001). [@vingilis2013influence, pp. 305]
+> Each face was manually delineated with 189 landmark points outlining features and the face shape. Each face was then averaged with its mirror‑image to create a perfectly symmetric version. The original face was then warped 75% toward its perfectly symmetric version, or had its asymmetries exaggerated by 75% changing the shape of the faces, but maintaining original texture (see Tiddeman et al 2001). [@vingilis2013influence, p. 305]
 
 The Tiddeman citation is about the texture averaging algorithm. Only those in-the-know would realise from this description that the method used was probably webmorph, as its default template is 189 points, while the default psychomorph template is 179 points. I only know this because I made the 189-point webmorph template.
+
+> They were cropped such that the hair did not extend well below the chin, resized to a height of 400 pixels, and placed on 400 x 400 pixel backgrounds consisting of phase-scrambled variations of a single scene image (for example stimuli, see Figure 1). [@pegors2015simultaneous, p. 665]

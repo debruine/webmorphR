@@ -40,7 +40,7 @@ authornote: |
   This research was funded by ERC grant #647910 (KINSHIP).
 
 abstract: |
-  Face stimuli are commonly created in non-reproducible ways. This paper will introduce the open-source R package webmorphR. It will explain the technical processes of morphing and transforming through a case study of creating face stimuli from an open-access image set.
+  Face stimuli are commonly created in non-reproducible ways. In this paper, we document the irreproducibility of much existing work on faces, explain the benefits of reproducible stimuli, and introduce the open-source R package webmorphR. We explain the technical processes of morphing and transforming through a case study of creating face stimuli from an open-access image set. Finally, we discuss some ethical and methodological issues around the use of face images in research that may be ameliorated through the use of reproducible stimuli. 
   
 keywords          : "faces; morphing; transforming; reproducibility; webmorph"
 wordcount         : "X"
@@ -69,18 +69,20 @@ note              : "Draft"
 
 ```{r setup, include = FALSE}
 # devtools::install_github("crsh/papaja")
-library("papaja")
-library("kableExtra")
-library("dplyr")
-library("magick")
+library("papaja") # for manuscript formatting
+library("kableExtra") # for table formatting
+library("dplyr") # for data wrangling
+library("magick") # for image processing
 
 # devtools::install_github("debruine/webmorphR")
 # devtools::install_github("debruine/webmorphR.stim")
 # devtools::install_github("debruine/webmorphR.dlib")
-library("webmorphR") 
+library("webmorphR") # for reproducible stimuli
 library("webmorphR.stim") # for additional stimuli
 library("webmorphR.dlib") # for face detection
-r_refs("r-references.bib")
+
+# bibliography
+r_refs("r-references.bib", append = FALSE)
 
 # Seed for random number generation
 set.seed(42)
@@ -111,22 +113,34 @@ wm_opts(plot.maxwidth = 850)
 
 Face stimuli are commonly used in research on visual and social perception. This almost always involves some level of stimulus preparation to rotate, resize, crop, and reposition faces on the image. In addition, many studies systematically manipulate face images by changing color and/or shape properties [e.g., @jones2019biological; reviewed in @Little_2011]. 
 
-Gronenschild and colleagues [-@Gronenschild_2009] argue for the importance of standardizing face stimuli so that they are not "confounded by factors such as brightness and contrast, head size, hair cut and color, skin color, and the presence of glasses and earrings". They describe a three-step standardization process. First, they manually removed features such as glasses and earrings in Photoshop. Second, they geometrically standardized images by semi-automatically defining eye and mouth coordinates used to fit the images within an oval mask, Third, they optically standardized images by converting them to greyscale and remapping values between the minimum and 98% threshold onto the full range of values. While laudable in its aims, this procedure has not achieved widespread adoption, probably because the authors provided no code or tools. In personal communication, the main author said that this is because "the procedure is based on standard image processing algorithms described in many textbooks". However, I was unable to easily replicate the procedure and found several places where instructions had more than one possible interpretation or relied on the starting images having specific properties, such as symmetric lighting reflections in the eyes.
+Gronenschild and colleagues [-@Gronenschild_2009] argue for the importance of standardizing face stimuli so that they are not "confounded by factors such as brightness and contrast, head size, hair cut and color, skin color, and the presence of glasses and earrings". They describe a three-step standardization process. First, they manually removed features such as glasses and earrings in Photoshop. Second, they geometrically standardized images by semi-automatically defining eye and mouth coordinates used to fit the images within an oval mask, Third, they optically standardized images by converting them to greyscale and remapping values between the minimum and 98% threshold onto the full range of values. While laudable in its aims, this procedure has not achieved widespread adoption, probably because the authors provided no code or tools. In personal communication, the main author said that this is because "the procedure is based on standard image processing algorithms described in many textbooks". However, we were unable to easily replicate the procedure and found several places where instructions had more than one possible interpretation or relied on the starting images having specific properties, such as symmetric lighting reflections in the eyes.
 
-The goal of this paper is to argue for the importance of reproducible stimulus processing methods in face research and to introduce an open-source R package that allows researchers to create face stimuli with a script that can then be shared so that others can create stimuli using identical methods.
+The goal of this paper is to argue for the importance of reproducible stimulus processing methods in face research and to introduce an open-source R package that allows researchers to create face stimuli with scripts that can then be shared so that others can create stimuli using identical methods.
 
 
 ### Why are reproducible stimulus construction methods important?
 
-I once gave up on a research project because I couldn't figure out how to manipulate spatial frequency in MatLab to make my stimuli look like those in a relevant paper. When I contacted the author, they didn't know how the stimuli were created because a postdoc had done it in Photoshop and didn't leave a detailed record of the method.
+Lisa once gave up on a research project because she couldn't figure out how to manipulate spatial frequency to make the stimuli look like those in a relevant paper. When she contacted the author, they didn't know how the stimuli were created because a postdoc had done it in Photoshop and didn't leave a detailed record of the method.
 
-Reproducibility of stimuli is especially important for face stimuli because faces are sampled, so replications should sample new *faces* as well as new participants [@barrgeneralizing]. The difficulty of creating equivalent face stimuli is a major barrier to this, resulting in stimulus sets that are used across dozens or hundreds of papers. For example, the Chicago Face Database [@CFD_2015] has been cited in almost 800 papers. Ekman and Friesen's [-@ekman1976pictures] Pictures of Facial Affect has been cited more than 5500 times. This image set is currently [**selling** for $399](https://www.paulekman.com/product/pictures-of-facial-affect-pofa/) for "110 photographs of facial expressions that have been widely used in cross-cultural studies, and more recently, in neuropsychological research". Such extensive reuse of image sets means that any confounds present in the image set can cause highly "replicable" but false findings.
+Reproducibility is especially important for face stimuli because faces are sampled, so replications should sample new *faces* as well as new participants [@barrgeneralizing]. The difficulty of creating equivalent face stimuli is a major barrier to this, resulting in stimulus sets that are used across dozens or hundreds of papers. For example, the Chicago Face Database [@CFD_2015] has been cited in almost 800 papers. Ekman and Friesen's [-@ekman1976pictures] Pictures of Facial Affect has been cited more than 5500 times. This image set is currently [**selling** for $399](https://www.paulekman.com/product/pictures-of-facial-affect-pofa/) for "110 photographs of facial expressions that have been widely used in cross-cultural studies, and more recently, in neuropsychological research". Such extensive reuse of image sets means that any confounds present in the image set can cause highly "replicable" but potentially false findings.
 
 Additionally, image sets are often private and reused without clear attribution. Our group has only recently been trying to combat this by making image sets public and citable where possible [e.g., @FRL_London;@Canada2003;@Morrison_2018] and including clear explanations of reuse where not possible [e.g., @jones2018no,@holzleitner2019comparing].
 
 ### Common Techniques
 
-It was basically impossible to systematically survey the literature about the methods used to create facial stimuli, in large part because of poor documentation. However, several common methods are discussed below.
+In this section, we will give an overview of common techniques used to process face stimuli across a wide range of research involving faces. It was basically impossible to systematically survey the literature about the methods used to create facial stimuli, in large part because of poor documentation. However, several common methods are discussed below.
+
+#### Mystery Methods
+
+Many researchers describe image manipulation generically or use "in-house" methods that are not well specified enough for another researcher to have any chance of replicating them.
+
+> Each of the images was rendered in gray-scale and morphed to a common shape using an in-house program based on bi-linear interpolation (see e.g., Gonzalez & Woods, 2002). Key points in the morphing grid were set manually, using a graphics program to align a standard grid to a set of facial points (eye corners, face outline, etc.). Images were then subject to automatic histogram equalization. [@burton2005robust, p. 263]
+
+The reference above [@gonzalez2002digital] has been cited by 2384 papers on Google Scholar, and is a 190-page book. It mentions bilinear interpolation on pages 64--66 in the context of calculating pixel color when resizing images and it's unclear how this could be used to morph shape.
+
+> They were cropped such that the hair did not extend well below the chin, resized to a height of 400 pixels, and placed on 400 x 400 pixel backgrounds consisting of phase-scrambled variations of a single scene image (for example stimuli, see Figure 1). [@pegors2015simultaneous, p. 665]
+
+While the example images in the figure mentioned above help to clarify the methods, it was clear that there was a large degree of subjectivity in determining how to crop the hair. 
 
 #### Photoshop/Image editors
 
@@ -138,15 +152,35 @@ A search for "Photoshop face attractiveness" produced 19,300 responses in Google
 
 > These pictures were edited using Adobe Photoshop 6.0 to remove external features (hair, ears) and create a uniform grey background. [@sforza2010my, p. 150] 
 
-> The averaged composites and blends were sharpened in Adobe Photoshop to
-reduce any blurring introduced by blending. [@rhodes2001attractiveness, p. 615]
+> The averaged composites and blends were sharpened in Adobe Photoshop to reduce any blurring introduced by blending. [@rhodes2001attractiveness, p. 615]
 
-  
+Most papers that use Photoshop methods simply state in lay terms what the editing accomplished, and not the specific tools used to accomplish it. For example, it is not clear what sharpening tool was used in the last quote above, and what settings were used. Were all images sharpened by the same amount or was this done "by eye"?  
+
+A potential danger to processing images "by eye" is the possibility of visual adaptation affecting the researcher's perception. It is well known that viewing images with specific alterations to shape or colour alters the perception of subsequent images [@rhodes2017adaptive]. Thus, a researcher's perception of the "typical" face can change after exposure to altered faces [@DeBruine:2007JEPHPP]. While some processing will always require human intervention, reproducible methods can also allow researchers to record their specific decisions so such biases can be detected and corrected for.
+
+#### Scriptable Methods
+
+There are several scriptable methods for creating image stimuli, including MatLab, ImageMagick, and GraphicConvertor. Photoshop is technically scriptable, but a search of "Photoshop script face" only revealed a few computer vision papers on detecting photoshopped images [e.g., @wang2019detecting].
+
+MatLab [@higham2016matlab] is widely used within visual psychophysics. A Google Scholar search for "MatLab face attractiveness" returned 23,000 hits, although the majority of papers we inspected used MatLab to process EEG data, present the experiment, or analyse image color, rather than using MatLab to create the stimuli. "MatLab face perception" generated 97,300 hits, more of which used MatLab to create stimuli.
+
+> The average pixel intensity of each image (ranging from 0 to 255) was set to 128 with a standard deviation of 40 using the SHINE toolbox (function lumMatch) (Willenbockel et al., 2010) in MATLAB (version 8.1.0.604, R2013a). [@visconti2014facilitated, p. 2]
+
+ImageMagick [@imagemagick] is a free, open-source program that creates, edits, and converts images in a scriptable manner. The {magick} R package [@R-magick] allows you to script image manipulations in R using ImageMagick.
+
+> Images were cropped, resized to 150 × 150 pixels, and then grayscaled using ImageMagick (version 6.8.7-7 Q16, x86_64, 2013-11-27) on Mac OS X 10.9.2. [@visconti2014facilitated, p. 2]
+
+GraphicConvertor [@nishimura2000graphicconverter] is typically used to batch process images, such as making images a standard size or adjusting color. While not technically "scriptable", batch processing can be set up in the GUI interface and then saved to a reloadable ".gaction" file. (A search for '"gaction" graphicconvertor' on Google Scholar returned no hits.)
+
+> We used the GraphicConverterTM application to crop the images around the cat face and make them all 1024x1024 pixels. One of the challenges of image matching is to do this process automatically. [@paluszek2019pattern, p.214]
+
+Scriptable methods are a laudable start to reproducible stimuli, but the scripts themselves are often not shared, or are in a proprietary closed format, such as MatLab. Additionally, most images that were processed with scriptable methods also used some non-scripted pre-processing to manually crop or align the images.
+
 #### Commerical morphing 
 
 Face averaging or "morphing" is a common technique for making images that are blends of two or more faces. We found 937 Google Scholar responses for "Fantamorph face", 170 Google Scholar responses for "WinMorph face" and fewer mentions of several other programs, such as MorphThing (no longer available) and xmorph.
 
-Most of these programs do not use open formats for storing delineations, the x- and y-coordinates of the landmark points that define shape and the way these are connected with lines. Their algorithms also tend to be closed and there is no common language for describing the procedures used to create stimuli in one program in a way that is easily translatable to another program. Here are descriptions of the use of commercial morphing programs from a few of the top hits.
+Most of these programs do not use open formats for storing delineations: the x- and y-coordinates of the landmark points that define shape and the way these are connected with lines. Their algorithms also tend to be closed and there is no common language for describing the procedures used to create stimuli in one program in a way that is easily translatable to another program. Here are descriptions of the use of commercial morphing programs from a few of the top hits.
 
 > The faces were carefully marked with 112 nodes in FantaMorph™, 4th version: 28 nodes (face outline), 16 (nose), 5 (each ear), 20 (lips), 11 (each eye), and 8 (each eyebrow). To create the prototypes, I used FantaMorph Face Mixer, which averages node locations across faces. Prototypes are available online, in the Personality Faceaurus [http://www.nickholtzman.com/faceaurus.htm]. [@Holtzman_2011, p. 650]
 
@@ -154,39 +188,14 @@ The link above contains only morphed face images and no further details about th
 
 > The 20 individual stimuli of each category were paired to make 10 morph continua, by morphing one endpoint exemplar into its paired exemplar (e.g. one face into its paired face, see Figure 1C) in steps of 5%. Morphing was realized within FantaMorph Software (Abrosoft) for faces and cars, Poser 6 for bodies (only between stimuli of the same gender with same clothing), and Google SketchUp for places. [@Weigelt_2013, p. 4]
 
-#### Scriptable Methods
 
-There are several scriptable methods for creating image stimuli, including MatLab, ImageMagick, and GraphicConvertor. Photoshop is technically scriptable, but a search of "Photoshop script face" only revealed a few computer vision papers on detecting photoshopped images [e.g., @wang2019detecting].
+### Psychomorph/WebMorph {#psychomorph}
 
-MatLab [@higham2016matlab] is widely used within visual psychophysics. A Google Scholar search for "MatLab face attractiveness" returned 23,000 hits, although the majority of papers I inspected used MatLab to process EEG data, present the experiment, or analyse image color, rather than using MatLab to create the stimuli. "MatLab face perception" generated 97,300 hits, more of which used MatLab to create stimuli.
-
-> The average pixel intensity of each image (ranging from 0 to 255) was set to 128 with a standard deviation of 40 using the SHINE toolbox (function lumMatch) (Willenbockel et al., 2010) in MATLAB (version 8.1.0.604, R2013a). [@visconti2014facilitated, p. 2]
-
-
-ImageMagick [@imagemagick] is a free, open-source program that creates, edits, and converts images in a scriptable manner. The {magick} R package [@R-magick] allows you to script image manipulations in R using ImageMagick.
-
-> Images were cropped, resized to 150 × 150 pixels, and then grayscaled using ImageMagick (version 6.8.7-7 Q16, x86_64, 2013-11-27) on Mac OS X 10.9.2. [@visconti2014facilitated, p. 2]
-
-GraphicConvertor [@nishimura2000graphicconverter] is typically used to batch process images, such as making images a standard size or adjusting color. While not technically "scriptable", batch processing can be set up in the GUI interface and the saved to a reloadable ".gaction" file. (A search for '"gaction" graphicconvertor' on Google Scholar returned no hits.)
-
-> We used the GraphicConverterTM application to crop the images around the cat face and make them all 1024x1024 pixels. One of the challenges of image matching is to do this process automatically. [@paluszek2019pattern, p.214]
-
-#### Mystery Methods
-
-Many researchers describe image manipulation generically or use "in-house" methods that are not well specified enough for another researcher to have any chance of replicating them.
-
-> Each of the images was rendered in gray-scale and morphed to a common shape using an in-house program based on bi-linear interpolation (see e.g., Gonzalez & Woods, 2002). Key points in the morphing grid were set manually, using a graphics program to align a standard grid to a set of facial points (eye corners, face outline, etc.). Images were then subject to automatic histogram equalization. [@burton2005robust, p. 263]
-
-The reference above [@gonzalez2002digital] has been cited by 2384 papers on Google Scholar, and is a 190-page book. It mentions bilinear interpolation on pages 64--66 in the context of calculating pixel color when resizing images and it's unclear how this could be used to morph shape.
-
-
-### Psychomorph/WebMorph
-
-Psychomorph is a program developed by Tiddeman, Perrett and colleagues. 
+Psychomorph is a program developed by Tiddeman, Perrett and colleagues. It uses "template" files in a plain text open format to store delineations and the code is well documented in academic papers and available as an open-source Java package. 
 
 Benson and Perrett [@benson1991perception;@benson1991synthesising;@benson1993extracting] describe algorithms for creating composite images by marking corresponding coordinates on individual face images, remapping the images into the average shape, and combining the colour values of the remapped images. These images are also called "prototype" images and can be used to generate caricatures.
 
-The averaging and caricaturing methods were later complemented by a transforming method [@rowland1995manipulating]. This method quantifies shape and colour differences between a pair of faces, creating a "face space" vector along which other faces can be manipulated. This method is distinct from averaging. For example, averaging an individual face with a prototype smiling face will produce a face that looks approximately halfway between the individual and the prototype. The smile will be more intense than the original individual's smile if they weren't smiling, and be less intense if the individual was smiling more than the prototype. However, the transform method would define the shape and/or color difference between neutral and smiling prototypes to define a vector of smiling. Transforming an individual face by some positive percent of the difference between neutral and smiling faces will then always result in an individual face that looks *more* cheerful than the original, no matter how cheerful they started out (Fig\ \@ref(fig:transform-demo)). 
+The averaging and caricaturing methods were later complemented by a transforming method [@rowland1995manipulating]. This method quantifies shape and colour differences between a pair of faces, creating a "face space" vector along which other faces can be manipulated. This method is distinct from averaging. For example, averaging an individual face with a prototype smiling face will produce a face that looks approximately halfway between the individual and the prototype. The smile will be more intense than the original individual's smile if they weren't smiling, and be less intense if the individual was smiling more than the prototype. However, the transform method defines the shape and/or color difference between neutral and smiling prototypes to define a vector of smiling. Transforming an individual face by some positive percent of the difference between neutral and smiling faces will then always result in an individual face that looks *more* cheerful than the original individual, no matter how cheerful they started out (Fig\ \@ref(fig:transform-demo)). 
 
 ```{r, eval = FALSE}
 # setup for making figures below
