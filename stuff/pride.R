@@ -1,6 +1,8 @@
+# devtools::install_github("debruine/webmorphR")
 library(webmorphR)
 wm_opts(fill = "none")
 
+# colors via https://twitter.com/dataandme/status/1531946768270860288?s=20&t=J25ZA4UETcz-awixPP5gDA 
 pride <- c(
   red = '#E50000',
   orange = '#FF8D00',
@@ -15,9 +17,8 @@ pride <- c(
   white = '#FFFFFF'
 )
 
-stripes <- blank(6, width = 500, height = 50, color = pride[1:6])
-
-flag <- plot(stripes, nrow = 6, padding = 0)
+stripes <- blank(6, width = 500, height = 50, color = pride[1:6]) |>
+  plot(nrow = 6, padding = 0)
 
 corner <- blank(1, 200, 200, color = pride["white"]) |>
   pad(50, fill = pride["pink"]) |>
@@ -25,12 +26,14 @@ corner <- blank(1, 200, 200, color = pride["white"]) |>
   pad(50, fill = pride["brown"]) |>
   pad(50, fill = pride["black"]) |>
   rotate(degrees = 45, 
-       keep_size = FALSE) |>
+         keep_size = FALSE) |>
   crop(width = 0.5, height = 2/3, 
        x_off = 0.5, y_off = 1/6) |>
-  resize(height = height(flag))
+  resize(height = height(stripes))
 
-prog_pride <- image_func(flag, "composite", corner$img$img)
+flag <- image_func(stripes, "composite", corner$img$img)
 
-write_stim(prog_pride, names = "prog_pride.png")
+plot(flag) # view image
 
+# write to disk
+write_stim(flag, names = "prog_pride.png")
