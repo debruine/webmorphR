@@ -22,6 +22,9 @@ unique_names <- function(full_names,
   if (remove_ext) {
     fnames <-  gsub("\\..{1,4}$", "", full_names)
   }
+  
+  # handle blanks
+  fnames[fnames == ""] <- "stim"
 
   # handle NULL breaks ----
   if (is.null(breaks)) {

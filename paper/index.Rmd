@@ -202,12 +202,12 @@ The averaging and caricaturing methods were later complemented by a transforming
 neutral <- load_stim_london() |> 
   add_info(london_info) |>
   subset(face_gender == "female") |>
-  auto_delin("dlib70", replace = TRUE)
+  webmorphR.dlib::auto_delin("dlib70", replace = TRUE)
 
 smiling <- load_stim_smiling() |> 
   add_info(london_info) |>
   subset(face_gender == "female") |>
-  auto_delin("dlib70", replace = TRUE)
+  webmorphR.dlib::auto_delin("dlib70", replace = TRUE)
 
 neutral_avg <- avg(neutral, texture = FALSE)
 smiling_avg <- avg(smiling, texture = FALSE)

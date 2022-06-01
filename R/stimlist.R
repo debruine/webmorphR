@@ -35,7 +35,6 @@ new_stimlist <- function(..., .names = NULL) {
 #' @export
 #' @keywords internal
 #' @family stim
-#'
 new_stim <- function(img, path = "", ...) {
   info <- magick::image_info(img)
   stim_i <- list(

@@ -1,4 +1,9 @@
-# webmorphR 0.1.0.0
+# webmorphR 0.1.1
+
+* Fixed a bug when cropping `blank()` images with no names
+* Fixed a bug when using `image_func()` with func = "composite" and the length of the stimuli and composite image are the same.
+
+# webmorphR 0.1.0
 
 * R version requirements decreased from 4.2.0 to 4.1.0
 * `quick_delin()` function changed to `delin()` and upgraded to be able to update full templates

@@ -65,7 +65,7 @@ image_func <- function(stimuli, func, ...) {
   # match argument to stimuli, otherwise pass to the function unaltered
   n <- length(stimuli)
   dots <- lapply(list(...), function(x) {
-    if (length(x) == n) {
+    if (length(x) == n & is.vector(x)) {
       rep_len(x, n)
     } else {
       rep_len(list(x), n)
