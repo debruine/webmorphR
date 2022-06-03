@@ -6,5 +6,5 @@ authors:
     orcid: https://orcid.org/0000-0002-7523-5539
 title: webmorphR: Reproducible Stimuli
 doi:10.5281/zenodo.6570965
-version: v0.1.0
-date-released: 2022-05-23
+version: v0.1.1
+date-released: 2022-06-03
