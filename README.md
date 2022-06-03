@@ -24,7 +24,7 @@ This development of this package was funded by ERC grant \#647910
 
 ## Installation
 
-You can (hopefully soon) install webmorphR from CRAN with:
+You can install webmorphR from CRAN with:
 
 ``` r
 install_packages("webmorphR")

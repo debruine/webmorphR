@@ -282,7 +282,7 @@ kableExtra::kable(terms, caption = "Glossary of terms.") |>
 
 ## Methods
 
-In this section, we will cover some common image manipulations and how to achieve them reproducibly using webmorphR [@R-webmorphR]. We will also be using webmorphR.stim [@R-webmorphR.stim], a package that contains a number of open-source face image sets, and webmorphR.dlib [@R-webmorphR.dlib], a package that provides dlib models and functions for automatic face detection. These latter two packages can not be made available on CRAN because of their large file size.
+In this section, we will cover some common image manipulations and how to achieve them reproducibly using webmorphR [@R-webmorphR]. We will also be using webmorphR.stim [@R-webmorphR.stim], a package that contains a number of open-source face image sets, and webmorphR.dlib [@R-webmorphR.dlib], a package that provides dlib models and functions for automatic face detection. These latter two packages cannot be made available on CRAN because of their large file size.
 
 ```{r, eval = FALSE}
 # install.packages("webmorphR")
@@ -296,7 +296,7 @@ library("webmorphR.dlib") # for face detection with dlib
 
 ### Editing
 
-Almost all imagesets start with raw images that need to be cropped, resized, rotated, padded, and/or color normalised. Although many reproducible methods exist to manipulate images in these ways, they are complicated when an image has an associated template, so webmorphR has functions that alter the image and template together (Fig.\ \@ref(fig:editing)).
+Almost all image sets start with raw images that need to be cropped, resized, rotated, padded, and/or color normalised. Although many reproducible methods exist to manipulate images in these ways, they are complicated when an image has an associated template, so webmorphR has functions that alter the image and template together (Fig.\ \@ref(fig:editing)).
 
 ```{r, echo = TRUE}
 orig <- demo_stim() # load demo images
@@ -308,7 +308,7 @@ padded   <- pad(orig, 30, fill = "black")
 grey     <- greyscale(orig)
 ```
 
-```{r editing, fig.cap="Examples of image manipulations: (A) original image, (B) mirrored, (C) cropped to 75%, (D) resized to 75%, (E) rotated 180 degrees, (F) 30 pixels of black padding added, and (G) greyscale,.", fig.alt="Seven versions of the same average female face with different manipulations applied."}
+```{r editing, fig.cap="Examples of image manipulations: (A) original image, (B) mirrored, (C) cropped to 75%, (D) resized to 75%, (E) rotated 180 degrees, (F) 30 pixels of black padding added, and (G) greyscale.", fig.alt="Seven versions of the same average female face with different manipulations applied."}
 
 c(orig, mirrored, cropped, resized, rotated, padded, grey) |>
   pad(0, 0, 0, 60) |>
@@ -340,7 +340,7 @@ The function `tem_def()` retrieves a template definition that includes point nam
 FRL <- tem_def("frl")
 
 FRL$points[1:10, 1:5] |> 
-  kableExtra::kable(caption = "The first 10 landmark points of WebMorph.org's default \"FRL\" template.") |>
+  kableExtra::kable(caption = "The first 10 landmark points of WebMorph.org's default \"FRL\" template.", digits = 0) |>
   kable_styling(bootstrap_options = c("striped"))
 ```
 
@@ -449,7 +449,7 @@ One-point alignment (Fig.\ \@ref(fig:norm-comp)A) doesn't rotate or resize the i
 
 Two-point alignment (Fig.\ \@ref(fig:norm-comp)B) resizes and rotates the images so that two points (usually the centres of the eyes) are in the same position on each image. This will alter relative head size such that people with very close-set eyes will appear to have larger heads than people with very wide-set eyes. This technique is good for getting images into the same orientation when you didn't have any control over image rotation and camera-to-head distance of the original photos. 
 
-Procrustes alignment (Fig.\ \@ref(fig:norm-comp)C) resizes and rotates the images so that each delineation point is as aligned as possible across all images. This can obscure meaningful differences in relative face size (e.g., a baby's face will be as large as an adult's), but can be superior to two-point alignment. While this requires that the whole face be delineated, you can use a minimal template such as a face outline or the Face++ auto-delineation to achieve good results. While not available in webmorph.org, procrustes alignment is available in webmorphR. 
+Procrustes alignment (Fig.\ \@ref(fig:norm-comp)C) resizes and rotates the images so that each delineation point is as aligned as possible across all images. This can obscure meaningful differences in relative face size (e.g., a baby's face will be as large as an adult's), but can be superior to two-point alignment. While this requires that the whole face be delineated, you can use a minimal template such as a face outline or the Face++ auto-delineation to achieve good results. 
 
 You can very quickly delineate an image set with a custom template using the `delin()` function in webmorphR if auto-delineation doesn't provide suitable points.
 
@@ -468,7 +468,7 @@ proc <- align(f, pt1 = 0, pt2 = 1, procrustes = TRUE, fill = "dodgerblue")
 
 ```{r norm-comp, fig.cap="Original images with different alignments. (A) One-point alignment placing the bottom of the nose point in the centre of the image. (B) Two-point alignment placing the eye centre points in the same position as the average image. (C) Procrustes alignment moved, rotated, and resized all images to most closely match the average face. A blue background was used to highlight the difference here, but normally a colour matching the image background would be used or the images would be cropped.", fig.alt="Five West Asian female faces on each row, with the alignments described in the caption."}
 
-plot_rows(A = onept, B = twopt, C = proc)
+plot_rows(A = onept, B = twopt, C = proc, top_label = FALSE)
 ```
 
 
@@ -477,7 +477,7 @@ plot_rows(A = onept, B = twopt, C = proc)
 
 Oftentimes, researchers will want to remove the background, hair, and clothing from an image to avoid confounds. For example, the presence versus absence of hairstyle information can reverse preferences for masculine versus feminine male averages [@debruine2006correlated].
 
-The "standard oval mask" has enjoyed widespread popularity because it is straightforward to add to images using programs like PhotoShop. WebmorphR's `mask_oval()` function allows you to set oval boundaries manually (Fig.\ \@ref(fig:mask)A) or in relation to minimum and maximum template coordinates for each face (Fig.\ \@ref(fig:mask)B). An arguably better way to mask out hair, clothing and background from images is to crop around the curves defined by the template (Fig.\ \@ref(fig:mask)C). 
+The "standard oval mask" has enjoyed widespread popularity because it is straightforward to add to images using programs like PhotoShop. WebmorphR's `mask_oval()` function allows you to set oval boundaries manually (Fig.\ \@ref(fig:mask)A) or in relation to minimum and maximum template coordinates for each face (Fig.\ \@ref(fig:mask)B) or across the full image set. An arguably better way to mask out hair, clothing and background from images is to crop around the curves defined by the template (Fig.\ \@ref(fig:mask)C). 
 
 ```{r, echo = TRUE}
 # standard oval mask
@@ -489,12 +489,12 @@ oval_tem <- f |>
   subset_tem(features("gmm")) |> # remove external points
   mask_oval(fill = "dodgerblue") # oval boundaries to max and min template points
 
-# template aware mask
+# template-aware mask
 masked <- mask(f, c("face", "neck", "ears"), fill = "dodgerblue")
 ```
 
 ```{r mask, fig.cap = "Images masked with (A) an oval defined by image coordinates, (B) an oval defined by the minimum and maximum x- and y-coordinates of template points, or (C) to include face, ears and neck.", fig.alt="Five West Asian female faces on each row, with the masking described in the caption."}
-plot_rows(A = oval, B = oval_tem, C = masked)
+plot_rows(A = oval, B = oval_tem, C = masked, top_label = FALSE)
 ```
 
 ### Averaging
@@ -622,7 +622,9 @@ sym_anti <- symmetrize(f, shape = -1.0, color = 0)
 ```
 
 ```{r morph-sym, fig.cap = "Images with different types of symmetry: (A) symmetric shape and color, (B) symmetric color, (C) symmetric shape, (D) asymmetric shape."}
-plot_rows(A = sym_both, B = sym_color, C = sym_shape, D = sym_anti)
+plot_rows(A = sym_both, B = sym_color, 
+          C = sym_shape, D = sym_anti,
+          top_label = FALSE)
 ```
 
 
@@ -687,7 +689,7 @@ c(neu_avg,
   resize(height = height(neu_avg))
 ```
 
-We use the "dlib70" auto-delineation model, which is available through webmorphR.dlib [@R-webmorphR.dlib], but requires the installation of python and some python packages. However, it has the advantage of not requiring setting up an account at Face++ and doesn't transfer your images to a third party. Try "fpp106" if you have trouble setting up webmorphR.dlib.
+We use the "dlib70" auto-delineation model, which is available through webmorphR.dlib [@R-webmorphR.dlib], but requires the installation of python and some python packages. However, it has the advantage of not requiring setting up an account at Face++ and doesn't transfer your images to a third party.
 
 ### Emotion Continuum
 
@@ -785,14 +787,15 @@ virtual_bro <- trans(
 ```{r virtual-sibs, fig.cap="Creating virtual siblings: (A) original images, (B) virtual brothers, (C) virtual sisters."}
 plot_rows(A = crop_tem(m), 
           B = crop_tem(virtual_bro), 
-          C = crop_tem(virtual_sis))
+          C = crop_tem(virtual_sis),
+          top_label = FALSE)
 ```
 
 ### Labels
 
 Many social perception studies require labelled images, such a minimal group designs. You can add custom labels and superimpose images on stimuli (Fig.\ \@ref(fig:label-comp)).
 
-```{r}
+```{r, eval = FALSE}
 # download, resize and save flag images
 
 dir.create("images/flags", FALSE)
@@ -834,9 +837,9 @@ plot_rows(ingroup, outgroup)
 
 ## Discussion
 
-Preparing your stimuli for face resaerch in the ways described above has both personal and altruistic benefits. Once the original scripts are written, you will be able to prepare new stimuli without manual intervention. It also makes the process of changing your mind about the experimental design much less painful. If you decide that the image actually should have ben aligned prior to several steps, you only need to add a line of code and rerun your script, instead of start a whole manual process over from scratch. But even more important, providing reproducible scripts can allow others to build on your work with their own images. This is beneficial for generalisability, whether or not you can share your original images.
+Preparing your stimuli for face research in the ways described above has both personal and altruistic benefits. Once the original scripts are written, you will be able to prepare new stimuli without manual intervention. It also makes the process of changing your mind about the experimental design much less painful. If you decide that the images actually should have been aligned prior to several steps, you only need to add a line of code and rerun your script, instead of start a whole manual process over from scratch. But even more important, providing reproducible scripts can allow others to build on your work with their own images. This is beneficial for generalisability, whether or not you can share your original images.
 
-In this section, we will discuss a number of issues related to making sure resaerch that uses face stimuli is methodologically robust and ethical. While these issues may not be directly related to stimulus reproducibility, they are important to discuss in a paper that aims to make it easier for people to do resaerch with face images.
+In this section, we will discuss a number of issues related to making sure research that uses face stimuli is ethical and methodologically robust. While these issues may not be directly related to stimulus reproducibility, they are important to discuss in a paper that aims to make it easier for people to do research with face images.
 
 ### Ethical Issues
 
@@ -844,17 +847,31 @@ Research with identifiable faces has a number of ethical issues. This means it i
 
 The use of face photographs must respect participant consent and personal data privacy. Images that are "freely" available on the internet, such as in Twitter profiles, are a grey area and the ethical issues should be carefully considered by the researchers and relevant ethics board.
 
-Do not use face images in research where there is a possibility of real-world consequences for the pictured individuals. For example, do not post identifiable images of real people on real dating sites without the explicit consent of the pictured individuals for that specific research.
+We strongly advise against using face images in research where there is a possibility of real-world consequences for the pictured individuals. For example, do not post identifiable images of real people on real dating sites without the explicit consent of the pictured individuals for that specific research.
 
 The use of face image analysis should never be used to predict behaviour or as automatic screening. For example, face images cannot be used to predict criminality or decide who should proceed to the interview stage in a job application. This type of application is unethical because the training data is always biased. Face image analysis can be useful for researching what aspects of face images give rise to the *perception* of traits like trustworthiness, but should not be confused with the ability to detect *actual* behaviour. Researchers have a responsibility to consider how their research may be misused in this manner.
 
 ### Natural vs standardised source images
 
-Use the right image for the question.
+Use the right image for the question. -- Ben, do you think you could write a bit about this? I thought it would be useful to explain when/why you might use standardised images versus naturalistic "holiday snaps". WebmorphR can help process either, but the delineations are mainly specialised for front-facing faces (although profile face templates are available).
+
+```{r, echo = TRUE}
+left_profile <- tem_def(33)
+right_profile <- tem_def(32)
+
+left_viz <- viz_tem_def(left_profile)
+right_viz <- viz_tem_def(right_profile)
+```
+
+
+```{r, , fig.cap="Left and right profile templates available via webmoprh.org."}
+c(left_viz, right_viz) |> crop_tem()
+```
+
 
 ### Head position
 
-Morphometrics
+Morphometrics -- Iris, can you add this?
 
 ### Judging composites
 
