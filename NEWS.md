@@ -1,3 +1,5 @@
+# webmorphR (development version)
+
 # webmorphR 0.1.1
 
 * Fixed a bug when cropping `blank()` images with no names
