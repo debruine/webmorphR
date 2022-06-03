@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">webmorphR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.1.0</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,18 +155,22 @@
 <code><a href="avg.html">avg</a>()</code>,
 <code><a href="continuum.html">continuum</a>()</code>,
 <code><a href="loop.html">loop</a>()</code>,
-<code><a href="symmetrize.html">symmetrize</a>()</code></p></div>
+<code><a href="symmetrize.html">symmetrize</a>()</code>,
+<code><a href="webmorph_up.html">webmorph_up</a>()</code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="webmorph_up.html">webmorph_up</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in">  <span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_stim</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in">  <span class="va">sexdim</span> <span class="op">&lt;-</span> <span class="fu">trans</span><span class="op">(</span><span class="va">stimuli</span>, <span class="va">stimuli</span><span class="op">$</span><span class="va">f_multi</span>, <span class="va">stimuli</span><span class="op">$</span><span class="va">m_multi</span>,</span>
 <span class="r-in">                  shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>fem <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>, masc <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in">  </span>
 <span class="r-in">  <span class="va">sexdim</span> |&gt; <span class="fu"><a href="draw_tem.html">draw_tem</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="label.html">label</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
+<span class="r-plt img"><img src="trans-1.png" alt="" width="700" height="353"></span>
+<span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

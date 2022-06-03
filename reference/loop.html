@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">webmorphR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.1.0</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -104,21 +104,24 @@
 <code><a href="avg.html">avg</a>()</code>,
 <code><a href="continuum.html">continuum</a>()</code>,
 <code><a href="symmetrize.html">symmetrize</a>()</code>,
-<code><a href="trans.html">trans</a>()</code></p></div>
+<code><a href="trans.html">trans</a>()</code>,
+<code><a href="webmorph_up.html">webmorph_up</a>()</code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># align and crop images</span></span>
-<span class="r-in"><span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_unstandard</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> |&gt; </span>
-<span class="r-in">  <span class="fu"><a href="align.html">align</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">loop</span> <span class="op">&lt;-</span> <span class="fu">loop</span><span class="op">(</span><span class="va">stimuli</span>, <span class="fl">5</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># create an animated gif</span></span>
-<span class="r-in"><span class="fu"><a href="animate.html">animate</a></span><span class="op">(</span><span class="va">loop</span>, fps <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="webmorph_up.html">webmorph_up</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in">  <span class="co"># align and crop images</span></span>
+<span class="r-in">  <span class="va">stimuli</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_unstandard</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> |&gt; </span>
+<span class="r-in">    <span class="fu"><a href="align.html">align</a></span><span class="op">(</span><span class="op">)</span> |&gt; <span class="fu"><a href="crop_tem.html">crop_tem</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in">  </span>
+<span class="r-in">  <span class="va">loop</span> <span class="op">&lt;-</span> <span class="fu">loop</span><span class="op">(</span><span class="va">stimuli</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span class="r-in">  </span>
+<span class="r-in">  <span class="co"># create an animated gif</span></span>
+<span class="r-in">  <span class="fu"><a href="animate.html">animate</a></span><span class="op">(</span><span class="va">loop</span>, fps <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

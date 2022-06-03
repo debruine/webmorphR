@@ -313,6 +313,9 @@
     <loc>https://debruine.github.io/webmorphR/reference/webmorphR.html</loc>
   </url>
   <url>
+    <loc>https://debruine.github.io/webmorphR/reference/webmorph_up.html</loc>
+  </url>
+  <url>
     <loc>https://debruine.github.io/webmorphR/reference/width.html</loc>
   </url>
   <url>
@@ -326,8 +329,5 @@
   </url>
   <url>
     <loc>https://debruine.github.io/webmorphR/reference/write_tps.html</loc>
-  </url>
-  <url>
-    <loc>https://debruine.github.io/webmorphR/reference/xget.html</loc>
   </url>
 </urlset>

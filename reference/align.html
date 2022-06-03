@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">webmorphR</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.1.0</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.1.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,26 +154,22 @@
 <span class="r-in">        width <span class="op">=</span> <span class="fl">300</span>, height <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="align-1.png" alt="" width="700" height="353"></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="co"># \donttest{</span></span>
 <span class="r-in"><span class="va">orig</span> <span class="op">&lt;-</span> <span class="fu"><a href="demo_stim.html">demo_unstandard</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># align to bottom-centre of nose (average position)</span></span>
-<span class="r-in"><span class="va">one_pt</span> <span class="op">&lt;-</span> <span class="fu">align</span><span class="op">(</span><span class="va">orig</span>, pt1 <span class="op">=</span> <span class="fl">55</span>, pt2 <span class="op">=</span> <span class="fl">55</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">align</span><span class="op">(</span><span class="va">orig</span>, pt1 <span class="op">=</span> <span class="fl">55</span>, pt2 <span class="op">=</span> <span class="fl">55</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="align-2.png" alt="" width="700" height="353"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># align to pupils of second image</span></span>
-<span class="r-in"><span class="va">two_pt</span> <span class="op">&lt;-</span> <span class="fu">align</span><span class="op">(</span><span class="va">orig</span>, ref_img <span class="op">=</span> <span class="fl">2</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">align</span><span class="op">(</span><span class="va">orig</span>, ref_img <span class="op">=</span> <span class="fl">2</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></span>
+<span class="r-plt img"><img src="align-3.png" alt="" width="700" height="353"></span>
+<span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
 <span class="r-in"><span class="co"># procrustes align to average position</span></span>
-<span class="r-in"><span class="va">proc</span> <span class="op">&lt;-</span> <span class="fu">align</span><span class="op">(</span><span class="va">orig</span>, procrustes <span class="op">=</span> <span class="cn">TRUE</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># visualise all alignments</span></span>
-<span class="r-in"><span class="fu"><a href="plot_rows.html">plot_rows</a></span><span class="op">(</span></span>
-<span class="r-in">  <span class="st">"Original"</span> <span class="op">=</span> <span class="va">orig</span>,</span>
-<span class="r-in">  <span class="st">"1-point"</span> <span class="op">=</span> <span class="va">one_pt</span>,</span>
-<span class="r-in">  <span class="st">"2-point"</span> <span class="op">=</span> <span class="va">two_pt</span>,</span>
-<span class="r-in">  <span class="st">"Procrustes"</span> <span class="op">=</span> <span class="va">proc</span>,</span>
-<span class="r-in">  maxwidth <span class="op">=</span> <span class="fl">1000</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span class="co"># this requires XQuartz on mac and may not run on linux</span></span>
+<span class="r-in"><span class="fu">align</span><span class="op">(</span><span class="va">orig</span>, procrustes <span class="op">=</span> <span class="cn">TRUE</span>, fill <span class="op">=</span> <span class="st">"dodgerblue"</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
