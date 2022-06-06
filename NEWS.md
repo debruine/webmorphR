@@ -1,4 +1,6 @@
-# webmorphR (development version)
+# webmorphR 0.1.1.9001
+
+* Manual delineation with `delin()` now shows lines and allows for delineation customisation.
 
 # webmorphR 0.1.1
 

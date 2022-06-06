@@ -158,4 +158,23 @@ svgBezier <- function(v, idx = 1) {
 }
 
 
+#' Visualise template lines
+#'
+#' @param stim the stimulus object
+#'
+#' @return SVG text
+#' @keywords internal
+#'
+svgLines <- function(stim) {
+  stim$lines |>
+    lapply(function(m) {
+      v <- stim$points[, m+1]
+      svgBezier(v, 1)
+    }) |>
+    lapply(function(d) {
+      sprintf("<path d = \"%s\" />",
+              paste(d, collapse = "\n"))
+    }) |>
+    paste(collapse = "\n\n")
+}
 

@@ -1,5 +1,7 @@
 var resize = 100;
 var pts = [];
+var pt_color = "#00FF0066";
+var pt_size = 9;
 
 /* onload functions */
 $(function() {
@@ -62,7 +64,7 @@ function update_pts() {
     pts[data.i].y = data.y;
   });
   Shiny.setInputValue("pts", pts);
-  //console.log(pts);
+  console.log("udp");
 }
 
 
@@ -81,7 +83,12 @@ function new_pt(e) {
 
   $pt.css({
       top: e.originalEvent.layerY,
-      left: e.originalEvent.layerX
+      left: e.originalEvent.layerX,
+      'background-color': pt_color,
+      width: pt_size,
+      height: pt_size,
+      'margin-top': -(pt_size-1)/2,
+      'margin-left': -(pt_size-1)/2
   });
   
   $pt.draggable({stop: function(e, ui) {

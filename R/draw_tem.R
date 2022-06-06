@@ -105,16 +105,7 @@ draw_tem <- function(stimuli, pt.color = wm_opts("pt.color"), pt.alpha = 0.75, p
 
     # construct Bezier curves for lines ----
     if (line.alpha[i] > 0) {
-      curves <- stimuli[[i]]$lines |>
-        lapply(function(m) {
-            v <- temPoints[, m+1]
-            svgBezier(v, 1)
-          }) |>
-        lapply(function(d) {
-          sprintf("<path d = \"%s\" />",
-                  paste(d, collapse = "\n"))
-        }) |>
-        paste(collapse = "\n\n")
+      curves <- svgLines(stimuli[[i]])
     } else {
       curves <- ""
     }

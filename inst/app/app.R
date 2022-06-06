@@ -17,24 +17,21 @@ imgdir <- getShinyOption("imgdir")
 main_tab <- tabItem(
   tabName = "main_tab",
   textOutput("quickhelp"),
-  #fluidRow(
-    #column(width = 6,
-           #actionButton("delin_clear", "Clear Points"),
-           actionButton("delin_reload", NULL, icon = icon("redo")),
-           actionButton("prev_img", NULL, icon = icon("step-backward")),
-           actionButton("delin_save", "Save", icon = icon("save")),
-           actionButton("next_img", NULL, icon = icon("step-forward")),
-    #),
-    #column(width = 6,
-           sliderTextInput("img_size", NULL,
-              selected = 100, 
-              grid = FALSE, 
-              post = "%", 
-              choices = c(seq(10,100, 10), seq(200, 1000, 100))),
-    #)
-  #),
+  #actionButton("delin_clear", "Clear Points"),
+  actionButton("delin_reload", NULL, icon = icon("redo")),
+  actionButton("prev_img", NULL, icon = icon("step-backward")),
+  actionButton("delin_save", "Save", icon = icon("save")),
+  actionButton("next_img", NULL, icon = icon("step-forward")),
+  sliderTextInput("img_size", NULL,
+     selected = 100, 
+     grid = FALSE, 
+     post = "%", 
+     choices = c(seq(10,100, 10), seq(200, 1000, 100))),
+
   tags$div(id = "delin_box_box", 
-    tags$div(id = "delin_box", imageOutput("delin_img", ))
+    tags$div(id = "delin_box", 
+             imageOutput("delin_img"), 
+             uiOutput("delin_lines"))
   )
 )
 
@@ -52,6 +49,11 @@ ui <- dashboardPage(
       actionButton("delin_cancel", "Cancel without Saving"),
       fileInput("finder_load", "Load Files", multiple = TRUE,
                 width = "100%", accept = c("image/*", ".tem")),
+      box(id = "delin_settings", title = "Settings", collapsible = TRUE, collapsed = TRUE, width = 12,
+          colorPickr("point_color", "Point Color", selected = "#00FF0066"),
+          sliderInput("point_size", "Point Size", value = 9, min = 1, max = 19, step = 2),
+          colorPickr("line_color", "Line Color", selected = "#0000FF66"),
+          sliderInput("line_width", "Line Width", value = 2, min = 0, max = 10, step = 0.5)),
       DTOutput("finder_table")
     )
   ),
@@ -143,18 +145,55 @@ server <- function(input, output, session) {
       runjs()
   })
   
-  # update save button on template change ----
-  observeEvent(input$pts, { debug_msg("pts change")
+  ## point_color ----
+  observe({ debug_msg(input$point_color)
+    sprintf("pt_color = '%s'; $('.pt').css('background-color', pt_color);",
+            input$point_color) |>
+      runjs()
+  })
+  
+  ## point_size ----
+  observe({
+    offset <- -(input$point_size-1)/2
+    sprintf("pt_size = %f; $('.pt').css({width: pt_size, height: pt_size, 'margin-left': %f, 'margin-top': %f});",
+            input$point_size,  
+            offset, offset) |>
+      runjs()
+  })
+  
+  # delin_lines ----
+  output$delin_lines <- renderUI({
     req(v$stimuli)
     img <- v$stimuli[[v$delin_current]]
+    if (length(input$pts) < length(img$points)) return()
+    debug_msg("delin_lines")
     
+    img$points <- matrix(data = (input$pts * input$img_size / 100), 
+                         nrow = 2, 
+                         dimnames = list(c("x", "y")))
+    w <- img$width * input$img_size / 100
+    h <- img$height * input$img_size / 100
+    
+    svg <- sprintf("<svg width=\"%d\" height=\"%d\" xmlns=\"http://www.w3.org/2000/svg\">
+      <g id=\"lines\" stroke-width=\"%f\" stroke=\"%s\" fill=\"none\">
+          %s
+      </g></svg>\n", w, h, input$line_width, input$line_color, svgLines(img))
+    
+    HTML(svg)
+  })
+  
+  # update save button on template change ----
+  observeEvent(input$pts, {
+    req(v$stimuli)
+    img <- v$stimuli[[v$delin_current]]
+    if (length(input$pts) < length(img$points)) return()
+    debug_msg("pts change")
+
     # check if same as delin
     needs_saved <- TRUE
     if (!is.null(img$points)) {
       saved_pts <- apply(img$points, 2, c) |> c() |> round(1)
       needs_saved <- !all(round(input$pts, 1) == saved_pts)
-      # debug_msg("input: ", str(input$pts))
-      # debug_msg("saved: ", str(saved_pts))
     }
     
     shinyjs::toggleClass("delin_save", "btn-danger", needs_saved)
@@ -168,7 +207,7 @@ server <- function(input, output, session) {
     # update size
     w <- img$width * input$img_size/100
     h <- img$height * input$img_size/100
-    js <- sprintf("$('#delin_img, #delin_box').css('width', %d).css('height', %d)", w, h)
+    js <- sprintf("$('#delin_img, #delin_box, #delin_lines').css('width', %d).css('height', %d)", w, h)
     runjs(js)
     
     list(src = img$imgpath,
