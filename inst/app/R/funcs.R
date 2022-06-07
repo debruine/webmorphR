@@ -1,4 +1,4 @@
-DEBUG <- TRUE # show debug messages in console
+DEBUG <- FALSE # show debug messages in console
 
 # display debugging messages in R if local,
 # or in the console log if remote

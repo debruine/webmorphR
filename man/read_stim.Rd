@@ -4,7 +4,7 @@
 \alias{read_stim}
 \title{Read stimuli}
 \usage{
-read_stim(path, pattern = NULL, breaks = "/")
+read_stim(path, pattern = NULL, breaks = "/", recursive = TRUE)
 }
 \arguments{
 \item{path}{Path to directory containing image and/or template files (or a single file path)}
@@ -12,6 +12,8 @@ read_stim(path, pattern = NULL, breaks = "/")
 \item{pattern}{Vector of patterns to use to search for files, or a vector of image indices (e.g., 1:4 selects the first 4 images and their templates if they exist)}
 
 \item{breaks}{a vector of characters used to determine the stimulus names from the file names}
+
+\item{recursive}{logical; should stimuli in subdirectories be read?}
 }
 \value{
 a list of stimuli

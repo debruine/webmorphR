@@ -1,7 +1,7 @@
 url: https://debruine.github.io/webmorphR/
 
 development:
-  mode: unreleased
+  mode: auto
   
 home:
   title: Reproducible Stimuli

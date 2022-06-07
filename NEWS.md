@@ -1,6 +1,7 @@
 # webmorphR 0.1.1.9001
 
 * Manual delineation with `delin()` now shows lines and allows for delineation customisation.
+* Added `recursive` argument to `read_stim()`
 
 # webmorphR 0.1.1
 

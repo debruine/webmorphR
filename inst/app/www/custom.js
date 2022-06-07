@@ -1,6 +1,6 @@
 var resize = 100;
 var pts = [];
-var pt_color = "#00FF0066";
+var pt_color = "rgba(0, 255, 0, 0.4)";
 var pt_size = 9;
 
 /* onload functions */
@@ -27,16 +27,15 @@ $(document).keydown(function(e) {
   if ((e.ctrlKey || e.metaKey) && e.shiftKey) {
     $('#delin_img').css('cursor', 'crosshair');
     quickhelp('Click to add a point');
-  } else if ((e.ctrlKey || e.metaKey) && e.which == KEYCODE.s) {
-    $("#delin_save").click();
+  } else if ((e.ctrlKey || e.metaKey)) {
+    if (e.which == KEYCODE.s) {
+      $("#delin_save").click();
+    } else if (e.which == KEYCODE.right_arrow) {
+      $("#next_img").click();
+    } else if (e.which == KEYCODE.left_arrow) {
+      $("#prev_img").click();
+    }
     e.preventDefault();
-  } else if ((e.ctrlKey || e.metaKey) && e.which == KEYCODE.right_arrow) {
-    $("#next_img").click();
-    e.preventDefault();
-  } else if ((e.ctrlKey || e.metaKey) && e.which == KEYCODE.left_arrow) {
-    $("#prev_img").click();
-    e.preventDefault();
-    
   }
 }).keyup(function(e) {
   if (!((e.ctrlKey || e.metaKey) && e.shiftKey)) {

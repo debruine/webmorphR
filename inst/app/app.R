@@ -39,7 +39,21 @@ main_tab <- tabItem(
 # UI ----
 ui <- dashboardPage(
   skin = "blue",
-  dashboardHeader(title = "WebmorphR"),
+  dashboardHeader(title = "WebmorphR", 
+    dropdownMenu(type = "notifications",
+      notificationItem(
+        text = "ctrl-S Save",
+        icon("users")
+      ),
+      notificationItem(
+        text = "-←",
+        icon("truck"),
+      ),
+      notificationItem(
+        text = "ctrl-→",
+        icon = icon("exclamation-triangle"),
+      )
+  )),
   dashboardSidebar(
     sidebarMenu(
       id = "tabs",
@@ -50,9 +64,9 @@ ui <- dashboardPage(
       fileInput("finder_load", "Load Files", multiple = TRUE,
                 width = "100%", accept = c("image/*", ".tem")),
       box(id = "delin_settings", title = "Settings", collapsible = TRUE, collapsed = TRUE, width = 12,
-          colorPickr("point_color", "Point Color", selected = "#00FF0066"),
+          colorPickr("point_color", "Point Color", selected = "#00FF0066", preview = FALSE, opacity = TRUE),
           sliderInput("point_size", "Point Size", value = 9, min = 1, max = 19, step = 2),
-          colorPickr("line_color", "Line Color", selected = "#0000FF66"),
+          colorPickr("line_color", "Line Color", selected = "#0000FF66", preview = FALSE, opacity = TRUE),
           sliderInput("line_width", "Line Width", value = 2, min = 0, max = 10, step = 0.5)),
       DTOutput("finder_table")
     )
@@ -147,8 +161,13 @@ server <- function(input, output, session) {
   
   ## point_color ----
   observe({ debug_msg(input$point_color)
+    # background-color only takes opacity from rgba, nox hexa
+    rgba <- color_conv(input$point_color, from = "hexa", to = "rgba")
+    rgba_text <- sprintf('rgba(%d, %d, %d, %f)', 
+                         rgba[[1]], rgba[[2]], rgba[[3]], rgba[[4]]/255)
+    debug_msg(rgba_text)
     sprintf("pt_color = '%s'; $('.pt').css('background-color', pt_color);",
-            input$point_color) |>
+            rgba_text) |>
       runjs()
   })
   
@@ -190,13 +209,16 @@ server <- function(input, output, session) {
     debug_msg("pts change")
 
     # check if same as delin
-    needs_saved <- TRUE
+    v$needs_saved <- TRUE
     if (!is.null(img$points)) {
       saved_pts <- apply(img$points, 2, c) |> c() |> round(1)
-      needs_saved <- !all(round(input$pts, 1) == saved_pts)
+      v$needs_saved <- !all(round(input$pts, 1) == saved_pts)
     }
-    
-    shinyjs::toggleClass("delin_save", "btn-danger", needs_saved)
+  })
+  
+  ## needs_saved ----
+  observe({
+    shinyjs::toggleClass("delin_save", "btn-danger", v$needs_saved)
   })
 
   ## delin_img ----
@@ -282,12 +304,14 @@ server <- function(input, output, session) {
   })
   
   # delin_save ----
-  observeEvent(input$delin_save, {
+  observeEvent(input$delin_save, { debug_msg("delin_save")
     # add delin to v$stimuli
     v$stimuli[[v$delin_current]]$points <- 
       matrix(input$pts, 2, dimnames = list(c("x", "y")))
     
-    next_img()
+    v$needs_saved <- FALSE
+    
+    #next_img()
   })
   
   ## tem_dl ----

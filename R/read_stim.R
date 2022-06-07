@@ -5,6 +5,7 @@
 #' @param path Path to directory containing image and/or template files (or a single file path)
 #' @param pattern Vector of patterns to use to search for files, or a vector of image indices (e.g., 1:4 selects the first 4 images and their templates if they exist)
 #' @param breaks a vector of characters used to determine the stimulus names from the file names
+#' @param recursive logical; should stimuli in subdirectories be read?
 #'
 #' @return a list of stimuli
 #' @export
@@ -19,20 +20,27 @@
 #' # read in just images and templates with "m_"
 #' m_stimuli <- read_stim(path, "m_")
 #'
-read_stim <- function (path, pattern = NULL, breaks = "/") {
+read_stim <- function (path, pattern = NULL, breaks = "/", recursive = TRUE) {
   imgext <- "\\.(jpg|jpeg|gif|png|bmp)$"
   # get paths to temfiles ----
   if (dir.exists(path) |> all()) {
     if (is.numeric(pattern)) {
       # get images by index and matching tems
-      imgpaths <- list.files(path, imgext, full.names = TRUE, ignore.case = TRUE)[pattern]
+      imgpaths <- list.files(path, imgext, 
+                             full.names = TRUE, 
+                             ignore.case = TRUE, 
+                             recursive = recursive)[pattern]
       tempaths <- sub(imgext, "\\.tem", imgpaths)
       tem_exists <- file.exists(tempaths)
       files <- c(imgpaths, tempaths[tem_exists])
     } else if (is.null(pattern)) {
-      files <- list.files(path, full.names = TRUE)
+      files <- list.files(path, 
+                          full.names = TRUE, 
+                          recursive = recursive)
     } else {
-      files <- lapply(pattern, list.files, path = path, full.names = TRUE) |> unlist()
+      files <- lapply(pattern, list.files, path = path, 
+                      full.names = TRUE, 
+                      recursive = recursive) |> unlist()
     }
   } else if (sapply(path, file.exists) |> all()) {
     files <- path
@@ -48,7 +56,7 @@ read_stim <- function (path, pattern = NULL, breaks = "/") {
   # load tems ----
   t <- grepl("\\.tem$", files, ignore.case = TRUE)
   temfiles <- files[t]
-  temlist <- lapply(temfiles, read_tem)
+  temlist <- lapply(temfiles[88:90], read_tem)
 
   # join image and tem lists ----
   df_img <- data.frame(
