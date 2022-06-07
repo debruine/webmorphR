@@ -1,0 +1,99 @@
+---
+title: "Quotes"
+author: "Lisa DeBruine"
+date: "24/05/2021"
+output: html_document
+---
+
+<style>
+  blockquote { 
+    font-size: 13px; 
+    border: 1px solid grey; 
+    background-color: #EEE;
+    border-radius: 1em;
+  }
+</style>
+
+#### Photoshop/Image editors
+
+A search for "Photoshop face attractiveness" produced 6,450 responses in Google Scholar. Here are descriptions of the use of Photoshop from a few of the top hits.
+
+> If necessary, scanned pictures were rotated slightly, using Adobe Photoshop software, clockwise to counterclockwise until both pupil centres were on the same y-coordinate. Each picture was slightly lightened a constant amount by Adobe Photoshop. [@Scheib_1999, p. 1914]
+
+> For each face in the adapting set, we created two distortions using the spherize distort function in Adobe Photoshop: a −50% distortion, which compressed the center of the face, producing the appearance of a face in a concave mirror, and a +50% distortion, which expanded the center of the face, producing the appearance of a face in a convex mirror [@Rhodes_2003, p. 559]
+
+>  Using Adobe Photoshop, Version 3.05 (1994), each photo was rotated (if necessary) and then cut vertically along the facial midline using the philtrum (the base of the nose) as a guide. For each LL image, a copy of the left half of the face was reversed horizontally and then pasted onto the actual left half of the photograph (as depicted in Figure 1). The same procedure was followed to obtain RR mirror-image depictions. [@Mealey_1999, p. 153]
+
+> Averted gaze images were generated in Adobe Photoshop. The irises and pupils of each face were isolated using the path tool and horizontally shifted three pixels left and right to produce an averted-left and averted-right version of each face [@Ewing_2010, p. 324]
+
+> These pictures were edited using Adobe Photoshop 6.0 to remove external features (hair, ears) and create a uniform grey background. [@sforza2010my, pp. 150] 
+
+> The averaged composites and blends were sharpened in Adobe Photoshop to
+reduce any blurring introduced by blending. [rhodes2001attractiveness, pp. 615]
+
+> Blemishes, stray hair, any clothing on the neck, and hair clips were removed using the cloningtool in Photoshop. [rhodes2001attractiveness, pp. 619]
+
+> The medial canthal tilt was artificially accentuated for each female face in the database, using Adobe Photoshop CS (Adobe Corporation), creating 66 very subtly altered female faces. [@bashour2007medial, pp. 53]
+
+  
+#### Commerical morphing 
+
+Face averaging or "morphing" is a common technique for making images that are blends of two or more faces. We found 831 Google Scholar responses for "Fantamorph face", 158 Google Scholar responses for "WinMorph face" and fewer mentions of several other programs, such as MorphThing (no longer available) and xmorph.
+
+Most of these programs do not use open formats for storing delineations, the x- and y-coordinates of the landmark points that define shape and the way these are connected with lines. Their algorithms also tend to be closed and there is no common language for describing the procedures used to create stimuli in one program in a way that is easily translatable to another program. Here are descriptions of the use of commercial morphing programs from a few of the top hits.
+
+> The faces were carefully marked with 112 nodes in FantaMorph™, 4th version: 28 nodes (face outline), 16 (nose), 5 (each ear), 20 (lips), 11 (each eye), and 8 (each eyebrow). To create the prototypes, I used FantaMorph Face Mixer, which averages node locations across faces. Prototypes are available online, in the Personality Faceaurus [http://www.nickholtzman.com/faceaurus.htm]. [@Holtzman_2011, p. 650]
+
+The link above contains only morphed face images and no further details about the morphing or stimulus preparation procedure.
+
+> For the stimuli used as probes of the aftereffect, we created morphs across the three expression pairs for each Karolinska face, using Fantamorph 3.0 (www.fantamorph.com). Twenty-one images were produced for each morph series, with each picture representing a 5% step within the morph series (i.e., 0/100, 5/95, 10/90… 100/0). [@Fox_2007, p.87]
+
+> The 20 individual stimuli of each category were paired to make 10 morph continua, by morphing one endpoint exemplar into its paired exemplar (e.g. one face into its paired face, see Figure 1C) in steps of 5%. Morphing was realized within FantaMorph Software (Abrosoft) for faces and cars, Poser 6 for bodies (only between stimuli of the same gender with same clothing), and Google SketchUp for places. [@Weigelt_2013, p. 4]
+
+> Each identity was morphed, using Fantamorph v5.3.1 (http://www. fantamorph.com), with three composite faces displaying happy, angry, and neutral expressions, respectively (each an average of 50 identities, from Skinner & Benton, 2010). For the neutral face condition, we also morphed each original face (neutral expression) image towards a neutral composite. This process ensured that all stimuli presented during this task were morphs. Standard morphing procedures were used to create 25% and 50% morphs by blending the original faces with the expression composites in different proportions, for example, 25% angry morph was a 75/25 blend of an original face and the angry composite. [@caulfield2016judging, pp. 506--507]
+
+> Then, for each pair, different degrees of digital morphing between the two picture faces were created using Abrosoft Fantamorph 3.0 (from 0% to 100% in steps of 2%, for a total of 48 morphs, plus the two original pictures; Figure 2A). Along the morphing continuum, 2% steps were contemplated except for two specific points where the step was 3% (from 24% to 27% and from 73% to 76%). [@sforza2010my, pp. 150--151] 
+
+> Winmorph 3.01 (http://www.debugmode.com/winmorph/) was used to morph each emotional expression with a neutral expression in 5% increments, resulting in expressions varying in emotional intensity from 0% (neutral) to 100% (emotion). [@lischke2012intranasal, p. 476]
+
+
+#### Scriptable Methods
+
+There are several scriptable methods for creating image stimuli, including MatLab, ImageMagick, and GraphicConvertor.
+
+MatLab [@higham2016matlab] is widely used within visual psychophysics. A Google Scholar search for "MatLab face attractiveness" returned 7,440 hits, although the majority of papers I inspected used MatLab to process EEG data, present the experiment, or analyse image color, rather than using MatLab to create the stimuli. "MatLab face perception" generated 80,800 hits, more of which used MatLab to create stimuli.
+
+> Subjects were presented with four different types of face stimuli: black and white line drawings of unfamiliar faces, and gray scale photographs of unfamiliar, famous, and emotional faces. Phase scrambled versions of these faces were used as visual baseline. The scrambled pictures were generated by randomizing the phase information after Fourier transformation using an in-house Matlab script. [no stimuli were shown in the paper, @ishai2005face, p. 88]
+
+> The average pixel intensity of each image (ranging from 0 to 255) was set to 128 with a standard deviation of 40 using the SHINE toolbox (function lumMatch) (Willenbockel et al., 2010) in MATLAB (version 8.1.0.604, R2013a). [@visconti2014facilitated, p. 2]
+
+> Adobe Photoshop CS4 (Adobe Systems Inc., San Jose, CA, USA) and Matlab 7.7 (MathWorks Inc., Natick, MA, USA) were used to convert the images into gray-scales and equalize them in size. Finally, the cumulative brightness was normalized across all images using an in-house script written in MATLAB. Thereafter, each image was enclosed within an elliptic mask (411 × 570 pixel) that only revealed the face itself.  [@lischke2012intranasal, p. 476]
+
+
+ImageMagick [@imagemagick] is a free, open-source program that creates, edits, and converts images in a scriptable manner. The {magick} R package [@R-magick] allows you to script image manipulations in R using ImageMagick.
+
+> Images were cropped, resized to 150 × 150 pixels, and then grayscaled using ImageMagick (version 6.8.7-7 Q16, x86_64, 2013-11-27) on Mac OS X 10.9.2. [@visconti2014facilitated, p. 2]
+
+GraphicConvertor [@nishimura2000graphicconverter] is typically used to batch process images, such as making images a standard size or adjusting color. While not technically "scriptable", batch processing can be set up in the GUI interface and the saved to a reloadable ".gaction" file. (A search for '"gaction" graphicconvertor' on Google Scholar returned no hits.)
+
+> Photographs were converted to black-and-white images through a program called GraphicConverter (Thorsten Lemke, v.3.1.1). [@neiworth2007face, pp. 128-129]
+
+> We used the GraphicConverterTM application to crop the images around the cat face and make them all 1024x1024 pixels. One of the challenges of image matching is to do this process automatically. [@paluszek2019pattern, p.214]
+
+#### Mystery Methods
+
+Many researchers describe image manipulation generically or use "in-house" methods that are not well specified enough for another researcher to have any chance of replicating them.
+
+> A normalization procedure was then used to bring each face into a common orientation and position. [@pantelis2008some, p.1188]
+
+> Each of the images was rendered in gray-scale and morphed to a common shape using an in-house program based on bi-linear interpolation (see e.g., Gonzalez & Woods, 2002). Key points in the morphing grid were set manually, using a graphics program to align a standard grid to a set of facial points (eye corners, face outline, etc.). Images were then subject to automatic histogram equalization. [@burton2005robust, p. 263]
+
+The reference above [@gonzalez2002digital] has been cited by 2384 papers on Google Scholar, and is a 190-page book. It mentions bilinear interpolation on pages 64--66 in the context of calculating pixel color when resizing images and it's unclear how this could be used to morph shape.
+
+> Each face was put into an oval so that the hairstyle was not visible. The oval was 670 pixels high x 510 pixels wide, which corresponded to a size of about 14.5 x 11 cm on the screen. [@baudouin2006face, p. 792]
+
+> Each face was manually delineated with 189 landmark points outlining features and the face shape. Each face was then averaged with its mirror‑image to create a perfectly symmetric version. The original face was then warped 75% toward its perfectly symmetric version, or had its asymmetries exaggerated by 75% changing the shape of the faces, but maintaining original texture (see Tiddeman et al 2001). [@vingilis2013influence, p. 305]
+
+The Tiddeman citation is about the texture averaging algorithm. Only those in-the-know would realise from this description that the method used was probably webmorph, as its default template is 189 points, while the default psychomorph template is 179 points. I only know this because I made the 189-point webmorph template.
+
+> They were cropped such that the hair did not extend well below the chin, resized to a height of 400 pixels, and placed on 400 x 400 pixel backgrounds consisting of phase-scrambled variations of a single scene image (for example stimuli, see Figure 1). [@pegors2015simultaneous, p. 665]
