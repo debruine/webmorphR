@@ -1,7 +1,6 @@
 ---
 title             : "Reproducible Methods for Face Research"
 shorttitle        : "Face Methods"
-
 author: 
   - name          : "Lisa DeBruine"
     affiliation   : "1"
@@ -23,8 +22,13 @@ author:
       - Validation
       - Visualization
       - Writing - Review & Editing
-  - name          : "Benedict C. Jones"
+  - name          : "Bernard Tiddeman"
     affiliation   : "3"
+    role:
+      - Software
+      - Writing - Review & Editing
+  - name          : "Benedict C. Jones"
+    affiliation   : "4"
     role:
       - Conceptualization
       - Writing - Review & Editing
@@ -32,19 +36,18 @@ affiliation:
   - id            : "1"
     institution   : "Institute of Neuroscience & Psychology, University of Glasgow"
   - id            : "2"
-    institution   : "University of the West of England, Bristol"
+    institution   : "Health and Social Sciences, University of the West of England, Bristol"
   - id            : "3"
-    institution   : "University of Strathclyde, Glasgow"
-
+    institution   : "Computer Science, Aberystwyth University"
+  - id            : "4"
+    institution   : "Psychological Sciences & Health, University of Strathclyde"
 authornote: |
   This research was funded by ERC grant #647910 (KINSHIP).
-
 abstract: |
-  Face stimuli are commonly created in non-reproducible ways. In this paper, we document the irreproducibility of much existing work on faces, explain the benefits of reproducible stimuli, and introduce the open-source R package webmorphR. We explain the technical processes of morphing and transforming through a case study of creating face stimuli from an open-access image set. Finally, we discuss some ethical and methodological issues around the use of face images in research that may be ameliorated through the use of reproducible stimuli. 
+  Face stimuli are commonly created in ways that are not explained well enough for others to reproduce them. In this paper, we document the irreproducibility of most face stimuli, explain the benefits of reproducible stimuli, and introduce the open-source R package webmorphR that facilitates scriptable fae image processing. We explain the technical processes of morphing and transforming through a case study of creating face stimuli from an open-access image set. Finally, we discuss some ethical and methodological issues around the use of face images in research that may be ameliorated through the use of reproducible stimuli. 
   
 keywords          : "faces; morphing; transforming; reproducibility; webmorph"
 wordcount         : "7172"
-
 bibliography      : ["r-references.bib","biblio.bib"]
 csl               : apa.csl
 floatsintext      : yes
@@ -54,18 +57,20 @@ footnotelist      : no
 linenumbers       : yes
 mask              : no
 draft             : no
-
 documentclass     : "apa6"
 classoption       : "doc"
 output            : 
-  papaja::apa6_pdf:
-    default
   bookdown::html_document2:
     toc: true
     toc_float: true
     number_sections: false
     self_contained: false
     code_folding: show
+  bookdown::word_document2:
+    default
+  papaja::apa6_pdf:
+    default
+always_allow_html: true
 note              : "Draft"
 ---
 
@@ -83,7 +88,7 @@ library("webmorphR.stim") # for additional stimuli
 library("webmorphR.dlib") # for face detection
 
 # bibliography
-r_refs("r-references.bib", append = FALSE)
+#r_refs("r-references.bib", append = FALSE)
 
 # Seed for random number generation
 set.seed(42)
@@ -109,12 +114,14 @@ wm_opts(plot.maxwidth = 850)
   address { display: none; }
 </style>
 
+Face stimuli are commonly created in ways that are not explained well enough for others to reproduce them. In this paper, we document the irreproducibility of most face stimuli, explain the benefits of reproducible stimuli, and introduce the open-source R package webmorphR that facilitates scriptable fae image processing. We explain the technical processes of morphing and transforming through a case study of creating face stimuli from an open-access image set. Finally, we discuss some ethical and methodological issues around the use of face images in research that may be ameliorated through the use of reproducible stimuli. 
+
 
 ## Introduction
 
-Face stimuli are commonly used in research on visual and social perception. This almost always involves some level of stimulus preparation to rotate, resize, crop, and reposition faces on the image. In addition, many studies systematically manipulate face images by changing color and/or shape properties [e.g., @jones2019biological; reviewed in @Little_2011]. 
+Face stimuli are commonly used in research on visual and social perception. Faces are thought to play a core role in social interaction, with a wealth of research on brain areas for face processing [@duchaine2015revised], emotional and social information communicated by faces [@jack2017toward], and the role of facial appearance in shaping stereotypes [@zebrowitz2008social], to give just a few examples.  This research almost always involves some level of stimulus preparation to rotate, resize, crop, and reposition faces on the image. In addition, many studies systematically manipulate face images by changing color and/or shape properties [e.g., @perrett1994facial;@perrett1998effects;@stephen2012cross; reviewed in @Little_2011]. 
 
-Over a decade ago, Gronenschild and colleagues [-@Gronenschild_2009] argued for the importance of standardizing face stimuli so that they are not "confounded by factors such as brightness and contrast, head size, hair cut and color, skin color, and the presence of glasses and earrings". They describe a three-step standardization process. First, they manually removed features such as glasses and earrings in Photoshop. Second, they geometrically standardized images by semi-automatically defining eye and mouth coordinates used to fit the images within an oval mask, Third, they optically standardized images by converting them to greyscale and remapping values between the minimum and 98% threshold onto the full range of values. While laudable in its aims, this procedure has not achieved widespread adoption, probably because the authors provided no code or tools. In personal communication, the main author said that this is because "the procedure is based on standard image processing algorithms described in many textbooks". However, we were unable to easily replicate the procedure and found several places where instructions had more than one possible interpretation or relied on the starting images having specific properties, such as symmetric lighting reflections in the eyes. Additionally, greyscale images with an oval mask are not appropriate for many research questions.
+Over a decade ago, Gronenschild et al. [-@Gronenschild_2009] argued for the importance of standardizing face stimuli for "factors such as brightness and contrast, head size, hair cut and color, skin color, and the presence of glasses and earrings". They describe a three-step standardization process. First, they manually removed features such as glasses and earrings in Photoshop. Second, they geometrically standardized images by semi-automatically defining eye and mouth coordinates used to fit the images within an oval mask, Third, they optically standardized images by converting them to greyscale and remapping values between the minimum and 98% threshold onto the full range of values. While laudable in its aims, this procedure has not achieved widespread adoption, probably because the authors provided no code or tools. In personal communication, the main author said that this is because "the procedure is based on standard image processing algorithms described in many textbooks". However, we were unable to easily replicate the procedure and found several places where instructions had more than one possible interpretation or relied on the starting images having specific properties, such as symmetric lighting reflections in the eyes. Additionally, greyscale images with an oval mask are not appropriate for many research questions. Indeed, color information can have important effects on perception [@stephen2012cross] and the oval mask can affect perception in potentially unintended ways [@hong2018boundary].
 
 The goal of this paper is to argue for the importance of reproducible stimulus processing methods in face research and to introduce an open-source R package that allows researchers to create face stimuli with scripts that can then be shared so that others can create stimuli using identical methods.
 
@@ -123,25 +130,27 @@ The goal of this paper is to argue for the importance of reproducible stimulus p
 
 Lisa once gave up on a research project because she couldn't figure out how to manipulate spatial frequency to make the stimuli look like those in a relevant paper. When she contacted the author, they didn't know how the stimuli were created because a postdoc had done it in Photoshop and didn't leave a detailed record of the method.
 
-Reproducibility is especially important for face stimuli because faces are sampled, so replications should sample new *faces* as well as new participants [@barrgeneralizing]. The difficulty of creating equivalent face stimuli is a major barrier to this, resulting in stimulus sets that are used across dozens or hundreds of papers. For example, the Chicago Face Database [@CFD_2015] has been cited in almost 800 papers. Ekman and Friesen's [-@ekman1976pictures] Pictures of Facial Affect has been cited more than 5500 times. This image set is currently [**selling** for $399](https://www.paulekman.com/product/pictures-of-facial-affect-pofa/) for "110 photographs of facial expressions that have been widely used in cross-cultural studies, and more recently, in neuropsychological research". Such extensive reuse of image sets means that any confounds present in the image set can cause highly "replicable" but potentially false findings.
+Reproducibility is especially important for face stimuli because faces are sampled, so replications should sample new *faces* as well as new participants [@barrgeneralizing]. The difficulty of creating equivalent face stimuli is a major barrier to this, resulting in stimulus sets that are used across dozens or hundreds of papers. For example, the Chicago Face Database [@CFD_2015] has been cited in almost 800 papers. Ekman and Friesen's [-@ekman1976pictures] Pictures of Facial Affect has been cited more than 5500 times. This image set is currently [**selling** for $399](https://www.paulekman.com/product/pictures-of-facial-affect-pofa/) for "110 photographs of facial expressions that have been widely used in cross-cultural studies, and more recently, in neuropsychological research". Such extensive reuse of image sets means that any confounds present in a particular image set can result in findings that are highly "replicable" but potentially just an artifact of the set-specific confounds.
 
-Additionally, image sets are often private and reused without clear attribution. Our group has only recently been trying to combat this by making image sets public and citable where possible [e.g., @FRL_London;@Canada2003;@stim-3dsk;@stim-composites;@Morrison_2018] and including clear explanations of reuse where not possible [e.g., @jones2018no,@holzleitner2019comparing].
+Additionally, image sets are often private and reused without clear attribution. Our group has only recently been trying to combat this by making image sets public and citable where possible [e.g., @FRL_London;@Canada2003;@stim-3dsk;@stim-composites;@Morrison_2018] and including clear explanations of reuse where not possible [e.g., @jones2018no;@holzleitner2019comparing].
 
 ### Common Techniques
 
 In this section, we will give an overview of common techniques used to process face stimuli across a wide range of research involving faces. It was basically impossible to systematically survey the literature about the methods used to create facial stimuli, in large part because of poor documentation. However, several common methods are discussed below.
 
-#### Mystery Methods
+#### Vague Methods
 
-Many researchers describe image manipulation generically or use "in-house" methods that are not well specified enough for another researcher to have any chance of replicating them.
+Many researchers describe image manipulation generically or use "in-house" methods that are not well specified enough for another researcher to have any chance of replicating them. Consider this text from @burton2005robust (p. 263).
 
-> Each of the images was rendered in gray-scale and morphed to a common shape using an in-house program based on bi-linear interpolation (see e.g., Gonzalez & Woods, 2002). Key points in the morphing grid were set manually, using a graphics program to align a standard grid to a set of facial points (eye corners, face outline, etc.). Images were then subject to automatic histogram equalization. [@burton2005robust, p. 263]
+> Each of the images was rendered in gray-scale and morphed to a common shape using an in-house program based on bi-linear interpolation (see e.g., Gonzalez & Woods, 2002). Key points in the morphing grid were set manually, using a graphics program to align a standard grid to a set of facial points (eye corners, face outline, etc.). Images were then subject to automatic histogram equalization. 
 
-The reference above [@gonzalez2002digital] is a 190-page textbook. It mentions bilinear interpolation on pages 64--66 in the context of calculating pixel color when resizing images and it's unclear how this could be used to morph shape.
+The reference to @gonzalez2002digital is a 190-page textbook. It mentions bilinear interpolation on pages 64--66 in the context of calculating pixel color when resizing images and it's unclear how this could be used to morph shape.
+
+While the example below includes images in the mentioned figure that help to clarify the methods, it is clear that there was a large degree of subjectivity in determining how to crop the hair. 
 
 > They were cropped such that the hair did not extend well below the chin, resized to a height of 400 pixels, and placed on 400 x 400 pixel backgrounds consisting of phase-scrambled variations of a single scene image (for example stimuli, see Figure 1). [@pegors2015simultaneous, p. 665]
 
-While the example images in the figure mentioned above help to clarify the methods, it was clear that there was a large degree of subjectivity in determining how to crop the hair. 
+
 
 #### Photoshop/Image editors
 
@@ -157,7 +166,7 @@ A search for "Photoshop face attractiveness" produced 19,300 responses in Google
 
 Most papers that use Photoshop methods simply state in lay terms what the editing accomplished, and not the specific tools or methods in the application used to accomplish it. For example, it is not clear what sharpening tool was used in the last quote above, and what settings were used. Were all images sharpened by the same amount or was this done "by eye"?  
 
-A potential danger to processing images "by eye" is the possibility of visual adaptation affecting the researcher's perception. It is well known that viewing images with specific alterations to shape or colour alters the perception of subsequent images [@rhodes2017adaptive]. Thus, a researcher's perception of the "typical" face can change after exposure to altered faces [@DeBruine:2007JEPHPP]. While some processing will always require human intervention, reproducible methods can also allow researchers to record their specific decisions so such biases can be detected and corrected for.
+A potential danger to processing images "by eye" is the possibility of visual adaptation affecting the researcher's perception. It is well known that viewing images with specific alterations to shape or colour alters the perception of subsequent images [@rhodes2017adaptive]. Thus, a researcher's perception of the "typical" face can change after exposure to altered faces [@webster2011visual;@rhodes2011adaptive;@DeBruine2007JEPHPP;@o2011adaptation]. While some processing will always require human intervention, reproducible methods can also allow researchers to record their specific decisions so such biases can be detected and corrected for.
 
 #### Scriptable Methods
 
@@ -374,7 +383,7 @@ c(f[1], fpp106_tem[1], fpp83_tem[1], dlib70_tem[1], dlib7_tem[1]) |>
   label(LETTERS, gravity = "northwest", location = "+20+10")
 ```
 
-A study comparing the accuracy of four common measures of face shape (sexual dimorphism, distinctiveness, bilateral asymmetry, and facial width to height ratio) between automatic and manual delineation concluded that automatic delineation had higher replicability and good correlations with manual delineation [@jones2021facial]. However, around 2% of images had noticeably inaccurate automatic delineation, which should be screened for by outlier detection and visual inspection. 
+A study comparing the accuracy of four common measures of face shape (sexual dimorphism, distinctiveness, bilateral asymmetry, and facial width to height ratio) between automatic and manual delineation concluded that automatic delineation had good correlations with manual delineation [@jones2021facial]. However, around 2% of images had noticeably inaccurate automatic delineation, which should be screened for by outlier detection and visual inspection. 
 
 You can use the `delin()` function in webmorphR to open auto-delineated images in a visual editor to fix any inaccuracies. 
 
@@ -445,7 +454,7 @@ data.frame(
   kable_styling(bootstrap_options = c("striped", "responsive"))
 ```
 
-While it is *possible* to calculate metrics such as width-to-height ratio from 2D face images, this does not mean it is a good idea. Even on highly standardized images, head tilt can have large effects on such measurements [@hehman2013enhancing]. When image qualities such as camera type and head-to-camera distance are not standardized, facial metrics are meaningless at best [@tvrebicky2016focal].
+While it is *possible* to calculate metrics such as width-to-height ratio from 2D face images, this does not mean it is a good idea. Even on highly standardized images, head tilt can have large effects on such measurements [@hehman2013enhancing;@schneider2012judging]. When image qualities such as camera type and head-to-camera distance are not standardized, facial metrics are meaningless at best [@tvrebicky2016focal].
 
 ### Alignment
 
@@ -455,7 +464,7 @@ One-point alignment (Fig.\ \@ref(fig:norm-comp)A) doesn't rotate or resize the i
 
 Two-point alignment (Fig.\ \@ref(fig:norm-comp)B) resizes and rotates the images so that two points (usually the centres of the eyes) are in the same position on each image. This will alter relative head size such that people with very close-set eyes will appear to have larger heads than people with very wide-set eyes. This technique is good for getting images into the same orientation when you didn't have any control over image rotation and camera-to-head distance of the original photos. 
 
-Procrustes alignment (Fig.\ \@ref(fig:norm-comp)C) resizes and rotates the images so that each delineation point is as aligned as possible across all images. This can obscure meaningful differences in relative face size (e.g., a baby's face will be as large as an adult's), but can be superior to two-point alignment. While this requires that the whole face be delineated, you can use a minimal template such as a face outline or the Face++ auto-delineation to achieve good results. 
+Procrustes alignment (Fig.\ \@ref(fig:norm-comp)C) resizes and rotates the images so that each delineation point is aligned as closely as possible across all images. This can obscure meaningful differences in relative face size (e.g., a baby's face will be as large as an adult's), but can be superior to two-point alignment. While this requires that the whole face be delineated, you can use a minimal template such as a face outline or the Face++ auto-delineation to achieve good results. 
 
 You can very quickly delineate an image set with a custom template using the `delin()` function in webmorphR if auto-delineation doesn't provide suitable points.
 
@@ -481,9 +490,13 @@ plot_rows(A = onept, B = twopt, C = proc, top_label = FALSE)
 
 ### Masking
 
-Oftentimes, researchers will want to remove the background, hair, and clothing from an image to avoid confounds. For example, the presence versus absence of hairstyle information can reverse preferences for masculine versus feminine male averages [@debruine2006correlated].
+Oftentimes, researchers will want to remove the background, hair, and clothing from an image. For example, the presence versus absence of hairstyle information can reverse preferences for masculine versus feminine male averages [@debruine2006correlated]. 
 
-The "standard oval mask" has enjoyed widespread popularity because it is straightforward to add to images using programs like PhotoShop. WebmorphR's `mask_oval()` function allows you to set oval boundaries manually (Fig.\ \@ref(fig:mask)A) or in relation to minimum and maximum template coordinates for each face (Fig.\ \@ref(fig:mask)B) or across the full image set. An arguably better way to mask out hair, clothing and background from images is to crop around the curves defined by the template (Fig.\ \@ref(fig:mask)C). 
+The "standard oval mask" has enjoyed widespread popularity because it is straightforward to add to images using programs like PhotoShop, although the procedure usually requires some subjective judgements, as exemplified by this quote from @hong2018boundary:
+
+> The 'oval' mask, in contrast, was a predefined oval window that occluded a greater area of external features, including the jawline and the hairline. The ratio of oval width to oval height was 1:1.3. It was adjusted to fit for the size of the face.
+
+WebmorphR's `mask_oval()` function allows you to set oval boundaries manually (Fig.\ \@ref(fig:mask)A) or in relation to minimum and maximum template coordinates for each face (Fig.\ \@ref(fig:mask)B) or across the full image set. An arguably better way to mask out hair, clothing and background from images is to crop around the curves defined by the template (Fig.\ \@ref(fig:mask)C). 
 
 ```{r, echo = TRUE}
 # standard oval mask
@@ -587,7 +600,7 @@ c(individual, masc) |>
 
 ### Symmetrising
 
-Although a common technique [e.g., @Mealey_1999], left-left and right-right mirroring (Fig.\ \@ref(fig:mirror-sym)) is not recommended for investigating perceptions of facial symmetry. This is because this method typically produces unnatural images for any face that isn't already perfectly symmetric. For example, if the nose does not lie in a perfectly straight line from the centre point between the eyes to the centre of the mouth, then one of the mirrored halves will have a much wider nose than the original face, while the the other half will have a much narrower nose than the original face. In extreme cases, one mirrored version can end up with three nostrils and the other with a single nostril. 
+Although a common technique [e.g., @Mealey_1999], left-left and right-right mirroring (Fig.\ \@ref(fig:mirror-sym)) is not recommended for investigating perceptions of facial symmetry. As noted by @perrett1999symmetry, this is because this method typically produces unnatural images for any face that isn't already perfectly symmetric. For example, if the nose does not lie in a perfectly straight line from the centre point between the eyes to the centre of the mouth, then one of the mirrored halves will have a much wider nose than the original face, while the the other half will have a much narrower nose than the original face. In extreme cases, one mirrored version can end up with three nostrils and the other with a single nostril. 
 
 ```{r mirror-sym, fig.cap = "Left-left (top) and right-right (bottom) mirrored images. The code for making these images is in the supplemental materials, but we only recommend using this method to demonstrate how misleading it is.", fig.alt="The five West Asian women shown left-left and right-right mirrored. Some look OK and others look bizarre, with unnaturally wider or narrow features."}
 # make eye points exactly horizontal
@@ -618,7 +631,9 @@ right_right <- mapply(function(ls, rs) {
 plot_rows(left_left, right_right)
 ```
 
-A morph-based technique is a more realistic way to manipulate symmetry [@Little_2011,@little2001self,@paukner2017capuchin]. It preserves the individual's characteristic feature shapes and avoids the problem of having to choose an axis of symmetry on a face that isn't perfectly symmetrical. In this method, the original face is mirror-reversed and each template point is re-labelled. The original and mirrored images are averaged together to create a perfectly symmetric version of the image that has the same feature widths as the original face (Fig.\ \@ref(fig:morph-sym)). You can also use this symmetric version to create asymmetric versions of the original face through transforming: exaggerating the differences between the original and the symmetric version.
+A morph-based technique is a more realistic way to manipulate symmetry [@perrett1999symmetry;@Little_2011;@little2001self;@paukner2017capuchin]. It preserves the individual's characteristic feature shapes and avoids the problem of having to choose an axis of symmetry on a face that isn't perfectly symmetrical. In this method, the original face is mirror-reversed and each template point is re-labelled. The original and mirrored images are averaged together to create a perfectly symmetric version of the image that has the same feature widths as the original face (Fig.\ \@ref(fig:morph-sym)). 
+
+You can also use this symmetric version to create asymmetric versions of the original face through transforming: exaggerating the differences between the original and the symmetric version. This can be used, for example, to investigate perceptions of faces with exaggerated asymmetry [@tybur2022re], which has been hypothesised to be a cue of poor health during developmental.
 
 ```{r, echo = TRUE}
 sym_both <- symmetrize(f)
@@ -846,7 +861,7 @@ plot_rows(ingroup, outgroup)
 
 ## Discussion
 
-Preparing your stimuli for face research in the ways described above has both personal and altruistic benefits. Once the original scripts are written, you will be able to prepare new stimuli without manual intervention. It also makes the process of changing your mind about the experimental design much less painful. If you decide that the images actually should have been aligned prior to several steps, you only need to add a line of code and rerun your script, instead of start a whole manual process over from scratch. But even more important, providing reproducible scripts can allow others to build on your work with their own images. This is beneficial for generalisability, whether or not you can share your original images.
+Preparing your stimuli for face research in the ways described above has several benefits. Once the original scripts are written, you will be able to prepare new stimuli without manual intervention. It also makes the process of changing your mind about the experimental design much less painful. If you decide that the images actually should have been aligned prior to several steps, you only need to add a line of code and rerun your script, instead of start a whole manual process over from scratch. But even more important, providing reproducible scripts can allow others to build on your work with their own images. This is beneficial for generalisability, whether or not you can share your original images.
 
 In this section, we will discuss a number of issues related to making sure research that uses face stimuli is ethical and methodologically robust. While these issues may not be directly related to stimulus reproducibility, they are important to discuss in a paper that aims to make it easier for people to do research with face images.
 
@@ -854,7 +869,7 @@ In this section, we will discuss a number of issues related to making sure resea
 
 Research with identifiable faces has a number of ethical issues. This means it is not always possible to share the exact images used in a study. In this case, it is all the more important for the stimulus construction methods to be clear and reproducible. However, there are other ethical issues outside of image sharing that we feel are important to highlight in a paper discussing the use of face images in research.
 
-The use of face photographs must respect participant consent and personal data privacy. Images that are "freely" available on the internet, such as in Twitter profiles, are a grey area and the ethical issues should be carefully considered by the researchers and relevant ethics board.
+The use of face photographs must respect participant consent and personal data privacy. Images that are "freely" available on the internet are a grey area and the ethical issues should be carefully considered by the researchers and relevant ethics board.
 
 We strongly advise against using face images in research where there is a possibility of real-world consequences for the pictured individuals. For example, do not post identifiable images of real people on real dating sites without the explicit consent of the pictured individuals for that specific research.
 
@@ -862,7 +877,7 @@ The use of face image analysis should never be used to predict behaviour or as a
 
 ### Natural vs standardised source images
 
-Use the right image for the question. -- Ben, do you think you could write a bit about this? I thought it would be useful to explain when/why you might use standardised images versus naturalistic "holiday snaps". WebmorphR can help process either, but the delineations are mainly specialised for front-facing faces (although profile face templates are available).
+Use the right image for the question. -- Ben, do you think you could write a bit about this (and maybe include a bit about the dangers of masking)? I thought it would be useful to explain when/why you might use standardised images versus naturalistic "holiday snaps". WebmorphR can help process either, but the delineations are mainly specialised for mostly front-facing faces (although profile face templates are available and the Face++ auto-delineation can handle profile images, although the point placement is a little odd).
 
 ```{r, echo = TRUE}
 left_profile <- tem_def(33)
@@ -877,6 +892,14 @@ right_viz <- viz_tem_def(right_profile)
 c(left_viz, right_viz) |> crop_tem()
 ```
 
+### Synthetic faces
+
+Recently Deep Learning methods have had a huge impact on machine learning and there has been a considerable amount of face related work undertaken. In particular, generative adversarial networks (GANs) are capable of generating random photo-realistic faces from an input vector sampled from a known distribution [@gauthier2014conditional;@goodfellow2014generative]. Face-generating GANs are usually in the form of a convolutional neural network that takes the input vector in the form of a small pixel image with many channels, and through repeated convolutions and upsampling, or transpose convolutions, combined with pooling methods and non-linear activation functions, can generate a 3-channel RGB image. The generating networks are trained with the help of a second CNN, a discriminator network, that using convolutions, pooling /downsampling and non-linear activations to detect real vs fake images. Training is alternated between the generator network and the discriminator network, where the discriminator is trained to detect the fake images, then the generator is trained to fool the discriminator, and so on. GANs learn a face space, which can be further explored to enable alteration of attributes such as age, gender, or glasses in the generated images [e.g., @shen2020interfacegan].  
+
+Cycle-GANs extend the use of GANs for what is known as image translation (what we refer to as transforms in this paper) such as altering age, sex, race [@zhu2017unpaired]. Cycle-GANs use an encoding-decoding network to transform an input image belonging to one class (e.g. male) into the corresponding image in the target class (e.g. female). Similar to GANs, cycle-GANs are trained with the use of discriminator networks, which are trained to detect fake outputs from the networks. In addition, cycle-GANs need to produce not just realistic images for the target class, but they need to be (in some sense) otherwise unchanged from the input image.  To help ensure this is the case, the inverse transform is also learnt (e.g. from female to male), along with it’s own discriminator, and the training tries to ensure that the result of the transformation followed by the inverse transformation results in an image as close as possible to the original input.
+
+These synthetic faces are perceived as real human face images under many circumstances [@shen2021study]. The use of GANs and cycle-GANs has started to make its way into face perception research [e.g. @dado2022hyperrealistic;@zaltron2020cg], and its use will undoubtedly increase, but these methods need to be used with caution. Firstly, the trained networks are essentially "black boxes" controlled by millions of learnt parameters that are extremely difficult to interpret.  A consequence and example of this is the vulnerability to adversarial attacks. For example, it is possible to find valid-looking input images that will fail catastrophically on the output images [@kos2018adversarial]. Secondly, the quantity of training data needed is prohibitive for some experiments, as is the computing power needed to learn the models, requiring the repeated training of 2 networks for GAN or 4 networks for cycle-GAN.  The need for very large datasets means that that image datasets are typically scraped off the web, which can result in biases, and ethical issues around consent. Thirdly, training GANs and cycle-GANs is notoriously challenging, and without care they can suffer from mode collapse, non-convergence and instability [@saxena2021generative].
+
 
 ### Head position
 
@@ -888,9 +911,9 @@ In this section we will explain a serious caveat to research using composite fac
 
 As a concrete illustration, a recent paper by @alper2021all used faces from the Faceaurus database [@holtzman2011facing]. “Holtzman (2011) standardized the assessment scores, computed average scores of self- and peer-reports, and ranked the face images based on the resulting scores. Then, prototypes for each of the personality dimensions were created by digitally combining 10 faces with the highest, and 10 faces with the lowest scores on the personality trait in question (Holtzman, 2011).” This was done separately for male and female faces.
 
-Since scores on the three dark triad traits are positively correlated, the three pairs of composite faces are not independent. Indeed, Holtzman states that 5 individuals were in all three low composites for the male faces, while the overlap was less extreme in other cases. With 105 observers, Holtzman found that the ability to detect the composite higher in a dark triad trait was greater than chance.
+With 105 observers, Holtzman found that the ability to detect the composite higher in a dark triad trait was greater than chance for all three trait for each sex. However, since scores on the three dark triad traits are positively correlated, the three pairs of composite faces are not independent. Indeed, Holtzman states that 5 individuals were in all three low composites for the male faces, while the overlap was less extreme in other cases. Alper and colleagues replicated these findings in three studies with Ns of 160, 318, and 402, the larger two of which were pre-registered.
 
-While we commend both Holtzman and Alper, Bayrak, and Yilmaz for their transparency, data sharing, and material sharing, we argue that this test has an effective N of 2, not 105, and that further replications using these images, such as those done by Alper, Bayrak, and Yilmaz, regardless of number of observers or preregistered status, lend no further weight of evidence to the assertion that dark triad traits are visible in physical appearance.
+While we commend both Holtzman and Alper, Bayrak, and Yilmaz for their transparency, data sharing, and material sharing, we argue that the original test has an effective N of 2, not 105, and that further replications using these images, such as those done by Alper, Bayrak, and Yilmaz, regardless of number of observers or preregistered status, lend no further weight of evidence to the assertion that dark triad traits are visible in physical appearance.
 
 To explain this, we'll use an analogy that has nothing to do with faces (bear with us). Imagine a researcher predicts that women born on odd days are taller than women born on even days. Ridiculous, right? So let's simulate some data assuming that isn't true. The code below samples 20 women from a population with a mean height of 158.1 cm and an SD of 5.7. Half are born on odd days and half on even days.
 
@@ -930,8 +953,7 @@ mean_unsigned_diff_10 <- round(mean(abs(x)), 2)
 
 Now the women with odd birthdays are significantly taller than the women with even birthdays (p = `r p`). Or are they?
 
-
-We can be sure that by chance alone, our two composites will be at least slightly different on any measure, even if they are drawn from identical populations. The smaller the number of stimuli that go into each composite, the larger the mean (unsigned) size of this difference. With only 10 stimuli per composite (like the Facesaurus composites), the mean unsigned effect size of the difference between composites from populations with no real difference is `r mean_unsigned_diff_10` (in units of SD of the original trait distribution). If our observers are accurate enough at perceiving this difference, or we run a very large number of observers, we are virtually guaranteed to find significant results every time. Additionally, there is a 50% chance that these results will be in the predicted direction, and this direction will be replicable across different samples of observers for the same image set.
+People tend to show high agreement on stereotypical social perceptions from the physical appearance of faces, even when physical appearance is not meaningfully associated with the traits being judged [@todorov2008understanding;@zebrowitz2008social;@jones2021world]. We can be sure that by chance alone, our two composites will be at least slightly different on any measure, even if they are drawn from identical populations. The smaller the number of stimuli that go into each composite, the larger the mean (unsigned) size of this difference. With only 10 stimuli per composite (like the Facesaurus composites), the mean unsigned effect size of the difference between composites from populations with no real difference is `r mean_unsigned_diff_10` (in units of SD of the original trait distribution). If our observers are accurate enough at perceiving this difference, or we run a very large number of observers, we are virtually guaranteed to find significant results every time. Additionally, there is a 50% chance that these results will be in the predicted direction, and this direction will be replicable across different samples of observers for the same image set.
 
 So what does this mean for studies of the link between personality traits and facial appearance? The analogy with birth date and height holds. As long as there are facial morphologies that are even slightly consistently associated with the *perception* of a trait, then composites will not be identical in that morphology. Thus, even if that morphology is totally unassociated with the trait as measured by, e.g., personality scales or peer report (which is often the case), using the composite rating method will inflate the false positive rate for concluding a difference.  
 
