@@ -56,8 +56,8 @@ labelling functions to create figures.
 library(webmorphR)
 
 # load 6 images from the smiling demo set
-original <- demo_stim(dir = "smiling",
-                      pattern = "002|013|030|064|094|099") 
+# devtools::install_github("debruine/webmorphR.stim")
+original <- webmorphR.stim::load_stim_smiling("002|013|030|064|094|099") 
 
 # resize and delineate the images (using Face++)
 # procrustes align and crop them to 80% size
