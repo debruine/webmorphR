@@ -38,6 +38,16 @@ You can install the development version from
 devtools::install_github("debruine/webmorphR")
 ```
 
+## Helper packages
+
+There are also two helper packages that contain large demo stimulus
+files or functions that require python and dlib.
+
+``` r
+devtools::install_github("debruine/webmorphR.stim")
+devtools::install_github("debruine/webmorphR.dlib")
+```
+
 ## Use
 
 The code below produces the following figure reproducibly, and can be
@@ -92,12 +102,4 @@ c(grid, tem_viz) |>
   plot(nrow = 1, maxwidth = 1500)
 ```
 
-## Helper packages
 
-There are also two helper packages that contain large demo stimulus
-files or functions that require python and dlib.
-
-``` r
-devtools::install_github("debruine/webmorphR.stim")
-devtools::install_github("debruine/webmorphR.dlib")
-```
