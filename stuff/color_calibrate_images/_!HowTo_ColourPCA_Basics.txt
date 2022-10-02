@@ -1,0 +1,21 @@
+HOW TO DERIVE COLOUR PCs
+
+
+STEP 1
+All images need to be warped to the same shape: each pixel needs to have a corresponding pixel in all images
+
+This requires work in Webmorph. You can either use R to generate the  batch files you'll need for that (thanks to Ant), or manually (not that much fuss)
+
+- Create average of your image set
+	Download average template file from Webmorph and edit in Excel (see 1_batchAverage)
+	
+- Warp individual images to average image
+	Download transfrom template file from Webmorph and edit in Excel (see 2_batchWarp)
+	
+- Save average as well as warped individual images in your working directory
+
+- Create *transparent* mask using Webmorph, and save it in the same working directory. 
+
+STEP 2
+Extract colour values for each pixel of each image, run PCA, extract PCs using broken stick criterion and save colour PCs for subsequent analysis.
+Ant has written a script for this.
