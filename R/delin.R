@@ -22,7 +22,7 @@ delin <- function(stimuli) {
   pkg_available <- sapply(req_packages, requireNamespace, quietly = TRUE)
   
   if (!all(pkg_available)) {
-    pkg_txt <- pkg_available[pkg_available == FALSE] |> paste(collapse = ", ")
+    pkg_txt <- req_packages[pkg_available == FALSE] |> paste(collapse = ", ")
     stop("You need to install the following packages to use the shiny delineator: ",
          pkg_txt)
   }
