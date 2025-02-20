@@ -2,7 +2,7 @@
 
 test_that("loop", {
   skip_on_cran()
-  skip_if_offline()
+  skip_if_offline("webmorph.org"); skip("webmorph.org offline")
   
   stimuli <- demo_stim()
   expect_error(loop(stimuli[1]))

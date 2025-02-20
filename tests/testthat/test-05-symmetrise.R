@@ -3,6 +3,7 @@
 # frl ----
 test_that("frl", {
   skip_on_cran()
+  skip_if_offline("webmorph.org"); skip("webmorph.org offline")
   
   stimuli <- demo_tems("frl")
   sym_both <- symmetrize(stimuli)
@@ -33,6 +34,7 @@ test_that("frl", {
 # fpp106 ----
 test_that("fpp106", {
   skip_on_cran()
+  skip_if_offline("webmorph.org"); skip("webmorph.org offline")
   
   tem_id <- "fpp106"
   
@@ -61,6 +63,7 @@ test_that("fpp106", {
 # fpp83 ----
 test_that("fpp83", {
   skip_on_cran()
+  skip_if_offline("webmorph.org"); skip("webmorph.org offline")
   
   tem_id <- "fpp83"
   
@@ -90,7 +93,7 @@ test_that("fpp83", {
 # dlib70 ----
 test_that("dlib70", {
   skip_on_cran()
-  skip_if_offline()
+  skip_if_offline("webmorph.org"); skip("webmorph.org offline")
   
   tem_id <- "dlib70"
   
@@ -119,6 +122,7 @@ test_that("dlib70", {
 # dlib7 ----
 test_that("dlib7", {
   skip_on_cran()
+  skip_if_offline("webmorph.org"); skip("webmorph.org offline")
   
   tem_id <- "dlib7"
   

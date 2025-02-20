@@ -1,11 +1,8 @@
 #' Get template definition
 #'
 #' Template definitions are lists that contain information about templates that are needed to do things like symmetrising and masking images. This function is mostly used internally.
-#' 
-#' @details 
-#' If you have defined a custom template on webmorph.org, you can get its function definition by ID. You can see the ID numbers next to the templates available to you under the *Template > Current Template* menu. 
 #'
-#' @param tem_id the name of a built-in template (frl, fpp106, fpp83, dlib70, or dlib7) or a numeric ID of a template to retrieve from webmorph.org
+#' @param tem_id the name of a built-in template (frl, fpp106, fpp83, dlib70, or dlib7)
 #' @param path path of local tem definition file
 #'
 #' @return list with template definition
@@ -37,15 +34,15 @@ tem_def <- function(tem_id = "frl", path = NULL) {
     }, error = function(e) {
       stop("The file couldn't be read")
     })
-  } else if (is.numeric(tem_id)) {
-    url <- sprintf("https://webmorph.org/scripts/temDownloadJSON?tem_id=%d",
-                   tem_id)
-    tem_def <- tryCatch({
-      jsonlite::read_json(url, simplifyVector = TRUE,
-                          simplifyMatrix = FALSE)
-    }, error = function(e) {
-      stop("You might not have an internet connection")
-    })
+  # } else if (is.numeric(tem_id)) {
+  #   url <- sprintf("https://webmorph.org/scripts/temDownloadJSON?tem_id=%d",
+  #                  tem_id)
+  #   tem_def <- tryCatch({
+  #     jsonlite::read_json(url, simplifyVector = TRUE,
+  #                         simplifyMatrix = FALSE)
+  #   }, error = function(e) {
+  #     stop("You might not have an internet connection")
+  #   })
   } else if (is.character(tem_id)) {
     temdir <- system.file("extdata/tem_defs", package = "webmorphR")
     temdefs <- list.files(temdir, "\\.json$", full.names = TRUE)
@@ -60,7 +57,7 @@ tem_def <- function(tem_id = "frl", path = NULL) {
                                    simplifyVector = TRUE,
                                    simplifyMatrix = FALSE)
   } else {
-    stop("You must supply a numeric tem_id or a valid path to a template definition file.")
+    stop("You must supply a valid path to a template definition file.")
   }
 
   tem_def

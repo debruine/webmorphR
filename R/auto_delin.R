@@ -90,11 +90,20 @@ auto_delin <- function(stimuli,
     resp <- httr::content(r)
     
     if (!is.null(resp$error_message)) {
-      e <- resp$error_message |>
-        paste(collapse = "\n")
-      e <- paste0(imgname, ": ", e)
-      warning(e, call. = FALSE)
-    } else {
+      if (resp$error_message == "CONCURRENCY_LIMIT_EXCEEDED") {
+        # wait a second and try one time again
+        Sys.sleep(1.0)
+        r <- httr::POST(url, body = data)
+        resp <- httr::content(r)
+      } else {
+        e <- resp$error_message |>
+          paste(collapse = "\n") |>
+          paste0(imgname, ": ", x = _)
+        warning(e, call. = FALSE)
+      }
+    }
+    
+    if (is.null(resp$error_message)) {
       # put in order from fpp
       which_face <- face[i]
       if (length(resp$faces) < which_face) {

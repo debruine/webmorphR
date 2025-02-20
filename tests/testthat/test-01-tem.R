@@ -27,14 +27,14 @@ test_that("tem_def", {
   expect_equal(frl, frl2)
 })
 
-test_that("online", {
-  skip_if_offline()
-
-  # no masks in online version
-  frl_online <- tem_def(1)
-  expect_equal(names(frl_online), def_parts[1:10])
-  expect_equal(frl_online$delin_pts, c(0, 1, 96))
-})
+# test_that("online", {
+#   skip_if_offline("webmorph.org"); skip("webmorph.org offline")
+# 
+#   # no masks in online version
+#   frl_online <- tem_def(1)
+#   expect_equal(names(frl_online), def_parts[1:10])
+#   expect_equal(frl_online$delin_pts, c(0, 1, 96))
+# })
 
 
 # subset_tem ----

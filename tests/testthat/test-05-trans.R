@@ -2,7 +2,7 @@
 
 test_that("trans", {
   skip_on_cran()
-  skip_if_offline()
+  skip_if_offline("webmorph.org"); skip("webmorph.org offline")
   
   s <- demo_stim()
   

@@ -56,7 +56,7 @@ read_stim <- function (path, pattern = NULL, breaks = "/", recursive = TRUE) {
   # load tems ----
   t <- grepl("\\.tem$", files, ignore.case = TRUE)
   temfiles <- files[t]
-  temlist <- lapply(temfiles[88:90], read_tem)
+  temlist <- lapply(temfiles, read_tem)
 
   # join image and tem lists ----
   df_img <- data.frame(

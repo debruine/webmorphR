@@ -3,7 +3,7 @@
 # avg ----
 test_that("avg", {
   skip_on_cran()
-  skip_if_offline()
+  skip_if_offline("webmorph.org"); skip("webmorph.org offline")
 
   # can't average more than 100 images
   stim120 <- demo_stim() |> rep(60)

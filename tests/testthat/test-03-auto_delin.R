@@ -23,7 +23,7 @@ test_that("auto_delin", {
 test_that("auto_delin", {
   # Requires FACEPLUSPLUS_KEY and FACEPLUSPLUS_SECRET
   skip_on_cran()
-  skip_if_offline()
+  skip_if_offline("api-us.faceplusplus.com")
   
   # all images have templates
   stimuli <- demo_stim("f")
@@ -34,7 +34,7 @@ test_that("auto_delin", {
                                   face = 3, replace = TRUE),
                   "f_multi did not have 3 faces")
   
-  stimuli <- demo_stim("m")
+  stimuli <- demo_stim("m_multi")
   ad <- auto_delin(stimuli, "fpp106", replace = TRUE)
   fpp <- auto_delin(stimuli, "fpp106", replace = TRUE)
   expect_equal(fpp[[1]]$points, ad[[1]]$points)
@@ -43,7 +43,7 @@ test_that("auto_delin", {
 
 test_that("paste 2 together", {
   skip_on_cran()
-  skip_if_offline()
+  skip_if_offline("api-us.faceplusplus.com")
   
   s <- demo_stim() |> plot()
   f <- auto_delin(s, "fpp106", TRUE, 1)
@@ -51,6 +51,11 @@ test_that("paste 2 together", {
   
   expect_true(all((f[[1]]$points == m[[1]]$points) == FALSE))
   # draw_tem(c(f, m)) |> plot(nrow = 2)
+})
+
+test_that("concurrency", {
+  stimuli <- demo_stim()[c(1,1,2,2)]
+  ad <- auto_delin(stimuli, model = "fpp106", replace = TRUE)
 })
 
 
